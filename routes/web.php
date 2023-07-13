@@ -13,8 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
-
-Route::get('/test', \App\Http\Controllers\TestController::class);
+Route::get('/', \App\Http\Controllers\TestController::class);

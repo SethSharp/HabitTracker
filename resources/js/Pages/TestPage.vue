@@ -1,11 +1,7 @@
 <script setup>
-
-let user = {
-    name: "Seth"
-}
+    let user = {name:"Seth"}
 </script>
 
 <template>
-    <h1>Welcome</h1>
-    <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+    <h1>Welcome {{ user.name }}, this is your first inertia app </h1>
 </template>
