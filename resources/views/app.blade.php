@@ -6,12 +6,13 @@
 
         @vite('resources/css/app.css')
 
+        @vite('resources/js/app.js')
+
+
         <title> Habit Tracker </title>
 
     </head>
-    <body class="antialiased">
-        <h1 class="text-3xl font-bold text-gray-600">
-            Habit Tracker
-        </h1>
+    <body>
+        <div class="text-2xl text-gray-500"> Habit Tracker </div>
     </body>
 </html>
