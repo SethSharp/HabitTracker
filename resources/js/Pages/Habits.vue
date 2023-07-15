@@ -9,7 +9,7 @@ import { Head } from '@inertiajs/vue3';
     <AuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                This is the main area to show stuff
+                This is where we will show the habits
             </div>
         </div>
     </AuthenticatedLayout>
