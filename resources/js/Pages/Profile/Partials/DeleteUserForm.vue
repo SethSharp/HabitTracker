@@ -1,9 +1,5 @@
 <script setup>
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
 import Modal from '@/Components/Modal.vue'
-import TextInput from '@/Components/TextInput.vue'
-import { useForm } from '@inertiajs/vue3'
 import { nextTick, ref } from 'vue'
 import { useSchema, FormBuilder } from '@codinglabsau/inertia-form-builder'
 import { DangerButton, SecondaryButton, Password } from '@codinglabsau/ui'
@@ -12,11 +8,11 @@ const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
 
 const schema = useSchema({
-    password: {
-        component: Password,
-        label: 'password',
-        value: '',
-    },
+  password: {
+    component: Password,
+    label: 'password',
+    value: '',
+  },
 })
 
 const confirmUserDeletion = () => {
@@ -54,7 +50,7 @@ const closeModal = () => {
     </header>
 
     <div class="flex justify-end">
-        <DangerButton as="button" @click="confirmUserDeletion">Delete Account</DangerButton>
+      <DangerButton as="button" @click="confirmUserDeletion">Delete Account</DangerButton>
     </div>
 
     <Modal :show="confirmingUserDeletion" @close="closeModal">
@@ -68,22 +64,22 @@ const closeModal = () => {
           Please enter your password to confirm you would like to permanently delete your account.
         </p>
 
-          <FormBuilder :schema="schema" class="!w-full">
-              <template #actions="{ form }">
-                  <div class="space-x-2">
-                      <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+        <FormBuilder :schema="schema" class="!w-full">
+          <template #actions="{ form }">
+            <div class="space-x-2">
+              <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
 
-                      <DangerButton
-                          class="ml-3"
-                          :class="{ 'opacity-25': form.processing }"
-                          :disabled="form.processing"
-                          @click="submit"
-                      >
-                          Delete Account
-                      </DangerButton>
-                  </div>
-              </template>
-          </FormBuilder>
+              <DangerButton
+                class="ml-3"
+                :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing"
+                @click="submit"
+              >
+                Delete Account
+              </DangerButton>
+            </div>
+          </template>
+        </FormBuilder>
       </div>
     </Modal>
   </section>
