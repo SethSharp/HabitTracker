@@ -18,6 +18,10 @@ let headingLinksConfig = [
         name: "Habits",
         href: "habits"
     },
+    {
+        name: "Competition",
+        href: "competition"
+    },
 ]
 </script>
 

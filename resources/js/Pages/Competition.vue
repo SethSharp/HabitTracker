@@ -4,12 +4,12 @@ import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Habits" />
+    <Head title="Competition" />
 
     <AuthenticatedLayout>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                This is where we will show the habits
+                Coming Soon
             </div>
         </div>
     </AuthenticatedLayout>

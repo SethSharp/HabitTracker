@@ -23,13 +23,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/habits', function () {
-    return Inertia::render('Habits');
-})->middleware(['auth', 'verified'])->name('habits');
+Route::get('/habits', \App\Http\Controllers\Pages\ShowHabitsController::class)->middleware(['auth', 'verified'])->name('habits');
+
+Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->middleware(['auth', 'verified'])->name('competition');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
