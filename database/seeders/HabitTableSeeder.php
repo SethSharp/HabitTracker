@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Habit;
+use App\Models\HabitSchedule;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +14,12 @@ class HabitTableSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
-            Habit::factory()->create([
+            $habit = Habit::factory()->create([
+                'user_id' => $user->id
+            ]);
+
+            HabitSchedule::factory()->create([
+                'habit_id' => $habit->id,
                 'user_id' => $user->id
             ]);
         }
