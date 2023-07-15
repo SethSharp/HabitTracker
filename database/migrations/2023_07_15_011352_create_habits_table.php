@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('habits', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->nullable();
             $table->string('name');
             $table->string('description');
             $table->string('frequency'); // TODO: Will change to a enum...

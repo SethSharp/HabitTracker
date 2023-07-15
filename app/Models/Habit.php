@@ -13,12 +13,13 @@ class Habit extends Model
 
     protected $fillable = [
         'name',
-        'email',
+        'description',
         'frequency',
         'password',
     ];
 
     protected $casts = [
+        'user_id' => 'int',
         'frequency' => Frequency::class,
     ];
 
