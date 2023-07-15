@@ -27,10 +27,6 @@ const schema = useSchema({
         label: 'Email',
         value: user.email
     },
-    avatar: {
-        component: Image,
-        label: 'Avatar',
-    },
 })
 
 const submit = () => schema.form.patch(route('profile.update'))
