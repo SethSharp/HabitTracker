@@ -5,6 +5,7 @@ module.exports = {
         "plugin:@typescript-eslint/eslint-recommended",
         "prettier"
     ],
+    plugins: ["unused-imports"],
     rules: {
         "vue/component-tags-order": [
             "error",
