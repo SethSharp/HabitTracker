@@ -30,9 +30,9 @@ Route::get('/habits', \App\Http\Controllers\Pages\ShowHabitsController::class)->
 Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->middleware(['auth', 'verified'])->name('competition');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', \App\Http\Controllers\Profile\EditProfileController::class)->name('profile.edit');
+    Route::patch('/profile', \App\Http\Controllers\Profile\UpdateProfileController::class)->name('profile.update');
+    Route::delete('/profile', \App\Http\Controllers\Profile\DeleteProfileController::class)->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
