@@ -3,7 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Link, usePage } from '@inertiajs/vue3';
 
 import {useSchema, FormBuilder} from "@codinglabsau/inertia-form-builder"
-import {Text, Image} from "@codinglabsau/ui"
+import {Text} from "@codinglabsau/ui"
 
 defineProps({
     mustVerifyEmail: {
