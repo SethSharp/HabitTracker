@@ -32,4 +32,4 @@ jobs:
       env:
         DB_USERNAME: root
         DB_PASSWORD: root
-      run: php artisan test --parallel
+      run: php artisan test
