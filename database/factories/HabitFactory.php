@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\User;
 use App\Enums\Frequency;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 
 class HabitFactory extends Factory
 {
@@ -13,8 +12,10 @@ class HabitFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'user_id' => User::factory()->create()->id,
-            'description' => $this->faker->sentence(mt_rand(20, 25)),
+            'user_id' => function () {
+                return User::factory()->create()->id;
+            },
+            'description' => $this->faker->sentence(mt_rand(10, 15)),
             'frequency' => Frequency::DAILY
         ];
     }
