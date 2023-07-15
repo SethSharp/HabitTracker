@@ -8,20 +8,23 @@
         "lint": "eslint 'resources/**/*.{js,ts,vue}' --fix"
     },
     "devDependencies": {
+        "@inertiajs/vue3": "^1.0.0",
+        "@tailwindcss/forms": "^0.5.3",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
-        "@vitejs/plugin-vue": "^4.2.3",
-        "autoprefixer": "^10.4.14",
+        "@vitejs/plugin-vue": "^4.0.0",
+        "autoprefixer": "^10.4.12",
         "axios": "^1.1.2",
         "eslint": "^8.45.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-vue": "^9.15.1",
         "laravel-vite-plugin": "^0.7.5",
-        "postcss": "^8.4.25",
+        "postcss": "^8.4.18",
         "prettier": "^3.0.0",
         "prettier-plugin-tailwindcss": "^0.4.1",
-        "tailwindcss": "^3.3.2",
-        "vite": "^4.0.0"
+        "tailwindcss": "^3.2.1",
+        "vite": "^4.0.0",
+        "vue": "^3.2.41"
     },
     "dependencies": {
         "@codinglabsau/inertia-form-builder": "^1.2.1",
