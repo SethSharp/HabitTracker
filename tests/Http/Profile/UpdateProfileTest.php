@@ -2,10 +2,9 @@
 
 namespace Tests\Http\Profile;
 
+use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
 
 class UpdateProfileTest extends TestCase
 {
