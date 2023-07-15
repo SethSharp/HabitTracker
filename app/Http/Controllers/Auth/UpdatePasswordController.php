@@ -10,7 +10,6 @@ use Illuminate\Validation\Rules\Password;
 
 class UpdatePasswordController extends Controller
 {
-    // TODO: Convert to single use naming
     public function __invoke(Request $request): RedirectResponse
     {
         $validated = $request->validate([

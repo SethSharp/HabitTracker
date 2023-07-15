@@ -4,6 +4,7 @@ namespace Tests\Http\Profile;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UpdateProfileTest extends TestCase
@@ -60,7 +61,7 @@ class UpdateProfileTest extends TestCase
     }
 
     /** @test */
-    public function can_save_user_data()
+    public function user_can_update_information()
     {
         $userData = [
             'name' => 'New Name',
@@ -75,5 +76,33 @@ class UpdateProfileTest extends TestCase
             'name' => 'New Name',
             'email' => 'testing@testing.com',
         ]);
+    }
+
+    /** @test */
+    public function user_can_delete_their_account(): void
+    {
+        $this->actingAs($this->user)
+            ->delete('/profile', [
+                'password' => 'password',
+            ])
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/');
+
+        $this->assertGuest();
+        $this->assertNull($this->user->fresh());
+    }
+
+    /** @test */
+    public function correct_password_must_be_provided_to_delete_account(): void
+    {
+        $this->actingAs($this->user)
+            ->from('/profile')
+            ->delete('/profile', [
+                'password' => 'wrong-password',
+            ])
+            ->assertSessionHasErrors('password')
+            ->assertRedirect('/profile');
+
+        $this->assertNotNull($this->user->fresh());
     }
 }
