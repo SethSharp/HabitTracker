@@ -38,14 +38,17 @@ class HabitTableSeeder extends Seeder
 
             $occurrences = json_decode($habit->occurrence_days);
 
-            HabitSchedule::factory()->create([
-                'habit_id' => $habit->id,
-                'user_id' => $user->id,
-            ]);
+            foreach ($occurrences as $occurrence) {
+                HabitSchedule::factory()->create([
+                    'habit_id' => $habit->id,
+                    'user_id' => $user->id,
+                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence)
+                ]);
+            }
         }
     }
 
-    private function determineDateForHabitCompletion($freq, $occurrences): Carbon
+    private function determineDateForHabitCompletion($freq, $day): string
     {
         switch ($freq) {
             case Frequency::DAILY:
@@ -53,7 +56,8 @@ class HabitTableSeeder extends Seeder
             case Frequency::WEEKLY:
                 return now()->addWeek();
             case Frequency::MONTHLY:
-                return now()->addMonth();
+                return date('Y-m-d', strtotime(date('Y-m') . '-' . $day));
+
         }
         return now();
     }
