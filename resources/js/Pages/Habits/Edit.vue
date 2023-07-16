@@ -24,16 +24,36 @@ let weekConfig = {
     ]
 }
 
-// convert frequency to a number somehow
-// convert occurrence_days to array of numbers
+let occurrences = JSON.parse(props.habit.occurrence_days)
+
+const getFrequency = () => {
+    if (props.habit.frequency === "weekly") {
+        return 1
+    } else if (props.habit.frequency === "monthly") {
+        return 2
+    }
+    return 0
+}
+
+const getDaily = () => {
+    return occurrences.map(Number)
+}
+
+const getWeekly = () => {
+    return occurrences.map(Number)[0]
+}
+
+const getMonthly = () => {
+    return occurrences[0]
+}
 
 const form = useForm({
     name: props.habit.name,
     description: props.habit.description,
-    frequency: 2,
-    daily_config: [],
-    weekly_config: 0,
-    monthly_config: ''
+    frequency: getFrequency(),
+    daily_config: getDaily(),
+    weekly_config: getWeekly(),
+    monthly_config: getMonthly()
 });
 
 const submit = () => form.post(route('habit.store'))

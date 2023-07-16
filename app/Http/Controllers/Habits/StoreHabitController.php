@@ -40,7 +40,7 @@ class StoreHabitController extends Controller
                 return json_encode($data['weekly_config']);
             case Frequency::MONTHLY->value:
                 $date = DateTime::createFromFormat('Y-n-j', $data['monthly_config']);
-                return json_encode([(int)$date->format('j')]);
+                return json_encode([$date->format('j')]);
             default:
                 return now();
         }

@@ -40,7 +40,7 @@ let week = [
                 <div class="p-4">
                     <span class="font-bold"> Occurrences: </span>
                     <span v-for="dayIndex in habit.occurrence_days">
-                        {{ week[dayIndex] }}
+                        {{ week[dayIndex-1] }}
                     </span>
                 </div>
             </div>

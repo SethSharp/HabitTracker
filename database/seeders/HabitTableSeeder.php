@@ -29,7 +29,7 @@ class HabitTableSeeder extends Seeder
             $habit->occurrence_days = match ($freq) {
                 Frequency::DAILY => '[1,2,3]',
                 Frequency::WEEKLY => '[4]',
-                Frequency::MONTHLY => '[16]',
+                Frequency::MONTHLY => '["2023-07-13"]',
                 default => '[]',
             };
 
