@@ -39,7 +39,7 @@ let schema = useSchema({
     },
 })
 
-const submit = () => schema.form.post()
+const submit = () => schema.form.post(route('habit.store'))
 </script>
 
 <template>
@@ -47,18 +47,17 @@ const submit = () => schema.form.post()
 
     <AuthenticatedLayout>
         <div class="py-12">
-            <form onsubmit="submit">
+            <form @submit.prevent="submit">
                 <FormBuilder :schema="schema">
                     <template #actions="{ form }">
                         <div class="text-gray-400">
                             <div>
                                 <p>
-<!--                                    <InformationCircleIcon class="w-4 h-4 flex justify-start"/>-->
                                     Weekly: Only select one day</p>
                                 <p> Daily: Select any day</p>
                             </div>
                         </div>
-                        <PrimaryButton>
+                        <PrimaryButton :loading="form.processing" type="submit">
                             Create Habit
                         </PrimaryButton>
                     </template>

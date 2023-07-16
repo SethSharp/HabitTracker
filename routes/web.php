@@ -25,6 +25,7 @@ Route::get('/', function () {
 
 Route::middleware('auth')->name('habit.')->group(function () {
     Route::get('/habits/create', \App\Http\Controllers\Habits\CreateHabitController::class)->name('create');
+    Route::post('habits', \App\Http\Controllers\Habits\StoreHabitController::class)->name('store');
 });
 
 
