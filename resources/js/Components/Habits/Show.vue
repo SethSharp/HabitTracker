@@ -6,11 +6,20 @@ const props = defineProps({
     habit: Object,
 })
 
-let occurrences = JSON.parse(props.habit.occurrence_days)
+let monthData = JSON.parse(props.habit.occurrence_days)
 
 let week = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ]
+const createString = () => {
+    let occurrences = JSON.parse(props.habit.occurrence_days)
+    const daysOfWeek = occurrences.map(number => {
+        const index = (number - 1) % 7; // Adjust the index to match the day names array
+        return week[index];
+    });
+
+    return daysOfWeek.join(', ');
+}
 </script>
 
 <template>
@@ -42,11 +51,11 @@ let week = [
                 <div class="p-4 flex block">
                     <span class="font-bold mr-2"> Occurrences: </span>
                     <div v-if="habit.frequency === 'monthly'">
-                        <span> {{ occurrences[0] }} </span>
+                        <span> {{ monthData[0] }} </span>
                     </div>
                     <div v-else>
-                        <span v-for="dayIndex in habit.occurrence_days">
-                            {{ week[dayIndex-1] }}
+                        <span>
+                            {{ createString() }}
                         </span>
                     </div>
                 </div>
