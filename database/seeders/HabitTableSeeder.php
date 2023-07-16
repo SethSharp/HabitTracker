@@ -7,6 +7,7 @@ use App\Models\Habit;
 use App\Models\HabitSchedule;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Date;
@@ -50,14 +51,14 @@ class HabitTableSeeder extends Seeder
 
     private function determineDateForHabitCompletion($freq, $day): string
     {
+        // With knowledge that this is run on a monday
         switch ($freq) {
             case Frequency::DAILY:
                 return now()->addDay();
             case Frequency::WEEKLY:
-                return now()->addWeek();
+                return Carbon::parse('2023-07-3')->copy()->addDays(4)->format('Y-m-d');
             case Frequency::MONTHLY:
                 return date('Y-m-d', strtotime(date('Y-m') . '-' . $day));
-
         }
         return now();
     }
