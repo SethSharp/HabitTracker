@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/habits', \App\Http\Controllers\Pages\ShowHabitsController::class)->middleware(['auth', 'verified'])->name('habits');
+Route::get('/habits', \App\Http\Controllers\Habits\ShowHabitsController::class)->middleware(['auth', 'verified'])->name('habits');
 Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->middleware(['auth', 'verified'])->name('competition');
 
 Route::middleware('auth')->group(function () {
