@@ -1,8 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import IndexHabits from "@/Components/Habits/IndexHabits.vue";
-import ShowHabit from "@/Components/Habits/Show.vue";
+import Index from "@/Components/Habits/Index.vue";
+import Show from "@/Components/Habits/Show.vue";
 import {ref} from "vue";
 
 let selectedHabit = ref(0);
@@ -19,7 +19,7 @@ const props = defineProps({
         <div class="py-12">
             <div class="grid grid-cols-3 mx-12">
                 <div class="p-4">
-                    <IndexHabits>
+                    <Index>
                         <div class="mx-2 p-4" v-for="(habit, index) in habits">
                             <div
                                 @click="selectedHabit = index"
@@ -29,14 +29,16 @@ const props = defineProps({
                                 {{ habit.name }}
                             </div>
                         </div>
-                    </IndexHabits>
+                    </Index>
                 </div>
                 <div class="p-4">
-                    <ShowHabit :habit="habits[selectedHabit]"/>
+                    <Show :habit="habits[selectedHabit]"/>
                 </div>
                 <div class="p-4">
-                    <div class="rounded-xl border-2 border-black overflow-hidden h-full">
-                        Activity Log...
+                    <div class="rounded-xl border-2 border-black overflow-hidden h-full p-4">
+                        History of habit:
+                        - Dates you have checked off
+                        - A general statistics sections (Times completed, start, missed days?, streak for the specific habit)
                     </div>
                 </div>
             </div>
