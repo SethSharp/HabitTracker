@@ -4,6 +4,7 @@ import { Head, useForm } from '@inertiajs/vue3'
 import {Text, Select, Date, PrimaryButton, Checkbox, Error, Label} from "@codinglabsau/ui";
 
 const props = defineProps({
+    habit: Object,
     frequencies: Array,
     min: String,
     max: String
@@ -24,9 +25,9 @@ let weekConfig = {
 }
 
 const form = useForm({
-    name: '',
-    description: '',
-    frequency: 0,
+    name: props.habit.name,
+    description: props.habit.description,
+    frequency: 2,
     daily_config: [],
     weekly_config: 0,
     monthly_config: ''

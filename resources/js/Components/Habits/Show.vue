@@ -1,5 +1,6 @@
 <script setup>
 import {PlusCircleIcon} from "@heroicons/vue/24/outline/index.js";
+import {SecondaryButton} from "@codinglabsau/ui";
 
 const props = defineProps({
     habit: Object,
@@ -16,7 +17,11 @@ let week = [
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-gray-200 my-2 py-2 rounded-xl border-2 border-gray-500 md:flex">
                 <span class="w-3/4 h-fit py-2 text-2xl"> {{ habit.name }} </span>
                 <div class="w-1/4 flex justify-end items-center">
-                    <span class="rounded-lg border-2 border-gray-400 text-gray-500 p-2"> edit </span>
+                    <a :href="route('habit.edit', habit)"
+                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2"
+                    >
+                        Edit
+                    </a>
                 </div>
             </div>
             <div class="">
