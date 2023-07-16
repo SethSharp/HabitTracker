@@ -15,6 +15,7 @@ class Habit extends Model
         'name',
         'description',
         'frequency',
+        'occurrence_days',
         'password',
     ];
 
