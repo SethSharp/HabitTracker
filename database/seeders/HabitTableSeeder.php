@@ -7,10 +7,8 @@ use App\Models\Habit;
 use App\Models\HabitSchedule;
 use App\Models\User;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Date;
 
 class HabitTableSeeder extends Seeder
 {
@@ -49,6 +47,7 @@ class HabitTableSeeder extends Seeder
         }
     }
 
+    // TODO: Will eventually be moved to a trait I think (To be used in a command)
     private function determineDateForHabitCompletion($freq, $day): string
     {
         // With knowledge that this is run on a monday

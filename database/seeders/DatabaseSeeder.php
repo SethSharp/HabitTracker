@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         if (app()->environment('local', 'testing')) {
-            Carbon::setTestNow(Carbon::parse('2023-07-3')); // Monday
+            Carbon::setTestNow(Carbon::parse('2023-07-3')); // Monday -> Set as a global date somewhere?...
         }
 
         $this->call(UserTableSeeder::class);
