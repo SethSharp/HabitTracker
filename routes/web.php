@@ -23,6 +23,11 @@ Route::get('/', function () {
     ]);
 });
 
+Route::middleware('auth')->name('habit.')->group(function () {
+    Route::get('/habits/create', \App\Http\Controllers\Habits\CreateHabitController::class)->name('create');
+});
+
+
 Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/habits', \App\Http\Controllers\Habits\ShowHabitsController::class)->middleware(['auth', 'verified'])->name('habits');
 Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->middleware(['auth', 'verified'])->name('competition');
