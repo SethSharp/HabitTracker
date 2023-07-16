@@ -1,10 +1,12 @@
 <script setup>
 import {PlusCircleIcon} from "@heroicons/vue/24/outline/index.js";
-import {SecondaryButton} from "@codinglabsau/ui";
+import {onMounted} from "vue";
 
 const props = defineProps({
     habit: Object,
 })
+
+let occurrences = JSON.parse(props.habit.occurrence_days)
 
 let week = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
@@ -37,11 +39,16 @@ let week = [
                     <span class="font-bold"> Frequency: </span>
                     <span> {{ habit.frequency }} </span>
                 </div>
-                <div class="p-4">
-                    <span class="font-bold"> Occurrences: </span>
-                    <span v-for="dayIndex in habit.occurrence_days">
-                        {{ week[dayIndex-1] }}
-                    </span>
+                <div class="p-4 flex block">
+                    <span class="font-bold mr-2"> Occurrences: </span>
+                    <div v-if="habit.frequency === 'monthly'">
+                        <span> {{ occurrences[0] }} </span>
+                    </div>
+                    <div v-else>
+                        <span v-for="dayIndex in habit.occurrence_days">
+                            {{ week[dayIndex-1] }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
