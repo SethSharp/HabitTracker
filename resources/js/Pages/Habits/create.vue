@@ -77,7 +77,7 @@ const submit = () => form.post(route('habit.store'))
 
                         <Error :error="form.errors.frequency" class="mt-2" />
                     </div>
-                    <div class="py-2">
+                    <div class="py-2" v-if="form.frequency===0">
                         <Label for="daily_config"> Daily </Label>
 
                         <Checkbox
@@ -91,7 +91,7 @@ const submit = () => form.post(route('habit.store'))
 
                         <Error :error="form.errors.daily_config" class="mt-2" />
                     </div>
-                    <div class="py-2">
+                    <div class="py-2" v-if="form.frequency===1">
                         <Label for="weekly_config"> Weekly </Label>
 
                         <Select
@@ -102,7 +102,7 @@ const submit = () => form.post(route('habit.store'))
 
                         <Error :error="form.errors.weekly_config" class="mt-2" />
                     </div>
-                    <div class="py-2">
+                    <div class="py-2" v-if="form.frequency===2">
                         <Label for="monthly_config"> Monthly </Label>
 
                         <Date
