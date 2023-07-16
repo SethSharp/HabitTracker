@@ -21,8 +21,10 @@ const props = defineProps({
                 <div class="p-4">
                     <ShowHabit />
                 </div>
-                <div>
-                    activity log?..
+                <div class="p-4">
+                    <div class="rounded-xl border-2 border-black overflow-hidden h-full">
+                        Activity Log...
+                    </div>
                 </div>
             </div>
         </div>
