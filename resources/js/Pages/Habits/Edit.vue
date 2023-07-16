@@ -24,6 +24,9 @@ let weekConfig = {
     ]
 }
 
+// convert frequency to a number somehow
+// convert occurrence_days to array of numbers
+
 const form = useForm({
     name: props.habit.name,
     description: props.habit.description,
