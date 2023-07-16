@@ -54,7 +54,7 @@ class HabitTableSeeder extends Seeder
         // With knowledge that this is run on a monday
         switch ($freq) {
             case Frequency::DAILY:
-                return now()->addDay();
+                return now()->addDays($day-1);
             case Frequency::WEEKLY:
                 return Carbon::parse('2023-07-3')->copy()->addDays(4)->format('Y-m-d');
             case Frequency::MONTHLY:
