@@ -16,7 +16,8 @@ class HabitFactory extends Factory
                 return User::factory()->create()->id;
             },
             'description' => $this->faker->sentence(mt_rand(10, 15)),
-            'frequency' => Frequency::DAILY
+            'frequency' => Frequency::DAILY,
+            'occurrence_days' => '[]'
         ];
     }
 }
