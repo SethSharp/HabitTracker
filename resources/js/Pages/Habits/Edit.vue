@@ -56,7 +56,7 @@ const form = useForm({
     monthly_config: getMonthly()
 });
 
-const submit = () => form.post(route('habit.store'))
+const submit = () => form.post(route('habit.update', props.habit))
 </script>
 
 <template>

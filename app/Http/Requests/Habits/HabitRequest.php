@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreHabitRequest extends FormRequest
+class HabitRequest extends FormRequest
 {
     public function rules(): array
     {
