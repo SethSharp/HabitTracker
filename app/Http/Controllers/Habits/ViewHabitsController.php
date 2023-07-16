@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Habit;
 use Inertia\Inertia;
 
-class ShowHabitsController extends Controller
+class ViewHabitsController extends Controller
 {
     public function __invoke()
     {
-        return Inertia::render('Habits/view', [
+        return Inertia::render('Habits/View', [
             'habits' => Habit::all(),
         ]);
     }

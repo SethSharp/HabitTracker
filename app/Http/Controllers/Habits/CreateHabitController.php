@@ -10,7 +10,7 @@ class CreateHabitController extends Controller
 {
     public function __invoke()
     {
-        return Inertia::render('Habits/create', [
+        return Inertia::render('Habits/Create', [
             'frequencies' => collect(Frequency::cases())->map(function ($data, $index) {
                 return ['id' => $index, 'name' => $data->name];
             }),
