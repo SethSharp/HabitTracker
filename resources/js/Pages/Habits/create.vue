@@ -2,11 +2,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
 import {useSchema, FormBuilder, CheckboxGroup} from "@codinglabsau/inertia-form-builder";
-import { Text, Select, Date, PrimaryButton } from "@codinglabsau/ui";
-import {InformationCircleIcon} from "@heroicons/vue/24/outline/index.js";
+import { Text, Select, Date, PrimaryButton, Container } from "@codinglabsau/ui";
 
 const props = defineProps({
     frequencies: Array,
+    min: String,
+    max: String
 })
 
 let schema = useSchema({
@@ -20,7 +21,7 @@ let schema = useSchema({
     },
     daily_weekly_configuration: {
         component: CheckboxGroup,
-        label: 'Days for daily or day for weekly habit',
+        label: 'Day/s: Daily, Day: Weekly habits',
         items: [
             { label: 'Monday', value: 1 },
             { label: 'Tuesday', value: 2 },
@@ -33,9 +34,10 @@ let schema = useSchema({
         component: Date,
         label: "Select the day for a monthly habit",
         props: {
-            min: '2023-06-10',
-            max: '2023-08-10'
-        }
+            min: props.min,
+            max: props.max
+        },
+        description: "This field is only used when making a monthly habit, the same goes for the list of days above (Only being used with daily or weekly habits)"
     },
 })
 
@@ -46,7 +48,7 @@ const submit = () => schema.form.post(route('habit.store'))
     <Head title="Create Habit" />
 
     <AuthenticatedLayout>
-        <div class="py-12">
+        <Container class="py-12">
             <form @submit.prevent="submit">
                 <FormBuilder :schema="schema">
                     <template #actions="{ form }">
@@ -57,12 +59,12 @@ const submit = () => schema.form.post(route('habit.store'))
                                 <p> Daily: Select any day</p>
                             </div>
                         </div>
-                        <PrimaryButton :loading="form.processing" type="submit">
+                        <PrimaryButton as="button" :loading="form.processing" type="submit">
                             Create Habit
                         </PrimaryButton>
                     </template>
                 </FormBuilder>
             </form>
-        </div>
+        </Container>
     </AuthenticatedLayout>
 </template>

@@ -14,8 +14,15 @@ class StoreHabitRequest extends FormRequest
             'name' => ['string', 'required', 'min:5', 'max:30'],
             'description' => ['string', 'required', 'min:5', 'max:255'],
             'frequency' => ['int', 'required'],
-            'daily_weekly_configuration' => ['array', 'required'],
-            'monthly_configuration' => ['string', 'required'],
+            'daily_weekly_configuration' => [
+                'array',
+                'required',
+            ],
+            'monthly_configuration' => [
+                'string',
+                'required',
+                'required_if:frequency,3'
+            ],
         ];
     }
 }

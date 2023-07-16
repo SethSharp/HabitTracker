@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Habits;
 
-use App\Enums\Frequency;
+use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Habits\StoreHabitRequest;
-use Illuminate\Foundation\Testing\Concerns\InteractsWithContainer;
-use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreHabitController extends Controller
 {
-    public function __invoke(StoreHabitRequest $request)
+    public function __invoke(StoreHabitRequest $request): Response
     {
         ray($request->validated());
         return Inertia::location(url('habits'));

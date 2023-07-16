@@ -13,7 +13,9 @@ class CreateHabitController extends Controller
         return Inertia::render('Habits/create', [
             'frequencies' => collect(Frequency::cases())->map(function ($data, $index) {
                 return ['id' => $index, 'name' => $data->name];
-            })
+            }),
+            'min' => date('Y-m-01'),
+            'max' => date('Y-m-t')
         ]);
     }
 }
