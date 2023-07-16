@@ -1,18 +1,16 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
-
 const props = defineProps({
     habits: Array,
 })
 </script>
 
 <template>
-    <Head title="Habits" />
-
-    <AuthenticatedLayout>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">This is showing all habits</div>
+    <div class="rounded-xl border-2 border-black overflow-hidden">
+        <div class="max-w-7xl text-2xl mx-auto sm:px-6 lg:px-8 bg-gray-200 mb-2 p-2">
+            Your Habits (5)
         </div>
-    </AuthenticatedLayout>
+        <div v-for="habit in habits">
+            {{ habit.name }}
+        </div>
+    </div>
 </template>
