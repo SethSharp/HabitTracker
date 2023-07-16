@@ -13,7 +13,7 @@ return new class extends Migration
             $table->integer('user_id')->nullable();
             $table->string('name');
             $table->string('description');
-            $table->string('frequency'); // TODO: Will change to a enum...
+            $table->string('frequency');
             $table->timestamps();
         });
     }
