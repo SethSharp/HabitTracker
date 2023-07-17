@@ -18,7 +18,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
+        'canLogin' => \Illuminate\Support\Facades\Auth::check(),
         'canRegister' => Route::has('register'),
     ]);
 });
