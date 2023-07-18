@@ -56,8 +56,25 @@ class UpdateHabitControllerTest extends TestCase
     }
 
     /** @test */
+    public function habit_belongs_to_other_user()
+    {
+        $user = User::factory()->create();
+        $habit = Habit::factory()->create([
+            'user_id' => $this->user->id
+        ]);
+
+        $this->actingAs($user)
+            ->post(route("habit.update", $habit), $this->dailyArray)
+            ->assertStatus(403);
+    }
+
+    /** @test */
     public function fields_are_required(): void
     {
+        $habit = Habit::factory()->create([
+            'user_id' => $this->user->id
+        ]);
+
         $habitData = [
             'name' => '',
             'description' => '',
@@ -65,7 +82,7 @@ class UpdateHabitControllerTest extends TestCase
         ];
 
         $this->actingAs($this->user)
-            ->post(route("habit.store", $habitData))
+            ->post(route("habit.update", $habit), $habitData)
             ->assertSessionHasErrors([
                 'name',
                 'description',
@@ -74,35 +91,73 @@ class UpdateHabitControllerTest extends TestCase
     }
 
     /** @test */
-    public function daily_config_is_required_if_frequency_is_daily(): void
+    public function can_update_to_daily_habit(): void
     {
+        $habit = Habit::factory()->create([
+            'user_id' => $this->user->id
+        ]);
+
         $this->actingAs($this->user)
-            ->post(route("habit.store", $this->dailyArray))
+            ->post(route("habit.update", $habit), $this->dailyArray)
             ->assertSessionDoesntHaveErrors(['weekly_config', 'monthly_config']);
 
-        $habit = Habit::all()->first();
-        $this->assertEquals($habit->occurrence_days, '"[1,2,3]"');
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'daily',
+        ]);
+
+        $updatedHabit = Habit::find($habit->id);
+
+        $this->assertEquals($updatedHabit->occurrence_days, '"[1,2,3]"');
     }
 
     /** @test */
-    public function weekly_config_is_required_if_frequency_is_weekly(): void
+    public function can_update_weekly_habit(): void
     {
+        $habit = Habit::factory()->create([
+            'user_id' => $this->user->id
+        ]);
+
         $this->actingAs($this->user)
-            ->post(route("habit.store", $this->weeklyArray))
+            ->post(route("habit.update", $habit), $this->weeklyArray)
             ->assertSessionDoesntHaveErrors(['daily_config', 'monthly_config']);
 
-        $habit = Habit::all()->first();
-        $this->assertEquals($habit->occurrence_days, '[4]');
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'weekly',
+        ]);
+
+        $updatedHabit = Habit::find($habit->id);
+
+        $this->assertEquals($updatedHabit->occurrence_days, '[4]');
     }
 
     /** @test */
-    public function monthly_config_is_required_if_frequency_is_monthly(): void
+    public function can_update_to_monthly_habit(): void
     {
+        $habit = Habit::factory()->create([
+            'user_id' => $this->user->id
+        ]);
+
         $this->actingAs($this->user)
-            ->post(route("habit.store", $this->monthlyArray))
+            ->post(route("habit.update", $habit), $this->monthlyArray)
             ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config']);
 
-        $habit = Habit::all()->first();
-        $this->assertEquals($habit->occurrence_days, '["2023-07-17"]');
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'monthly',
+        ]);
+
+        $updatedHabit = Habit::find($habit->id);
+        $this->assertEquals($updatedHabit->occurrence_days, '["2023-07-17"]');
     }
 }

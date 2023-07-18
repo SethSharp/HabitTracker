@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Habits;
 
 use App\Enums\Frequency;
 use App\Http\Controllers\Traits\HabitStorageTrait;
-use App\Http\Requests\Habits\HabitRequest;
+use App\Http\Requests\Habits\StoreHabitRequest;
 use App\Models\Habit;
-use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
@@ -16,7 +15,7 @@ class StoreHabitController extends Controller
 {
     use HabitStorageTrait;
 
-    public function __invoke(HabitRequest $request): Response
+    public function __invoke(StoreHabitRequest $request): Response
     {
         $data = collect($request->validated());
 

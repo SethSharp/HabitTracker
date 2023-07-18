@@ -78,8 +78,15 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $this->dailyArray))
             ->assertSessionDoesntHaveErrors(['weekly_config', 'monthly_config']);
 
-        $habit = Habit::all()->first();
-        $this->assertEquals($habit->occurrence_days, '"[1,2,3]"');
+        $this->assertDatabaseHas('habits', [
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'daily',
+        ]);
+
+        $updatedHabit = Habit::all()->first();
+        $this->assertEquals($updatedHabit->occurrence_days, '"[1,2,3]"');
     }
 
     /** @test */
@@ -89,19 +96,33 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $this->weeklyArray))
             ->assertSessionDoesntHaveErrors(['daily_config', 'monthly_config']);
 
-        $habit = Habit::all()->first();
-        $this->assertEquals($habit->occurrence_days, '[4]');
+        $this->assertDatabaseHas('habits', [
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'weekly',
+        ]);
+
+        $updatedHabit = Habit::all()->first();
+        $this->assertEquals($updatedHabit->occurrence_days, '[4]');
     }
 
     /** @test */
-    public function monthly_config_is_required_if_frequency_is_monthly(): void
+    public function can_store_monthly_habit(): void
     {
         $this->actingAs($this->user)
             ->post(route("habit.store", $this->monthlyArray))
             ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config']);
 
-        $habit = Habit::all()->first();
-        $this->assertEquals($habit->occurrence_days, '["2023-07-17"]');
+        $this->assertDatabaseHas('habits', [
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'monthly',
+        ]);
+
+        $updatedHabit = Habit::all()->first();
+        $this->assertEquals($updatedHabit->occurrence_days, '["2023-07-17"]');
     }
 
     /** @test */
