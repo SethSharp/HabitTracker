@@ -5,11 +5,11 @@ namespace Tests\Http\Habits;
 use App\Models\Habit;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Traits\RefreshDatabase;
 
 class StoreHabitControllerTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected User $user;
     protected array $dailyArray;
@@ -49,8 +49,6 @@ class StoreHabitControllerTest extends TestCase
     {
         $this->post(route("habit.store"))
             ->assertRedirect('/login');
-
-        $this->assertDatabaseCount('users', 1);
     }
 
     /** @test */
@@ -85,7 +83,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 'daily',
         ]);
 
-        $updatedHabit = Habit::all()->first();
+        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
         $this->assertEquals($updatedHabit->occurrence_days, '"[1,2,3]"');
     }
 
@@ -103,7 +101,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 'weekly',
         ]);
 
-        $updatedHabit = Habit::all()->first();
+        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
         $this->assertEquals($updatedHabit->occurrence_days, '[4]');
     }
 
@@ -121,7 +119,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 'monthly',
         ]);
 
-        $updatedHabit = Habit::all()->first();
+        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
         $this->assertEquals($updatedHabit->occurrence_days, '["2023-07-17"]');
     }
 
