@@ -12,11 +12,14 @@ const props = defineProps({
 let selectedHabit = ref(0);
 let habit = props.habits[selectedHabit.value]
 
-let monthData = JSON.parse(habit.occurrence_days)
+let monthData = () => {
+    return JSON.parse(habit.occurrence_days)
+}
 
 let week = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ]
+
 const createString = () => {
     let occurrences = JSON.parse(habit.occurrence_days)
     const daysOfWeek = occurrences.map(number => {
@@ -26,7 +29,6 @@ const createString = () => {
 
     return daysOfWeek.join(', ');
 }
-
 </script>
 
 <template>
@@ -34,7 +36,7 @@ const createString = () => {
 
     <AuthenticatedLayout>
         <div class="py-12">
-            <div class="grid grid-cols-3 mx-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-12">
                 <div class="p-4">
                     <Card>
                         <template #heading>
@@ -42,7 +44,7 @@ const createString = () => {
                         </template>
                         <template #content>
                             <div v-if="habits.length != 0">
-                                <div class="mx-2 p-4" v-for="(habit, index) in habits">
+                                <div class="" v-for="(habit, index) in habits">
                                     <div
                                         @click="selectedHabit = index"
                                         class="rounded-md border border-black px-2 py-4 cursor-pointer"
@@ -54,7 +56,7 @@ const createString = () => {
                             </div>
                             <div v-else class="mx-2 p-4 flex justify-center">
                                 <a :href="route('habit.create')">
-                                    <PlusCircleIcon class="w-12 h-12 flex hover:text-gray-500"/>
+                                    <PlusCircleIcon class="w-16 h-16 flex hover:text-gray-500"/>
                                 </a>
                             </div>
                         </template>
@@ -67,7 +69,7 @@ const createString = () => {
                                 <span class="w-3/4 h-fit py-2 text-2xl"> {{ habit.name }} </span>
                                 <div class="w-1/4 flex justify-end items-center">
                                     <a :href="route('habit.edit', habit)"
-                                       class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2"
+                                       class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
                                     >
                                         Edit
                                     </a>
@@ -78,7 +80,7 @@ const createString = () => {
                             </div>
                         </template>
                         <template #content>
-                            <div  v-if="habit">
+                            <div v-if="habit">
                                 <div class="p-4">
                                     <span class="font-bold"> Name: </span>
                                     <span> {{ habit.name }} </span>
@@ -94,7 +96,7 @@ const createString = () => {
                                 <div class="p-4 flex block">
                                     <span class="font-bold mr-2"> Occurrences: </span>
                                     <div v-if="habit.frequency === 'monthly'">
-                                        <span> {{ monthData[0] }} </span>
+                                        <span> {{ monthData()[0] }} </span>
                                     </div>
                                     <div v-else>
                                         <span>
@@ -103,18 +105,23 @@ const createString = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div v-else>
-                                Content
+                            <div v-else class="text-center">
+                                No habit selected
                             </div>
                         </template>
                     </Card>
                 </div>
                 <div class="p-4">
-                    <div class="rounded-xl border-2 border-black overflow-hidden h-full p-4">
-                        History of habit:
-                        - Dates you have checked off
-                        - A general statistics sections (Times completed, start, missed days?, streak for the specific habit)
-                    </div>
+                    <Card>
+                        <template #heading>
+                            <span class="h-fit py-2 text-2xl"> Habit Log </span>
+                        </template>
+                        <template #content>
+                            History of habit:
+                            - Dates you have checked off
+                            - A general statistics sections (Times completed, start, missed days?, streak for the specific habit)
+                        </template>
+                    </Card>
                 </div>
             </div>
         </div>
