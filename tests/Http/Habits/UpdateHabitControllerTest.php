@@ -5,11 +5,11 @@ namespace Tests\Http\Habits;
 use App\Models\Habit;
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Traits\RefreshDatabase;
 
 class UpdateHabitControllerTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected User $user;
     protected array $dailyArray;
