@@ -6,8 +6,13 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class HabitRequest extends FormRequest
+class UpdateHabitRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return $this->user()->can('store', $this->route('habit'));
+    }
+
     public function rules(): array
     {
         return [

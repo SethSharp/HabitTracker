@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Habits;
 
 use App\Enums\Frequency;
 use App\Http\Controllers\Traits\HabitStorageTrait;
-use App\Http\Requests\Habits\HabitRequest;
+use App\Http\Requests\Habits\UpdateHabitRequest;
 use App\Models\Habit;
 use Carbon\Carbon;
 use DateTime;
@@ -17,7 +17,7 @@ class UpdateHabitController extends Controller
 {
     use HabitStorageTrait;
 
-    public function __invoke(Habit $habit, HabitRequest $request): Response
+    public function __invoke(Habit $habit, UpdateHabitRequest $request): Response
     {
         $data = collect($request->validated());
 
