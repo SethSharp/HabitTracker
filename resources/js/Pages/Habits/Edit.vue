@@ -140,7 +140,7 @@ const submit = () => form.post(route('habit.update', props.habit))
                     </div>
                 </div>
                 <PrimaryButton as="button" :loading="form.processing" type="submit">
-                    Create Habit
+                    Save Changes
                 </PrimaryButton>
             </form>
         </div>
