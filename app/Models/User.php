@@ -30,6 +30,6 @@ class User extends Authenticatable
 
     public function habits(): HasMany
     {
-        return $this->hasMany(Habit::class, 'habit_id');
+        return $this->hasMany(Habit::class);
     }
 }

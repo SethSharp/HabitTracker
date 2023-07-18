@@ -24,7 +24,7 @@ defineProps({
             </AuthenticatedLayout>
         </div>
         <div v-else>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-gray-200">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8 bg-gray-200">
                 <div class="flex justify-start py-4">
                     <div class="flex text-lg h-fit">
                         <Link :href="route('dashboard')">
