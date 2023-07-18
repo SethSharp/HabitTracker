@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\HabitStorageTrait;
 use App\Http\Requests\Habits\HabitRequest;
 use App\Models\Habit;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class StoreHabitController extends Controller
         $freq = Frequency::cases()[$data['frequency']];
 
         Habit::factory()->create([
+            'user_id' => Auth::user()->id,
             'name' => $data['name'],
             'description' => $data['description'],
             'frequency' => $freq,
