@@ -1,8 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import Card from "@/Components/Habits/Card.vue"
-import {ChevronDownIcon} from "@heroicons/vue/24/outline/index.js";
+import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/vue/24/outline/index.js";
 
 const props = defineProps({
     habits: Array,
@@ -21,15 +22,23 @@ const props = defineProps({
                     </template>
                     <template #content>
                         <div v-if="habits.length > 0">
-                            <div v-for="habit in habits">
+                            <div v-for="habit in habits" class="p-4">
                                 <input
                                     class="w-10 h-10 text-green-500 rounded-full hover:bg-gray-200 focus:ring-green-500"
                                     type="checkbox"
                                 />
-                                <span class="pl-2 text-xl"> {{ habit.name }} </span>
-                                <button>
-                                    <ChevronDownIcon class="w-8 h-8"/>
-                                </button>
+                                <Menu>
+                                    <MenuButton>
+                                        <span class="pl-4 text-xl font-medium"> {{ habit.name }} </span>
+                                    </MenuButton>
+                                    <MenuItems>
+                                        <MenuItem v-slot="{ active }">
+                                            <div class="text-gray-500 pl-10 py-2">
+                                                {{ habit.description }}
+                                            </div>
+                                        </MenuItem>
+                                    </MenuItems>
+                                </Menu>
                             </div>
                         </div>
                         <div v-else>
