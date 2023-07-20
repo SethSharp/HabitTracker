@@ -6,7 +6,7 @@ import Card from "@/Components/Habits/Card.vue"
 import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/vue/24/outline/index.js";
 
 const props = defineProps({
-    habits: Array,
+    schedule: Array,
 })
 </script>
 
@@ -21,20 +21,20 @@ const props = defineProps({
                         <span class="h-fit py-2 text-2xl"> Today's Habits  </span>
                     </template>
                     <template #content>
-                        <div v-if="habits.length > 0">
-                            <div v-for="habit in habits" class="p-4">
+                        <div v-if="schedule.length > 0">
+                            <div v-for="scheduledHabit in schedule" class="p-4 hover:bg-gray-300 rounded-lg">
                                 <input
                                     class="w-10 h-10 text-green-500 rounded-full hover:bg-gray-200 focus:ring-green-500"
                                     type="checkbox"
                                 />
                                 <Menu>
                                     <MenuButton>
-                                        <span class="pl-4 text-xl font-medium"> {{ habit.name }} </span>
+                                        <span class="pl-4 text-xl font-medium"> {{ scheduledHabit.habit.name }} </span>
                                     </MenuButton>
                                     <MenuItems>
                                         <MenuItem v-slot="{ active }">
                                             <div class="text-gray-500 pl-10 py-2">
-                                                {{ habit.description }}
+                                                {{ scheduledHabit.habit.description}}
                                             </div>
                                         </MenuItem>
                                     </MenuItems>
@@ -44,6 +44,21 @@ const props = defineProps({
                         <div v-else>
                             None for today
                         </div>
+                    </template>
+                </Card>
+                <div>
+
+                </div>
+                <Card>
+                    <template #heading>
+                        <span class="h-fit py-2 text-2xl"> Habit Log  </span>
+                    </template>
+                </Card>
+            </div>
+            <div class="mx-12 mt-6">
+                <Card>
+                    <template #heading>
+                        <span class="h-fit py-2 text-2xl"> The Current Week  </span>
                     </template>
                 </Card>
             </div>
