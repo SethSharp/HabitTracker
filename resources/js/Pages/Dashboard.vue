@@ -1,12 +1,31 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { useSchema, FormBuilder } from "@codinglabsau/inertia-form-builder"
 import Card from "@/Components/Habits/Card.vue"
-import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/vue/24/outline/index.js";
+import CheckboxGroup from "@/Components/CheckboxGroup.vue"
 
 const props = defineProps({
     schedule: Array,
+})
+
+const getHabitConfig = () => {
+    return props.schedule.map(h => {
+        return {
+            value: h.habit.id,
+            label: h.habit.name,
+            description: h.habit.description,
+        }
+    })
+}
+
+const schema = useSchema({
+    habits: {
+        component: CheckboxGroup,
+        label: 'Check off habits',
+        items: getHabitConfig(),
+        description: "This can be changed through the day"
+    }
 })
 </script>
 
@@ -18,28 +37,11 @@ const props = defineProps({
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-12">
                 <Card>
                     <template #heading>
-                        <span class="h-fit py-2 text-2xl"> Today's Habits  </span>
+                        <span class="h-fit pt-2 text-2xl"> Today's Habits  </span>
                     </template>
                     <template #content>
-                        <div v-if="schedule.length > 0">
-                            <div v-for="scheduledHabit in schedule" class="p-4 hover:bg-gray-300 rounded-lg">
-                                <input
-                                    class="w-10 h-10 text-green-500 rounded-full hover:bg-gray-200 focus:ring-green-500"
-                                    type="checkbox"
-                                />
-                                <Menu>
-                                    <MenuButton>
-                                        <span class="pl-4 text-xl font-medium"> {{ scheduledHabit.habit.name }} </span>
-                                    </MenuButton>
-                                    <MenuItems>
-                                        <MenuItem v-slot="{ active }">
-                                            <div class="text-gray-500 pl-10 py-2">
-                                                {{ scheduledHabit.habit.description}}
-                                            </div>
-                                        </MenuItem>
-                                    </MenuItems>
-                                </Menu>
-                            </div>
+                        <div v-if="schedule.length > 0" class="pl-2">
+                            <FormBuilder :schema="schema" />
                         </div>
                         <div v-else>
                             None for today
