@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue"
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import {Checkbox} from "@codinglabsau/ui"
 
 const props = defineProps({
   modelValue: {
@@ -30,13 +31,13 @@ const internalValue = computed({
 
 <template>
     <div v-for="(item, index) in items" class="cursor-pointer flex py-2">
-        <input
+        <Checkbox
             :id="item.label ?? item"
             :key="index"
             v-model="internalValue"
             :value="item.value ?? item"
-            class="w-10 h-10 text-green-500 rounded-full hover:bg-gray-200 focus:ring-green-500"
-            type="checkbox"
+            :label="item.label ?? item"
+            class="!w-10 !h-10 !text-green-500 !rounded-full !hover:bg-gray-200 !focus:ring-green-500"
         />
         <div class="w-full">
             <Menu>

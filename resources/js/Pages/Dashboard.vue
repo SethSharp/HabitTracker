@@ -9,24 +9,29 @@ const props = defineProps({
     schedule: Array,
 })
 
-const getHabitConfig = () => {
-    return props.schedule.map(h => {
-        return {
-            value: h.habit.id,
-            label: h.habit.name,
-            description: h.habit.description,
-        }
-    })
-}
+let habitConfig = props.schedule.map(h => {
+    return {
+        value: h.id,
+        label: h.habit.name,
+        description: h.habit.description,
+        completed: h.completed
+    }
+});
+
+let completed = habitConfig.map(h => {
+    return h.completed ? h.value : -1
+})
 
 const schema = useSchema({
     habits: {
         component: CheckboxGroup,
         label: 'Check off habits',
-        items: getHabitConfig(),
-        description: "This can be changed through the day"
+        items: habitConfig,
+        value: completed,
     }
 })
+
+const submit = () => schema.form.post(route('schedule.update'));
 </script>
 
 <template>
@@ -41,7 +46,9 @@ const schema = useSchema({
                     </template>
                     <template #content>
                         <div v-if="schedule.length > 0" class="pl-2">
-                            <FormBuilder :schema="schema" />
+                            <form @submit="submit">
+                                <FormBuilder :schema="schema" />
+                            </form>
                         </div>
                         <div v-else>
                             None for today

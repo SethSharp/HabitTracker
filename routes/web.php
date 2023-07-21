@@ -30,15 +30,19 @@ Route::middleware('auth')->name('habit.')->group(function () {
     Route::post('habits', \App\Http\Controllers\Habits\StoreHabitController::class)->name('store');
 });
 
+Route::middleware('auth')->name('schedule.')->group(function () {
+    Route::post('schedule/habits', \App\Http\Controllers\ScheduleHabit\UpdateScheduleHabitController::class)->name('update');
+});
+
 
 Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/habits', \App\Http\Controllers\Habits\ViewHabitsController::class)->middleware(['auth', 'verified'])->name('habits');
 Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->middleware(['auth', 'verified'])->name('competition');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', \App\Http\Controllers\Profile\EditProfileController::class)->name('profile.edit');
-    Route::patch('/profile', \App\Http\Controllers\Profile\UpdateProfileController::class)->name('profile.update');
-    Route::delete('/profile', \App\Http\Controllers\Profile\DeleteProfileController::class)->name('profile.destroy');
+Route::middleware('auth')->name('profile.')->group(function () {
+    Route::get('/profile', \App\Http\Controllers\Profile\EditProfileController::class)->name('edit');
+    Route::patch('/profile', \App\Http\Controllers\Profile\UpdateProfileController::class)->name('update');
+    Route::delete('/profile', \App\Http\Controllers\Profile\DeleteProfileController::class)->name('destroy');
 });
 
 require __DIR__.'/auth.php';
