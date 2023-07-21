@@ -29,7 +29,7 @@ const internalValue = computed({
 </script>
 
 <template>
-    <div v-for="(item, index) in items" class="cursor-pointer flex">
+    <div v-for="(item, index) in items" class="cursor-pointer flex py-2">
         <input
             :id="item.label ?? item"
             :key="index"
@@ -45,7 +45,7 @@ const internalValue = computed({
                 </MenuButton>
                 <MenuItems>
                     <MenuItem v-slot="{ active }">
-                        <div class="text-gray-500 pl-10 py-2">
+                        <div class="text-gray-500 pl-6 py-2">
                             {{ item.description }}
                         </div>
                     </MenuItem>
