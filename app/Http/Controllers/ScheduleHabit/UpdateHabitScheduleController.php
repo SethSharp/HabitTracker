@@ -17,7 +17,8 @@ class UpdateHabitScheduleController extends Controller
     public function __invoke(UpdateHabitScheduleRequest $request): Response
     {
         $checkedHabits = $request->validated()['habits'];
-        
+
+        // TODO: Make this process more efficient
         Auth::user()->scheduledHabits()->get()->pluck('id')
             ->map( function ($id) use ($checkedHabits) {
                 $habit = HabitSchedule::find($id);

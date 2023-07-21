@@ -22,12 +22,17 @@ let completed = habitConfig.map(h => {
     return h.completed ? h.value : -1
 })
 
+let disabled = habitConfig.map(h => {
+    return h.completed ? true : false
+})
+
 const schema = useSchema({
     habits: {
         component: CheckboxGroup,
         label: 'Check off habits',
         items: habitConfig,
         value: completed,
+        disabled: disabled,
     }
 })
 

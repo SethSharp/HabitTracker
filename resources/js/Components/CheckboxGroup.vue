@@ -15,6 +15,9 @@ const props = defineProps({
   description: {
     type: String,
   },
+    disabled: {
+      type: Array,
+    }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -35,6 +38,7 @@ const internalValue = computed({
             :id="item.label ?? item"
             :key="index"
             v-model="internalValue"
+            :disabled="disabled[index]"
             :value="item.value ?? item"
             class="!w-10 !h-10 !text-green-500 !rounded-full !hover:bg-gray-200 !focus:ring-green-500"
         />
