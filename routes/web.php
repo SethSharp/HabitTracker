@@ -31,7 +31,7 @@ Route::middleware('auth')->name('habit.')->group(function () {
 });
 
 Route::middleware('auth')->name('schedule.')->group(function () {
-    Route::post('schedule/habits', \App\Http\Controllers\ScheduleHabit\UpdateScheduleHabitController::class)->name('update');
+    Route::post('schedule/habits', \App\Http\Controllers\ScheduleHabit\UpdateHabitScheduleController::class)->name('update');
 });
 
 

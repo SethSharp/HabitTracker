@@ -36,13 +36,12 @@ const internalValue = computed({
             :key="index"
             v-model="internalValue"
             :value="item.value ?? item"
-            :label="item.label ?? item"
             class="!w-10 !h-10 !text-green-500 !rounded-full !hover:bg-gray-200 !focus:ring-green-500"
         />
         <div class="w-full">
             <Menu>
                 <MenuButton class="px-2 flex justify-start text-sm w-full cursor-pointer">
-                    <label class="pl-2 py-2 cursor-pointer"> {{ item.label }}</label>
+                    <label class="py-2 cursor-pointer"> {{ item.label }}</label>
                 </MenuButton>
                 <MenuItems>
                     <MenuItem v-slot="{ active }">

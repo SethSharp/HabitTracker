@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateSchedulelHabitRequest extends FormRequest
+class UpdateHabitScheduleRequest extends FormRequest
 {
     public function authorize(): bool
     {

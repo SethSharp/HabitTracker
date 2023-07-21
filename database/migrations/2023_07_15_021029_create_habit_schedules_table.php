@@ -13,7 +13,7 @@ return new class extends Migration
             $table->integer('habit_id');
             $table->integer('user_id');
             $table->date('scheduled_completion');
-            $table->boolean('completed')->default(-1);
+            $table->boolean('completed')->default(0);
             $table->timestamps();
         });
     }
