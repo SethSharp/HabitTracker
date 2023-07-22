@@ -54,7 +54,7 @@ class ScheduledHabitsTest extends TestCase
             'scheduled_completion' => '2023-07-20'
         ]);
 
-        $scheduledHabits = $this->getScheduledHabitsForUser($this->user, '2023-07-23', '2023-07-17');
+        $scheduledHabits = $this->getWeeklyScheduledHabits($this->user, '2023-07-23', '2023-07-17');
 
         $this->assertCount(2, $scheduledHabits);
 

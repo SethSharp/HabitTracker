@@ -6,10 +6,11 @@ import Card from "@/Components/Habits/Card.vue"
 import CheckboxGroup from "@/Components/CheckboxGroup.vue"
 
 const props = defineProps({
-    schedule: Array,
+    dailyHabits: Array,
+    weeklyHabits: Array,
 })
 
-let habitConfig = props.schedule.map(h => {
+let habitConfig = props.dailyHabits.map(h => {
     return {
         value: h.id,
         label: h.habit.name,
@@ -29,8 +30,6 @@ const getCompleted = () => {
 }
 
 let completed = getCompleted()
-
-console.log(completed)
 
 let disabled = habitConfig.map(h => {
     return h.completed ? true : false
@@ -60,7 +59,7 @@ const submit = () => schema.form.post(route('schedule.update'));
                         <span class="h-fit pt-2 text-2xl"> Today's Habits  </span>
                     </template>
                     <template #content>
-                        <div v-if="schedule.length > 0" class="pl-2">
+                        <div v-if="dailyHabits.length > 0" class="pl-2 mt-4">
                             <form @submit="submit">
                                 <FormBuilder :schema="schema" />
                             </form>

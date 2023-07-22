@@ -14,7 +14,8 @@ class ShowDashboardController extends Controller
     public function __invoke()
     {
         return Inertia::render('Dashboard', [
-            'schedule' => $this->getScheduledHabitsForUser(Auth::user()),
+            'dailyHabits' => $this->getDailyScheduledHabits(Auth::user()),
+            'weeklyHabits' => $this->getWeeklyScheduledHabits(Auth::user())
         ]);
     }
 }

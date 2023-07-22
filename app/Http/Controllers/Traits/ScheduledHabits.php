@@ -9,14 +9,32 @@ use Illuminate\Support\Collection;
 
 trait ScheduledHabits
 {
-    public function getScheduledHabitsForUser(User $user, string $nextSunday = null, string $nextMonday = null): array
+
+    public function getDailyScheduledHabits(User $user)
     {
         return $user->scheduledHabits()
-            ->where('scheduled_completion', '<=', $this->getNextSunday() ?? $nextSunday)
-            ->where('scheduled_completion', '>=', $this->getPreviousMonday() ?? $nextMonday)
+            ->where('scheduled_completion', '=', date('Y-m-d'))
             ->with('habit')
             ->get()
             ->toArray();
+    }
+
+    public function getWeeklyScheduledHabits(User $user, string $nextSunday = null, string $nextMonday = null): Collection
+    {
+        // TODO: Cache, create Cache keys file etc..
+        $week = $this->getWeekDatesStartingFromMonday(date('Y-m-d'));
+
+        $thisWeeksHabits = $user->scheduledHabits()
+            ->where('scheduled_completion', '<=', $this->getNextSunday() ?? $nextSunday)
+            ->where('scheduled_completion', '>=', $this->getPreviousMonday() ?? $nextMonday)
+            ->with('habit')
+            ->get();
+
+        return $week->reduce(function (Collection $carry, string $date) use ($thisWeeksHabits) {
+            $carry[$date] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion == $date)->toArray();
+
+            return $carry;
+        }, collect());
     }
 
     private function getNextSunday(): string
@@ -46,5 +64,23 @@ trait ScheduledHabits
 
         // Return the previous Monday date in the format 'Y-m-d' (e.g., '2023-07-17')
         return $previousMonday->format('Y-m-d');
+    }
+
+    private function getWeekDatesStartingFromMonday($startDate): Collection
+    {
+        $dates = collect();
+
+        // Convert the input date to a timestamp
+        $timestamp = strtotime($startDate);
+
+        // Calculate the timestamp of the first Monday on or before the input date
+        $startOfWeek = strtotime('last Monday', $timestamp);
+
+        // Loop through the days of the week and add them to the $dates array
+        for ($i = 0; $i < 7; $i++) {
+            $dates[] = date('Y-m-d', strtotime("+$i days", $startOfWeek));
+        }
+
+        return $dates;
     }
 }
