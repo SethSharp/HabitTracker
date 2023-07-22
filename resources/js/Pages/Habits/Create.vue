@@ -39,9 +39,9 @@ const submit = () => form.post(route('habit.store'))
     <Head title="Create Habit" />
 
     <AuthenticatedLayout>
-        <div class="bg-gray-200 pl-10">
-            <form @submit.prevent="submit">
-                <div class="w-1/4">
+        <div class="bg-gray-100 flex justify-center">
+            <form @submit.prevent="submit" class="w-1/2 mt-10 h-screen">
+                <div>
                     <div class="py-2">
                         <Label for="name"> Name </Label>
 
@@ -115,7 +115,7 @@ const submit = () => form.post(route('habit.store'))
                         <Error :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                 </div>
-                <PrimaryButton as="button" :loading="form.processing" type="submit">
+                <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">
                     Create Habit
                 </PrimaryButton>
             </form>

@@ -10,10 +10,10 @@ const props = defineProps({
 })
 
 let selectedHabit = ref(0);
-let habit = props.habits[selectedHabit.value]
+let habit = ref(props.habits[selectedHabit.value])
 
 let monthData = () => {
-    return JSON.parse(habit.occurrence_days)
+    return JSON.parse(habit.value.occurrence_days)
 }
 
 let week = [
@@ -21,13 +21,18 @@ let week = [
 ]
 
 const createString = () => {
-    let occurrences = JSON.parse(habit.occurrence_days)
+    let occurrences = JSON.parse(habit.value.occurrence_days)
     const daysOfWeek = occurrences.map(number => {
         const index = (number - 1) % 7; // Adjust the index to match the day names array
         return week[index];
     });
 
     return daysOfWeek.join(', ');
+}
+
+const selectedUser = (index) => {
+    selectedHabit.value = index
+    habit.value = props.habits[index]
 }
 </script>
 
@@ -40,14 +45,23 @@ const createString = () => {
                 <div class="p-4">
                     <Card>
                         <template #heading>
-                            <span class="h-fit py-2 text-2xl"> Your Habits </span>
+                            <div class="sm:flex">
+                                <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
+                                <div class="w-1/4 flex justify-end items-center">
+                                    <a :href="route('habit.create')"
+                                       class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
+                                    >
+                                        Create
+                                    </a>
+                                </div>
+                            </div>
                         </template>
                         <template #content>
                             <div v-if="habits.length != 0">
                                 <div class="" v-for="(habit, index) in habits">
                                     <div
-                                        @click="selectedHabit = index"
-                                        class="rounded-md border border-black px-2 py-4 cursor-pointer"
+                                        @click="selectedUser(index)"
+                                        class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
                                         :class="`${index==selectedHabit ? 'bg-indigo-400 hover:bg-indigo-500' : 'bg-gray-300 hover:bg-gray-400'}`"
                                     >
                                         {{ habit.name }}
