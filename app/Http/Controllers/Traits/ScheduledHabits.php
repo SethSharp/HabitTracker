@@ -9,13 +9,14 @@ use Illuminate\Support\Collection;
 
 trait ScheduledHabits
 {
-    public function getScheduledHabitsForUser(User $user): Collection
+    public function getScheduledHabitsForUser(User $user, string $nextSunday = null, string $nextMonday = null): array
     {
         return $user->scheduledHabits()
-            ->where('scheduled_completion', '<=', $this->getNextSunday())
-            ->where('scheduled_completion', '>=', $this->getPreviousMonday())
+            ->where('scheduled_completion', '<=', $this->getNextSunday() ?? $nextSunday)
+            ->where('scheduled_completion', '>=', $this->getPreviousMonday() ?? $nextMonday)
             ->with('habit')
-            ->get();
+            ->get()
+            ->toArray();
     }
 
     private function getNextSunday(): string
