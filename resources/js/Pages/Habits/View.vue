@@ -10,10 +10,10 @@ const props = defineProps({
 })
 
 let selectedHabit = ref(0);
-let habit = props.habits[selectedHabit.value]
+let habit = ref(props.habits[selectedHabit.value])
 
 let monthData = () => {
-    return JSON.parse(habit.occurrence_days)
+    return JSON.parse(habit.value.occurrence_days)
 }
 
 let week = [
@@ -21,13 +21,18 @@ let week = [
 ]
 
 const createString = () => {
-    let occurrences = JSON.parse(habit.occurrence_days)
+    let occurrences = JSON.parse(habit.value.occurrence_days)
     const daysOfWeek = occurrences.map(number => {
         const index = (number - 1) % 7; // Adjust the index to match the day names array
         return week[index];
     });
 
     return daysOfWeek.join(', ');
+}
+
+const selectedUser = (index) => {
+    selectedHabit.value = index
+    habit.value = props.habits[index]
 }
 </script>
 
@@ -46,7 +51,7 @@ const createString = () => {
                             <div v-if="habits.length != 0">
                                 <div class="" v-for="(habit, index) in habits">
                                     <div
-                                        @click="selectedHabit = index"
+                                        @click="selectedUser(index)"
                                         class="rounded-md border border-black px-2 py-4 cursor-pointer"
                                         :class="`${index==selectedHabit ? 'bg-indigo-400 hover:bg-indigo-500' : 'bg-gray-300 hover:bg-gray-400'}`"
                                     >
