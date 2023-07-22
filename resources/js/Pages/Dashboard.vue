@@ -4,11 +4,15 @@ import { Head } from '@inertiajs/vue3'
 import { useSchema, FormBuilder } from "@codinglabsau/inertia-form-builder"
 import Card from "@/Components/Habits/Card.vue"
 import CheckboxGroup from "@/Components/CheckboxGroup.vue"
+import { ArrowRightIcon } from "@heroicons/vue/24/solid/index.js"
+import { CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline/index.js"
 
 const props = defineProps({
     dailyHabits: Array,
     weeklyHabits: Array,
 })
+
+let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 let habitConfig = props.dailyHabits.map(h => {
     return {
@@ -27,6 +31,55 @@ const getCompleted = () => {
         }
     }
     return arr
+}
+
+const test = (habit, scheduled, today) => {
+    console.log(habit.id)
+    if (scheduled > today) {
+        return true
+    }
+    return habit.completed
+}
+
+const calculateX = (habit) => {
+    let scheduled = new Date(habit.scheduled_completion)
+    let today = new Date()
+
+    if (scheduled.getDate() < today.getDate()) {
+        return habit.completed === 0
+    }
+
+    return
+}
+
+const calculateCheck = (habit) => {
+    let scheduled = new Date(habit.scheduled_completion)
+    let today = new Date()
+
+    if (scheduled.getDate() < today.getDate()) {
+        return habit.completed !== 0
+    }
+
+    if (scheduled.getDate() === today.getDate()) {
+        if (habit.completed === 1) return true
+    }
+
+    return
+}
+
+const calculateGray = (habit) => {
+    let scheduled = new Date(habit.scheduled_completion)
+    let today = new Date()
+
+    if (scheduled.getDate() < today.getDate()) return
+
+    if (scheduled.getDate() === today.getDate()) {
+        if (habit.completed === 0) return true
+    }
+
+    if (scheduled.getDate() > today.getDate()) return true
+
+    return
 }
 
 let completed = getCompleted()
@@ -82,6 +135,31 @@ const submit = () => schema.form.post(route('schedule.update'));
                 <Card>
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> The Current Week  </span>
+                    </template>
+                    <template #content>
+                        <div class="flex overflow-x-auto space-x-8 mx-4">
+                            <Card
+                                v-for="(habits, index) in weeklyHabits"
+                                class="min-w-[300px] min-h-[500px]"
+                            >
+                                <template #heading>
+                                    <span> {{ week[index] }} </span>
+                                </template>
+                                <template #content>
+                                    <ul v-for="habit in habits" class="list-disc p-4">
+                                        <li class="flex">
+                                            <XCircleIcon v-show="calculateX(habit)" class="w-5 h-5 mr-1 mt-0.5 text-red-600"/>
+                                            <CheckCircleIcon v-show="calculateCheck(habit)" class="w-5 h-5 mr-1 mt-0.5 text-green-600"/>
+                                            <XCircleIcon v-show="calculateGray(habit)" class="w-5 h-5 mr-1 mt-0.5 text-gray-600"/>
+                                            {{ habit.habit.name }} - {{ habit.id }}
+                                        </li>
+                                    </ul>
+                                </template>
+                            </Card>
+                        </div>
+                        <div class="flex justify-end mx-4">
+                            <ArrowRightIcon class="w-8 h-8 text-gray-500"/>
+                        </div>
                     </template>
                 </Card>
             </div>

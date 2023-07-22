@@ -58,7 +58,7 @@ const selectedUser = (index) => {
                         </template>
                         <template #content>
                             <div v-if="habits.length != 0">
-                                <div class="" v-for="(habit, index) in habits">
+                                <div v-for="(habit, index) in habits">
                                     <div
                                         @click="selectedUser(index)"
                                         class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
