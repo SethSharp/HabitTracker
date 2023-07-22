@@ -45,14 +45,23 @@ const selectedUser = (index) => {
                 <div class="p-4">
                     <Card>
                         <template #heading>
-                            <span class="h-fit py-2 text-2xl"> Your Habits </span>
+                            <div class="sm:flex">
+                                <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
+                                <div class="w-1/4 flex justify-end items-center">
+                                    <a :href="route('habit.create')"
+                                       class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
+                                    >
+                                        Create
+                                    </a>
+                                </div>
+                            </div>
                         </template>
                         <template #content>
                             <div v-if="habits.length != 0">
                                 <div class="" v-for="(habit, index) in habits">
                                     <div
                                         @click="selectedUser(index)"
-                                        class="rounded-md border border-black px-2 py-4 cursor-pointer"
+                                        class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
                                         :class="`${index==selectedHabit ? 'bg-indigo-400 hover:bg-indigo-500' : 'bg-gray-300 hover:bg-gray-400'}`"
                                     >
                                         {{ habit.name }}
