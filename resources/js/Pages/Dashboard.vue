@@ -18,9 +18,19 @@ let habitConfig = props.schedule.map(h => {
     }
 });
 
-let completed = habitConfig.map(h => {
-    return h.completed ? h.value : -1
-})
+const getCompleted = () => {
+    let arr = []
+    for(let i = 0; i < habitConfig.length; i++) {
+        if (habitConfig[i].completed) {
+            arr.push(habitConfig[i].value)
+        }
+    }
+    return arr
+}
+
+let completed = getCompleted()
+
+console.log(completed)
 
 let disabled = habitConfig.map(h => {
     return h.completed ? true : false

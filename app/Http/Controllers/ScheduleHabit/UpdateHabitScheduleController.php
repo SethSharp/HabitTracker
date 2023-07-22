@@ -19,24 +19,14 @@ class UpdateHabitScheduleController extends Controller
         $checkedHabits = $request->validated()['habits'];
 
         // TODO: Make this process more efficient
-        Auth::user()->scheduledHabits()->get()->pluck('id')
-            ->map( function ($id) use ($checkedHabits) {
-                $habit = HabitSchedule::find($id);
-                if (in_array($id, $checkedHabits)) {
-                    if ($habit->completed === 0) {
-                        $habit->update([
-                            'completed' => 1
-                        ]);
-                    }
-                } else {
-                    if ($habit->completed === 1) {
-                        $habit->update([
-                            'completed' => 0
-                        ]);
-                    }
-                }
+        $user = Auth::user()->scheduledHabits()->get()->pluck('id');
+        $user->map( function ($id) use ($checkedHabits) {
+            if (in_array($id, $checkedHabits)) {
+                HabitSchedule::find($id)->update([
+                    'completed' => 1
+                ]);
             }
-        );
+        });
 
         return Inertia::location(url('dashboard'));
     }
