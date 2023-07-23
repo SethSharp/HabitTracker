@@ -88,6 +88,19 @@ let disabled = habitConfig.map(h => {
     return h.completed ? true : false
 })
 
+const isSuccess = (habits) => {
+    if (Object.keys(habits).length === 0) return false
+    console.log(habits, habits[0])
+    // for (let i = 0; i < Object.keys(habits).length; i++) {
+    //     console.log(habits[i])
+    // }
+    return true
+}
+
+const isWarning = (habits) => {return false}
+
+const isDanger = (habits) => {return false}
+
 const schema = useSchema({
     habits: {
         component: CheckboxGroup,
@@ -141,6 +154,9 @@ const submit = () => schema.form.post(route('schedule.update'));
                             <Card
                                 v-for="(habits, index) in weeklyHabits"
                                 class="min-w-[300px] min-h-[500px]"
+                                :success="isSuccess(habits)"
+                                :warning="isWarning(habits)"
+                                :danger="isDanger(habits)"
                             >
                                 <template #heading>
                                     <span> {{ week[index] }} </span>

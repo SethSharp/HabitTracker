@@ -22,19 +22,25 @@ trait ScheduledHabits
     public function getWeeklyScheduledHabits(User $user, string $nextSunday = null, string $nextMonday = null): Collection
     {
         // TODO: Cache, create Cache keys file etc..
+        ray(date('Y-m-d'));
         $week = $this->getWeekDatesStartingFromMonday(date('Y-m-d'));
+        ray($week);
 
         $thisWeeksHabits = $user->scheduledHabits()
-            ->where('scheduled_completion', '<=', $this->getNextSunday() ?? $nextSunday)
             ->where('scheduled_completion', '>=', $this->getPreviousMonday() ?? $nextMonday)
+            ->where('scheduled_completion', '<=', $this->getNextSunday() ?? $nextSunday)
             ->with('habit')
             ->get();
 
-        return $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
-            $carry[$key] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion == $date)->toArray();
+        $test = $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
+            $carry[$key] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion === $date)->toArray();
 
             return $carry;
         }, collect());
+
+        ray($test);
+
+        return $test;
     }
 
     private function getNextSunday(): string
@@ -75,6 +81,7 @@ trait ScheduledHabits
 
         // Calculate the timestamp of the first Monday on or before the input date
         $startOfWeek = strtotime('last Monday', $timestamp);
+        ray($startOfWeek);
 
         // Loop through the days of the week and add them to the $dates array
         for ($i = 0; $i < 7; $i++) {
