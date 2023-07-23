@@ -2,16 +2,20 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
+    use ScheduledHabits;
+
     public function run(): void
     {
         if (app()->environment('local', 'testing')) {
-            // Carbon::setTestNow(Carbon::parse('2023-07-3'));
+             Carbon::setTestNow(Carbon::parse($this->getPreviousMonday()));
         }
 
         $user = User::factory()->create([

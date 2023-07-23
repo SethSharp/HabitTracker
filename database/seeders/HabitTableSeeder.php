@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Frequency;
+use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
 use App\Models\User;
@@ -12,6 +13,8 @@ use Illuminate\Support\Arr;
 
 class HabitTableSeeder extends Seeder
 {
+    use ScheduledHabits;
+
     public function run(): void
     {
         $users = User::all();
@@ -47,13 +50,11 @@ class HabitTableSeeder extends Seeder
         }
     }
 
-    // TODO: Will eventually be moved to a trait I think (To be used in a command)
     private function determineDateForHabitCompletion($freq, $day): string
     {
-        // With knowledge that this is run on a monday
         return match ($freq) {
-            Frequency::DAILY => now()->addDays($day - 1),
-            Frequency::WEEKLY => Carbon::parse('2023-07-3')->copy()->addDays(4)->format('Y-m-d'),
+            Frequency::DAILY => Carbon::parse($this->getPreviousMonday())->addDays($day - 1),
+            Frequency::WEEKLY => Carbon::parse($this->getPreviousMonday())->copy()->addDays(4)->format('Y-m-d'),
             Frequency::MONTHLY => date('Y-m-d', strtotime(date('Y-m') . '-' . $day)),
             default => now(),
         };
