@@ -11,6 +11,7 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline/index.js
 const props = defineProps({
     dailyHabits: Array,
     weeklyHabits: Array,
+    log: Array,
 })
 
 let today = new Date()
