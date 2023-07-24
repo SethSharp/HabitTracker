@@ -133,8 +133,8 @@ const submit = () => {
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="py-12">
-            <div v-if="isCompleted" class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mx-12">
+        <div class="py-2">
+            <div v-if="isCompleted" class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 my-4 mx-12">
                 You have ticked off all of your habits for today! Now you can relax knowing your achievement, keep it up!
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-4">
@@ -165,8 +165,14 @@ const submit = () => {
                         <span class="h-fit py-2 text-2xl"> Habit Log  </span>
                     </template>
                     <template #content>
-                        <div v-for="(schedule, index) in log">
-                            {{ schedule.habit.name }} - {{ schedule.completed }} - {{ schedule.scheduled_completion}}
+                        <div
+                            v-for="(schedule) in log"
+                            class="my-2"
+                            :class="schedule.completed === 0
+                                    ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
+                                    : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'"
+                        >
+                            {{ schedule.habit.name }} completed on {{ schedule.scheduled_completion}}
                         </div>
                     </template>
                 </Card>
