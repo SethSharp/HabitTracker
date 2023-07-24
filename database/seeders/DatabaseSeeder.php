@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         if (app()->environment('local', 'testing')) {
-             Carbon::setTestNow(Carbon::parse($this->getPreviousMonday()));
+             Carbon::setTestNow(Carbon::parse($this->getMonday()));
         }
 
         $user = User::factory()->create([

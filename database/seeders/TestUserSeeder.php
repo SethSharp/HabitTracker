@@ -39,6 +39,6 @@ class TestUserSeeder extends Seeder
 
     private function getDates($day): string
     {
-        return Carbon::parse($this->getPreviousMonday())->addDays($day - 1);
+        return Carbon::parse($this->getMonday())->addDays($day - 1);
     }
 }

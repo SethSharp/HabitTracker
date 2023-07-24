@@ -12,6 +12,8 @@ const props = defineProps({
     weeklyHabits: Array,
 })
 
+let today = new Date()
+
 let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 let habitConfig = props.dailyHabits.map(h => {
@@ -33,8 +35,7 @@ const getCompleted = () => {
     return arr
 }
 
-const test = (habit, scheduled, today) => {
-    console.log(habit.id)
+const test = (habit, scheduled) => {
     if (scheduled > today) {
         return true
     }
@@ -43,18 +44,14 @@ const test = (habit, scheduled, today) => {
 
 const calculateX = (habit) => {
     let scheduled = new Date(habit.scheduled_completion)
-    let today = new Date()
 
     if (scheduled.getDate() < today.getDate()) {
         return habit.completed === 0
     }
-
-    return
 }
 
 const calculateCheck = (habit) => {
     let scheduled = new Date(habit.scheduled_completion)
-    let today = new Date()
 
     if (scheduled.getDate() < today.getDate()) {
         return habit.completed !== 0
@@ -69,7 +66,6 @@ const calculateCheck = (habit) => {
 
 const calculateGray = (habit) => {
     let scheduled = new Date(habit.scheduled_completion)
-    let today = new Date()
 
     if (scheduled.getDate() < today.getDate()) return
 
@@ -78,8 +74,6 @@ const calculateGray = (habit) => {
     }
 
     if (scheduled.getDate() > today.getDate()) return true
-
-    return
 }
 
 let completed = getCompleted()
@@ -89,17 +83,36 @@ let disabled = habitConfig.map(h => {
 })
 
 const isSuccess = (habits) => {
-    if (Object.keys(habits).length === 0) return false
-    console.log(habits, habits[0])
-    // for (let i = 0; i < Object.keys(habits).length; i++) {
-    //     console.log(habits[i])
-    // }
+    for (const obj of Object.values(habits)) {
+        if (obj.completed === 0) return false
+    }
     return true
 }
 
-const isWarning = (habits) => {return false}
+const isWarning = (habits) => {
+    let successCount = 0
+    let failCount = 0
 
-const isDanger = (habits) => {return false}
+    for (const obj of Object.values(habits)) {
+        if (obj.completed === 0) {
+            failCount++
+        } else {
+            successCount++
+        }
+    }
+    return false
+    return failCount !== successCount || failCount === successCount
+}
+
+const isDanger = (habits) => {
+    for (const obj of Object.values(habits)) {
+        if (obj.completed === 0) {
+            let scheduled = new Date(obj.scheduled_completion)
+            return scheduled.getDate() < today.getDate()
+        }
+    }
+    return true
+}
 
 const schema = useSchema({
     habits: {
