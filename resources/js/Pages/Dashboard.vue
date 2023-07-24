@@ -1,11 +1,20 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
+import {onMounted, ref} from "vue";
 import { useSchema, FormBuilder } from "@codinglabsau/inertia-form-builder"
 import Card from "@/Components/Habits/Card.vue"
 import CheckboxGroup from "@/Components/CheckboxGroup.vue"
 import { ArrowRightIcon } from "@heroicons/vue/24/solid/index.js"
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline/index.js"
+import {
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+} from '@headlessui/vue'
+import { PrimaryButton } from "@codinglabsau/ui"
 
 const props = defineProps({
     dailyHabits: Array,
@@ -13,8 +22,18 @@ const props = defineProps({
 })
 
 let today = new Date()
-
 let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+// Dialog logic
+const isOpen = ref(false)
+const isCompleted = ref(false)
+
+function closeModal() {
+    isOpen.value = false
+}
+function openModal() {
+    isOpen.value = true
+}
 
 let habitConfig = props.dailyHabits.map(h => {
     return {
@@ -60,8 +79,6 @@ const calculateCheck = (habit) => {
     if (scheduled.getDate() === today.getDate()) {
         if (habit.completed === 1) return true
     }
-
-    return
 }
 
 const calculateGray = (habit) => {
@@ -100,7 +117,7 @@ const isWarning = (habits) => {
             successCount++
         }
     }
-    return false
+
     return failCount !== successCount || failCount === successCount
 }
 
@@ -113,6 +130,14 @@ const isDanger = (habits) => {
     }
     return true
 }
+
+onMounted(() => {
+    for (const habit of props.dailyHabits) {
+        if ( !habit.completed) return;
+    }
+    isCompleted.value = true
+    openModal()
+})
 
 const schema = useSchema({
     habits: {
@@ -138,13 +163,20 @@ const submit = () => schema.form.post(route('schedule.update'));
                         <span class="h-fit pt-2 text-2xl"> Today's Habits  </span>
                     </template>
                     <template #content>
-                        <div v-if="dailyHabits.length > 0" class="pl-2 mt-4">
+                        <div v-if="dailyHabits.length > 0 && ! isCompleted" class="pl-2 mt-4">
                             <form @submit="submit">
                                 <FormBuilder :schema="schema" />
                             </form>
                         </div>
-                        <div v-else>
-                            None for today
+                        <div v-else class="mx-2">
+                            <div v-if="isCompleted">
+                                You are all done for today!
+                            </div>
+                            <div v-else>
+                                No habits for today, click
+                                <a class="text-indigo-500 text-md underline pointer-cursor" :href="route('habits')"> here </a>
+                                to add a habit.
+                            </div>
                         </div>
                     </template>
                 </Card>
@@ -193,5 +225,63 @@ const submit = () => schema.form.post(route('schedule.update'));
                 </Card>
             </div>
         </div>
+
+        <TransitionRoot appear :show="isOpen" as="template">
+            <Dialog as="div" @close="closeModal" class="relative z-10">
+                <TransitionChild
+                    as="template"
+                    enter="duration-300 ease-out"
+                    enter-from="opacity-0"
+                    enter-to="opacity-100"
+                    leave="duration-200 ease-in"
+                    leave-from="opacity-100"
+                    leave-to="opacity-0"
+                >
+                    <div class="fixed inset-0 bg-black bg-opacity-25" />
+                </TransitionChild>
+
+                <div class="fixed inset-0 overflow-y-auto">
+                    <div
+                        class="flex min-h-full items-center justify-center p-4 text-center"
+                    >
+                        <TransitionChild
+                            as="template"
+                            enter="duration-300 ease-out"
+                            enter-from="opacity-0 scale-95"
+                            enter-to="opacity-100 scale-100"
+                            leave="duration-200 ease-in"
+                            leave-from="opacity-100 scale-100"
+                            leave-to="opacity-0 scale-95"
+                        >
+                            <DialogPanel
+                                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                            >
+                                <DialogTitle
+                                    as="h3"
+                                    class="text-lg font-medium leading-6 text-gray-900"
+                                >
+                                    Congratulations!!
+                                </DialogTitle>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">
+                                        You have ticked off all of your habits for today!
+                                        Now you can relax knowing your achievement, keep it up!
+                                    </p>
+                                </div>
+
+                                <div class="mt-4">
+                                    <PrimaryButton
+                                        type="button"
+                                        @click="closeModal"
+                                    >
+                                        Close
+                                    </PrimaryButton>
+                                </div>
+                            </DialogPanel>
+                        </TransitionChild>
+                    </div>
+                </div>
+            </Dialog>
+        </TransitionRoot>
     </AuthenticatedLayout>
 </template>
