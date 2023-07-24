@@ -22,28 +22,23 @@ trait ScheduledHabits
     public function getWeeklyScheduledHabits(User $user, string $nextSunday = null, string $nextMonday = null): Collection
     {
         // TODO: Cache, create Cache keys file etc..
-        ray(date('Y-m-d'));
-        $week = $this->getWeekDatesStartingFromMonday(date('Y-m-d'));
-        ray($week);
+        $week = $this->getWeekDatesStartingFromMonday($this->getMonday());
 
         $thisWeeksHabits = $user->scheduledHabits()
-            ->where('scheduled_completion', '>=', $this->getPreviousMonday() ?? $nextMonday)
-            ->where('scheduled_completion', '<=', $this->getNextSunday() ?? $nextSunday)
+            ->where('scheduled_completion', '>=', $this->getMonday() ?? $nextMonday)
+            ->where('scheduled_completion', '<=', $this->getSunday() ?? $nextSunday)
             ->with('habit')
             ->get();
 
-        $test = $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
+
+        return $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
             $carry[$key] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion === $date)->toArray();
 
             return $carry;
         }, collect());
-
-        ray($test);
-
-        return $test;
     }
 
-    private function getNextSunday(): string
+    private function getSunday(): string
     {
         $currentDate = new DateTime();
 
@@ -54,7 +49,7 @@ trait ScheduledHabits
         return $next->format('Y-m-d');
     }
 
-    private function getPreviousMonday(): string
+    private function getMonday(): string
     {
         // Create a DateTime object for the current date
         $currentDate = new DateTime();
@@ -76,14 +71,8 @@ trait ScheduledHabits
     {
         $dates = collect();
 
-        // Convert the input date to a timestamp
-        $timestamp = strtotime($startDate);
+        $startOfWeek = strtotime($this->getMonday(), strtotime($startDate));
 
-        // Calculate the timestamp of the first Monday on or before the input date
-        $startOfWeek = strtotime('last Monday', $timestamp);
-        ray($startOfWeek);
-
-        // Loop through the days of the week and add them to the $dates array
         for ($i = 0; $i < 7; $i++) {
             $dates[] = date('Y-m-d', strtotime("+$i days", $startOfWeek));
         }
