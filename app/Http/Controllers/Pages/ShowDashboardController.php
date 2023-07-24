@@ -17,12 +17,10 @@ class ShowDashboardController extends Controller
 
     public function __invoke()
     {
-        $log = $this->getWeeklyLog(Auth::user(), $this->getDateXDaysAgo(7), $this->getSunday());
-        ray($log);
         return Inertia::render('Dashboard', [
             'dailyHabits' => $this->getDailyScheduledHabits(Auth::user()),
             'weeklyHabits' => $this->getWeeklyScheduledHabits(Auth::user()),
-            'log' => $log
+            'log' => $this->getWeeklyLog(Auth::user(), $this->getDateXDaysAgo(7), $this->getDateXDaysAgo(1))
         ]);
     }
 }

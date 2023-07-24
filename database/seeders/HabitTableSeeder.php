@@ -17,6 +17,8 @@ class HabitTableSeeder extends Seeder
 
     public function run(): void
     {
+        Carbon::setTestNow(Carbon::parse($this->getDateXDaysAgo(7)));
+
         $users = User::all();
 
         foreach ($users as $user) {
@@ -53,8 +55,8 @@ class HabitTableSeeder extends Seeder
     private function determineDateForHabitCompletion($freq, $day): string
     {
         return match ($freq) {
-            Frequency::DAILY => Carbon::parse($this->getMonday())->addDays($day - 1),
-            Frequency::WEEKLY => Carbon::parse($this->getMonday())->copy()->addDays(4)->format('Y-m-d'),
+            Frequency::DAILY => Carbon::today()->addDays($day - 1),
+            Frequency::WEEKLY => Carbon::today()->copy()->addDays(4)->format('Y-m-d'),
             Frequency::MONTHLY => date('Y-m-d', strtotime(date('Y-m') . '-' . $day)),
             default => now(),
         };

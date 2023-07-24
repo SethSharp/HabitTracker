@@ -164,6 +164,11 @@ const submit = () => {
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> Habit Log  </span>
                     </template>
+                    <template #content>
+                        <div v-for="(schedule, index) in log">
+                            {{ schedule.habit.name }} - {{ schedule.completed }} - {{ schedule.scheduled_completion}}
+                        </div>
+                    </template>
                 </Card>
             </div>
             <div class="mx-12 mt-6">
