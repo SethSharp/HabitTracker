@@ -7,14 +7,6 @@ import Card from "@/Components/Habits/Card.vue"
 import CheckboxGroup from "@/Components/CheckboxGroup.vue"
 import { ArrowRightIcon } from "@heroicons/vue/24/solid/index.js"
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline/index.js"
-import {
-    TransitionRoot,
-    TransitionChild,
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-} from '@headlessui/vue'
-import { PrimaryButton } from "@codinglabsau/ui"
 
 const props = defineProps({
     dailyHabits: Array,
@@ -23,17 +15,7 @@ const props = defineProps({
 
 let today = new Date()
 let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-// Dialog logic
-const isOpen = ref(false)
-const isCompleted = ref(false)
-
-function closeModal() {
-    isOpen.value = false
-}
-function openModal() {
-    isOpen.value = true
-}
+let isCompleted = ref(false)
 
 let habitConfig = props.dailyHabits.map(h => {
     return {
@@ -52,13 +34,6 @@ const getCompleted = () => {
         }
     }
     return arr
-}
-
-const test = (habit, scheduled) => {
-    if (scheduled > today) {
-        return true
-    }
-    return habit.completed
 }
 
 const calculateX = (habit) => {
@@ -136,7 +111,6 @@ onMounted(() => {
         if ( !habit.completed) return;
     }
     isCompleted.value = true
-    openModal()
 })
 
 const schema = useSchema({
@@ -149,7 +123,9 @@ const schema = useSchema({
     }
 })
 
-const submit = () => schema.form.post(route('schedule.update'));
+const submit = () => {
+    schema.form.post(route('schedule.update'));
+}
 </script>
 
 <template>
@@ -157,7 +133,10 @@ const submit = () => schema.form.post(route('schedule.update'));
 
     <AuthenticatedLayout>
         <div class="py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-12">
+            <div v-if="isCompleted" class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mx-12">
+                You have ticked off all of your habits for today! Now you can relax knowing your achievement, keep it up!
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-4">
                 <Card>
                     <template #heading>
                         <span class="h-fit pt-2 text-2xl"> Today's Habits  </span>
@@ -180,9 +159,6 @@ const submit = () => schema.form.post(route('schedule.update'));
                         </div>
                     </template>
                 </Card>
-                <div>
-
-                </div>
                 <Card>
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> Habit Log  </span>
@@ -225,63 +201,5 @@ const submit = () => schema.form.post(route('schedule.update'));
                 </Card>
             </div>
         </div>
-
-        <TransitionRoot appear :show="isOpen" as="template">
-            <Dialog as="div" @close="closeModal" class="relative z-10">
-                <TransitionChild
-                    as="template"
-                    enter="duration-300 ease-out"
-                    enter-from="opacity-0"
-                    enter-to="opacity-100"
-                    leave="duration-200 ease-in"
-                    leave-from="opacity-100"
-                    leave-to="opacity-0"
-                >
-                    <div class="fixed inset-0 bg-black bg-opacity-25" />
-                </TransitionChild>
-
-                <div class="fixed inset-0 overflow-y-auto">
-                    <div
-                        class="flex min-h-full items-center justify-center p-4 text-center"
-                    >
-                        <TransitionChild
-                            as="template"
-                            enter="duration-300 ease-out"
-                            enter-from="opacity-0 scale-95"
-                            enter-to="opacity-100 scale-100"
-                            leave="duration-200 ease-in"
-                            leave-from="opacity-100 scale-100"
-                            leave-to="opacity-0 scale-95"
-                        >
-                            <DialogPanel
-                                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
-                            >
-                                <DialogTitle
-                                    as="h3"
-                                    class="text-lg font-medium leading-6 text-gray-900"
-                                >
-                                    Congratulations!!
-                                </DialogTitle>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500">
-                                        You have ticked off all of your habits for today!
-                                        Now you can relax knowing your achievement, keep it up!
-                                    </p>
-                                </div>
-
-                                <div class="mt-4">
-                                    <PrimaryButton
-                                        type="button"
-                                        @click="closeModal"
-                                    >
-                                        Close
-                                    </PrimaryButton>
-                                </div>
-                            </DialogPanel>
-                        </TransitionChild>
-                    </div>
-                </div>
-            </Dialog>
-        </TransitionRoot>
     </AuthenticatedLayout>
 </template>
