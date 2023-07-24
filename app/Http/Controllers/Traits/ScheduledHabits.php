@@ -11,7 +11,6 @@ trait ScheduledHabits
 {
     use DateHelper;
 
-    // TODO: Cache, create Cache keys file etc..
     public function getDailyScheduledHabits(User $user): array
     {
             return $user->scheduledHabits()
