@@ -10,9 +10,4 @@ class CacheKeys
     {
         return 'weekly-habit-log-' . $user->id;
     }
-
-    public static function weeklyScheduledHabits(User $user): string
-    {
-        return 'weekly-schedueld-haits-' . $user->id;
-    }
 }

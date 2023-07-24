@@ -24,19 +24,17 @@ trait ScheduledHabits
     {
         $week = $this->getWeekDatesStartingFromMonday($this->getMonday());
 
-        return Cache::remember(CacheKeys::weeklyScheduledHabits($user), now()->addHour(), function() use ($user, $nextSunday, $nextMonday, $week) {
-            $thisWeeksHabits = $user->scheduledHabits()
-                ->where('scheduled_completion', '>=', $this->getMonday() ?? $nextMonday)
-                ->where('scheduled_completion', '<=', $this->getSunday() ?? $nextSunday)
-                ->with('habit')
-                ->get();
 
+        $thisWeeksHabits = $user->scheduledHabits()
+            ->where('scheduled_completion', '>=', $this->getMonday() ?? $nextMonday)
+            ->where('scheduled_completion', '<=', $this->getSunday() ?? $nextSunday)
+            ->with('habit')
+            ->get();
 
-            return $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
-                $carry[$key] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion === $date)->toArray();
+        return $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
+            $carry[$key] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion === $date)->toArray();
 
-                return $carry;
-            }, collect());
-        });
+            return $carry;
+        }, collect());
     }
 }
