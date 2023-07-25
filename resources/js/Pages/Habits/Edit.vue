@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import {Text, Select, Date, PrimaryButton, Checkbox, Error, Label} from "@codinglabsau/ui";
+import {Text, Select, Date, PrimaryButton, DangerButton, Checkbox, Error, Label} from "@codinglabsau/ui";
 
 const props = defineProps({
     habit: Object,
@@ -59,6 +59,7 @@ const form = useForm({
 });
 
 const submit = () => form.post(route('habit.update', props.habit))
+const deleteHabit = () => form.delete(route('habit.delete', props.habit))
 </script>
 
 <template>
@@ -144,6 +145,9 @@ const submit = () => form.post(route('habit.update', props.habit))
                 <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">
                     Save Changes
                 </PrimaryButton>
+                <a @click.prevent="deleteHabit" class="mt-4">
+                    Delete
+                </a>
             </form>
         </div>
     </AuthenticatedLayout>
