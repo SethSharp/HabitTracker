@@ -20,6 +20,8 @@ let weekConfig = {
         { name: 'Wednesday', id: 3 },
         { name: 'Thursday', id: 4 },
         { name: 'Friday', id: 5 },
+        { name: 'Saturday', id: 6 },
+        { name: 'Sunday', id: 7 },
     ]
 }
 

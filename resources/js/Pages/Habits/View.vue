@@ -1,15 +1,26 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import {ref} from "vue";
+import {onBeforeMount, onMounted, ref} from "vue";
 import {PlusCircleIcon} from "@heroicons/vue/24/outline/index.js";
 import Card from "@/Components/Habits/Card.vue";
 
 const props = defineProps({
     habits: Array,
+    log: Object,
 })
 
+const getInitId = () => {
+    if (Object.keys(props.log).length > 0) {
+        return Object.keys(props.log)[0]
+    }
+    return null
+}
+
 let selectedHabit = ref(0);
+let selectedId = getInitId()
+let selectedLog = ref(props.log[selectedId])
+
 let habit = ref(props.habits[selectedHabit.value])
 
 let monthData = () => {
@@ -30,9 +41,16 @@ const createString = () => {
     return daysOfWeek.join(', ');
 }
 
-const selectedUser = (index) => {
+const dateHelper = (date) => {
+    let d = new Date(date)
+    return `${d.getDate()}` + `/` + `${d.getDay()}`
+}
+
+const selectedUser = (id, index) => {
     selectedHabit.value = index
     habit.value = props.habits[index]
+    selectedId = id
+    selectedLog.value = props.log[id]
 }
 </script>
 
@@ -60,7 +78,7 @@ const selectedUser = (index) => {
                             <div v-if="habits.length != 0">
                                 <div v-for="(habit, index) in habits">
                                     <div
-                                        @click="selectedUser(index)"
+                                        @click="selectedUser(habit.id, index)"
                                         class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
                                         :class="`${index==selectedHabit ? 'bg-indigo-400 hover:bg-indigo-500' : 'bg-gray-300 hover:bg-gray-400'}`"
                                     >
@@ -131,9 +149,30 @@ const selectedUser = (index) => {
                             <span class="h-fit py-2 text-2xl"> Habit Log </span>
                         </template>
                         <template #content>
-                            History of habit:
-                            - Dates you have checked off
-                            - A general statistics sections (Times completed, start, missed days?, streak for the specific habit)
+                            <div class="mx-4">
+                                <div v-if="Object.keys(log).length !== 0">
+                                    <div v-if="selectedLog.length !== 0">
+                                        <div v-for="schedule in selectedLog">
+                                            <div
+                                                class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
+                                                :class="schedule.completed === 0
+                                                    ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
+                                                    : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'"
+                                            >
+                                                {{ schedule.habit.name }}
+                                                {{ schedule.completed ? 'completed on' : 'was not completed on' }}
+                                                {{ dateHelper(schedule.scheduled_completion) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        No habit log available for this habit
+                                    </div>
+                                </div>
+                                <div v-else class="text-lg">
+                                    No habit log available
+                                </div>
+                            </div>
                         </template>
                     </Card>
                 </div>
