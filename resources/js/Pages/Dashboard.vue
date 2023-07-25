@@ -6,7 +6,7 @@ import { useSchema, FormBuilder } from "@codinglabsau/inertia-form-builder"
 import Card from "@/Components/Habits/Card.vue"
 import CheckboxGroup from "@/Components/CheckboxGroup.vue"
 import { ArrowRightIcon } from "@heroicons/vue/24/solid/index.js"
-import { CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline/index.js"
+import { CheckCircleIcon, XCircleIcon, EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline/index.js"
 
 const props = defineProps({
     dailyHabits: Array,
@@ -86,25 +86,40 @@ const isWarning = (habits) => {
     let successCount = 0
     let failCount = 0
 
-    for (const obj of Object.values(habits)) {
-        if (obj.completed === 0) {
+    for (const habit of Object.values(habits)) {
+        if (habit.completed === 0) {
             failCount++
         } else {
             successCount++
         }
+
+        if (failCount !== 0 || successCount !== 0) {
+            let scheduled = new Date(habit.scheduled_completion)
+            if (today.getDate() <= scheduled.getDate()) return false
+        }
     }
+    if (failCount == 0) return false
 
     return failCount !== successCount || failCount === successCount
 }
 
 const isDanger = (habits) => {
-    for (const obj of Object.values(habits)) {
-        if (obj.completed === 0) {
-            let scheduled = new Date(obj.scheduled_completion)
-            return scheduled.getDate() < today.getDate()
+    let successCount = 0
+    let failCount = 0
+
+    for (const habit of Object.values(habits)) {
+        if (habit.completed === 0) {
+            failCount++
+        } else {
+            successCount++
+        }
+
+        if (failCount !== 0 || successCount !== 0) {
+            let scheduled = new Date(habit.scheduled_completion)
+            if (today.getDate() <= scheduled.getDate()) return false
         }
     }
-    return true
+    return successCount === 0 && failCount > 0;
 }
 
 onMounted(() => {
@@ -190,6 +205,7 @@ const submit = () => {
                                 :success="isSuccess(habits)"
                                 :warning="isWarning(habits)"
                                 :danger="isDanger(habits)"
+                                :heading="today.getDay()-1 === index"
                             >
                                 <template #heading>
                                     <span> {{ week[index] }} </span>
@@ -199,8 +215,8 @@ const submit = () => {
                                         <li class="flex">
                                             <XCircleIcon v-show="calculateX(habit)" class="w-5 h-5 mr-1 mt-0.5 text-red-600"/>
                                             <CheckCircleIcon v-show="calculateCheck(habit)" class="w-5 h-5 mr-1 mt-0.5 text-green-600"/>
-                                            <XCircleIcon v-show="calculateGray(habit)" class="w-5 h-5 mr-1 mt-0.5 text-gray-600"/>
-                                            {{ habit.habit.name }} - {{ habit.id }}
+                                            <EllipsisHorizontalCircleIcon v-show="calculateGray(habit)" class="w-5 h-5 mr-1 mt-0.5 text-gray-600"/>
+                                            {{ habit.habit.name }}
                                         </li>
                                     </ul>
                                 </template>
