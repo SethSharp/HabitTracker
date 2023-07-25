@@ -18,8 +18,7 @@ class UpdateHabitScheduleController extends Controller
     {
         $checkedHabits = $request->validated()['habits'];
 
-        // TODO: Make this process more efficient and also, keep track of when this is completed...
-        $user = Auth::user()->scheduledHabits()->get()->pluck('id');
+        $user = Auth::user()->scheduledHabits()->where('completed', 0)->get()->pluck('id');
         $user->map( function ($id) use ($checkedHabits) {
             if (in_array($id, $checkedHabits)) {
                 HabitSchedule::find($id)->update([

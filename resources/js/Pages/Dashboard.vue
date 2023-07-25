@@ -1,16 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import {onMounted, ref} from "vue";
+import {onMounted, ref} from "vue"
 import { useSchema, FormBuilder } from "@codinglabsau/inertia-form-builder"
 import Card from "@/Components/Habits/Card.vue"
 import CheckboxGroup from "@/Components/CheckboxGroup.vue"
 import { ArrowRightIcon } from "@heroicons/vue/24/solid/index.js"
 import { CheckCircleIcon, XCircleIcon, EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline/index.js"
 import JSConfetti from "js-confetti"
+import { CheckIcon } from "@heroicons/vue/24/solid/index.js"
 
 const props = defineProps({
     dailyHabits: Array,
+    completedHabits: Array,
     weeklyHabits: Array,
     log: Array,
 })
@@ -176,19 +178,25 @@ const submit = () => {
                         <span class="h-fit pt-2 text-2xl"> Today's Habits  </span>
                     </template>
                     <template #content>
-                        <div v-if="dailyHabits.length > 0 && ! isCompleted" class="pl-2 mt-4">
-                            <form @submit="submit">
-                                <FormBuilder :schema="schema" />
-                            </form>
-                        </div>
-                        <div v-else class="mx-2">
-                            <div v-if="isCompleted">
-                                You are all done for today!
+                        <div class="mx-2">
+                            <div v-if="dailyHabits.length > 0 && ! isCompleted" class="pl-2 mt-4">
+                                <form @submit="submit">
+                                    <FormBuilder :schema="schema" />
+                                </form>
                             </div>
                             <div v-else>
-                                No habits for today, click
-                                <a class="text-indigo-500 text-md underline pointer-cursor" :href="route('habits')"> here </a>
-                                to add a habit.
+                                <div v-if="isCompleted">
+                                    You are all done for today!
+                                </div>
+                                <div v-else>
+                                    No habits for today, click
+                                    <a class="text-indigo-500 text-md underline pointer-cursor" :href="route('habits')"> here </a>
+                                    to add a habit.
+                                </div>
+                            </div>
+                            <div v-for="habit in completedHabits" class="flex my-2">
+                                <CheckIcon class="w-10 h-10 text-white bg-green-500 p-2 rounded-full"/>
+                                <span class="py-2 px-3"> {{ habit.habit.name }}</span>
                             </div>
                         </div>
                     </template>

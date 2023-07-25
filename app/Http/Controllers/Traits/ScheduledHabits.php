@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Http\CacheKeys;
 use App\Models\User;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 
 trait ScheduledHabits
 {
@@ -15,6 +13,17 @@ trait ScheduledHabits
     {
             return $user->scheduledHabits()
             ->where('scheduled_completion', '=', date('Y-m-d'))
+            ->where('completed', '=', 0)
+            ->with('habit')
+            ->get()
+            ->toArray();
+    }
+
+    public function getCompletedDailyHabits(user $user)
+    {
+        return $user->scheduledHabits()
+            ->where('scheduled_completion', '=', date('Y-m-d'))
+            ->where('completed', '=', 1)
             ->with('habit')
             ->get()
             ->toArray();

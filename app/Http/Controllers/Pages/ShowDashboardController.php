@@ -19,6 +19,7 @@ class ShowDashboardController extends Controller
     {
         return Inertia::render('Dashboard', [
             'dailyHabits' => $this->getDailyScheduledHabits(Auth::user()),
+            'completedHabits' => $this->getCompletedDailyHabits(Auth::user()),
             'weeklyHabits' => $this->getWeeklyScheduledHabits(Auth::user()),
             'log' => $this->getWeeklyLog(Auth::user(), $this->getDateXDaysAgo(7), $this->getDateXDaysAgo(1))
         ]);
