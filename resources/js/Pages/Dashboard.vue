@@ -7,12 +7,15 @@ import Card from "@/Components/Habits/Card.vue"
 import CheckboxGroup from "@/Components/CheckboxGroup.vue"
 import { ArrowRightIcon } from "@heroicons/vue/24/solid/index.js"
 import { CheckCircleIcon, XCircleIcon, EllipsisHorizontalCircleIcon } from "@heroicons/vue/24/outline/index.js"
+import JSConfetti from "js-confetti"
 
 const props = defineProps({
     dailyHabits: Array,
     weeklyHabits: Array,
     log: Array,
 })
+
+const jsConfetti = new JSConfetti()
 
 let today = new Date()
 let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -122,11 +125,26 @@ const isDanger = (habits) => {
     return successCount === 0 && failCount > 0;
 }
 
+const dateHelper = (date) => {
+    let d = new Date(date)
+    return `${d.getDate()}` + `/` + `${d.getDay()}`
+}
+
+const confetti = () => {
+    jsConfetti.addConfetti()
+}
+
 onMounted(() => {
     for (const habit of props.dailyHabits) {
         if ( !habit.completed) return;
     }
     isCompleted.value = true
+    confetti()
+
+    let element = document.getElementById((today.getDay()-1).toString())
+    if (! element) return
+
+    element.scrollIntoView()
 })
 
 const schema = useSchema({
@@ -187,7 +205,9 @@ const submit = () => {
                                     ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
                                     : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'"
                         >
-                            {{ schedule.habit.name }} completed on {{ schedule.scheduled_completion}}
+                            {{ schedule.habit.name }}
+                            {{ schedule.completed ? 'completed on' : 'was not completed on' }}
+                            {{ dateHelper(schedule.scheduled_completion) }}
                         </div>
                     </template>
                 </Card>
@@ -206,6 +226,7 @@ const submit = () => {
                                 :warning="isWarning(habits)"
                                 :danger="isDanger(habits)"
                                 :heading="today.getDay()-1 === index"
+                                :id="index"
                             >
                                 <template #heading>
                                     <span> {{ week[index] }} </span>

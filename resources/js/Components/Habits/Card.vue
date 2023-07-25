@@ -22,7 +22,7 @@ const props = defineProps({
 
 <template>
     <div
-        class="rounded-xl border-2 border-black overflow-hidden max-h-[650px] my-2"
+        class="rounded-xl border-2 border-black overflow-hidden max-h-[650px] my-6"
         :class="`${success ? 'bg-green-300 bg-opacity-25' : danger ? 'bg-red-300 bg-opacity-25' : warning ? 'bg-yellow-300 bg-opacity-25' : ''}`"
     >
         <div
