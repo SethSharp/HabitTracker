@@ -194,10 +194,13 @@ const submit = () => {
                                     to add a habit.
                                 </div>
                             </div>
-                            <div v-for="habit in completedHabits" class="flex my-2">
-                                <CheckIcon class="w-10 h-10 text-white bg-green-500 p-2 rounded-full"/>
-                                <span class="py-2 px-3"> {{ habit.habit.name }}</span>
+                            <div v-if="completedHabits.length !== 0">
+                                <div v-for="habit in completedHabits" class="flex my-2">
+                                    <CheckIcon class="w-10 h-10 text-white bg-green-500 p-2 rounded-full"/>
+<!--                                    <span class="py-2 px-3"> {{ habit.habit.name }}</span>-->
+                                </div>
                             </div>
+
                         </div>
                     </template>
                 </Card>
@@ -206,16 +209,18 @@ const submit = () => {
                         <span class="h-fit py-2 text-2xl"> Habit Log  </span>
                     </template>
                     <template #content>
-                        <div
-                            v-for="(schedule) in log"
-                            class="my-2"
-                            :class="schedule.completed === 0
+                        <div v-if="log.length !== 0">
+                            <div
+                                v-for="(schedule) in log"
+                                class="my-2"
+                                :class="schedule.completed === 0
                                     ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
                                     : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'"
-                        >
-                            {{ schedule.habit.name }}
-                            {{ schedule.completed ? 'completed on' : 'was not completed on' }}
-                            {{ dateHelper(schedule.scheduled_completion) }}
+                            >
+                                {{ schedule.habit.name }}
+                                {{ schedule.completed ? 'completed on' : 'was not completed on' }}
+                                {{ dateHelper(schedule.scheduled_completion) }}
+                            </div>
                         </div>
                     </template>
                 </Card>

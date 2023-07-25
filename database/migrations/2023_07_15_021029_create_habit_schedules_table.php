@@ -15,6 +15,7 @@ return new class extends Migration
             $table->date('scheduled_completion');
             $table->boolean('completed')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 };

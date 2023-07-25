@@ -142,12 +142,16 @@ const deleteHabit = () => form.delete(route('habit.delete', props.habit))
                         <Error :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                 </div>
-                <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">
-                    Save Changes
-                </PrimaryButton>
-                <a @click.prevent="deleteHabit" class="mt-4">
-                    Delete
-                </a>
+
+                <div class="flex gap-2">
+                    <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">
+                        Save Changes
+                    </PrimaryButton>
+                    <DangerButton @click.prevent="deleteHabit" class="mt-4">
+                        Delete
+                    </DangerButton>
+                </div>
+
             </form>
         </div>
     </AuthenticatedLayout>
