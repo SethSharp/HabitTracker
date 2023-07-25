@@ -28,4 +28,9 @@ class Habit extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function habitSchedule(): BelongsTo
+    {
+        return $this->belongsTo(HabitSchedule::class, 'habit_id');
+    }
 }

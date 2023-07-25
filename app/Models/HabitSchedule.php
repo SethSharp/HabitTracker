@@ -17,16 +17,17 @@ class HabitSchedule extends Model
 
     protected $casts = [
         'user_id' => 'int',
+        'habit_id' => 'int',
         'auction_id' => 'int',
     ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function habit(): BelongsTo
     {
-        return $this->belongsTo(Habit::class);
+        return $this->belongsTo(Habit::class, 'habit_id');
     }
 }

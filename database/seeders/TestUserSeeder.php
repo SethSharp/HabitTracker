@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\Frequency;
+use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
 use App\Models\User;
@@ -12,6 +13,8 @@ use Illuminate\Support\Arr;
 
 class TestUserSeeder extends Seeder
 {
+    use ScheduledHabits;
+
     public function run($user): void
     {
         $habit = Habit::factory()->create([
@@ -19,7 +22,7 @@ class TestUserSeeder extends Seeder
             'frequency' => Frequency::DAILY->value,
         ]);
 
-        $habit->occurrence_days = '[1,2,3]';
+        $habit->occurrence_days = '[1,2,3,4,5,6,7]';
 
         $habit->save();
 
@@ -29,20 +32,13 @@ class TestUserSeeder extends Seeder
             HabitSchedule::factory()->create([
                 'habit_id' => $habit->id,
                 'user_id' => $user->id,
-                'scheduled_completion' => $this->determineDateForHabitCompletion(Frequency::DAILY->value, $occurrence)
+                'scheduled_completion' => $this->getDates($occurrence)
             ]);
         }
     }
 
-    // TODO: Will eventually be moved to a trait I think (To be used in a command)
-    private function determineDateForHabitCompletion($freq, $day): string
+    private function getDates($day): string
     {
-        // With knowledge that this is run on a monday
-        return match ($freq) {
-            Frequency::DAILY => now()->addDays($day - 1),
-            Frequency::WEEKLY => Carbon::parse('2023-07-3')->copy()->addDays(4)->format('Y-m-d'),
-            Frequency::MONTHLY => date('Y-m-d', strtotime(date('Y-m') . '-' . $day)),
-            default => now(),
-        };
+        return Carbon::parse($this->getMonday())->addDays($day - 1);
     }
 }
