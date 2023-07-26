@@ -43,7 +43,7 @@ const createString = () => {
 
 const dateHelper = (date) => {
     let d = new Date(date)
-    return `${d.getDate()}` + `/` + `${d.getDay()}`
+    return `${d.getDate()}` + `/` + `${d.getMonth()}`
 }
 
 const selectedUser = (id, index) => {
@@ -58,10 +58,12 @@ const selectedUser = (id, index) => {
     <Head title="Habits" />
 
     <AuthenticatedLayout>
-        <div class="py-12">
+        <div>
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-12">
                 <div class="p-4">
-                    <Card>
+                    <Card
+                        class="min-h-[600px] max-h-[600px]">
+                    >
                         <template #heading>
                             <div class="sm:flex">
                                 <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
@@ -75,27 +77,31 @@ const selectedUser = (id, index) => {
                             </div>
                         </template>
                         <template #content>
-                            <div v-if="habits.length != 0">
-                                <div v-for="(habit, index) in habits">
-                                    <div
-                                        @click="selectedUser(habit.id, index)"
-                                        class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
-                                        :class="`${index==selectedHabit ? 'bg-indigo-400 hover:bg-indigo-500' : 'bg-gray-300 hover:bg-gray-400'}`"
-                                    >
-                                        {{ habit.name }}
+                            <div>
+                                <div v-if="habits.length != 0" class="overflow-y-auto max-h-[500px]">
+                                    <div v-for="(habit, index) in habits">
+                                        <div
+                                            @click="selectedUser(habit.id, index)"
+                                            class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
+                                            :class="`${index==selectedHabit ? 'bg-indigo-400 hover:bg-indigo-500' : 'bg-gray-300 hover:bg-gray-400'}`"
+                                        >
+                                            {{ habit.name }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div v-else class="mx-2 p-4 flex justify-center">
-                                <a :href="route('habit.create')">
-                                    <PlusCircleIcon class="w-16 h-16 flex hover:text-gray-500"/>
-                                </a>
+                                <div v-else class="mx-2 p-4 flex justify-center">
+                                    <a :href="route('habit.create')">
+                                        <PlusCircleIcon class="w-16 h-16 flex hover:text-gray-500"/>
+                                    </a>
+                                </div>
                             </div>
                         </template>
                     </Card>
                 </div>
                 <div class="p-4">
-                    <Card>
+                    <Card
+                        class="min-h-[600px] max-h-[600px]">
+                    >
                         <template #heading>
                             <div v-if="habit" class="sm:flex">
                                 <span class="w-3/4 h-fit py-2 text-2xl"> {{ habit.name }} </span>
@@ -112,44 +118,49 @@ const selectedUser = (id, index) => {
                             </div>
                         </template>
                         <template #content>
-                            <div v-if="habit">
-                                <div class="p-4">
-                                    <span class="font-bold"> Name: </span>
-                                    <span> {{ habit.name }} </span>
-                                </div>
-                                <div class="p-4">
-                                    <span class="font-bold"> Description: </span>
-                                    <span> {{ habit.description }} </span>
-                                </div>
-                                <div class="p-4">
-                                    <span class="font-bold"> Frequency: </span>
-                                    <span> {{ habit.frequency }} </span>
-                                </div>
-                                <div class="p-4 flex block">
-                                    <span class="font-bold mr-2"> Occurrences: </span>
-                                    <div v-if="habit.frequency === 'monthly'">
-                                        <span> {{ monthData()[0] }} </span>
+                            <div>
+                                <div v-if="habit" class="overflow-y-auto max-h-[525px]">
+                                    <div class="p-4">
+                                        <span class="font-bold"> Name: </span>
+                                        <span> {{ habit.name }} </span>
                                     </div>
-                                    <div v-else>
+                                    <div class="p-4">
+                                        <span class="font-bold"> Description: </span>
+                                        <span> {{ habit.description }} </span>
+                                    </div>
+                                    <div class="p-4">
+                                        <span class="font-bold"> Frequency: </span>
+                                        <span> {{ habit.frequency }} </span>
+                                    </div>
+                                    <div class="p-4 flex block">
+                                        <span class="font-bold mr-2"> Occurrences: </span>
+                                        <div v-if="habit.frequency === 'monthly'">
+                                            <span> {{ monthData()[0] }} </span>
+                                        </div>
+                                        <div v-else>
                                         <span>
                                             {{ createString() }}
                                         </span>
+                                        </div>
                                     </div>
                                 </div>
+                                <div v-else class="text-center">
+                                    No habit selected
+                                </div>
                             </div>
-                            <div v-else class="text-center">
-                                No habit selected
-                            </div>
+
                         </template>
                     </Card>
                 </div>
                 <div class="p-4">
-                    <Card>
+                    <Card
+                        class="min-h-[600px] max-h-[600px]">
+                    >
                         <template #heading>
                             <span class="h-fit py-2 text-2xl"> Habit Log </span>
                         </template>
                         <template #content>
-                            <div class="mx-4">
+                            <div class="mx-4 overflow-y-auto max-h-[525px]">
                                 <div v-if="Object.keys(log).length !== 0">
                                     <div v-if="selectedLog.length !== 0">
                                         <div v-for="schedule in selectedLog">

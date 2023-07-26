@@ -22,7 +22,7 @@ const props = defineProps({
 
 <template>
     <div
-        class="rounded-xl border-2 border-black overflow-hidden max-h-[650px] my-6"
+        class="rounded-xl border-2 border-black overflow-hidden my-6"
         :class="`${success ? 'bg-green-300 bg-opacity-25' : danger ? 'bg-red-300 bg-opacity-25' : warning ? 'bg-yellow-300 bg-opacity-25' : ''}`"
     >
         <div
@@ -31,11 +31,12 @@ const props = defineProps({
                 ${heading ? 'border-indigo-500 bg-indigo-500 bg-opacity-25' : 'border-gray-500'}
                 ${danger ? 'border-red-300 bg-red-300 bg-opacity-25' : ''}
                 ${success ? 'border-green-300 bg-green-300 bg-opacity-25' : ''}
+                ${warning ? 'border-yellow-300 bg-yellow-300 bg-opacity-25' : ''}
             `"
         >
             <slot name="heading"></slot>
         </div>
-        <div class="min-h-[650px] max-h-[950px] overflow-y-auto mx-4">
+        <div class="overflow-y-auto mx-4">
             <slot name="content"></slot>
         </div>
     </div>

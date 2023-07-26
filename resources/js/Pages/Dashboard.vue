@@ -129,7 +129,7 @@ const isDanger = (habits) => {
 
 const dateHelper = (date) => {
     let d = new Date(date)
-    return `${d.getDate()}` + `/` + `${d.getDay()}`
+    return `${d.getDate()}` + `/` + `${d.getMonth()}`
 }
 
 const confetti = () => {
@@ -144,11 +144,18 @@ const shouldShowDay = (habit) => {
 }
 
 onMounted(() => {
+    let b = false
     for (const habit of props.dailyHabits) {
-        if ( !habit.completed) return;
+        if (! habit.completed) {
+            b = true
+            break
+        }
     }
-    isCompleted.value = true
-    confetti()
+
+    if (b) {
+        isCompleted.value = true
+        confetti()
+    }
 
     let element = document.getElementById((today.getDay()-1).toString())
     if (! element) return
@@ -179,7 +186,7 @@ const submit = () => {
             <div v-if="isCompleted" class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 my-4 mx-12">
                 You have ticked off all of your habits for today! Now you can relax knowing your achievement, keep it up!
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 mx-12 space-x-4">
                 <Card>
                     <template #heading>
                         <span class="h-fit pt-2 text-2xl"> Today's Habits  </span>
@@ -204,10 +211,9 @@ const submit = () => {
                             <div v-if="completedHabits.length !== 0">
                                 <div v-for="habit in completedHabits" class="flex my-2">
                                     <CheckIcon class="w-10 h-10 text-white bg-green-500 p-2 rounded-full"/>
-<!--                                    <span class="py-2 px-3"> {{ habit.habit.name }}</span>-->
+                                    <span class="py-2 px-3"> {{ habit.habit.name }}</span>
                                 </div>
                             </div>
-
                         </div>
                     </template>
                 </Card>
@@ -216,10 +222,10 @@ const submit = () => {
                         <span class="h-fit py-2 text-2xl"> Habit Log  </span>
                     </template>
                     <template #content>
-                        <div v-if="log.length !== 0">
+                        <div v-if="log.length !== 0" class="min-h-[450px] max-h-[550px]">
                             <div
                                 v-for="(schedule) in log"
-                                class="my-2"
+                                class="my-4"
                                 :class="schedule.completed === 0
                                     ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
                                     : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'"
@@ -231,9 +237,10 @@ const submit = () => {
                         </div>
                     </template>
                 </Card>
+                <div></div>
             </div>
-            <div class="mx-12 mt-6">
-                <Card>
+            <div class="mx-12">
+                <Card class="">
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> The Current Week  </span>
                     </template>
@@ -241,7 +248,7 @@ const submit = () => {
                         <div class="flex overflow-x-auto space-x-8 mx-4">
                             <Card
                                 v-for="(habits, index) in weeklyHabits"
-                                class="min-w-[300px] min-h-[500px]"
+                                class="min-w-[300px]"
                                 :success="isSuccess(habits)"
                                 :warning="isWarning(habits)"
                                 :danger="isDanger(habits)"
@@ -252,14 +259,16 @@ const submit = () => {
                                     <span> {{ week[index] }} </span>
                                 </template>
                                 <template #content>
-                                    <ul v-for="habit in habits" class="list-disc p-4">
-                                        <li v-show="shouldShowDay(habit)" class="flex">
-                                            <XCircleIcon v-show="calculateX(habit)" class="w-5 h-5 mr-1 mt-0.5 text-red-600"/>
-                                            <CheckCircleIcon v-show="calculateCheck(habit)" class="w-5 h-5 mr-1 mt-0.5 text-green-600"/>
-                                            <EllipsisHorizontalCircleIcon v-show="calculateGray(habit)" class="w-5 h-5 mr-1 mt-0.5 text-gray-600"/>
-                                            {{ habit.habit.name }}
-                                        </li>
-                                    </ul>
+                                    <div class="min-h-[450px]">
+                                        <ul v-for="habit in habits" class="list-disc p-4">
+                                            <li v-show="shouldShowDay(habit)" class="flex">
+                                                <XCircleIcon v-show="calculateX(habit)" class="w-5 h-5 mr-1 mt-0.5 text-red-600"/>
+                                                <CheckCircleIcon v-show="calculateCheck(habit)" class="w-5 h-5 mr-1 mt-0.5 text-green-600"/>
+                                                <EllipsisHorizontalCircleIcon v-show="calculateGray(habit)" class="w-5 h-5 mr-1 mt-0.5 text-gray-600"/>
+                                                {{ habit.habit.name }}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </template>
                             </Card>
                         </div>
