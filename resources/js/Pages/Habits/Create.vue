@@ -32,7 +32,7 @@ const form = useForm({
     daily_config: [],
     weekly_config: 0,
     monthly_config: '',
-    start_next_week: true,
+    start_next_week: false,
 });
 
 const submit = () => form.post(route('habit.store'))

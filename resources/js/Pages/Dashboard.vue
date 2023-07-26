@@ -144,10 +144,10 @@ const shouldShowDay = (habit) => {
 }
 
 onMounted(() => {
-    let b = false
+    let b = true
     for (const habit of props.dailyHabits) {
         if (! habit.completed) {
-            b = true
+            b = false
             break
         }
     }

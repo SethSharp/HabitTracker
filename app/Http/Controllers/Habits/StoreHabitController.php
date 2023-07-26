@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Habits;
 
 use App\Enums\Frequency;
+use App\Http\Controllers\Traits\DateHelper;
 use App\Http\Controllers\Traits\HabitStorageTrait;
 use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Http\Requests\Habits\StoreHabitRequest;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
@@ -17,6 +19,7 @@ class StoreHabitController extends Controller
 {
     use HabitStorageTrait;
     use ScheduledHabits;
+    use DateHelper;
 
     public function __invoke(StoreHabitRequest $request): Response
     {
@@ -38,11 +41,14 @@ class StoreHabitController extends Controller
         if (! $data['start_next_week']) {
             $occurrences = json_decode($habit->occurrence_days);
 
+            $monday = $this->getMonday();
+
             foreach ($occurrences as $occurrence) {
+                $today = Carbon::parse($monday);
                 HabitSchedule::factory()->create([
                     'habit_id' => $habit->id,
                     'user_id' => Auth::user()->id,
-                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence)
+                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, $today)
                 ]);
             }
         }

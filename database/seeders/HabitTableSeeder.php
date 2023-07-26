@@ -46,7 +46,7 @@ class HabitTableSeeder extends Seeder
                 HabitSchedule::factory()->create([
                     'habit_id' => $habit->id,
                     'user_id' => $user->id,
-                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence)
+                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, Carbon::today())
                 ]);
             }
         }
