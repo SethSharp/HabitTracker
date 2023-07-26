@@ -51,14 +51,4 @@ class HabitTableSeeder extends Seeder
             }
         }
     }
-
-    private function determineDateForHabitCompletion($freq, $day): string
-    {
-        return match ($freq) {
-            Frequency::DAILY => Carbon::today()->addDays($day - 1),
-            Frequency::WEEKLY => Carbon::today()->copy()->addDays(4)->format('Y-m-d'),
-            Frequency::MONTHLY => date('Y-m-d', strtotime(date('Y-m') . '-' . $day)),
-            default => now(),
-        };
-    }
 }

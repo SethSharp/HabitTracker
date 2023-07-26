@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import {Text, Select, Date, PrimaryButton, Checkbox, Error, Label} from "@codinglabsau/ui";
+import {Text, Select, Date, PrimaryButton, Checkbox, Error, Label, Textarea} from "@codinglabsau/ui";
 
 const props = defineProps({
     frequencies: Array,
@@ -31,7 +31,8 @@ const form = useForm({
     frequency: 0,
     daily_config: [],
     weekly_config: 0,
-    monthly_config: ''
+    monthly_config: '',
+    start_next_week: true,
 });
 
 const submit = () => form.post(route('habit.store'))
@@ -59,7 +60,7 @@ const submit = () => form.post(route('habit.store'))
                     <div class="py-2">
                         <Label for="description"> Description </Label>
 
-                        <Text
+                        <Textarea
                             id="description"
                             ref="description"
                             v-model="form.description"
@@ -115,6 +116,22 @@ const submit = () => form.post(route('habit.store'))
                         />
 
                         <Error :error="form.errors.monthly_config" class="mt-2" />
+                    </div>
+                    <div class="py-2">
+                        <Label for="start_next_week"> Start time </Label>
+
+                        <Checkbox
+                            v-model="form.start_next_week"
+                            :value="form.start_next_week"
+                            label="Start next"
+                        />
+
+                        <label class="!text-gray-500">
+                            If selected and habit occurs on a day that is already passed
+                            will not be added for that day
+                        </label>
+
+                        <Error :error="form.errors.start_next_week" class="mt-2" />
                     </div>
                 </div>
                 <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">
