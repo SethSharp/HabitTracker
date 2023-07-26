@@ -35,9 +35,10 @@ trait HabitLog
     {
         return Cache::remember(CacheKeys::weeklyHabitLog($user), now()->addDay(),
             fn () => $user->scheduledHabits()
+                ->withTrashed()
                 ->where('scheduled_completion', '>=', $start_date)
                 ->where('scheduled_completion', '<=', $end_date)
-                ->with('habit')
+                ->with(['habit' => fn ($query) => $query->withTrashed()])
                 ->get());
     }
 }

@@ -136,6 +136,13 @@ const confetti = () => {
     jsConfetti.addConfetti()
 }
 
+const shouldShowDay = (habit) => {
+    if (habit.deleted_at === null) return true
+
+    let scheduledDate = new Date(habit.scheduled_completion)
+    return (today.getDate() > scheduledDate.getDate());
+}
+
 onMounted(() => {
     for (const habit of props.dailyHabits) {
         if ( !habit.completed) return;
@@ -246,7 +253,7 @@ const submit = () => {
                                 </template>
                                 <template #content>
                                     <ul v-for="habit in habits" class="list-disc p-4">
-                                        <li class="flex">
+                                        <li v-show="shouldShowDay(habit)" class="flex">
                                             <XCircleIcon v-show="calculateX(habit)" class="w-5 h-5 mr-1 mt-0.5 text-red-600"/>
                                             <CheckCircleIcon v-show="calculateCheck(habit)" class="w-5 h-5 mr-1 mt-0.5 text-green-600"/>
                                             <EllipsisHorizontalCircleIcon v-show="calculateGray(habit)" class="w-5 h-5 mr-1 mt-0.5 text-gray-600"/>
