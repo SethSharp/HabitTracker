@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Habits;
 
+use Inertia\Inertia;
+use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Http\Controllers\Controller;
-use App\Models\Habit;
-use Inertia\Inertia;
 
 class EditHabitController extends Controller
 {

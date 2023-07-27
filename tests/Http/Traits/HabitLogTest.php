@@ -2,15 +2,13 @@
 
 namespace Tests\Http\Traits;
 
-use App\Enums\Frequency;
-use App\Http\Controllers\Traits\HabitLog;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Models\Habit;
-use App\Models\HabitSchedule;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Habit;
+use App\Enums\Frequency;
+use App\Models\HabitSchedule;
+use App\Http\Controllers\Traits\HabitLog;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class HabitLogTest extends TestCase

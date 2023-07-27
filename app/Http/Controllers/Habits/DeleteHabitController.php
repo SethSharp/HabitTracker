@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Habits;
 
-use App\Http\Controllers\Traits\HabitStorageTrait;
-use App\Models\Habit;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Habit;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\HabitStorageTrait;
 
 class DeleteHabitController extends Controller
 {

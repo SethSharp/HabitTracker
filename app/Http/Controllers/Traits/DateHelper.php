@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Traits;
 
-use DateInterval;
 use DateTime;
+use DateInterval;
 use Illuminate\Support\Collection;
 
 trait DateHelper

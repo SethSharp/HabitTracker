@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Frequency;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Models\Habit;
-use App\Models\HabitSchedule;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Habit;
+use App\Enums\Frequency;
 use Illuminate\Support\Arr;
+use App\Models\HabitSchedule;
+use Illuminate\Database\Seeder;
+use App\Http\Controllers\Traits\ScheduledHabits;
 
 class HabitTableSeeder extends Seeder
 {

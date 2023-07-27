@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Habits;
 
+use Inertia\Inertia;
 use App\Enums\Frequency;
 use App\Http\Controllers\Controller;
-use Inertia\Inertia;
 
 class CreateHabitController extends Controller
 {

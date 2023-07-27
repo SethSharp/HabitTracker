@@ -2,9 +2,9 @@
 
 namespace Tests\Http\Habits;
 
-use App\Models\Habit;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Habit;
 use Tests\Traits\RefreshDatabase;
 
 class UpdateHabitControllerTest extends TestCase

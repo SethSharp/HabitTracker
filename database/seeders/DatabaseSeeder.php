@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Http\Controllers\Traits\DateHelper;
-use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Traits\DateHelper;
+use App\Http\Controllers\Traits\ScheduledHabits;
 
 class DatabaseSeeder extends Seeder
 {

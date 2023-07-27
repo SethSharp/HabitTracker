@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Habits;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreHabitRequest extends FormRequest
 {

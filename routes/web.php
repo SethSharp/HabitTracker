@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,4 +45,4 @@ Route::middleware('auth')->name('profile.')->group(function () {
     Route::delete('/profile', \App\Http\Controllers\Profile\DeleteProfileController::class)->name('destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

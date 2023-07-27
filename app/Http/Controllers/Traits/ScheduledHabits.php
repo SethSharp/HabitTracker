@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Enums\Frequency;
-use App\Models\User;
+use DateTime;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Enums\Frequency;
 use Illuminate\Support\Collection;
 
 trait ScheduledHabits
@@ -13,12 +14,12 @@ trait ScheduledHabits
 
     public function getDailyScheduledHabits(User $user): array
     {
-            return $user->scheduledHabits()
-            ->where('scheduled_completion', '=', date('Y-m-d'))
-            ->where('completed', '=', 0)
-            ->with('habit')
-            ->get()
-            ->toArray();
+        return $user->scheduledHabits()
+        ->where('scheduled_completion', '=', date('Y-m-d'))
+        ->where('completed', '=', 0)
+        ->with('habit')
+        ->get()
+        ->toArray();
     }
 
     public function getCompletedDailyHabits(user $user)
@@ -51,11 +52,18 @@ trait ScheduledHabits
 
     public function determineDateForHabitCompletion($freq, $day, $today): string
     {
+        ray(Carbon::parse($day)->toString());
+        $date = new DateTime($day);
         return match ($freq) {
             Frequency::DAILY => $today->addDays($day-1),
-            Frequency::WEEKLY => $today->copy()->addDays(4)->format('Y-m-d'),
-            Frequency::MONTHLY => date('Y-m-d', strtotime(date('Y-m') . '-' . $day)),
+            Frequency::WEEKLY => $today->addDays($day-1)->format('Y-m-d'),
+            Frequency::MONTHLY => $date->format('Y-m-d'),
             default => now(),
         };
+    }
+
+    private function getMonth()
+    {
+        
     }
 }

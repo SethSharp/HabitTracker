@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\DateHelper;
-use App\Http\Controllers\Traits\HabitLog;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Traits\HabitLog;
+use App\Http\Controllers\Traits\DateHelper;
+use App\Http\Controllers\Traits\ScheduledHabits;
 
 class ShowDashboardController extends Controller
 {

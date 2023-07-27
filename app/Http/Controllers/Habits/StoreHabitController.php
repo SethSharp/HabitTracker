@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Habits;
 
-use App\Enums\Frequency;
-use App\Http\Controllers\Traits\DateHelper;
-use App\Http\Controllers\Traits\HabitStorageTrait;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Http\Requests\Habits\StoreHabitRequest;
-use App\Models\Habit;
-use App\Models\HabitSchedule;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Habit;
+use App\Enums\Frequency;
+use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Traits\DateHelper;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\Habits\StoreHabitRequest;
+use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Http\Controllers\Traits\HabitStorageTrait;
 
 class StoreHabitController extends Controller
 {
