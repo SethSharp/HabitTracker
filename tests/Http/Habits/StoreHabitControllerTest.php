@@ -106,6 +106,24 @@ class StoreHabitControllerTest extends TestCase
     }
 
     /** @test */
+    public function can_store_daily_habit(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $this->dailyArray))
+            ->assertSessionDoesntHaveErrors(['monthly_config', 'weekly_config']);
+
+        $this->assertDatabaseHas('habits', [
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'weekly',
+        ]);
+
+        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
+        $this->assertEquals($updatedHabit->occurrence_days, '["2023-07-17"]');
+    }
+
+    /** @test */
     public function can_store_monthly_habit(): void
     {
         $this->actingAs($this->user)

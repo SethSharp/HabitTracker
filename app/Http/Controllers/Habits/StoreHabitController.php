@@ -44,11 +44,12 @@ class StoreHabitController extends Controller
             $monday = $this->getMonday();
 
             foreach ($occurrences as $occurrence) {
-                $today = Carbon::parse($monday);
+                $startOfTheWeek = Carbon::parse($monday);
+                if ($startOfTheWeek->addDays($occurrence-1) >= Carbon::parse(date('Y-m-d'))) continue;
                 HabitSchedule::factory()->create([
                     'habit_id' => $habit->id,
                     'user_id' => Auth::user()->id,
-                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, $today)
+                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, $startOfTheWeek)
                 ]);
             }
         }

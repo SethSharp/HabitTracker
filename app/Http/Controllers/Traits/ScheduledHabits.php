@@ -52,18 +52,16 @@ trait ScheduledHabits
 
     public function determineDateForHabitCompletion($freq, $day, $today): string
     {
-        ray(Carbon::parse($day)->toString());
-        $date = new DateTime($day);
         return match ($freq) {
             Frequency::DAILY => $today->addDays($day-1),
             Frequency::WEEKLY => $today->addDays($day-1)->format('Y-m-d'),
-            Frequency::MONTHLY => $date->format('Y-m-d'),
+            Frequency::MONTHLY => $day,
             default => now(),
         };
     }
 
     private function getMonth()
     {
-        
+
     }
 }
