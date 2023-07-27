@@ -1,34 +1,34 @@
 <script setup>
-import { computed } from "vue"
+import { computed } from 'vue'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import {Checkbox} from "@codinglabsau/ui"
+import { Checkbox } from '@codinglabsau/ui'
 
 const props = defineProps({
-  modelValue: {
-    type: Array,
-    required: true,
-  },
-  items: {
-    type: Array,
-    required: true,
-  },
-  description: {
-    type: String,
-  },
+    modelValue: {
+        type: Array,
+        required: true,
+    },
+    items: {
+        type: Array,
+        required: true,
+    },
+    description: {
+        type: String,
+    },
     disabled: {
-      type: Array,
-    }
+        type: Array,
+    },
 })
 
 const emit = defineEmits(['update:modelValue'])
 
 const internalValue = computed({
-  get: () => {
-    return props.modelValue || [];
-  },
-  set: (value) => {
-    emit('update:modelValue', value);
-  },
+    get: () => {
+        return props.modelValue || []
+    },
+    set: (value) => {
+        emit('update:modelValue', value)
+    },
 })
 </script>
 
@@ -56,8 +56,7 @@ const internalValue = computed({
                 </MenuItems>
             </Menu>
         </div>
-
     </div>
 
-    <div class="text-gray-500 text-xs mt-3"> {{ description }} </div>
+    <div class="text-gray-500 text-xs mt-3">{{ description }}</div>
 </template>
