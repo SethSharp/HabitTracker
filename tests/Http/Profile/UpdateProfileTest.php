@@ -82,7 +82,7 @@ class UpdateProfileTest extends TestCase
     {
         $this->actingAs($this->user)
             ->delete('/profile', [
-                'password' => 'password',
+                'password' => '123456',
             ])
             ->assertSessionHasNoErrors()
             ->assertRedirect('/');
