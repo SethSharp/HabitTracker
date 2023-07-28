@@ -40,6 +40,7 @@ trait HabitLog
                 ->where('scheduled_completion', '>=', $start_date)
                 ->where('scheduled_completion', '<=', $end_date)
                 ->with(['habit' => fn ($query) => $query->withTrashed()])
+                ->orderBy('scheduled_completion', 'desc')
                 ->get()
         );
     }

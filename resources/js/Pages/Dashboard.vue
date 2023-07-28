@@ -107,7 +107,10 @@ const isWarning = (habits) => {
             if (today.getDate() <= scheduled.getDate()) return false
         }
     }
-    if (failCount == 0) return false
+
+    if (successCount > 0 && failCount === 0) return false
+
+    if (successCount === 0 && failCount > 0) return false
 
     return failCount !== successCount || failCount === successCount
 }
