@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Frequency;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Models\Habit;
-use App\Models\HabitSchedule;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Habit;
+use App\Enums\Frequency;
 use Illuminate\Support\Arr;
+use App\Models\HabitSchedule;
+use Illuminate\Database\Seeder;
+use App\Http\Controllers\Traits\ScheduledHabits;
 
 class HabitTableSeeder extends Seeder
 {
@@ -46,19 +46,9 @@ class HabitTableSeeder extends Seeder
                 HabitSchedule::factory()->create([
                     'habit_id' => $habit->id,
                     'user_id' => $user->id,
-                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence)
+                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, Carbon::today())
                 ]);
             }
         }
-    }
-
-    private function determineDateForHabitCompletion($freq, $day): string
-    {
-        return match ($freq) {
-            Frequency::DAILY => Carbon::today()->addDays($day - 1),
-            Frequency::WEEKLY => Carbon::today()->copy()->addDays(4)->format('Y-m-d'),
-            Frequency::MONTHLY => date('Y-m-d', strtotime(date('Y-m') . '-' . $day)),
-            default => now(),
-        };
     }
 }

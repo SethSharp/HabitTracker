@@ -1,16 +1,25 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import {Text, Select, Date, PrimaryButton, Checkbox, Error, Label} from "@codinglabsau/ui";
+import {
+    Text,
+    Select,
+    Date,
+    PrimaryButton,
+    Checkbox,
+    Error,
+    Label,
+    Textarea,
+} from '@codinglabsau/ui'
 
 const props = defineProps({
     frequencies: Array,
     min: String,
-    max: String
+    max: String,
 })
 
 let frequenciesConfig = {
-    options: props.frequencies
+    options: props.frequencies,
 }
 
 let weekConfig = {
@@ -20,7 +29,9 @@ let weekConfig = {
         { name: 'Wednesday', id: 3 },
         { name: 'Thursday', id: 4 },
         { name: 'Friday', id: 5 },
-    ]
+        { name: 'Saturday', id: 6 },
+        { name: 'Sunday', id: 7 },
+    ],
 }
 
 const form = useForm({
@@ -29,8 +40,9 @@ const form = useForm({
     frequency: 0,
     daily_config: [],
     weekly_config: 0,
-    monthly_config: ''
-});
+    monthly_config: '',
+    start_next_week: false,
+})
 
 const submit = () => form.post(route('habit.store'))
 </script>
@@ -45,19 +57,14 @@ const submit = () => form.post(route('habit.store'))
                     <div class="py-2">
                         <Label for="name"> Name </Label>
 
-                        <Text
-                            id="name"
-                            ref="name"
-                            v-model="form.name"
-                            class="mt-1 block w-full"
-                        />
+                        <Text id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
 
                         <Error :error="form.errors.name" class="mt-2" />
                     </div>
                     <div class="py-2">
                         <Label for="description"> Description </Label>
 
-                        <Text
+                        <Textarea
                             id="description"
                             ref="description"
                             v-model="form.description"
@@ -77,7 +84,7 @@ const submit = () => form.post(route('habit.store'))
 
                         <Error :error="form.errors.frequency" class="mt-2" />
                     </div>
-                    <div class="py-2" v-if="form.frequency===0">
+                    <div class="py-2" v-if="form.frequency === 0">
                         <Label for="daily_config"> Daily </Label>
 
                         <Checkbox
@@ -91,7 +98,7 @@ const submit = () => form.post(route('habit.store'))
 
                         <Error :error="form.errors.daily_config" class="mt-2" />
                     </div>
-                    <div class="py-2" v-if="form.frequency===1">
+                    <div class="py-2" v-if="form.frequency === 1">
                         <Label for="weekly_config"> Weekly </Label>
 
                         <Select
@@ -102,7 +109,7 @@ const submit = () => form.post(route('habit.store'))
 
                         <Error :error="form.errors.weekly_config" class="mt-2" />
                     </div>
-                    <div class="py-2" v-if="form.frequency===2">
+                    <div class="py-2" v-if="form.frequency === 2">
                         <Label for="monthly_config"> Monthly </Label>
 
                         <Date
@@ -113,6 +120,22 @@ const submit = () => form.post(route('habit.store'))
                         />
 
                         <Error :error="form.errors.monthly_config" class="mt-2" />
+                    </div>
+                    <div class="py-2">
+                        <Label for="start_next_week"> Start time </Label>
+
+                        <Checkbox
+                            v-model="form.start_next_week"
+                            :value="form.start_next_week"
+                            label="Start next"
+                        />
+
+                        <label class="!text-gray-500">
+                            If selected and habit occurs on a day that is already passed will not be
+                            added for that day
+                        </label>
+
+                        <Error :error="form.errors.start_next_week" class="mt-2" />
                     </div>
                 </div>
                 <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">

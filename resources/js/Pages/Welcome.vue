@@ -1,8 +1,8 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
-import About from "@/Pages/About.vue";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import ApplicationLogo from '@/Components/ApplicationLogo.vue'
+import About from '@/Pages/About.vue'
 
 defineProps({
     canLogin: {
@@ -20,7 +20,7 @@ defineProps({
     <div class="relative min-h-screen bg-gray-100">
         <div v-if="canLogin">
             <AuthenticatedLayout>
-                <About/>
+                <About />
             </AuthenticatedLayout>
         </div>
         <div v-else>
@@ -28,9 +28,7 @@ defineProps({
                 <div class="flex justify-start py-4">
                     <div class="flex text-lg h-fit">
                         <Link :href="route('dashboard')">
-                            <ApplicationLogo
-                                class="block fill-current text-gray-600"
-                            />
+                            <ApplicationLogo class="block fill-current text-gray-600" />
                         </Link>
                         <div class="py-4 px-4">
                             <Link
@@ -50,7 +48,7 @@ defineProps({
                     </div>
                 </div>
             </div>
-            <About/>
+            <About />
         </div>
     </div>
 </template>

@@ -2,13 +2,9 @@
 
 namespace Tests\Http\Traits;
 
-use App\Enums\Frequency;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Models\Habit;
-use App\Models\HabitSchedule;
-use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
+use App\Http\Controllers\Traits\ScheduledHabits;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ScheduledHabitsTest extends TestCase

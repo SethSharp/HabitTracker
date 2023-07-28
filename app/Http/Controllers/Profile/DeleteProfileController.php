@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Profile;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
 class DeleteProfileController extends Controller
 {

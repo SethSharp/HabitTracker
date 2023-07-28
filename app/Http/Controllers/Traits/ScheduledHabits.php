@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Traits;
 
 use App\Models\User;
+use App\Enums\Frequency;
 use Illuminate\Support\Collection;
 
 trait ScheduledHabits
@@ -11,12 +12,12 @@ trait ScheduledHabits
 
     public function getDailyScheduledHabits(User $user): array
     {
-            return $user->scheduledHabits()
-            ->where('scheduled_completion', '=', date('Y-m-d'))
-            ->where('completed', '=', 0)
-            ->with('habit')
-            ->get()
-            ->toArray();
+        return $user->scheduledHabits()
+        ->where('scheduled_completion', '=', date('Y-m-d'))
+        ->where('completed', '=', 0)
+        ->with('habit')
+        ->get()
+        ->toArray();
     }
 
     public function getCompletedDailyHabits(user $user)
@@ -34,9 +35,10 @@ trait ScheduledHabits
         $week = $this->getWeekDatesStartingFromMonday($this->getMonday());
 
         $thisWeeksHabits = $user->scheduledHabits()
+            ->withTrashed()
             ->where('scheduled_completion', '>=', $this->getMonday() ?? $nextMonday)
             ->where('scheduled_completion', '<=', $this->getSunday() ?? $nextSunday)
-            ->with('habit')
+            ->with(['habit' => fn ($query) => $query->withTrashed()])
             ->get();
 
         return $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
@@ -44,5 +46,14 @@ trait ScheduledHabits
 
             return $carry;
         }, collect());
+    }
+
+    public function determineDateForHabitCompletion($freq, $day, $today): string
+    {
+        return match ($freq) {
+            Frequency::DAILY, Frequency::WEEKLY => $today->addDays($day-1)->format('Y-m-d'),
+            Frequency::MONTHLY => $day,
+            default => now(),
+        };
     }
 }

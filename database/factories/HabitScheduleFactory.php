@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Habit;
 use App\Models\User;
+use App\Models\Habit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HabitScheduleFactory extends Factory

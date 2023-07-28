@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Habits;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreHabitRequest extends FormRequest
 {
@@ -17,6 +15,7 @@ class StoreHabitRequest extends FormRequest
             'daily_config' => ['required_if:frequency,0'],
             'weekly_config' => ['required_if:frequency,1'],
             'monthly_config' => ['required_if:frequency,2'],
+            'start_next_week' => ['boolean']
         ];
     }
 }

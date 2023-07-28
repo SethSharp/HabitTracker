@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class() extends Migration {
     public function up(): void
     {
         Schema::create('habit_schedules', function (Blueprint $table) {
@@ -15,6 +14,7 @@ return new class extends Migration
             $table->date('scheduled_completion');
             $table->boolean('completed')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 };

@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Habits;
 
-use App\Enums\Frequency;
-use App\Http\Controllers\Traits\HabitStorageTrait;
-use App\Http\Requests\Habits\UpdateHabitRequest;
-use App\Models\Habit;
-use Carbon\Carbon;
-use DateTime;
 use Inertia\Inertia;
+use App\Models\Habit;
+use App\Enums\Frequency;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Habits\StoreHabitRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\Habits\UpdateHabitRequest;
+use App\Http\Controllers\Traits\HabitStorageTrait;
 
 class UpdateHabitController extends Controller
 {
