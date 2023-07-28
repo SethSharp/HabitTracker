@@ -45,7 +45,9 @@ class StoreHabitController extends Controller
                 $startOfTheWeek = Carbon::parse($monday);
 
                 if (! is_string($occurrence)) {
-                    if ($startOfTheWeek->addDays($occurrence-1) < date('Y-m-d')) continue;
+                    if ($startOfTheWeek->addDays($occurrence-1) < date('Y-m-d')) {
+                        continue;
+                    }
 
                     $startOfTheWeek->subDays($occurrence-1);
                 }

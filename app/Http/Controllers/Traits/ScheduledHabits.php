@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Traits;
 
-use DateTime;
-use Carbon\Carbon;
 use App\Models\User;
 use App\Enums\Frequency;
 use Illuminate\Support\Collection;
@@ -57,10 +55,5 @@ trait ScheduledHabits
             Frequency::MONTHLY => $day,
             default => now(),
         };
-    }
-
-    private function getMonth()
-    {
-
     }
 }

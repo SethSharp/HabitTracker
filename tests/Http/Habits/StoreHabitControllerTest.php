@@ -2,11 +2,10 @@
 
 namespace Tests\Http\Habits;
 
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Models\HabitSchedule;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
+use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
 
 class StoreHabitControllerTest extends TestCase
