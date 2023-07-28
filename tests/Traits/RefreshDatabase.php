@@ -8,7 +8,7 @@ trait RefreshDatabase
 {
     use BaseRefreshDatabase;
 
-    protected function refreshTestDatabase()
+    protected function refreshTestDatabase(): void
     {
         $this->beginDatabaseTransaction();
     }

@@ -25,8 +25,6 @@ class StoreHabitController extends Controller
     {
         $data = collect($request->validated());
 
-        ray($data);
-
         $freq = Frequency::cases()[$data['frequency']];
 
         $habit = Habit::factory()->create([
@@ -45,7 +43,13 @@ class StoreHabitController extends Controller
 
             foreach ($occurrences as $occurrence) {
                 $startOfTheWeek = Carbon::parse($monday);
-                if ($startOfTheWeek->addDays($occurrence-1) >= Carbon::parse(date('Y-m-d'))) continue;
+
+                if (! is_string($occurrence)) {
+                    if ($startOfTheWeek->addDays($occurrence-1) < date('Y-m-d')) continue;
+
+                    $startOfTheWeek->subDays($occurrence-1);
+                }
+
                 HabitSchedule::factory()->create([
                     'habit_id' => $habit->id,
                     'user_id' => Auth::user()->id,

@@ -2,6 +2,8 @@
 
 namespace Tests\Http\Habits;
 
+use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Models\HabitSchedule;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
@@ -26,7 +28,7 @@ class StoreHabitControllerTest extends TestCase
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 0,
-            'daily_config' => '[1,2,3]'
+            'daily_config' => '[2,3,4]'
         ];
 
         $this->weeklyArray = [
@@ -106,21 +108,33 @@ class StoreHabitControllerTest extends TestCase
     }
 
     /** @test */
-    public function can_store_daily_habit(): void
+    public function can_store_daily_habits(): void
     {
+        $daily = [
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 0,
+            'daily_config' => [2,3,4],
+            'start_next_week' => false
+        ];
+
         $this->actingAs($this->user)
-            ->post(route("habit.store", $this->dailyArray))
+            ->post(route("habit.store", $daily))
             ->assertSessionDoesntHaveErrors(['monthly_config', 'weekly_config']);
 
         $this->assertDatabaseHas('habits', [
             'user_id' => $this->user->id,
             'name' => 'Testing name',
             'description' => 'Testing description',
-            'frequency' => 'weekly',
+            'frequency' => 'daily',
         ]);
 
         $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
-        $this->assertEquals($updatedHabit->occurrence_days, '["2023-07-17"]');
+        $this->assertEquals($updatedHabit->occurrence_days, '["2", "3", "4"]');
+
+        $scheduledHabits = HabitSchedule::all();
+
+        $this->assertCount(3, $scheduledHabits);
     }
 
     /** @test */

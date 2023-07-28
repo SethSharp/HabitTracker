@@ -53,8 +53,7 @@ trait ScheduledHabits
     public function determineDateForHabitCompletion($freq, $day, $today): string
     {
         return match ($freq) {
-            Frequency::DAILY => $today->addDays($day-1),
-            Frequency::WEEKLY => $today->addDays($day-1)->format('Y-m-d'),
+            Frequency::DAILY, Frequency::WEEKLY => $today->addDays($day-1)->format('Y-m-d'),
             Frequency::MONTHLY => $day,
             default => now(),
         };
