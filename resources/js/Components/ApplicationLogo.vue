@@ -1,7 +1,15 @@
 <script setup>
-import { BeakerIcon } from '@heroicons/vue/20/solid/index.js'
+import {
+    CheckCircleIcon,
+    XCircleIcon,
+} from "@heroicons/vue/24/outline/index.js";
 </script>
 
 <template>
-    <BeakerIcon class="h-16 w-16" />
+    <div class="grid grid-cols-2">
+        <XCircleIcon class="w-5 h-5"/>
+        <CheckCircleIcon class="w-5 h-5"/>
+        <CheckCircleIcon class="w-5 h-5"/>
+        <CheckCircleIcon class="w-5 h-5"/>
+    </div>
 </template>
