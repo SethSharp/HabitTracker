@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "format": "prettier \"resources/**/*.{js,ts,vue}\" -write",
+        "format": "prettier --write 'resources/**/*.{js,ts,vue}'",
         "lint": "eslint 'resources/**/*.{js,ts,vue}' --fix"
     },
     "devDependencies": {
