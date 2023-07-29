@@ -1,8 +1,9 @@
 <script setup>
 import { Link, useForm, usePage } from '@inertiajs/vue3'
-import { Error } from '@codinglabsau/ui'
 import TextInput from '@/Components/TextInput.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
+import InputLabel from "@/Components/InputLabel.vue"
+import InputError from "@/Components/InputError.vue"
 
 defineProps({
     mustVerifyEmail: {
@@ -36,14 +37,14 @@ const submit = () => form.patch(route('profile.update'))
         <form class="mt-6 space-y-6" @submit.prevent="submit">
             <div>
                 <div class="py-2">
-                    <Label for="name"> Username </Label>
+                    <InputLabel for="name"> Username </InputLabel>
 
                     <TextInput id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
 
-                    <Error :error="form.errors.name" class="mt-2" />
+                    <InputError :error="form.errors.name" class="mt-2" />
                 </div>
                 <div class="py-2">
-                    <Label for="email"> Email </Label>
+                    <InputLabel for="email"> Email </InputLabel>
 
                     <TextInput
                         id="email"
@@ -52,7 +53,7 @@ const submit = () => form.patch(route('profile.update'))
                         class="mt-1 block w-full"
                     />
 
-                    <Error :error="form.errors.email" class="mt-2" />
+                    <InputError :error="form.errors.email" class="mt-2" />
                 </div>
             </div>
 

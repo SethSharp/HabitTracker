@@ -1,15 +1,15 @@
 <script setup>
 defineProps({
-    message: {
+    error: {
         type: String,
     },
 })
 </script>
 
 <template>
-    <div v-show="message">
+    <div v-show="error">
         <p class="text-sm text-red-600">
-            {{ message }}
+            {{ error }}
         </p>
     </div>
 </template>

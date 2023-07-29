@@ -15,8 +15,7 @@ trait HabitStorageTrait
             case Frequency::WEEKLY->value:
                 return json_encode([(int)$data['weekly_config']]);
             case Frequency::MONTHLY->value:
-                $date = DateTime::createFromFormat('Y-n-j', $data['monthly_config']);
-                return json_encode([$date->format('Y-m-d')]);
+                return json_encode([$data['monthly_config']]);
             default:
                 return now();
         }

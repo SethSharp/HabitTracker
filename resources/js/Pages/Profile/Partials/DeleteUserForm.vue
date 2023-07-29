@@ -1,10 +1,12 @@
 <script setup>
 import Modal from '@/Components/Modal.vue'
 import { nextTick, ref } from 'vue'
-import { Password, Error } from '@codinglabsau/ui'
 import { useForm } from '@inertiajs/vue3'
 import DangerButton from '@/Components/DangerButton.vue'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
+import Error from '@/Components/Error.vue'
+import TextInput from "@/Components/TextInput.vue"
+import InputLabel from "@/Components/InputLabel.vue"
 
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
@@ -63,12 +65,12 @@ const closeModal = () => {
 
                 <form @submit.prevent="submit" class="w-1/2 mt-5">
                     <div class="py-2">
-                        <Label for="password"> Password </Label>
+                        <InputLabel for="password"> Password </InputLabel>
 
-                        <Password
+                        <TextInput
                             id="password"
-                            ref="name"
                             v-model="form.password"
+                            type="password"
                             class="mt-1 block w-full"
                         />
 

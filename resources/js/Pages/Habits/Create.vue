@@ -2,15 +2,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import {
-    Text,
     Select,
-    Date,
-    PrimaryButton,
     Checkbox,
-    Error,
-    Label,
-    Textarea,
 } from '@codinglabsau/ui'
+import TextInput from "@/Components/TextInput.vue"
+import PrimaryButton from "@/Components/PrimaryButton.vue"
+import InputLabel from "@/Components/InputLabel.vue"
+import TextAreaInput from "@/Components/TextAreaInput.vue"
+import InputError from "@/Components/InputError.vue"
+import DateInput from "@/Components/DateInput.vue"
 
 const props = defineProps({
     frequencies: Array,
@@ -55,26 +55,26 @@ const submit = () => form.post(route('habit.store'))
             <form @submit.prevent="submit" class="w-1/2 mt-10 h-screen">
                 <div>
                     <div class="py-2">
-                        <Label for="name"> Name </Label>
+                        <InputLabel for="name"> Name </InputLabel>
 
-                        <Text id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
+                        <TextInput id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
 
-                        <Error :error="form.errors.name" class="mt-2" />
+                        <InputError :error="form.errors.name" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <Label for="description"> Description </Label>
+                        <InputLabel for="description"> Description </InputLabel>
 
-                        <Textarea
+                        <TextAreaInput
                             id="description"
                             ref="description"
                             v-model="form.description"
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.description" class="mt-2" />
+                        <InputError :error="form.errors.description" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <Label for="frequency"> Frequency </Label>
+                        <InputLabel for="frequency"> Frequency </InputLabel>
 
                         <Select
                             v-model="form.frequency"
@@ -82,10 +82,10 @@ const submit = () => form.post(route('habit.store'))
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.frequency" class="mt-2" />
+                        <InputError :error="form.errors.frequency" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 0">
-                        <Label for="daily_config"> Daily </Label>
+                        <InputLabel for="daily_config"> Daily </InputLabel>
 
                         <Checkbox
                             v-for="(item, index) in weekConfig.options"
@@ -96,10 +96,10 @@ const submit = () => form.post(route('habit.store'))
                             :label="item.name ?? item"
                         />
 
-                        <Error :error="form.errors.daily_config" class="mt-2" />
+                        <InputError :error="form.errors.daily_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 1">
-                        <Label for="weekly_config"> Weekly </Label>
+                        <InputLabel for="weekly_config"> Weekly </InputLabel>
 
                         <Select
                             v-model="form.weekly_config"
@@ -107,22 +107,22 @@ const submit = () => form.post(route('habit.store'))
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.weekly_config" class="mt-2" />
+                        <InputError :error="form.errors.weekly_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 2">
-                        <Label for="monthly_config"> Monthly </Label>
+                        <InputLabel for="monthly_config"> Monthly </InputLabel>
 
-                        <Date
+                        <DateInput
                             v-model="form.monthly_config"
                             v-model:min="props.min"
                             v-model:max="props.max"
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.monthly_config" class="mt-2" />
+                        <InputError :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <Label for="start_next_week"> Start time </Label>
+                        <InputLabel for="start_next_week"> Start time </InputLabel>
 
                         <Checkbox
                             v-model="form.start_next_week"
@@ -135,7 +135,7 @@ const submit = () => form.post(route('habit.store'))
                             added for that day
                         </label>
 
-                        <Error :error="form.errors.start_next_week" class="mt-2" />
+                        <InputError :error="form.errors.start_next_week" class="mt-2" />
                     </div>
                 </div>
                 <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">

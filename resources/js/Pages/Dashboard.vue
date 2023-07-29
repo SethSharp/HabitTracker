@@ -1,5 +1,4 @@
 <script setup>
-import { Error } from '@codinglabsau/ui'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import { onMounted, ref } from 'vue'
@@ -13,6 +12,8 @@ import {
 import JSConfetti from 'js-confetti'
 import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
+import InputLabel from "@/Components/InputLabel.vue"
+import InputError from "@/Components/InputError.vue"
 
 const props = defineProps({
     dailyHabits: Array,
@@ -201,7 +202,7 @@ const submit = () => {
                             <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
                                 <form @submit="submit">
                                     <div class="py-2">
-                                        <Label for="habits"> Scheduled Habits for today </Label>
+                                        <InputLabel for="habits"> Scheduled Habits for today </InputLabel>
 
                                         <CheckboxGroup
                                             id="habits"
@@ -212,7 +213,7 @@ const submit = () => {
                                             class="mt-1 block w-full"
                                         />
 
-                                        <Error :error="form.errors.habits" class="mt-2" />
+                                        <InputError :error="form.errors.habits" class="mt-2" />
                                     </div>
                                     <PrimaryButton type="submit"> Save </PrimaryButton>
                                 </form>

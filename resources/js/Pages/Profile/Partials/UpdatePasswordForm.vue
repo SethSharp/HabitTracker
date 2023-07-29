@@ -1,8 +1,9 @@
 <script setup>
-import { Password } from '@codinglabsau/ui'
 import { useForm } from '@inertiajs/vue3'
 import DangerButton from '@/Components/DangerButton.vue'
 import Error from '@/Components/Error.vue'
+import TextInput from "@/Components/TextInput.vue"
+import InputLabel from "@/Components/InputLabel.vue"
 
 const form = useForm({
     current_password: '',
@@ -38,24 +39,24 @@ const submit = () => {
 
         <form @submit.prevent="submit" class="w-1/2 mt-5">
             <div class="py-2">
-                <Label for="current_password"> Current Password </Label>
+                <InputLabel for="current_password"> Current Password </InputLabel>
 
-                <Password
+                <TextInput
                     id="current_password"
-                    ref="current_password"
                     v-model="form.current_password"
+                    type="password"
                     class="mt-1 block w-full"
                 />
 
                 <Error :error="form.errors.current_password" class="mt-2" />
             </div>
             <div class="py-2">
-                <Label for="password"> New Password </Label>
+                <InputLabel for="password"> New Password </InputLabel>
 
-                <Password
+                <TextInput
                     id="password"
-                    ref="password"
                     v-model="form.password"
+                    type="password"
                     class="mt-1 block w-full"
                 />
 
