@@ -1,7 +1,8 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3'
-import { useSchema, FormBuilder } from '@codinglabsau/inertia-form-builder'
-import { Text } from '@codinglabsau/ui'
+import {Link, useForm, usePage} from '@inertiajs/vue3'
+import { Error } from '@codinglabsau/ui'
+import TextInput from "@/Components/TextInput.vue"
+import PrimaryButton from "@/Components/PrimaryButton.vue"
 
 defineProps({
     mustVerifyEmail: {
@@ -14,20 +15,12 @@ defineProps({
 
 const user = usePage().props.auth.user
 
-const schema = useSchema({
-    name: {
-        component: Text,
-        label: 'Name',
-        value: user.name,
-    },
-    email: {
-        component: Text,
-        label: 'Email',
-        value: user.email,
-    },
+let form = useForm({
+    name: user.name,
+    email: user.email,
 })
 
-const submit = () => schema.form.patch(route('profile.update'))
+const submit = () => form.patch(route('profile.update'))
 </script>
 
 <template>
@@ -41,7 +34,24 @@ const submit = () => schema.form.patch(route('profile.update'))
         </header>
 
         <form class="mt-6 space-y-6" @submit.prevent="submit">
-            <FormBuilder :schema="schema" class="!mx-0" />
+            <div>
+                <div class="py-2">
+                    <Label for="name"> Username </Label>
+
+                    <TextInput id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
+
+                    <Error :error="form.errors.name" class="mt-2" />
+                </div>
+                <div class="py-2">
+                    <Label for="email"> Email </Label>
+
+                    <TextInput id="email" ref="email" v-model="form.email" class="mt-1 block w-full" />
+
+                    <Error :error="form.errors.email" class="mt-2" />
+                </div>
+            </div>
+
+            <PrimaryButton as="button" type="submit"> Submit </PrimaryButton>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">
@@ -71,7 +81,7 @@ const submit = () => schema.form.patch(route('profile.update'))
                     leave-active-class="transition ease-in-out"
                     leave-to-class="opacity-0"
                 >
-                    <p v-if="schema.form.recentlySuccessful" class="text-sm text-gray-600">
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">
                         Saved.
                     </p>
                 </Transition>

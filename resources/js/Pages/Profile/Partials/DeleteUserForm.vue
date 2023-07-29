@@ -1,8 +1,10 @@
 <script setup>
 import Modal from '@/Components/Modal.vue'
 import { nextTick, ref } from 'vue'
-import { DangerButton, SecondaryButton, Password, Error } from '@codinglabsau/ui'
+import { Password, Error } from '@codinglabsau/ui'
 import { useForm } from "@inertiajs/vue3";
+import DangerButton from "@/Components/DangerButton.vue"
+import SecondaryButton from "@/Components/SecondaryButton.vue"
 
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
@@ -59,17 +61,15 @@ const closeModal = () => {
                     delete your account.
                 </p>
 
-                <form @submit.prevent="submit" class="w-1/2 mt-10">
-                    <div>
-                        <div class="py-2">
-                            <Label for="password"> Password </Label>
+                <form @submit.prevent="submit" class="w-1/2 mt-5">
+                    <div class="py-2">
+                        <Label for="password"> Password </Label>
 
-                            <Password id="password" ref="name" v-model="form.password" class="mt-1 block w-full" />
+                        <Password id="password" ref="name" v-model="form.password" class="mt-1 block w-full" />
 
-                            <Error :error="form.errors.password" class="mt-2" />
-                        </div>
+                        <Error :error="form.errors.password" class="mt-2" />
                     </div>
-                    <div class="space-x-2">
+                    <div class="space-x-2 mt-4">
                         <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
 
                         <DangerButton
