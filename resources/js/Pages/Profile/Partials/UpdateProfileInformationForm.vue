@@ -1,8 +1,8 @@
 <script setup>
-import {Link, useForm, usePage} from '@inertiajs/vue3'
+import { Link, useForm, usePage } from '@inertiajs/vue3'
 import { Error } from '@codinglabsau/ui'
-import TextInput from "@/Components/TextInput.vue"
-import PrimaryButton from "@/Components/PrimaryButton.vue"
+import TextInput from '@/Components/TextInput.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
 
 defineProps({
     mustVerifyEmail: {
@@ -45,7 +45,12 @@ const submit = () => form.patch(route('profile.update'))
                 <div class="py-2">
                     <Label for="email"> Email </Label>
 
-                    <TextInput id="email" ref="email" v-model="form.email" class="mt-1 block w-full" />
+                    <TextInput
+                        id="email"
+                        ref="email"
+                        v-model="form.email"
+                        class="mt-1 block w-full"
+                    />
 
                     <Error :error="form.errors.email" class="mt-2" />
                 </div>
@@ -81,9 +86,7 @@ const submit = () => form.patch(route('profile.update'))
                     leave-active-class="transition ease-in-out"
                     leave-to-class="opacity-0"
                 >
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">
-                        Saved.
-                    </p>
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
                 </Transition>
             </div>
         </form>

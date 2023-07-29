@@ -1,7 +1,7 @@
 <script setup>
 import { Password, Error } from '@codinglabsau/ui'
-import { useForm } from "@inertiajs/vue3";
-import DangerButton from "@/Components/DangerButton.vue";
+import { useForm } from '@inertiajs/vue3'
+import DangerButton from '@/Components/DangerButton.vue'
 
 const form = useForm({
     current_password: '',
@@ -39,23 +39,28 @@ const submit = () => {
             <div class="py-2">
                 <Label for="current_password"> Current Password </Label>
 
-                <Password id="current_password" ref="current_password" v-model="form.current_password" class="mt-1 block w-full" />
+                <Password
+                    id="current_password"
+                    ref="current_password"
+                    v-model="form.current_password"
+                    class="mt-1 block w-full"
+                />
 
                 <Error :error="form.errors.current_password" class="mt-2" />
             </div>
             <div class="py-2">
                 <Label for="password"> New Password </Label>
 
-                <Password id="password" ref="password" v-model="form.password" class="mt-1 block w-full" />
+                <Password
+                    id="password"
+                    ref="password"
+                    v-model="form.password"
+                    class="mt-1 block w-full"
+                />
 
                 <Error :error="form.errors.password" class="mt-2" />
             </div>
-            <DangerButton
-                as="button"
-                class="mt-5"
-                type="submit"
-                :disabled="form.processing"
-            >
+            <DangerButton as="button" class="mt-5" type="submit" :disabled="form.processing">
                 Change Password
             </DangerButton>
         </form>
@@ -65,9 +70,7 @@ const submit = () => {
             leave-active-class="transition ease-in-out"
             leave-to-class="opacity-0"
         >
-            <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">
-                Saved.
-            </p>
+            <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
         </Transition>
     </section>
 </template>

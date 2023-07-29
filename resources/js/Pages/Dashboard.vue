@@ -1,11 +1,10 @@
 <script setup>
-import { Error } from "@codinglabsau/ui"
+import { Error } from '@codinglabsau/ui'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import { onMounted, ref } from 'vue'
 import Card from '@/Components/Habits/Card.vue'
 import CheckboxGroup from '@/Components/CheckboxGroup.vue'
-import { ArrowRightIcon } from '@heroicons/vue/24/solid/index.js'
 import {
     CheckCircleIcon,
     XCircleIcon,
@@ -13,7 +12,7 @@ import {
 } from '@heroicons/vue/24/outline/index.js'
 import JSConfetti from 'js-confetti'
 import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
-import PrimaryButton from "@/Components/PrimaryButton.vue";
+import PrimaryButton from '@/Components/PrimaryButton.vue'
 
 const props = defineProps({
     dailyHabits: Array,
@@ -172,7 +171,7 @@ onMounted(() => {
 })
 
 const form = useForm({
-    habits: completed
+    habits: completed,
 })
 
 const submit = () => {
@@ -307,9 +306,6 @@ const submit = () => {
                                     </div>
                                 </template>
                             </Card>
-                        </div>
-                        <div class="flex justify-end mx-4">
-                            <ArrowRightIcon class="w-8 h-8 text-gray-500" />
                         </div>
                     </template>
                 </Card>
