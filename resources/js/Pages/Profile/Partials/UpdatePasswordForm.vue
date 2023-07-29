@@ -1,7 +1,8 @@
 <script setup>
-import { Password, Error } from '@codinglabsau/ui'
+import { Password } from '@codinglabsau/ui'
 import { useForm } from '@inertiajs/vue3'
 import DangerButton from '@/Components/DangerButton.vue'
+import Error from '@/Components/Error.vue'
 
 const form = useForm({
     current_password: '',
