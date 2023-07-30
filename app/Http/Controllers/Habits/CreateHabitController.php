@@ -15,7 +15,6 @@ class CreateHabitController extends Controller
                 return ['id' => $index, 'name' => $data->value];
             }),
             'min' => date('Y-m-d'),
-            'max' => date('Y-m-t')
         ]);
     }
 }

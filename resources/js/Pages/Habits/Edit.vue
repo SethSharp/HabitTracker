@@ -1,16 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import {
-    Text,
-    Select,
-    Date,
-    PrimaryButton,
-    DangerButton,
-    Checkbox,
-    Error,
-    Label,
-} from '@codinglabsau/ui'
+import TextInput from "@/Components/TextInput.vue"
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue"
+import DangerButton from "@/Components/Buttons/DangerButton.vue"
+import InputLabel from "@/Components/InputLabel.vue"
+import TextAreaInput from "@/Components/TextAreaInput.vue"
+import InputError from "@/Components/InputError.vue"
+import DateInput from "@/Components/DateInput.vue"
+import Checkbox from "@/Components/Checkbox.vue"
+import Select from "@/Components/Select.vue"
 
 const props = defineProps({
     habit: Object,
@@ -47,14 +46,19 @@ const getFrequency = () => {
 }
 
 const getDaily = () => {
-    return occurrences.map(Number)
+    if (getFrequency() === 0) return occurrences.map(Number)
+    return []
 }
 
 const getWeekly = () => {
-    return occurrences.map(Number)[0]
+    if (getFrequency() === 1) return occurrences.map(Number)[0]
+    return 0
 }
 
 const getMonthly = () => {
+    if (! isNaN(occurrences[0])) {
+        return '';
+    }
     return occurrences[0]
 }
 
@@ -79,26 +83,26 @@ const deleteHabit = () => form.delete(route('habit.delete', props.habit))
             <form @submit.prevent="submit" class="w-1/2 mt-10 h-screen">
                 <div>
                     <div class="py-2">
-                        <Label for="name"> Name </Label>
+                        <InputLabel for="name"> Name </InputLabel>
 
-                        <Text id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
+                        <TextInput id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
 
-                        <Error :error="form.errors.name" class="mt-2" />
+                        <InputError :error="form.errors.name" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <Label for="description"> Description </Label>
+                        <InputLabel for="description"> Description </InputLabel>
 
-                        <Text
+                        <TextAreaInput
                             id="description"
                             ref="description"
                             v-model="form.description"
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.description" class="mt-2" />
+                        <InputError :error="form.errors.description" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <Label for="frequency"> Frequency </Label>
+                        <InputLabel for="frequency"> Frequency </InputLabel>
 
                         <Select
                             v-model="form.frequency"
@@ -106,10 +110,10 @@ const deleteHabit = () => form.delete(route('habit.delete', props.habit))
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.frequency" class="mt-2" />
+                        <InputError :error="form.errors.frequency" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 0">
-                        <Label for="daily_config"> Daily </Label>
+                        <InputLabel for="daily_config"> Daily </InputLabel>
 
                         <Checkbox
                             v-for="(item, index) in weekConfig.options"
@@ -120,10 +124,10 @@ const deleteHabit = () => form.delete(route('habit.delete', props.habit))
                             :label="item.name ?? item"
                         />
 
-                        <Error :error="form.errors.daily_config" class="mt-2" />
+                        <InputError :error="form.errors.daily_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 1">
-                        <Label for="weekly_config"> Weekly </Label>
+                        <InputLabel for="weekly_config"> Weekly </InputLabel>
 
                         <Select
                             v-model="form.weekly_config"
@@ -131,19 +135,19 @@ const deleteHabit = () => form.delete(route('habit.delete', props.habit))
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.weekly_config" class="mt-2" />
+                        <InputError :error="form.errors.weekly_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 2">
-                        <Label for="monthly_config"> Monthly </Label>
+                        <InputLabel for="monthly_config"> Monthly </InputLabel>
 
-                        <Date
+                        <DateInput
                             v-model="form.monthly_config"
                             v-model:min="props.min"
                             v-model:max="props.max"
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.monthly_config" class="mt-2" />
+                        <InputError :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                 </div>
 

@@ -4,6 +4,8 @@ import { Head } from '@inertiajs/vue3'
 import { onBeforeMount, onMounted, ref } from 'vue'
 import { PlusCircleIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
+import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 
 const props = defineProps({
     habits: Array,
@@ -65,12 +67,12 @@ const selectedUser = (id, index) => {
                             <div class="sm:flex">
                                 <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
                                 <div class="w-1/4 flex justify-end items-center">
-                                    <a
-                                        :href="route('habit.create')"
+                                    <SecondaryButton
+                                        @click="this.$inertia.visit(route('habit.create'))"
                                         class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
                                     >
                                         Create
-                                    </a>
+                                    </SecondaryButton>
                                 </div>
                             </div>
                         </template>
@@ -112,12 +114,12 @@ const selectedUser = (id, index) => {
                             <div v-if="habit" class="sm:flex">
                                 <span class="w-3/4 h-fit py-2 text-2xl"> {{ habit.name }} </span>
                                 <div class="w-1/4 flex justify-end items-center">
-                                    <a
-                                        :href="route('habit.edit', habit)"
+                                    <SecondaryButton
+                                        @click="this.$inertia.visit(route('habit.edit', habit))"
                                         class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
                                     >
                                         Edit
-                                    </a>
+                                    </SecondaryButton>
                                 </div>
                             </div>
                             <div v-else class="text-2xl">No habit selected</div>

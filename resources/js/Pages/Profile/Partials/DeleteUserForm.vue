@@ -1,23 +1,22 @@
 <script setup>
 import Modal from '@/Components/Modal.vue'
 import { nextTick, ref } from 'vue'
-import { useSchema, FormBuilder } from '@codinglabsau/inertia-form-builder'
-import { DangerButton, SecondaryButton, Password } from '@codinglabsau/ui'
+import { useForm } from '@inertiajs/vue3'
+import DangerButton from '@/Components/Buttons/DangerButton.vue'
+import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
+import Error from '@/Components/Error.vue'
+import TextInput from "@/Components/TextInput.vue"
+import InputLabel from "@/Components/InputLabel.vue"
 
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
 
-const schema = useSchema({
-    password: {
-        component: Password,
-        label: 'password',
-        value: '',
-    },
+const form = useForm({
+    password: '',
 })
 
 const confirmUserDeletion = () => {
     confirmingUserDeletion.value = true
-
     nextTick(() => passwordInput.value.focus())
 }
 
@@ -32,7 +31,6 @@ const submit = () => {
 
 const closeModal = () => {
     confirmingUserDeletion.value = false
-
     form.reset()
 }
 </script>
@@ -49,7 +47,7 @@ const closeModal = () => {
             </p>
         </header>
 
-        <div class="flex justify-end">
+        <div class="flex justify-start">
             <DangerButton as="button" @click="confirmUserDeletion">Delete Account</DangerButton>
         </div>
 
@@ -65,22 +63,32 @@ const closeModal = () => {
                     delete your account.
                 </p>
 
-                <FormBuilder :schema="schema" class="!w-full">
-                    <template #actions="{ form }">
-                        <div class="space-x-2">
-                            <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+                <form @submit.prevent="submit" class="w-1/2 mt-5">
+                    <div class="py-2">
+                        <InputLabel for="password"> Password </InputLabel>
 
-                            <DangerButton
-                                class="ml-3"
-                                :class="{ 'opacity-25': form.processing }"
-                                :disabled="form.processing"
-                                @click="submit"
-                            >
-                                Delete Account
-                            </DangerButton>
-                        </div>
-                    </template>
-                </FormBuilder>
+                        <TextInput
+                            id="password"
+                            v-model="form.password"
+                            type="password"
+                            class="mt-1 block w-full"
+                        />
+
+                        <Error :error="form.errors.password" class="mt-2" />
+                    </div>
+                    <div class="space-x-2 mt-4">
+                        <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+
+                        <DangerButton
+                            class="ml-3"
+                            :class="{ 'opacity-25': form.processing }"
+                            :disabled="form.processing"
+                            @click="submit"
+                        >
+                            Delete Account
+                        </DangerButton>
+                    </div>
+                </form>
             </div>
         </Modal>
     </section>

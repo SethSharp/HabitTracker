@@ -1,11 +1,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 import { onMounted, ref } from 'vue'
-import { useSchema, FormBuilder } from '@codinglabsau/inertia-form-builder'
 import Card from '@/Components/Habits/Card.vue'
 import CheckboxGroup from '@/Components/CheckboxGroup.vue'
-import { ArrowRightIcon } from '@heroicons/vue/24/solid/index.js'
 import {
     CheckCircleIcon,
     XCircleIcon,
@@ -13,6 +11,9 @@ import {
 } from '@heroicons/vue/24/outline/index.js'
 import JSConfetti from 'js-confetti'
 import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
+import InputLabel from "@/Components/InputLabel.vue"
+import InputError from "@/Components/InputError.vue"
 
 const props = defineProps({
     dailyHabits: Array,
@@ -170,18 +171,12 @@ onMounted(() => {
     element.scrollIntoView()
 })
 
-const schema = useSchema({
-    habits: {
-        component: CheckboxGroup,
-        label: 'Check off habits',
-        items: habitConfig,
-        value: completed,
-        disabled: disabled,
-    },
+const form = useForm({
+    habits: completed,
 })
 
 const submit = () => {
-    schema.form.post(route('schedule.update'))
+    form.post(route('schedule.update'))
 }
 </script>
 
@@ -206,7 +201,21 @@ const submit = () => {
                         <div class="mx-2">
                             <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
                                 <form @submit="submit">
-                                    <FormBuilder :schema="schema" />
+                                    <div class="py-2">
+                                        <InputLabel for="habits"> Scheduled Habits for today </InputLabel>
+
+                                        <CheckboxGroup
+                                            id="habits"
+                                            ref="habits"
+                                            v-model="form.habits"
+                                            :items="habitConfig"
+                                            :disabled="disabled"
+                                            class="mt-1 block w-full"
+                                        />
+
+                                        <InputError :error="form.errors.habits" class="mt-2" />
+                                    </div>
+                                    <PrimaryButton type="submit"> Save </PrimaryButton>
                                 </form>
                             </div>
                             <div v-else>
@@ -298,9 +307,6 @@ const submit = () => {
                                     </div>
                                 </template>
                             </Card>
-                        </div>
-                        <div class="flex justify-end mx-4">
-                            <ArrowRightIcon class="w-8 h-8 text-gray-500" />
                         </div>
                     </template>
                 </Card>
