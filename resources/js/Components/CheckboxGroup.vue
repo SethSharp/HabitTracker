@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import { Checkbox } from '@codinglabsau/ui'
+import Checkbox from "@/Components/Checkbox.vue"
 
 const props = defineProps({
     modelValue: {
@@ -38,7 +38,6 @@ const internalValue = computed({
             :id="item.label ?? item"
             :key="index"
             v-model="internalValue"
-            :disabled="disabled[index]"
             :value="item.value ?? item"
             class="!w-10 !h-10 !text-green-500 !rounded-full !hover:bg-gray-200 !focus:ring-green-500"
         />
