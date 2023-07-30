@@ -88,8 +88,8 @@ const selectedUser = (id, index) => {
                                             class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
                                             :class="`${
                                                 index == selectedHabit
-                                                    ? 'bg-indigo-400 hover:bg-indigo-500'
-                                                    : 'bg-gray-300 hover:bg-gray-400'
+                                                    ? 'bg-teal-300 hover:bg-teal-400'
+                                                    : 'bg-gray-200 hover:bg-gray-300'
                                             }`"
                                         >
                                             {{ habit.name }}

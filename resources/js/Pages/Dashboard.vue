@@ -187,12 +187,12 @@ const submit = () => {
         <div class="py-2">
             <div
                 v-if="isCompleted"
-                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 my-4 mx-12"
+                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 mx-12"
             >
                 You have ticked off all of your habits for today! Now you can relax knowing your
                 achievement, keep it up!
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 mx-12 space-x-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 mx-12 space-x-6">
                 <Card>
                     <template #heading>
                         <span class="h-fit pt-2 text-2xl"> Today's Habits </span>
@@ -267,7 +267,7 @@ const submit = () => {
                 <div></div>
             </div>
             <div class="mx-12">
-                <Card class="">
+                <Card>
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> The Current Week </span>
                     </template>
