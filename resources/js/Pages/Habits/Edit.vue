@@ -3,8 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import {
     Select,
-    Checkbox,
 } from '@codinglabsau/ui'
+
 import TextInput from "@/Components/TextInput.vue"
 import PrimaryButton from "@/Components/PrimaryButton.vue"
 import DangerButton from "@/Components/DangerButton.vue"
@@ -12,6 +12,7 @@ import InputLabel from "@/Components/InputLabel.vue"
 import TextAreaInput from "@/Components/TextAreaInput.vue"
 import InputError from "@/Components/InputError.vue"
 import DateInput from "@/Components/DateInput.vue"
+import Checkbox from "@/Components/Checkbox.vue"
 
 const props = defineProps({
     habit: Object,

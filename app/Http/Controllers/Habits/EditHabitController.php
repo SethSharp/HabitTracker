@@ -17,7 +17,6 @@ class EditHabitController extends Controller
                 return ['id' => $index, 'name' => $data->value];
             }),
             'min' => date('Y-m-01'),
-            'max' => date('Y-m-t')
         ]);
     }
 }
