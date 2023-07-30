@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import TextInput from "@/Components/TextInput.vue"
-import PrimaryButton from "@/Components/PrimaryButton.vue"
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue"
 import InputLabel from "@/Components/InputLabel.vue"
 import TextAreaInput from "@/Components/TextAreaInput.vue"
 import InputError from "@/Components/InputError.vue"
@@ -129,7 +129,7 @@ const submit = () => form.post(route('habit.store'))
                         />
 
                         <label class="!text-gray-500">
-                            If selected and habit occurs on a day that is already passed will not be
+                            If not selected and habit occurs on a day that is already passed will not be
                             added for that day
                         </label>
 

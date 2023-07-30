@@ -11,7 +11,7 @@ import {
 } from '@heroicons/vue/24/outline/index.js'
 import JSConfetti from 'js-confetti'
 import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from "@/Components/InputLabel.vue"
 import InputError from "@/Components/InputError.vue"
 

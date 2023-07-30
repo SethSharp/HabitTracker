@@ -2,8 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import TextInput from "@/Components/TextInput.vue"
-import PrimaryButton from "@/Components/PrimaryButton.vue"
-import DangerButton from "@/Components/DangerButton.vue"
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue"
+import DangerButton from "@/Components/Buttons/DangerButton.vue"
 import InputLabel from "@/Components/InputLabel.vue"
 import TextAreaInput from "@/Components/TextAreaInput.vue"
 import InputError from "@/Components/InputError.vue"

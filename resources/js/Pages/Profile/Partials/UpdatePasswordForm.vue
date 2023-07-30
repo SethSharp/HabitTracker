@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
-import DangerButton from '@/Components/DangerButton.vue'
+import DangerButton from '@/Components/Buttons/DangerButton.vue'
 import Error from '@/Components/Error.vue'
 import TextInput from "@/Components/TextInput.vue"
 import InputLabel from "@/Components/InputLabel.vue"
