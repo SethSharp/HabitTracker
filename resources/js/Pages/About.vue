@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
     <div class="flex justify-center mt-8">
         <div class="w-1/2">
