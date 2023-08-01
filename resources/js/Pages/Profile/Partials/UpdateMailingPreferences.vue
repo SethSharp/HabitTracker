@@ -1,16 +1,20 @@
 <script setup>
-import { Link, useForm } from '@inertiajs/vue3'
-import TextInput from '@/Components/TextInput.vue'
+import { useForm } from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
-import InputLabel from "@/Components/InputLabel.vue"
 import InputError from "@/Components/InputError.vue"
-import Checkbox from "@/Components/Checkbox.vue";
+import Checkbox from "@/Components/Checkbox.vue"
 
-let form = useForm({
-    daily_reminder: false,
+const props = defineProps({
+    preference: {
+        type: Boolean,
+    }
 })
 
-const submit = () => form.patch(route('profile.update'))
+let form = useForm({
+    daily_reminder: Boolean(props.preference),
+})
+
+const submit = () => form.patch(route('email-preferences.update'))
 </script>
 
 <template>
@@ -27,10 +31,9 @@ const submit = () => form.patch(route('profile.update'))
             <div>
                 <div class="py-2">
                     <Checkbox
-                        id="daily_reminder"
-                        ref="daily_reminder"
                         v-model="form.daily_reminder"
-                        label="Daily Reminder (5:00pm)"
+                        :value="form.daily_reminder"
+                        label="Receive daily reminders (5:00pm) to complete habits"
                     />
 
                     <InputError :error="form.errors.daily_reminder" class="mt-2" />

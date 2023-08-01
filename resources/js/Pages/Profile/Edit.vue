@@ -13,6 +13,9 @@ defineProps({
     status: {
         type: String,
     },
+    email_preference: {
+        type: Boolean,
+    }
 })
 </script>
 
@@ -31,7 +34,7 @@ defineProps({
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdateMailingPreferences />
+                    <UpdateMailingPreferences :preference="email_preference"/>
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -38,5 +39,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scheduledHabits(): HasMany
     {
         return $this->hasMany(HabitSchedule::class, 'user_id');
+    }
+
+    public function emailPreferences(): HasOne
+    {
+        return $this->hasOne(EmailPreferences::class, 'user_id');
     }
 }
