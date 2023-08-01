@@ -4,11 +4,11 @@ namespace Tests\Http\Profile;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\Traits\RefreshDatabase;
 
 class UpdateProfileTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected User $user;
 

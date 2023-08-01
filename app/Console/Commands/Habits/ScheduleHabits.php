@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Habits;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\HabitSchedule;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
@@ -16,6 +16,7 @@ class ScheduleHabits extends Command
 
     public function handle()
     {
+        // TODO: Add a check to ensure the command is run on a monday
         $users = User::all();
         $users->map(function ($user) {
             $habits = $user->habits()->get();
