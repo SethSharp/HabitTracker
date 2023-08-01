@@ -1,26 +1,24 @@
 name: Laravel
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [ push ]
 
 jobs:
   laravel-tests:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+
+    env:
+      DB_DATABASE: testing
+      DB_USER: root
+      DB_PASSWORD: root
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Set up MySQL
-        env:
-          MYSQL_PWD: ${{ env.DB_PASSWORD }}
         run: |
           sudo /etc/init.d/mysql start
-          mysql -e "CREATE DATABASE ${{ env.DB_DATABASE }};" -u ${{ env.DB_USER }} --password="${MYSQL_PWD}"
-      
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
