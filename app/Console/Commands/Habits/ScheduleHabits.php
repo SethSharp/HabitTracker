@@ -4,6 +4,7 @@ namespace App\Console\Commands\Habits;
 
 use App\Models\User;
 use App\Models\HabitSchedule;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
@@ -28,7 +29,7 @@ class ScheduleHabits extends Command
                     HabitSchedule::factory()->create([
                         'habit_id' => $habit->id,
                         'user_id' => $user->id,
-                        'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, "2023-07-17")
+                        'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, Carbon::now())
                     ]);
                 }
             });

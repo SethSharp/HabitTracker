@@ -17,7 +17,7 @@ class HabitFactory extends Factory
             },
             'description' => $this->faker->sentence(mt_rand(10, 15)),
             'frequency' => Frequency::DAILY,
-            'occurrence_days' => '[]'
+            'occurrence_days' => '[2,3,4]'
         ];
     }
 }
