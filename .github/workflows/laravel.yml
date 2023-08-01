@@ -15,9 +15,12 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Set up MySQL
+        env:
+          MYSQL_PWD: ${{ env.DB_PASSWORD }}
         run: |
           sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+          mysql -e "CREATE DATABASE ${{ env.DB_DATABASE }};" -u ${{ env.DB_USER }} --password="${MYSQL_PWD}"
+      
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
