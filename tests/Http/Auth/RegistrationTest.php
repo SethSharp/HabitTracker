@@ -2,11 +2,11 @@
 
 namespace Tests\Http\Auth;
 
+use Tests\TestCase;
+use Tests\Traits\RefreshDatabase;
 use App\Http\Events\RegisteredEvent;
 use Illuminate\Support\Facades\Event;
-use Tests\TestCase;
 use App\Providers\RouteServiceProvider;
-use Tests\Traits\RefreshDatabase;
 
 class RegistrationTest extends TestCase
 {

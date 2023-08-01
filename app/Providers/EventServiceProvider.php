@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Http\Events\RegisteredEvent;
 use Illuminate\Auth\Events\Verified;
-use App\Http\Notifications\RegisteredNotificationListener;
 use App\Http\Notifications\VerifyEmailNotification;
+use App\Http\Notifications\RegisteredNotificationListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider

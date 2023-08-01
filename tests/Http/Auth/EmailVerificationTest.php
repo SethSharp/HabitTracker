@@ -2,10 +2,6 @@
 
 namespace Tests\Http\Auth;
 
-use App\Http\Events\RegisteredEvent;
-use App\Http\Notifications\VerifyEmailNotification;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\URL;
