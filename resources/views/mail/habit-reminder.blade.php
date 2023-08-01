@@ -1,3 +1,9 @@
 Hey {{ $name }},
-Can your Laravel app send emails yet? 😉
-Funny Coder
+
+Have you ensured all your habits are ticked off for today?
+
+If not Click here to do so
+
+<x-mail::button :url="$url">
+    Click here to go to dashboard
+</x-mail::button>

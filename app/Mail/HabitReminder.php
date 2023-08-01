@@ -30,7 +30,10 @@ class HabitReminder extends Mailable
     {
         return new Content(
             view: 'mail.habit-reminder',
-            with: ['name' => $this->name],
+            with: [
+                'name' => $this->name,
+                'url' => route('dashboard')
+            ],
         );
     }
 
