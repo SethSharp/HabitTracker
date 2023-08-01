@@ -27,14 +27,13 @@ jobs:
           extensions: zip, sqlite3
           coverage: none
 
-      - name: Check composer compatability
-        run: composer check-platform-reqs
-
-      - name: Install composer dependencies
-        run: composer install --no-cache --no-ansi --no-interaction --no-progress
-
       - name: Install node dependencies
         run: npm ci
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: Format code
         run: |
@@ -44,11 +43,18 @@ jobs:
           echo "running php-cs-fixer..."
           vendor/bin/php-cs-fixer fix
 
+      - name: Install composer dependencies
+        run: composer install --no-cache --no-ansi --no-interaction --no-progress
+
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Generate key
         run: php artisan key:generate
+
+      - name: Build frontend
+        run: |
+          npm run build
 
       - name: Execute tests
         env:
