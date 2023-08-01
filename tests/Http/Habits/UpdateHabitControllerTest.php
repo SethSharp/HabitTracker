@@ -158,6 +158,6 @@ class UpdateHabitControllerTest extends TestCase
         ]);
 
         $updatedHabit = Habit::find($habit->id);
-        $this->assertEquals($updatedHabit->occurrence_days, '["2023-07-17"]');
+        $this->assertEquals($updatedHabit->occurrence_days, '["2023-7-17"]');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Events;
 
-use Illuminate\Support\Facades\Event;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 
 class RegisteredEvent extends Event
 {

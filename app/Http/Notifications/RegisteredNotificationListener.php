@@ -2,15 +2,14 @@
 
 namespace App\Http\Notifications;
 
-use App\Http\Events\RegisteredEvent;
 use App\Mail\Registration;
-use App\Models\User;
-use Illuminate\Notifications\Notification;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Notifications\Notification;
 
 class RegisteredNotificationListener extends Notification
 {
-    public function handle(RegisteredEvent $event)
+    public function handle(Verified $event)
     {
         $user = $event->user;
 
