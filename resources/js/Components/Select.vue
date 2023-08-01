@@ -4,7 +4,7 @@ import { ref, computed } from 'vue'
 const Option = {
     id: '',
     name: '',
-};
+}
 
 const props = defineProps({
     modelValue: {
@@ -13,7 +13,7 @@ const props = defineProps({
     },
     id: String,
     options: Array,
-    label: String
+    label: String,
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -43,4 +43,3 @@ const proxySelected = computed({
         </slot>
     </select>
 </template>
-

@@ -2,8 +2,8 @@
 import { useForm } from '@inertiajs/vue3'
 import DangerButton from '@/Components/Buttons/DangerButton.vue'
 import Error from '@/Components/Error.vue'
-import TextInput from "@/Components/TextInput.vue"
-import InputLabel from "@/Components/InputLabel.vue"
+import TextInput from '@/Components/TextInput.vue'
+import InputLabel from '@/Components/InputLabel.vue'
 
 const form = useForm({
     current_password: '',

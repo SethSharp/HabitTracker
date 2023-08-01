@@ -2,10 +2,10 @@
 
 namespace Tests\Console\Commands;
 
-use App\Models\EmailPreferences;
 use Tests\TestCase;
 use App\Models\User;
 use App\Mail\HabitReminder;
+use App\Models\EmailPreferences;
 use Tests\Traits\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 

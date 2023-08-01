@@ -12,8 +12,8 @@ import {
 import JSConfetti from 'js-confetti'
 import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
-import InputLabel from "@/Components/InputLabel.vue"
-import InputError from "@/Components/InputError.vue"
+import InputLabel from '@/Components/InputLabel.vue'
+import InputError from '@/Components/InputError.vue'
 
 const props = defineProps({
     dailyHabits: Array,
@@ -202,7 +202,9 @@ const submit = () => {
                             <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
                                 <form @submit="submit">
                                     <div class="py-2">
-                                        <InputLabel for="habits"> Scheduled Habits for today </InputLabel>
+                                        <InputLabel for="habits">
+                                            Scheduled Habits for today
+                                        </InputLabel>
 
                                         <CheckboxGroup
                                             id="habits"

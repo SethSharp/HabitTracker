@@ -11,7 +11,7 @@ defineProps({
     },
     max: {
         type: String,
-    }
+    },
 })
 
 defineEmits(['update:modelValue'])

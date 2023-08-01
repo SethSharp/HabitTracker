@@ -1,13 +1,13 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
-import InputError from "@/Components/InputError.vue"
-import Checkbox from "@/Components/Checkbox.vue"
+import InputError from '@/Components/InputError.vue'
+import Checkbox from '@/Components/Checkbox.vue'
 
 const props = defineProps({
     preference: {
         type: Boolean,
-    }
+    },
 })
 
 let form = useForm({

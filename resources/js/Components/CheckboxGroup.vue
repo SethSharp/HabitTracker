@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import Checkbox from "@/Components/Checkbox.vue"
+import Checkbox from '@/Components/Checkbox.vue'
 
 const props = defineProps({
     modelValue: {
