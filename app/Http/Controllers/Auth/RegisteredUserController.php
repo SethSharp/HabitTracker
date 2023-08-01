@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Auth\Events\Registered;
+use App\Http\Events\RegisteredEvent;
 use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        event(new RegisteredEvent($user));
 
         Auth::login($user);
 

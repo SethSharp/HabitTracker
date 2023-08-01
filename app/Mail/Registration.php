@@ -13,7 +13,7 @@ class Registration extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(private $user)
+    public function __construct(private $name)
     {
         //
     }
@@ -22,7 +22,7 @@ class Registration extends Mailable
     {
         return new Envelope(
             from: new Address(config('mail.from.address'), config('mail.from.name')),
-            subject: 'Habit Reminder',
+            subject: 'Successful Registration with Habit Tracker',
         );
     }
 
