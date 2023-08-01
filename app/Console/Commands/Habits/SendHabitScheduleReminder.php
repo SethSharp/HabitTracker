@@ -16,7 +16,8 @@ class SendHabitScheduleReminder extends Command
     {
         $users = User::all();
         $users->map(function ($user) {
-            if (! is_null($user->email_verified_at)) {
+            $dailyPreference = $user->emailPreferences()->get()->first()?->daily_reminder;
+            if (! is_null($user->email_verified_at) && isset($dailyPreference) && $dailyPreference) {
                 Mail::to($user->email)->send(new HabitReminder($user->name));
             }
         });
