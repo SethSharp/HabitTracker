@@ -27,6 +27,12 @@ jobs:
           extensions: zip, sqlite3
           coverage: none
 
+      - name: Check composer compatability
+        run: composer check-platform-reqs
+        
+      - name: Install composer dependencies
+        run: composer install --no-cache --no-ansi --no-interaction --no-progress
+
       - name: Install node dependencies
         run: npm ci
 
