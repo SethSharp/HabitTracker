@@ -10,6 +10,7 @@ class RegisteredNotificationListener extends Notification
 {
     public function handle(Verified $event)
     {
-        $event->user->notify(RegistrationNotification::class);
+        $user = $event->user;
+        $user->notify(new RegistrationNotification());
     }
 }

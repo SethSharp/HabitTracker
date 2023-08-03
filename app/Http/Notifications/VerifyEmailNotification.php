@@ -10,7 +10,6 @@ class VerifyEmailNotification extends Notification
     public function handle(RegisteredEvent $event)
     {
         $user = $event->user;
-
         $user->sendEmailVerificationNotification();
     }
 }

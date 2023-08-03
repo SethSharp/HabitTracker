@@ -23,6 +23,7 @@ class RegistrationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage())
+                    ->subject('Habit Tracker Successful Registration')
                     ->line('Congratulations, you have successfully registered with us!')
                     ->action('Start completing your habits now!', route('dashboard'))
                     ->line('Hope you enjoy');
