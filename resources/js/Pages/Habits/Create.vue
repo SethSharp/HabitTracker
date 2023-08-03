@@ -1,14 +1,14 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import TextInput from "@/Components/TextInput.vue"
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue"
-import InputLabel from "@/Components/InputLabel.vue"
-import TextAreaInput from "@/Components/TextAreaInput.vue"
-import InputError from "@/Components/InputError.vue"
-import DateInput from "@/Components/DateInput.vue"
-import Checkbox from "@/Components/Checkbox.vue"
-import Select from "@/Components/Select.vue"
+import TextInput from '@/Components/TextInput.vue'
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import TextAreaInput from '@/Components/TextAreaInput.vue'
+import InputError from '@/Components/InputError.vue'
+import DateInput from '@/Components/DateInput.vue'
+import Checkbox from '@/Components/Checkbox.vue'
+import Select from '@/Components/Select.vue'
 
 const props = defineProps({
     frequencies: Array,
@@ -55,7 +55,12 @@ const submit = () => form.post(route('habit.store'))
                     <div class="py-2">
                         <InputLabel for="name"> Name </InputLabel>
 
-                        <TextInput id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
+                        <TextInput
+                            id="name"
+                            ref="name"
+                            v-model="form.name"
+                            class="mt-1 block w-full"
+                        />
 
                         <InputError :error="form.errors.name" class="mt-2" />
                     </div>
@@ -129,8 +134,8 @@ const submit = () => form.post(route('habit.store'))
                         />
 
                         <label class="!text-gray-500">
-                            If not selected and habit occurs on a day that is already passed will not be
-                            added for that day
+                            If not selected and habit occurs on a day that is already passed will
+                            not be added for that day
                         </label>
 
                         <InputError :error="form.errors.start_next_week" class="mt-2" />

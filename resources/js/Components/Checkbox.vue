@@ -14,7 +14,7 @@ const props = defineProps({
     },
     id: {
         type: String,
-    }
+    },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -38,7 +38,7 @@ const proxyChecked = computed({
                 v-model="proxyChecked"
                 :value="value"
                 type="checkbox"
-                class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                class="h-4 w-4 rounded border-gray-300 text-teal-500 focus:ring-teal-500"
                 v-bind="$attrs"
             />
 

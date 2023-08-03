@@ -1,15 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
-import TextInput from "@/Components/TextInput.vue"
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue"
-import DangerButton from "@/Components/Buttons/DangerButton.vue"
-import InputLabel from "@/Components/InputLabel.vue"
-import TextAreaInput from "@/Components/TextAreaInput.vue"
-import InputError from "@/Components/InputError.vue"
-import DateInput from "@/Components/DateInput.vue"
-import Checkbox from "@/Components/Checkbox.vue"
-import Select from "@/Components/Select.vue"
+import TextInput from '@/Components/TextInput.vue'
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
+import DangerButton from '@/Components/Buttons/DangerButton.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import TextAreaInput from '@/Components/TextAreaInput.vue'
+import InputError from '@/Components/InputError.vue'
+import DateInput from '@/Components/DateInput.vue'
+import Checkbox from '@/Components/Checkbox.vue'
+import Select from '@/Components/Select.vue'
 
 const props = defineProps({
     habit: Object,
@@ -56,8 +56,8 @@ const getWeekly = () => {
 }
 
 const getMonthly = () => {
-    if (! isNaN(occurrences[0])) {
-        return '';
+    if (!isNaN(occurrences[0])) {
+        return ''
     }
     return occurrences[0]
 }
@@ -85,7 +85,12 @@ const deleteHabit = () => form.delete(route('habit.delete', props.habit))
                     <div class="py-2">
                         <InputLabel for="name"> Name </InputLabel>
 
-                        <TextInput id="name" ref="name" v-model="form.name" class="mt-1 block w-full" />
+                        <TextInput
+                            id="name"
+                            ref="name"
+                            v-model="form.name"
+                            class="mt-1 block w-full"
+                        />
 
                         <InputError :error="form.errors.name" class="mt-2" />
                     </div>

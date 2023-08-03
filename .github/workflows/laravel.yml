@@ -1,28 +1,45 @@
 name: Laravel
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [ push ]
 
 jobs:
   laravel-tests:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+
+    env:
+      DB_DATABASE: testing
+      DB_USER: root
+      DB_PASSWORD: root
 
     steps:
-      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      - uses: actions/checkout@v3
+
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-
-      - uses: actions/checkout@v3
+          extensions: zip, sqlite3
+          coverage: none
 
       - name: Check composer compatability
         run: composer check-platform-reqs
 
       - name: Install composer dependencies
         run: composer install --no-cache --no-ansi --no-interaction --no-progress
+
+      - name: Install node dependencies
+        run: npm ci
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: Format code
         run: |
@@ -32,11 +49,18 @@ jobs:
           echo "running php-cs-fixer..."
           vendor/bin/php-cs-fixer fix
 
+      - name: Install composer dependencies
+        run: composer install --no-cache --no-ansi --no-interaction --no-progress
+
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Generate key
         run: php artisan key:generate
+
+      - name: Build frontend
+        run: |
+          npm run build
 
       - name: Execute tests
         env:

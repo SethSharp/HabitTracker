@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Traits;
 
-use DateTime;
 use App\Enums\Frequency;
 
 trait HabitStorageTrait

@@ -4,12 +4,12 @@ namespace Tests\Http\Traits;
 
 use Tests\TestCase;
 use App\Models\User;
+use Tests\Traits\RefreshDatabase;
 use App\Http\Controllers\Traits\ScheduledHabits;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ScheduledHabitsTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
     use ScheduledHabits;
 
     protected User $user;

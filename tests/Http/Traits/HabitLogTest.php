@@ -8,12 +8,12 @@ use App\Models\User;
 use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
+use Tests\Traits\RefreshDatabase;
 use App\Http\Controllers\Traits\HabitLog;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class HabitLogTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
     use HabitLog;
 
     protected User $user;

@@ -4,8 +4,8 @@ import { Head } from '@inertiajs/vue3'
 import { onBeforeMount, onMounted, ref } from 'vue'
 import { PlusCircleIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
-import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
-import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
+import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 
 const props = defineProps({
     habits: Array,

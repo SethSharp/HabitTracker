@@ -45,4 +45,8 @@ Route::middleware('auth')->name('profile.')->group(function () {
     Route::delete('/profile', \App\Http\Controllers\Profile\DeleteProfileController::class)->name('destroy');
 });
 
+Route::middleware('auth')->name('email-preferences.')->group(function () {
+    Route::patch('/email-preferences', \App\Http\Controllers\Profile\UpdateEmailPreferencesController::class)->name('update');
+});
+
 require __DIR__ . '/auth.php';

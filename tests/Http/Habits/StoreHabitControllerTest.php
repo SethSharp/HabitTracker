@@ -27,21 +27,24 @@ class StoreHabitControllerTest extends TestCase
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 0,
-            'daily_config' => '[2,3,4]'
+            'daily_config' => '[2,3,4]',
+            'start_next_week' => false,
         ];
 
         $this->weeklyArray = [
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 1,
-            'weekly_config' => 4
+            'weekly_config' => 4,
+            'start_next_week' => false,
         ];
 
         $this->monthlyArray = [
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 2,
-            'monthly_config' => '2023-7-17'
+            'monthly_config' => '2023-7-17',
+            'start_next_week' => false,
         ];
     }
 
@@ -85,7 +88,7 @@ class StoreHabitControllerTest extends TestCase
         ]);
 
         $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
-        $this->assertEquals($updatedHabit->occurrence_days, '"[1,2,3]"');
+        $this->assertEquals($updatedHabit->occurrence_days, '"[2,3,4]"');
     }
 
     /** @test */
@@ -151,7 +154,7 @@ class StoreHabitControllerTest extends TestCase
         ]);
 
         $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
-        $this->assertEquals($updatedHabit->occurrence_days, '["2023-07-17"]');
+        $this->assertEquals($updatedHabit->occurrence_days, '["2023-7-17"]');
     }
 
     /** @test */
@@ -161,7 +164,8 @@ class StoreHabitControllerTest extends TestCase
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 2,
-            'monthly_config' => '2023-7-17'
+            'monthly_config' => '2023-7-17',
+            'start_next_week' => false,
         ];
 
         $this->actingAs($this->user)
