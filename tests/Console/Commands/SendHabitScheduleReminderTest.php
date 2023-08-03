@@ -6,7 +6,6 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\EmailPreferences;
 use Tests\Traits\RefreshDatabase;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\DailyReminderNotification;
 

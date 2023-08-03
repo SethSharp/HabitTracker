@@ -2,9 +2,9 @@
 
 namespace App\Http\Notifications;
 
-use App\Notifications\RegistrationNotification;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Notifications\Notification;
+use App\Notifications\RegistrationNotification;
 
 class RegisteredNotificationListener extends Notification
 {

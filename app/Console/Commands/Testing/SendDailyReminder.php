@@ -10,6 +10,7 @@ use App\Http\Controllers\Traits\ScheduledHabits;
 class SendDailyReminder extends Command
 {
     use ScheduledHabits;
+
     protected $signature = 'testing:daily-reminder';
     protected $description = 'Send daily reminder email';
 

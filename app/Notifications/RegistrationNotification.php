@@ -24,7 +24,7 @@ class RegistrationNotification extends Notification
     {
         return (new MailMessage())
                     ->line('Congratulations, you have successfully registered with us!')
-                    ->action('Check them off here', route('dashboard'))
+                    ->action('Start completing your habits now!', route('dashboard'))
                     ->line('Hope you enjoy');
     }
 
