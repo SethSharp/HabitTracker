@@ -2,6 +2,9 @@
 
 namespace Tests\Http\Auth;
 
+use App\Notifications\RegistrationNotification;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
 use Tests\TestCase;
 use Tests\Traits\RefreshDatabase;
 use App\Http\Events\RegisteredEvent;

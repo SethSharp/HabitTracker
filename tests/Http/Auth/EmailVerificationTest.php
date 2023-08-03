@@ -2,6 +2,8 @@
 
 namespace Tests\Http\Auth;
 
+use App\Notifications\RegistrationNotification;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\URL;

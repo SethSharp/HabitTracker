@@ -3,9 +3,8 @@
 namespace App\Console\Commands\Habits;
 
 use App\Models\User;
-use App\Mail\HabitReminder;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
+use App\Notifications\DailyReminderNotification;
 
 class SendHabitScheduleReminder extends Command
 {
@@ -18,7 +17,7 @@ class SendHabitScheduleReminder extends Command
         $users->map(function ($user) {
             $dailyPreference = $user->emailPreferences()->get()->first()?->daily_reminder;
             if (! is_null($user->email_verified_at) && isset($dailyPreference) && $dailyPreference) {
-                Mail::to($user->email)->send(new HabitReminder($user->name));
+                $user->notify(new DailyReminderNotification());
             }
         });
     }

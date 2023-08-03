@@ -4,19 +4,20 @@ namespace Tests\Console\Commands;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Mail\HabitReminder;
 use App\Models\EmailPreferences;
 use Tests\Traits\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\DailyReminderNotification;
 
 class SendHabitScheduleReminderTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function mail_is_sent_when_command_is_called()
+    public function notification_is_sent_when_command_is_called()
     {
-        Mail::fake();
+        Notification::fake();
 
         $user = User::factory()->create([
             'email_verified_at' => now()
@@ -30,15 +31,13 @@ class SendHabitScheduleReminderTest extends TestCase
         $this->artisan('habits:send-habit-reminder')
             ->assertSuccessful();
 
-        Mail::assertSent(HabitReminder::class, function ($mail) use ($user) {
-            return $mail->hasTo($user->email);
-        });
+        Notification::assertSentTo($user, DailyReminderNotification::class);
     }
 
     /** @test */
-    public function mail_is_not_sent_if_email_is_not_verified()
+    public function notification_is_not_sent_if_email_is_not_verified()
     {
-        Mail::fake();
+        Notification::fake();
 
         User::factory()->create([
             'email_verified_at' => null
@@ -47,13 +46,13 @@ class SendHabitScheduleReminderTest extends TestCase
         $this->artisan('habits:send-habit-reminder')
             ->assertSuccessful();
 
-        Mail::assertNotSent(HabitReminder::class);
+        Notification::assertNothingSent();
     }
 
     /** @test */
     public function mail_is_not_sent_if_mail_preference_is_false()
     {
-        Mail::fake();
+        Notification::fake();
 
         $user = User::factory()->create([
             'email_verified_at' => null
@@ -66,6 +65,6 @@ class SendHabitScheduleReminderTest extends TestCase
         $this->artisan('habits:send-habit-reminder')
             ->assertSuccessful();
 
-        Mail::assertNotSent(HabitReminder::class);
+        Notification::assertNothingSent();
     }
 }
