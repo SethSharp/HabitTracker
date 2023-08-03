@@ -1,9 +1,14 @@
-Hey {{ $name }},
+<x-mail.notification-layout>
+    <x-slot:header>
+        <a href="{{$url}}">
+            Click here to tick them off
+        </a>
+    </x-slot:header>
 
-Have you ensured all your habits are ticked off for today?
-
-If not Click here to do so
-
-<x-mail::button :url="$url">
-    Click here to go to dashboard
-</x-mail::button>
+    {{-- Footer --}}
+    <x-slot:footer>
+        <div>
+            © {{ date('Y') }} Web Studios. @lang('All rights reserved.')
+        </div>
+    </x-slot:footer>
+</x-mail.notification-layout>
