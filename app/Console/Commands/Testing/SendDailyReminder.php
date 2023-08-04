@@ -3,10 +3,9 @@
 namespace App\Console\Commands\Testing;
 
 use App\Models\User;
-use App\Notifications\DailyReminderNotification;
 use Illuminate\Console\Command;
-use App\Notifications\RegistrationNotification;
 use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Notifications\DailyReminderNotification;
 
 class SendDailyReminder extends Command
 {
