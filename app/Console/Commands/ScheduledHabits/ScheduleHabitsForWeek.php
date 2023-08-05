@@ -27,7 +27,7 @@ class ScheduleHabitsForWeek extends Command
                 $occurrences = json_decode($habit->occurrence_days);
 
                 foreach ($occurrences as $occurrence) {
-                    HabitSchedule::factory()->create([
+                    HabitSchedule::create([
                         'habit_id' => $habit->id,
                         'user_id' => $user->id,
                         'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, Carbon::now())

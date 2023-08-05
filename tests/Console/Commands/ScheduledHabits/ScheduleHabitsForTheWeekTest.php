@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Console\Commands;
+namespace Tests\Console\Commands\ScheduledHabits;
 
+use App\Enums\Frequency;
+use App\Models\Habit;
+use App\Models\HabitSchedule;
+use App\Models\User;
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Habit;
-use App\Enums\Frequency;
-use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
 
-class ScheduleHabitsTest extends TestCase
+class ScheduleHabitsForTheWeekTest extends TestCase
 {
     use RefreshDatabase;
 

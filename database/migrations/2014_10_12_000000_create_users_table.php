@@ -17,8 +17,8 @@ return new class() extends Migration {
             $table->string('avatar')->default('/images/default-avatar.png');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('streak');
-            $table->integer('best_streak');
+            $table->integer('streak')->default(0);
+            $table->integer('best_streak')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

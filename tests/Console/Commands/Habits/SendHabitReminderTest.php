@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Console\Commands;
+namespace Tests\Console\Commands\Habits;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\EmailPreferences;
-use Tests\Traits\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
+use App\Models\User;
 use App\Notifications\DailyReminderNotification;
+use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
+use Tests\Traits\RefreshDatabase;
 
-class SendHabitScheduleReminderTest extends TestCase
+class SendHabitReminderTest extends TestCase
 {
     use RefreshDatabase;
 
