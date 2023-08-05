@@ -14,6 +14,7 @@ return new class() extends Migration {
             $table->string('description');
             $table->string('frequency');
             $table->json('occurrence_days')->nullable();
+            $table->integer('streak');
             $table->timestamps();
             $table->softDeletes();
         });

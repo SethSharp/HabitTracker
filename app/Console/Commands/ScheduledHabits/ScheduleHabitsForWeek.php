@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Habits;
+namespace App\Console\Commands\ScheduledHabits;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -8,7 +8,7 @@ use App\Models\HabitSchedule;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
-class ScheduleHabits extends Command
+class ScheduleHabitsForWeek extends Command
 {
     use ScheduledHabits;
     protected $signature = 'habits:schedule-habits';
@@ -35,5 +35,8 @@ class ScheduleHabits extends Command
                 }
             });
         });
+
+        // Clean up
+        $this->call('cleanup:scheduled-habits-table');
     }
 }
