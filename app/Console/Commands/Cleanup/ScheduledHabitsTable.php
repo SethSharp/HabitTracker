@@ -9,7 +9,7 @@ class ScheduledHabitsTable extends Command
 {
     use ScheduledHabits;
     protected $signature = 'cleanup:scheduled-habits-table';
-    protected $description = '';
+    protected $description = 'Once the week is over and counters have been updated, remove the previous week of scheduled habits';
 
     public function handle()
     {

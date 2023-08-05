@@ -12,7 +12,7 @@ class ScheduleHabitsForWeek extends Command
 {
     use ScheduledHabits;
     protected $signature = 'habits:schedule-habits';
-    protected $description = 'Set habits up for the week, which includes looking for habits occurring in the current week (Daily, weekly or monthly habits';
+    protected $description = 'Set habits up for the week based on the occurrence days of the habit';
 
     public function handle()
     {
@@ -35,8 +35,5 @@ class ScheduleHabitsForWeek extends Command
                 }
             });
         });
-
-        // Clean up
-        $this->call('cleanup:scheduled-habits-table');
     }
 }
