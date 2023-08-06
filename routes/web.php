@@ -15,12 +15,7 @@ use Illuminate\Foundation\Application;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => \Illuminate\Support\Facades\Auth::check(),
-        'canRegister' => Route::has('register'),
-    ]);
-});
+Route::get('/', \App\Http\Controllers\WelcomeController::class)->name('welcome');
 
 Route::middleware('auth')->name('habit.')->group(function () {
     Route::get('/habits/create', \App\Http\Controllers\Habits\CreateHabitController::class)->name('create');
