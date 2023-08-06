@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Cleanup;
 
+use App\Models\HabitSchedule;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
@@ -13,6 +14,9 @@ class ScheduledHabitsTable extends Command
 
     public function handle()
     {
+        $scheduledHabits = HabitSchedule::where('scheduled_completion', '<', date('Y-m-d'))
+            ->get();
 
+        $scheduledHabits->each->delete();
     }
 }
