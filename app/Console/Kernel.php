@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\Cleanup\HabitsTable;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\Counters\HabitStreak;
@@ -28,6 +29,13 @@ class Kernel extends ConsoleKernel
             ->after(function () {
                 // This closure will be executed after all other commands for the day
                 Artisan::call(ScheduledHabitsTable::class);
+            });
+
+        $schedule->command(HabitsTable::class)
+            ->mondays()
+            ->after(function () {
+                // This closure will be executed after all other commands for the day
+                Artisan::call(HabitsTable::class);
             });
 
         // Notifications
