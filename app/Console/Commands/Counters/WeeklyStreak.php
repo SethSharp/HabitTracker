@@ -5,7 +5,7 @@ namespace App\Console\Commands\Counters;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
-class CalculateWeeklyStreak extends Command
+class WeeklyStreak extends Command
 {
     use ScheduledHabits;
     protected $signature = 'counters:weekly-streak';
@@ -13,5 +13,10 @@ class CalculateWeeklyStreak extends Command
 
     public function handle()
     {
+        /**
+         * 1. Find / Go through today's scheduled habits
+         * 2. If all completed, increase streak counter
+         * 3. If not all completed, update best_streak if streak is greater
+         */
     }
 }
