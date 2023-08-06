@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
-use App\Console\Commands\Cleanup\HabitsTable;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\Cleanup\HabitsTable;
 use App\Console\Commands\Counters\HabitStreak;
 use App\Console\Commands\Counters\WeeklyStreak;
 use App\Console\Commands\Cleanup\ScheduledHabitsTable;

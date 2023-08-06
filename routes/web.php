@@ -1,6 +1,5 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 
@@ -20,6 +19,7 @@ Route::get('/', \App\Http\Controllers\WelcomeController::class)->name('welcome')
 Route::middleware('auth')->name('habit.')->group(function () {
     Route::get('/habits/create', \App\Http\Controllers\Habits\CreateHabitController::class)->name('create');
     Route::get('/habits/edit/{habit}', \App\Http\Controllers\Habits\EditHabitController::class)->name('edit');
+    Route::post('/habits/restore/{habit}', \App\Http\Controllers\Habits\RestoreHabitController::class)->name('restore');
     Route::post('habits/{habit}', \App\Http\Controllers\Habits\UpdateHabitController::class)->name('update');
     Route::delete('habits/delete/{habit}', \App\Http\Controllers\Habits\DeleteHabitController::class)->name('delete');
     Route::post('habits', \App\Http\Controllers\Habits\StoreHabitController::class)->name('store');

@@ -16,7 +16,7 @@ class ViewHabitsController extends Controller
     public function __invoke()
     {
         return Inertia::render('Habits/View', [
-            'habits' => Auth::user()->habits()->get()->toArray(),
+            'habits' => Auth::user()->habits()->withTrashed()->get()->toArray(),
             'log' => $this->getHabitLog(Auth::user(), $this->getDateXDaysAgo(14), $this->getDateXDaysAgo(1)),
         ]);
     }

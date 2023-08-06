@@ -33,7 +33,7 @@ const props = defineProps({
         }`"
     >
         <div
-            class="px-6 lg:px-8 bg-gray-200 mx-4 my-4 py-2 rounded-xl border-2"
+            class="px-4 bg-gray-200 mx-4 my-4 py-2 rounded-xl border-2"
             :class="`
                 ${heading ? 'border-indigo-500 bg-indigo-500 bg-opacity-25' : 'border-gray-500'}
                 ${danger ? 'border-red-300 bg-red-300 bg-opacity-25' : ''}

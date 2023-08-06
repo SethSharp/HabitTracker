@@ -112,13 +112,21 @@ const selectedUser = (id, index) => {
                         >
                         <template #heading>
                             <div v-if="habit" class="sm:flex">
-                                <span class="w-3/4 h-fit py-2 text-2xl"> {{ habit.name }} </span>
-                                <div class="w-1/4 flex justify-end items-center">
+                                <span class="w-3/4 truncate h-fit py-2 text-2xl"> {{ habit.name }} </span>
+                                <div class="w-fit flex justify-end items-center">
                                     <SecondaryButton
+                                        v-if="habit.deleted_at === null"
                                         @click="this.$inertia.visit(route('habit.edit', habit))"
                                         class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
                                     >
                                         Edit
+                                    </SecondaryButton>
+                                    <SecondaryButton
+                                        v-else
+                                        @click="this.$inertia.post(route('habit.restore', habit))"
+                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
+                                    >
+                                        Restore
                                     </SecondaryButton>
                                 </div>
                             </div>

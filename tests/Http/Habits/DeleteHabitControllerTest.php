@@ -2,7 +2,6 @@
 
 namespace Tests\Http\Habits;
 
-use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
