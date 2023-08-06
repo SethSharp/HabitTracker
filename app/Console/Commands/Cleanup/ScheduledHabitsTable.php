@@ -14,9 +14,10 @@ class ScheduledHabitsTable extends Command
 
     public function handle()
     {
+        // Get all schedules even ones deleted already
         $scheduledHabits = HabitSchedule::where('scheduled_completion', '<', date('Y-m-d'))
-            ->get();
+            ->withTrashed()->get();
 
-        $scheduledHabits->each->delete();
+        $scheduledHabits->map(fn ($habit) => $habit->forceDelete());
     }
 }
