@@ -2,6 +2,7 @@
 
 namespace Tests\Console\Commands\Counters;
 
+use App\Enums\Frequency;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
@@ -16,23 +17,24 @@ class WeeklyStreakTest extends TestCase
     /** @test */
     public function user_streak_is_reset_to_0_if_not_completed()
     {
-        Carbon::setTestNow(Carbon::parse("2023-07-17"));
-
         $user = User::factory()->create([
             'streak' => 2,
             'best_streak' => 4
         ]);
 
-        Habit::factory()->create([
+        $habit = Habit::factory()->create([
             'user_id' => $user->id,
             'occurrence_days' => '[1]'
         ]);
 
-        // Setup scheduled habits
-        $this->artisan('habits:schedule-habits')
-            ->assertSuccessful();
+        HabitSchedule::factory()->create([
+            'habit_id' => $habit->id,
+            'user_id' => $user->id,
+            'scheduled_completion' => "2023-08-02"
+        ]);
 
-        Carbon::setTestNow(Carbon::parse("2023-07-18"));
+        // Simulates the monday that it is run on
+        Carbon::setTestNow(Carbon::parse("2023-08-07"));
 
         $this->artisan('counters:weekly-streak')
             ->assertSuccessful();
@@ -47,27 +49,37 @@ class WeeklyStreakTest extends TestCase
     /** @test */
     public function user_best_streak_is_updated_to_current_streak_if_higher()
     {
-        Carbon::setTestNow(Carbon::parse("2023-07-17"));
-
         $user = User::factory()->create([
             'streak' => 4,
             'best_streak' => 4
         ]);
 
-        Habit::factory()->create([
+        $habit1 = Habit::factory()->create([
             'user_id' => $user->id,
             'occurrence_days' => '[1]'
         ]);
 
-        // Setup scheduled habits
-        $this->artisan('habits:schedule-habits')
-            ->assertSuccessful();
+        $habit2 = Habit::factory()->create([
+            'user_id' => $user->id,
+            'frequency' => Frequency::MONTHLY,
+            'occurrence_days' => '["2023-08-07"]'
+        ]);
 
-        Carbon::setTestNow(Carbon::parse("2023-07-18"));
+        HabitSchedule::factory()->create([
+            'habit_id' => $habit1->id,
+            'user_id' => $user->id,
+            'completed' => 1,
+            'scheduled_completion' => "2023-08-02"
+        ]);
 
-        $scheduledHabit = HabitSchedule::all()->first();
+        HabitSchedule::factory()->create([
+            'habit_id' => $habit2->id,
+            'user_id' => $user->id,
+            'completed' => 0,
+            'scheduled_completion' => "2023-08-07"
+        ]);
 
-        $scheduledHabit->update(['completed' => 1]);
+        Carbon::setTestNow(Carbon::parse("2023-08-07"));
 
         $this->artisan('counters:weekly-streak')
             ->assertSuccessful();
@@ -82,27 +94,24 @@ class WeeklyStreakTest extends TestCase
     /** @test */
     public function user_streak_is_stored_if_completed()
     {
-        Carbon::setTestNow(Carbon::parse("2023-07-17"));
-
         $user = User::factory()->create([
             'streak' => 3,
             'best_streak' => 5,
         ]);
 
-        Habit::factory()->create([
+        $habit = Habit::factory()->create([
             'user_id' => $user->id,
             'occurrence_days' => '[1]'
         ]);
 
-        // Setup scheduled habits
-        $this->artisan('habits:schedule-habits')
-            ->assertSuccessful();
+        HabitSchedule::factory()->create([
+            'habit_id' => $habit->id,
+            'user_id' => $user->id,
+            'completed' => 1,
+            'scheduled_completion' => "2023-08-02"
+        ]);
 
-        Carbon::setTestNow(Carbon::parse("2023-07-18"));
-
-        $scheduledHabit = HabitSchedule::all()->first();
-
-        $scheduledHabit->update(['completed' => 1]);
+        Carbon::setTestNow(Carbon::parse("2023-08-7"));
 
         $this->artisan('counters:weekly-streak')
             ->assertSuccessful();
@@ -117,8 +126,6 @@ class WeeklyStreakTest extends TestCase
     /** @test */
     public function multiple_users_streak_are_stored_if_completed()
     {
-        Carbon::setTestNow(Carbon::parse("2023-07-17"));
-
         $user1 = User::factory()->create([
             'streak' => 3,
             'best_streak' => 5,
@@ -129,25 +136,31 @@ class WeeklyStreakTest extends TestCase
             'best_streak' => 4,
         ]);
 
-        Habit::factory()->create([
+        $habit1 = Habit::factory()->create([
             'user_id' => $user1->id,
-            'occurrence_days' => '[1]'
+            'occurrence_days' => '[3]'
         ]);
 
-        Habit::factory()->create([
+        $habit2 = Habit::factory()->create([
             'user_id' => $user2->id,
-            'occurrence_days' => '[1]'
+            'occurrence_days' => '[3]'
         ]);
 
-        // Setup scheduled habits
-        $this->artisan('habits:schedule-habits')
-            ->assertSuccessful();
+        HabitSchedule::factory()->create([
+            'habit_id' => $habit1->id,
+            'user_id' => $user1->id,
+            'completed' => 1,
+            'scheduled_completion' => "2023-08-02"
+        ]);
 
-        Carbon::setTestNow(Carbon::parse("2023-07-18"));
+        HabitSchedule::factory()->create([
+            'habit_id' => $habit2->id,
+            'user_id' => $user2->id,
+            'completed' => 0,
+            'scheduled_completion' => "2023-08-02"
+        ]);
 
-        $scheduledHabits = HabitSchedule::all();
-
-        $scheduledHabits[0]->update(['completed' => 1]);
+        Carbon::setTestNow(Carbon::parse("2023-08-07"));
 
         $this->artisan('counters:weekly-streak')
             ->assertSuccessful();

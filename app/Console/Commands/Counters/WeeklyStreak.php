@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Counters;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
@@ -16,7 +17,8 @@ class WeeklyStreak extends Command
     {
         $users = User::all();
         $users->map(function ($user) {
-            $scheduledHabits = $user->scheduledHabits()->get();
+            $scheduledHabits = $user->scheduledHabits()->where('scheduled_completion', '<', Carbon::today())->get();
+            // TODO: Note somewhere in UI, if no habits for that day, will be a fail... UAT?
             $streak = true;
             $scheduledHabits->map(function ($habit) use (&$streak) {
                 if ($habit->completed == 0) {

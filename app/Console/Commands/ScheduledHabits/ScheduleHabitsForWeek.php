@@ -16,7 +16,6 @@ class ScheduleHabitsForWeek extends Command
 
     public function handle()
     {
-        // TODO: Add a check to ensure the command is run on a monday
         $users = User::all();
         $users->map(function ($user) {
             $habits = $user->habits()->get();
