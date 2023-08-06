@@ -22,21 +22,20 @@ class HabitStreakTest extends TestCase
 
         Habit::factory()->create([
             'user_id' => $user->id,
-            'occurrence_days' => '[1]'
+            'occurrence_days' => '[1]',
+            'streak' => 1
         ]);
 
         // Setup scheduled habits
         $this->artisan('habits:schedule-habits')
             ->assertSuccessful();
 
-        Carbon::setTestNow(Carbon::parse("2023-07-18"));
-
         $this->artisan('counters:habit-streak')
             ->assertSuccessful();
 
         $this->assertDatabaseHas('habits', [
             'user_id' => $user->id,
-            'streak' => 0
+            'streak' => 0,
         ]);
     }
 
@@ -49,14 +48,13 @@ class HabitStreakTest extends TestCase
 
         Habit::factory()->create([
             'user_id' => $user->id,
-            'occurrence_days' => '[1]'
+            'occurrence_days' => '[1]',
+            'streak' => 1
         ]);
 
         // Setup scheduled habits
         $this->artisan('habits:schedule-habits')
             ->assertSuccessful();
-
-        Carbon::setTestNow(Carbon::parse("2023-07-18"));
 
         $scheduledHabit = HabitSchedule::all()->first();
 
@@ -67,12 +65,12 @@ class HabitStreakTest extends TestCase
 
         $this->assertDatabaseHas('habits', [
             'user_id' => $user->id,
-            'streak' => 1
+            'streak' => 2
         ]);
     }
 
     /** @test */
-    public function multiple_users_habit_streaks_are_stored_if_completed()
+    public function handle_users_with_different_completion_statuses()
     {
         Carbon::setTestNow(Carbon::parse("2023-07-17"));
 
@@ -81,12 +79,14 @@ class HabitStreakTest extends TestCase
 
         Habit::factory()->create([
             'user_id' => $user1->id,
-            'occurrence_days' => '[1]'
+            'occurrence_days' => '[1]',
+            'streak' => 1
         ]);
 
         Habit::factory()->create([
             'user_id' => $user2->id,
-            'occurrence_days' => '[1]'
+            'occurrence_days' => '[1]',
+            'streak' => 1,
         ]);
 
         // Setup scheduled habits
@@ -97,14 +97,12 @@ class HabitStreakTest extends TestCase
 
         $scheduledHabits[0]->update(['completed' => 1]);
 
-        Carbon::setTestNow(Carbon::parse("2023-07-18"));
-
         $this->artisan('counters:habit-streak')
             ->assertSuccessful();
 
         $this->assertDatabaseHas('habits', [
             'user_id' => $user1->id,
-            'streak' => 1
+            'streak' => 2
         ]);
 
         $this->assertDatabaseHas('habits', [

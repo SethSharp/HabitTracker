@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Counters;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
@@ -16,15 +17,15 @@ class HabitStreak extends Command
     {
         $users = User::all();
         $users->map(function ($user) {
-            $scheduledHabits = $user->scheduledHabits()->get();
+            $scheduledHabits = $user->scheduledHabits()->where('scheduled_completion', Carbon::today())->get();
 
             $scheduledHabits->map(function ($habit) {
-                if ($habit->completed) {
-                    $habit->habit()->increment('streak');
+                if ($habit->completed == 1) {
+                    $habit->habit->increment('streak');
                 } else {
-                    $habit->habit()->streak = 0;
+                    $habit->habit->streak = 0;
                 }
-                $habit->save();
+                $habit->habit->save();
             });
         });
     }
