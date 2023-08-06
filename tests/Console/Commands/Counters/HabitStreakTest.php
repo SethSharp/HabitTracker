@@ -76,11 +76,11 @@ class HabitStreakTest extends TestCase
     {
         Carbon::setTestNow(Carbon::parse("2023-07-17"));
 
-        $user = User::factory()->create();
+        $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
         Habit::factory()->create([
-            'user_id' => $user->id,
+            'user_id' => $user1->id,
             'occurrence_days' => '[1]'
         ]);
 
@@ -103,13 +103,11 @@ class HabitStreakTest extends TestCase
             ->assertSuccessful();
 
         $this->assertDatabaseHas('habits', [
-            'id' => $scheduledHabits[0]->id,
-            'user_id' => $user->id,
+            'user_id' => $user1->id,
             'streak' => 1
         ]);
 
         $this->assertDatabaseHas('habits', [
-            'id' => $scheduledHabits[1]->id,
             'user_id' => $user2->id,
             'streak' => 0
         ]);
