@@ -16,7 +16,7 @@ use Tests\Traits\RefreshDatabase;
 class HabitStreakTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /** @test */
     public function streak_is_reset_to_0_if_not_completed()
     {
