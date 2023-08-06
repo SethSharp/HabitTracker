@@ -14,11 +14,6 @@ class WeeklyStreak extends Command
 
     public function handle()
     {
-        /**
-         * 1. Find / Go through today's scheduled habits
-         * 2. If all completed, increase streak counter
-         * 3. If not all completed, update best_streak if streak is greater
-         */
         $users = User::all();
         $users->map(function ($user) {
             $scheduledHabits = $user->scheduledHabits()->get();

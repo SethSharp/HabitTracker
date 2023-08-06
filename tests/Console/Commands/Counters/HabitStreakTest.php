@@ -2,15 +2,11 @@
 
 namespace Tests\Console\Commands\Counters;
 
-use App\Console\Commands\Counters\HabitStreak;
-use App\Models\EmailPreferences;
+use Carbon\Carbon;
+use Tests\TestCase;
+use App\Models\User;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
-use App\Models\User;
-use App\Notifications\DailyReminderNotification;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
 use Tests\Traits\RefreshDatabase;
 
 class HabitStreakTest extends TestCase
