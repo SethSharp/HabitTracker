@@ -72,7 +72,11 @@ const form = useForm({
 })
 
 const submit = () => form.post(route('habit.update', props.habit))
-const deleteHabit = () => form.delete(route('habit.delete', props.habit))
+const deleteHabit = () => {
+    if (window.confirm('Are you sure you want to delete this habit?')) {
+        form.delete(route('habit.delete', props.habit))
+    }
+}
 </script>
 
 <template>
