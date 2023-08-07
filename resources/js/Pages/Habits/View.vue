@@ -115,14 +115,14 @@ const selectedUser = (id, index) => {
                                     <SecondaryButton
                                         v-if="habit.deleted_at === null"
                                         @click="this.$inertia.visit(route('habit.edit', habit))"
-                                        class="rounded-lg font-medium border-2 bg-yellow-200 border-yellow-400 text-yellow-500 p-2 hover:bg-yellow-300"
+                                        class="rounded-lg font-medium border-2 bg-gray-200 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
                                     >
                                         Edit
                                     </SecondaryButton>
                                     <SecondaryButton
                                         v-else
                                         @click="this.$inertia.patch(route('habit.restore', habit))"
-                                        class="rounded-lg font-medium border-2 bg-yellow-200 border-yellow-400 text-yellow-500 p-2 hover:bg-yellow-300"
+                                        class="rounded-lg font-medium border-2 bg-gray-200 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
                                     >
                                         Restore
                                     </SecondaryButton>
