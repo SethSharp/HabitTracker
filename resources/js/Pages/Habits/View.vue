@@ -1,13 +1,12 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { PlusCircleIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
-import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 
-const props = defineProps({
+let props = defineProps({
     habits: Array,
     log: Object,
 })
@@ -62,14 +61,13 @@ const selectedUser = (id, index) => {
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-12">
                 <div class="p-4">
                     <Card class="min-h-[600px] max-h-[600px]">
-                        >
                         <template #heading>
                             <div class="sm:flex">
                                 <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
                                 <div class="w-1/4 flex justify-end items-center">
                                     <SecondaryButton
                                         @click="this.$inertia.visit(route('habit.create'))"
-                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
+                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
                                     >
                                         Create
                                     </SecondaryButton>
@@ -117,14 +115,14 @@ const selectedUser = (id, index) => {
                                     <SecondaryButton
                                         v-if="habit.deleted_at === null"
                                         @click="this.$inertia.visit(route('habit.edit', habit))"
-                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
+                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
                                     >
                                         Edit
                                     </SecondaryButton>
                                     <SecondaryButton
                                         v-else
-                                        @click="this.$inertia.post(route('habit.restore', habit))"
-                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-300"
+                                        @click="this.$inertia.patch(route('habit.restore', habit.id))"
+                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
                                     >
                                         Restore
                                     </SecondaryButton>
