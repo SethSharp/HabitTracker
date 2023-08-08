@@ -33,13 +33,12 @@ const internalValue = computed({
 </script>
 
 <template>
-    <div v-for="(item, index) in items" class="cursor-pointer flex mt-8">
+    <div v-for="(item, index) in items" class="cursor-pointer flex mt-4">
         <Checkbox
             :id="item.label ?? item"
             :key="index"
             v-model="internalValue"
             :value="item.value ?? item"
-            class="!w-10 !h-10 !text-green-500 !rounded-full !hover:bg-gray-200 !focus:ring-green-500"
         />
         <div class="w-full">
             <Menu>

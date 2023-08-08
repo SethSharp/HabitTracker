@@ -86,8 +86,8 @@ const selectedUser = (id, index) => {
                                             class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
                                             :class="`${
                                                 index == selectedHabit
-                                                    ? 'bg-teal-300 hover:bg-teal-400'
-                                                    : 'bg-gray-200 hover:bg-gray-300'
+                                                    ? 'bg-primary hover:bg-primaryOpacity'
+                                                    : 'bg-gray-200 hover:bg-primary'
                                             }`"
                                         >
                                             {{ habit.name }}
@@ -155,6 +155,13 @@ const selectedUser = (id, index) => {
                                                 {{ createString() }}
                                             </span>
                                         </div>
+                                    </div>
+                                    <div class="p-4 flex">
+                                        <span class="font-bold"> Colour: </span>
+                                        <div
+                                            class="ml-2 w-6 h-6 rounded-lg"
+                                            :style="`background-color: ${habit.colour}`"
+                                        > </div>
                                     </div>
                                 </div>
                                 <div v-else class="text-center">No habit selected</div>

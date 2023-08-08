@@ -18,7 +18,8 @@ class Habit extends Model
         'description',
         'frequency',
         'occurrence_days',
-        'password',
+        'icon',
+        'colour',
     ];
 
     protected $casts = [

@@ -20,6 +20,7 @@ class UpdateHabitRequest extends FormRequest
             'daily_config' => ['required_if:frequency,0'],
             'weekly_config' => ['required_if:frequency,1'],
             'monthly_config' => ['required_if:frequency,2'],
+            'colour' => ['required']
         ];
     }
 }

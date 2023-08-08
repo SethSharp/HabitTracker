@@ -29,6 +29,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => '[2,3,4]',
             'start_next_week' => false,
+            'colour' => '#00cedf'
         ];
 
         $this->weeklyArray = [
@@ -37,6 +38,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 1,
             'weekly_config' => 4,
             'start_next_week' => false,
+            'colour' => '#00cedf'
         ];
 
         $this->monthlyArray = [
@@ -45,6 +47,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 2,
             'monthly_config' => '2023-7-17',
             'start_next_week' => false,
+            'colour' => '#00cedf'
         ];
     }
 
@@ -117,7 +120,8 @@ class StoreHabitControllerTest extends TestCase
             'description' => 'Testing description',
             'frequency' => 0,
             'daily_config' => [2,3,4],
-            'start_next_week' => false
+            'start_next_week' => false,
+            'colour' => '#00cedf'
         ];
 
         $this->actingAs($this->user)
@@ -151,6 +155,7 @@ class StoreHabitControllerTest extends TestCase
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 'monthly',
+            'colour' => '#00cedf'
         ]);
 
         $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
@@ -166,6 +171,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 2,
             'monthly_config' => '2023-7-17',
             'start_next_week' => false,
+            'colour' => '#00cedf'
         ];
 
         $this->actingAs($this->user)

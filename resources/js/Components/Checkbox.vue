@@ -32,13 +32,13 @@ const proxyChecked = computed({
 
 <template>
     <div class="relative flex items-start">
-        <div class="flex h-5 items-center">
+        <div class="flex items-center">
             <input
                 :id="id"
                 v-model="proxyChecked"
                 :value="value"
                 type="checkbox"
-                class="h-4 w-4 rounded border-gray-300 text-teal-500 focus:ring-teal-500"
+                class="h-8 w-8 rounded-full border-transparent text-primary hover:bg-primary hover:bg-opacity-25 focus:ring-transparent"
                 v-bind="$attrs"
             />
 

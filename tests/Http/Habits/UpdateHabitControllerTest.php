@@ -26,21 +26,24 @@ class UpdateHabitControllerTest extends TestCase
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 0,
-            'daily_config' => '[1,2,3]'
+            'daily_config' => '[1,2,3]',
+            'colour' => '#00cedf'
         ];
 
         $this->weeklyArray = [
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 1,
-            'weekly_config' => 4
+            'weekly_config' => 4,
+            'colour' => '#00cedf'
         ];
 
         $this->monthlyArray = [
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 2,
-            'monthly_config' => '2023-7-17'
+            'monthly_config' => '2023-7-17',
+            'colour' => '#00cedf'
         ];
     }
 

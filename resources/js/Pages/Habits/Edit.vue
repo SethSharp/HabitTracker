@@ -1,6 +1,7 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
+import PickColors from 'vue-pick-colors'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import TextInput from '@/Components/TextInput.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import DangerButton from '@/Components/Buttons/DangerButton.vue'
@@ -69,6 +70,7 @@ const form = useForm({
     daily_config: getDaily(),
     weekly_config: getWeekly(),
     monthly_config: getMonthly(),
+    colour: props.habit.colour,
 })
 
 const submit = () => form.post(route('habit.update', props.habit))
@@ -157,6 +159,13 @@ const deleteHabit = () => {
                         />
 
                         <InputError :error="form.errors.monthly_config" class="mt-2" />
+                    </div>
+                    <div class="py-2">
+                        <InputLabel for="colour"> Colour </InputLabel>
+
+                        <PickColors v-model:value="form.colour"/>
+
+                        <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
                 </div>
 
