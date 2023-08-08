@@ -23,24 +23,8 @@ class Kernel extends ConsoleKernel
         $schedule->command(HabitStreak::class)->daily();
         $schedule->command(WeeklyStreak::class)->daily();
 
-        // Cleanup
-        $schedule->command(ScheduledHabitsTable::class)
-            ->mondays()
-            ->after(function () {
-                // This closure will be executed after all other commands for the day
-                Artisan::call(ScheduledHabitsTable::class);
-            });
-
-        $schedule->command(HabitsTable::class)
-            ->mondays()
-            ->after(function () {
-                // This closure will be executed after all other commands for the day
-                Artisan::call(HabitsTable::class);
-            });
-
         // Notifications
         $schedule->command(SendDailyHabitReminder::class)->dailyAt('17:00');
-        // TODO: Start of the week notification
     }
 
     protected function commands(): void
