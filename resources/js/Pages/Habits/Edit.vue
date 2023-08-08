@@ -163,7 +163,7 @@ const deleteHabit = () => {
                     <div class="py-2">
                         <InputLabel for="colour"> Colour </InputLabel>
 
-                        <PickColors v-model:value="form.colour"/>
+                        <PickColors v-model:value="form.colour" />
 
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>

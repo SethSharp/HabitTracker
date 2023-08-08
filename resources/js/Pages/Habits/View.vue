@@ -110,7 +110,9 @@ const selectedUser = (id, index) => {
                         >
                         <template #heading>
                             <div v-if="habit" class="sm:flex">
-                                <span class="w-3/4 truncate h-fit py-2 text-2xl"> {{ habit.name }} </span>
+                                <span class="w-3/4 truncate h-fit py-2 text-2xl">
+                                    {{ habit.name }}
+                                </span>
                                 <div class="w-fit flex justify-end items-center">
                                     <SecondaryButton
                                         v-if="habit.deleted_at === null"
@@ -161,7 +163,7 @@ const selectedUser = (id, index) => {
                                         <div
                                             class="ml-2 w-6 h-6 rounded-lg"
                                             :style="`background-color: ${habit.colour}`"
-                                        > </div>
+                                        ></div>
                                     </div>
                                 </div>
                                 <div v-else class="text-center">No habit selected</div>
