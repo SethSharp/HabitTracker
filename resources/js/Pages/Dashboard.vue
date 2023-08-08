@@ -192,7 +192,7 @@ const submit = () => {
                 You have ticked off all of your habits for today! Now you can relax knowing your
                 achievement, keep it up!
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 mx-12 space-x-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-6">
                 <Card>
                     <template #heading>
                         <span class="h-fit pt-2 text-2xl"> Today's Habits </span>
@@ -243,29 +243,6 @@ const submit = () => {
                         </div>
                     </template>
                 </Card>
-                <Card>
-                    <template #heading>
-                        <span class="h-fit py-2 text-2xl"> Habit Log </span>
-                    </template>
-                    <template #content>
-                        <div v-if="log.length !== 0" class="min-h-[450px] max-h-[550px]">
-                            <div
-                                v-for="schedule in log"
-                                class="my-4"
-                                :class="
-                                    schedule.completed === 0
-                                        ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
-                                        : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'
-                                "
-                            >
-                                {{ schedule.habit.name }}
-                                {{ schedule.completed ? 'completed on' : 'was not completed on' }}
-                                {{ dateHelper(schedule.scheduled_completion) }}
-                            </div>
-                        </div>
-                    </template>
-                </Card>
-                <div></div>
             </div>
             <div class="mx-12">
                 <Card>
