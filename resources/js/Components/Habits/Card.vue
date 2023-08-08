@@ -35,7 +35,7 @@ const props = defineProps({
         <div
             class="px-4 bg-gray-200 mx-4 my-4 py-2 rounded-xl border-2"
             :class="`
-                ${heading ? 'border-indigo-500 bg-indigo-500 bg-opacity-25' : 'border-gray-500'}
+                ${heading ? 'border-primary bg-primary bg-opacity-25' : 'border-gray-500'}
                 ${danger ? 'border-red-300 bg-red-300 bg-opacity-25' : ''}
                 ${success ? 'border-green-300 bg-green-300 bg-opacity-25' : ''}
                 ${warning ? 'border-yellow-300 bg-yellow-300 bg-opacity-25' : ''}

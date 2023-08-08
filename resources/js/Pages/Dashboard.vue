@@ -212,7 +212,6 @@ const submit = () => {
                                             v-model="form.habits"
                                             :items="habitConfig"
                                             :disabled="disabled"
-                                            class="mt-1 block w-full"
                                         />
 
                                         <InputError :error="form.errors.habits" class="mt-2" />
