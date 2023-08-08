@@ -19,6 +19,10 @@ let headingLinksConfig = [
         href: 'habits',
     },
     {
+        name: 'Statistics',
+        href: 'statistics',
+    },
+    {
         name: 'Competition',
         href: 'competition',
     },
