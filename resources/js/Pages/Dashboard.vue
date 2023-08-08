@@ -14,6 +14,7 @@ import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
+import Sunrise from "@/Components/Icons/Sunrise.vue";
 
 const props = defineProps({
     dailyHabits: Array,
@@ -185,6 +186,10 @@ const submit = () => {
 
     <AuthenticatedLayout>
         <div class="py-2">
+            <div class="bg-primary">
+                some logo
+                <Sunrise/>
+            </div>
             <div
                 v-if="isCompleted"
                 class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 mx-12"
