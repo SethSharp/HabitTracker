@@ -15,7 +15,7 @@ return new class() extends Migration {
             $table->string('frequency');
             $table->json('occurrence_days')->nullable();
             $table->integer('streak')->default(0);
-            $table->string('icon')->nullable();
+            $table->string('icon')->default('Default');
             $table->string('colour')->default('#00cedf');
             $table->timestamps();
             $table->softDeletes();
