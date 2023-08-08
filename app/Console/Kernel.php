@@ -2,12 +2,9 @@
 
 namespace App\Console;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\Scheduling\Schedule;
-use App\Console\Commands\Cleanup\HabitsTable;
 use App\Console\Commands\Counters\HabitStreak;
 use App\Console\Commands\Counters\WeeklyStreak;
-use App\Console\Commands\Cleanup\ScheduledHabitsTable;
 use App\Console\Commands\Habits\SendDailyHabitReminder;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ScheduledHabits\ScheduleHabitsForWeek;
