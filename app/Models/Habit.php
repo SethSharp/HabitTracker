@@ -18,6 +18,7 @@ class Habit extends Model
         'description',
         'frequency',
         'occurrence_days',
+        'icon',
         'colour',
     ];
 
