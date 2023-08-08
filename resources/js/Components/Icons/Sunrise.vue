@@ -1,9 +1,6 @@
 <template>
     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="23" height="24" transform="translate(0.5 0.871826)" fill="white"/>
-        <ellipse cx="12" cy="15" rx="9" ry="8" fill="black"/>
-        <ellipse cx="12" cy="15" rx="8" ry="7" fill="white"/>
-        <rect x="2" y="14" width="20" height="9" fill="white"/>
+        <path d="M12 7C5 7 4 15 4 15H20C20 15 19 7 12 7Z" stroke="black"/>
         <rect x="2" y="14" width="20" height="1" rx="0.5" fill="black"/>
         <rect x="4" y="16" width="16" height="1" rx="0.5" fill="black"/>
         <rect x="6" y="18" width="12" height="1" rx="0.5" fill="black"/>

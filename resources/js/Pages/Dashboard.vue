@@ -14,7 +14,6 @@ import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
-import * as Icons from '@/Components/Icons'
 
 const props = defineProps({
     dailyHabits: Array,
@@ -280,10 +279,7 @@ const submit = () => {
                                                     v-show="calculateGray(habit)"
                                                     class="w-5 h-5 mr-1 mt-0.5 text-gray-600"
                                                 />
-                                                <div class="flex">
-                                                    <span> {{ habit.habit.name }} </span>
-                                                    <component class="w-6 h-6" :is="Icons[habit.icon]"/>
-                                                </div>
+                                                <span> {{ habit.habit.name }} </span>
                                             </li>
                                         </ul>
                                     </div>
