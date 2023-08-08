@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Console\Command;
 use App\Notifications\DailyReminderNotification;
 
-class SendHabitScheduleReminder extends Command
+class SendDailyHabitReminder extends Command
 {
     protected $signature = 'habits:send-habit-reminder';
     protected $description = 'Emails to users about their habits for the day';

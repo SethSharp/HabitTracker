@@ -17,7 +17,7 @@ class DeleteHabitController extends Controller
     {
         $habit->delete();
 
-        $habits = Auth::user()->scheduledHabits()->get();
+        $habits = Auth::user()->scheduledHabits()->where('habit_id', $habit->id)->get();
 
         $habits->map(function ($habit) {
             $habit->delete();

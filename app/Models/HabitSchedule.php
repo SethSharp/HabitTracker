@@ -13,6 +13,8 @@ class HabitSchedule extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'habit_id',
+        'user_id',
         'scheduled_completion',
         'completed',
     ];
