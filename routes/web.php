@@ -1,6 +1,5 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 
@@ -33,6 +32,7 @@ Route::middleware('auth')->name('schedule.')->group(function () {
 Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/habits', \App\Http\Controllers\Habits\ViewHabitsController::class)->middleware(['auth', 'verified'])->name('habits');
 Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->middleware(['auth', 'verified'])->name('competition');
+Route::get('/statistics', \App\Http\Controllers\Pages\ShowStatisticsController::class)->middleware(['auth', 'verified'])->name('statistics');
 
 Route::middleware('auth')->name('profile.')->group(function () {
     Route::get('/profile', \App\Http\Controllers\Profile\EditProfileController::class)->name('edit');
