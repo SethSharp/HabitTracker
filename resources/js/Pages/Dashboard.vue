@@ -198,7 +198,7 @@ const submit = () => {
                         <span class="h-fit pt-2 text-2xl"> Today's Habits </span>
                     </template>
                     <template #content>
-                        <div class="mx-2">
+                        <div class="mx-2 my-5">
                             <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
                                 <form @submit="submit">
                                     <div class="py-2">
