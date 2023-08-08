@@ -28,8 +28,6 @@ class UpdateHabitController extends Controller
             'colour' => $data['colour']
         ]);
 
-        ray($data['colour']);
-
         $habit->save();
 
         return Inertia::location(url('habits'));
