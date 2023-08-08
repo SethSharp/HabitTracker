@@ -156,6 +156,13 @@ const selectedUser = (id, index) => {
                                             </span>
                                         </div>
                                     </div>
+                                    <div class="p-4 flex">
+                                        <span class="font-bold"> Colour: </span>
+                                        <div
+                                            class="ml-2 w-6 h-6 rounded-lg"
+                                            :style="`background-color: ${habit.colour}`"
+                                        > </div>
+                                    </div>
                                 </div>
                                 <div v-else class="text-center">No habit selected</div>
                             </div>

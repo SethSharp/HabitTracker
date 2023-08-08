@@ -9,6 +9,7 @@ import InputError from '@/Components/InputError.vue'
 import DateInput from '@/Components/DateInput.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
+import PickColors from 'vue-pick-colors'
 
 const props = defineProps({
     frequencies: Array,
@@ -40,6 +41,7 @@ const form = useForm({
     weekly_config: 0,
     monthly_config: '',
     start_next_week: false,
+    colour: '#00cedf',
 })
 
 const submit = () => form.post(route('habit.store'))
@@ -139,6 +141,14 @@ const submit = () => form.post(route('habit.store'))
                         </label>
 
                         <InputError :error="form.errors.start_next_week" class="mt-2" />
+                    </div>
+
+                    <div class="py-2">
+                        <InputLabel for="colour"> Colour </InputLabel>
+
+                        <PickColors v-model:value="form.colour"/>
+
+                        <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
                 </div>
                 <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">
