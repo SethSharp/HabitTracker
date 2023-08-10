@@ -11,29 +11,6 @@ let props = defineProps({
     log: Object,
 })
 
-const test = (habits) => {
-    habits.filter(habit => habit.completed !== 0)
-    console.log(habits)
-}
-
-let calendarSchema = {
-    // should have a name, colour property only, when sending to stats, should create toCalendarArray on the model which returns the name and colour of scheduled
-    // habits for the habits
-    days: props.habits,
-    functions: [
-        {
-            title: "Filter by completed",
-            apply: (habits) => {
-                habits.filter(habit => habit.completed !== 0)
-                console.log(habits)
-            }
-        }
-    ]
-}
-
-// Will be in the component
-calendarSchema.functions[0].apply(calendarSchema.days);
-
 const getInitId = () => {
     if (Object.keys(props.log).length > 0) {
         return Object.keys(props.log)[0]
