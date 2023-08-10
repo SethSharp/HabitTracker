@@ -6,6 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreHabitRequest extends FormRequest
 {
+    public function authorize(): bool
+    {
+        return $this->user()->can('store', $this->route('habit'));
+    }
+
     public function rules(): array
     {
         return [

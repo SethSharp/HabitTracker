@@ -123,7 +123,7 @@ const selectedUser = (id, index) => {
                                     </SecondaryButton>
                                     <SecondaryButton
                                         v-else
-                                        @click="this.$inertia.patch(route('habit.restore', habit))"
+                                        @click="this.$inertia.patch(route('habit.restore', habit.user_id))"
                                         class="rounded-lg font-medium border-2 bg-gray-200 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
                                     >
                                         Restore

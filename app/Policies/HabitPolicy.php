@@ -16,4 +16,10 @@ class HabitPolicy
     {
         return $habit->user_id == $user->id;
     }
+
+    public function restore(User $user, int $id): bool
+    {
+        ray($user, $id);
+        return $id == $user->id;
+    }
 }

@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Habits;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\HabitLog;
-use App\Http\Controllers\Traits\DateHelper;
+use App\Http\Requests\Habits\RestoreHabitRequest;
 
 class RestoreHabitController extends Controller
 {
-    use HabitLog;
-    use DateHelper;
-
-    public function __invoke(int $id): \Symfony\Component\HttpFoundation\Response
+    public function __invoke(RestoreHabitRequest $request): \Symfony\Component\HttpFoundation\Response
     {
-        $habit = Habit::withTrashed()->find($id);
+        $habit = Habit::withTrashed()->find($request->route('id'));
 
         $habit->restore();
 

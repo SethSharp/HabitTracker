@@ -27,7 +27,7 @@ class RestoreHabitControllerTest extends TestCase
 
         $this->actingAs($user)
             ->patch(route('habit.restore', $habit))
-            ->assertForbidden();
+            ->assertRedirect();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -47,7 +47,7 @@ class RestoreHabitControllerTest extends TestCase
         $habit->delete();
 
         $this->actingAs($owner)
-            ->patch(route('habit.restore', $habit))
+            ->patch(route('habit.restore', ['id' => $habit->id]))
             ->assertRedirect();
 
         $this->assertDatabaseHas('habits', [
