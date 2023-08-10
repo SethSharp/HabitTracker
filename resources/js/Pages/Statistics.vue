@@ -19,14 +19,11 @@ let calendarSchema = {
         {
             title: "Filter by completed",
             apply: (habits) => {
-                habits.filter(habit => habit.completed !== 0)
+                console.log('data')
             }
         }
     ]
 }
-
-// Will be in the component
-// calendarSchema.functions[0].apply(calendarSchema.days);
 
 </script>
 
@@ -35,7 +32,7 @@ let calendarSchema = {
 
     <AuthenticatedLayout>
         <div class="py-12 mx-12">
-            <Calendar />
+            <Calendar :calendarSchema="calendarSchema"/>
         </div>
     </AuthenticatedLayout>
 </template>

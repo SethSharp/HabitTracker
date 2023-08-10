@@ -1,5 +1,28 @@
-<script setup>
-import {ChevronRightIcon, ChevronLeftIcon} from "@heroicons/vue/24/outline/index.js";
+<script setup lang="ts">
+import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/outline/index.js";
+
+type Habit = {
+    name: string;
+    colour: string;
+    completed: number;
+};
+
+type Filter = {
+    title: string;
+    apply: (habits: Habit[]) => Habit[];
+};
+
+type CalendarSchema = {
+    days: [Habit[]];
+    filters: Filter[];
+};
+
+const props = defineProps({
+    calendarSchema: Object as () => CalendarSchema
+})
+
+props.calendarSchema.filters[0].apply([])
+
 </script>
 
 <template>
@@ -21,17 +44,21 @@ import {ChevronRightIcon, ChevronLeftIcon} from "@heroicons/vue/24/outline/index
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-7 h-16 text-center">
-            <div> Monday </div>
-            <div> Tuesday </div>
-            <div> Wednesday </div>
-            <div> Thursday </div>
-            <div> Friday </div>
-            <div> Saturday </div>
-            <div> Sunday </div>
+        <div class="grid grid-cols-7 mb-2 text-center">
+            <div
+                v-for="day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"
+                class="bg-red-300"
+            >
+                {{ day }}
+            </div>
         </div>
-        <div class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300">
-            <div v-for="_ in 30" class="bg-gray-100 rounded-xl h-24"> Day </div>
+        <div class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-black">
+            <div v-for="date in 30" class="bg-gray-100 rounded-xl h-24">
+                <div class="flex justify-end pr-2 pt-1"> {{ date }} </div>
+                <div class="">
+                    content
+                </div>
+            </div>
         </div>
     </div>
 </template>
