@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
+import Calendar from "@/Components/Statistics/Calendar.vue";
 
 const props = defineProps({
     monthlyHabits: Object
@@ -33,8 +34,8 @@ let calendarSchema = {
     <Head title="Statistics" />
 
     <AuthenticatedLayout>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">WIP</div>
+        <div class="py-12 mx-12">
+            <Calendar />
         </div>
     </AuthenticatedLayout>
 </template>
