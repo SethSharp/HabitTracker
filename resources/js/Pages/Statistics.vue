@@ -15,10 +15,7 @@ let calendarSchema = {
         {
             title: "Filter by completed",
             apply: (habitsByDay) => {
-                return habitsByDay.map(habits => {
-                    console.log(habits)
-                    return habits.filter(habit => habit?.completed === 1)
-                });
+                return habitsByDay.map(dayHabits => dayHabits.filter(habit => habit.completed === 1));
             }
         }
     ]

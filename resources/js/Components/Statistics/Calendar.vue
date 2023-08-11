@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/outline/index.js";
 import {calculateActiveIndex} from "@headlessui/vue/dist/utils/calculate-active-index";
+import {ref} from "vue";
 
 type Habit = {
     name: string;
@@ -10,7 +11,7 @@ type Habit = {
 
 type Filter = {
     title: string;
-    apply: (habits: Habit[]) => Habit[];
+    apply: (habits: []) => [];
 };
 
 // TODO: Look into creating a type which matches what we need
@@ -23,11 +24,8 @@ const props = defineProps({
     calendarSchema: Object as () => CalendarSchema
 })
 
-console.log(props.calendarSchema.days)
-
 let selectedFilters: Filter[] = [];
-let filteredHabits = props.calendarSchema.days
-
+let filteredHabits = ref(props.calendarSchema.days)
 let year = 2023
 let month = 8
 let getFirstDayOfTheMonth = (year, month) => {
@@ -37,7 +35,6 @@ let getFirstDayOfTheMonth = (year, month) => {
 }
 
 const removeFilter = (filterIndex) => {
-    console.log('removing filter')
     selectedFilters.splice(filterIndex, 1);
     applySelectedFilters()
 }
@@ -47,13 +44,14 @@ const addFilter = (filterIndex) => {
 }
 
 const applySelectedFilters = () => {
-    console.log('applying')
-    selectedFilters.forEach(filter => {
-        filteredHabits.map(habit => {
-            let x = filter.apply(habit)
+    if (selectedFilters.length === 0) {
+        filteredHabits.value = props.calendarSchema.days
+        return
+    } else {
+        selectedFilters.forEach(filter => {
+            filteredHabits.value = filter.apply(props.calendarSchema.days);
         });
-    });
-    console.log(filteredHabits)
+    }
 }
 </script>
 
