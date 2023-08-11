@@ -13,6 +13,7 @@ let calendarSchema = {
     days: props.habitsByDay,
     filters: [
         {
+            id: 0,
             title: "Filter by completed",
             apply: (habitsByDay) => {
                 return habitsByDay.map(dayHabits => dayHabits.filter(scheduledHabit => scheduledHabit.completed === 1));
@@ -20,6 +21,7 @@ let calendarSchema = {
             applied: false
         },
         {
+            id: 1,
             title: "Filter by colour", //currently hardcoded but will be made dynamic somehow
             apply: (habitsByDay) => {
                 return habitsByDay.map(dayHabits => dayHabits.filter(scheduledHabit => scheduledHabit.habit.colour === "#00cedf"));

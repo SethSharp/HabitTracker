@@ -10,6 +10,7 @@ type Habit = {
 };
 
 type Filter = {
+    id: number,
     title: string;
     apply: (habits: []) => [];
     applied: boolean
@@ -28,22 +29,23 @@ const props = defineProps({
 let appliedFilters = ref(props.calendarSchema.filters.map(filter => filter.applied))
 let selectedFilters: Filter[] = [];
 let filteredHabits = ref(props.calendarSchema.days)
-let year = 2023
-let month = 8
+let year = new Date().getFullYear()
+let month = new Date().getMonth()+1
+
 let getFirstDayOfTheMonth = (year, month) => {
     const firstDayOfMonth = new Date(year, month - 1, 1);
     const dayOfWeek = firstDayOfMonth.getDay();
     return dayOfWeek-1;
 }
 
-const removeFilter = (filterIndex) => {
-    selectedFilters.splice(filterIndex, 1);
-    appliedFilters.value[filterIndex] = false
+const removeFilter = (filterId, index) => {
+    selectedFilters = selectedFilters.filter(filter => filter.id !== filterId);
+    appliedFilters.value[index] = false
     applySelectedFilters()
 }
-const addFilter = (filterIndex) => {
-    selectedFilters.push(props.calendarSchema.filters[filterIndex]);
-    appliedFilters.value[filterIndex] = true
+const addFilter = (filterId, index) => {
+    selectedFilters = props.calendarSchema.filters.filter(filter => filter.id === filterId);
+    appliedFilters.value[index] = true
     applySelectedFilters()
 }
 
@@ -75,7 +77,7 @@ const applySelectedFilters = () => {
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" value="" class="sr-only peer">
                         <button
-                            @click="appliedFilters[index] ? removeFilter(index) : addFilter(index)"
+                            @click="appliedFilters[index] ? removeFilter(filter.id, index) : addFilter(filter.id, index)"
                             class="p-2 rounded-md"
                             :class="{'bg-primary' : appliedFilters[index]}"
                         >
