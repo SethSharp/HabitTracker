@@ -18,7 +18,7 @@ let calendarSchema = {
             apply: (habitsByDay) => {
                 return habitsByDay.map(dayHabits => dayHabits.filter(scheduledHabit => scheduledHabit.completed === 1));
             },
-            applied: false
+            applied: true
         },
         {
             id: 1,

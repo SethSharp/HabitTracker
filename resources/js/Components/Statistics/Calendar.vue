@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/outline/index.js";
-import {calculateActiveIndex} from "@headlessui/vue/dist/utils/calculate-active-index";
-import {ref} from "vue";
+import { onMounted, ref } from "vue";
 
 type Habit = {
     name: string;
@@ -59,6 +58,14 @@ const applySelectedFilters = () => {
         });
     }
 }
+
+onMounted(() => {
+    props.calendarSchema.filters.forEach((filter, index) => {
+        if (filter.applied) {
+            addFilter(filter.id, index)
+        }
+    })
+})
 </script>
 
 <template>
