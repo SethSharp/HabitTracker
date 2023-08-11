@@ -15,8 +15,16 @@ let calendarSchema = {
         {
             title: "Filter by completed",
             apply: (habitsByDay) => {
-                return habitsByDay.map(dayHabits => dayHabits.filter(habit => habit.completed === 1));
-            }
+                return habitsByDay.map(dayHabits => dayHabits.filter(scheduledHabit => scheduledHabit.completed === 1));
+            },
+            applied: false
+        },
+        {
+            title: "Filter by colour", //currently hardcoded but will be made dynamic somehow
+            apply: (habitsByDay) => {
+                return habitsByDay.map(dayHabits => dayHabits.filter(scheduledHabit => scheduledHabit.habit.colour === "#00cedf"));
+            },
+            applied: false
         }
     ]
 }

@@ -12,6 +12,7 @@ type Habit = {
 type Filter = {
     title: string;
     apply: (habits: []) => [];
+    applied: boolean
 };
 
 // TODO: Look into creating a type which matches what we need
@@ -24,6 +25,7 @@ const props = defineProps({
     calendarSchema: Object as () => CalendarSchema
 })
 
+let appliedFilters = ref(props.calendarSchema.filters.map(filter => filter.applied))
 let selectedFilters: Filter[] = [];
 let filteredHabits = ref(props.calendarSchema.days)
 let year = 2023
@@ -36,10 +38,12 @@ let getFirstDayOfTheMonth = (year, month) => {
 
 const removeFilter = (filterIndex) => {
     selectedFilters.splice(filterIndex, 1);
+    appliedFilters.value[filterIndex] = false
     applySelectedFilters()
 }
 const addFilter = (filterIndex) => {
     selectedFilters.push(props.calendarSchema.filters[filterIndex]);
+    appliedFilters.value[filterIndex] = true
     applySelectedFilters()
 }
 
@@ -67,10 +71,16 @@ const applySelectedFilters = () => {
         <div>
             <h1 class="text-xl font-medium"> Filters: </h1>
             <div class="flex mt-5">
-                <div v-for="filter in calendarSchema.filters" class="bg-gray-100 rounded-xl h-24 mx-4">
+                <div v-for="(filter, index) in calendarSchema.filters" class="bg-gray-100 rounded-xl h-24 mx-4">
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" value="" class="sr-only peer">
-                        <div class="w-11 h-6 bg-primaryOpacity peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-primary after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        <button
+                            @click="appliedFilters[index] ? removeFilter(index) : addFilter(index)"
+                            class="p-2 rounded-md"
+                            :class="{'bg-primary' : appliedFilters[index]}"
+                        >
+                            {{ appliedFilters[index] ? "Remove" : "Apply" }}
+                        </button>
                         <span class="ml-3 text-sm font-medium text-gray-900"> {{ filter.title }} </span>
                     </label>
                 </div>
