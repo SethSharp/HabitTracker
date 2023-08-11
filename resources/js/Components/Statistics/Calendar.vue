@@ -12,7 +12,14 @@ type Filter = {
     id: number,
     title: string;
     apply: (habits: []) => [];
-    applied: boolean
+    applied: {
+        type: boolean,
+        default: false
+    },
+    colour: {
+        type: string,
+        default: ''
+    }
 };
 
 // TODO: Look into creating a type which matches what we need
@@ -74,23 +81,26 @@ onMounted(() => {
         <span> August </span>
         <ChevronRightIcon class="w-6 h-6 cursor-pointer" />
     </div>
-    <button @click="addFilter(0)"> Add filter </button>
-    <button @click="removeFilter(0)"> Remove filter </button>
     <div class="rounded-xl w-full h-screen shadow-xl p-4">
         <div>
             <h1 class="text-xl font-medium"> Filters: </h1>
             <div class="flex mt-5">
                 <div v-for="(filter, index) in calendarSchema.filters" class="bg-gray-100 rounded-xl h-24 mx-4">
-                    <label class="relative inline-flex items-center cursor-pointer">
+                    <label class="relative inline-flex items-center">
                         <input type="checkbox" value="" class="sr-only peer">
                         <button
                             @click="appliedFilters[index] ? removeFilter(filter.id, index) : addFilter(filter.id, index)"
-                            class="p-2 rounded-md"
+                            class="p-2 rounded-md border border-black hover:bg-gray-200"
                             :class="{'bg-primary' : appliedFilters[index]}"
                         >
                             {{ appliedFilters[index] ? "Remove" : "Apply" }}
                         </button>
                         <span class="ml-3 text-sm font-medium text-gray-900"> {{ filter.title }} </span>
+                        <span
+                            v-if="filter.colour"
+                            class="ml-1 w-4 h-4 rounded-full"
+                            :style="`background-color: ${filter.colour}`"
+                        ></span>
                     </label>
                 </div>
             </div>
@@ -98,16 +108,16 @@ onMounted(() => {
         <div class="grid grid-cols-7 mb-2 text-center">
             <div
                 v-for="day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"
-                class="bg-red-300"
+                class=""
             >
                 {{ day }}
             </div>
         </div>
-        <div class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-black">
+        <div class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-gray-300 rounded-xl">
             <div v-for="_ in getFirstDayOfTheMonth(year, month)"></div>
-            <div v-for="(day, index) in filteredHabits" class="bg-gray-100 rounded-xl h-24">
+            <div v-for="(day, index) in filteredHabits" class="bg-gray-100 rounded-xl h-32">
                 <div class="flex justify-end pr-2 pt-1"> {{ index+1 }} </div>
-                <div v-for="scheduledHabit in day">
+                <div v-for="scheduledHabit in day.slice(0, 5)">
                     <div
                         class="ml-2 w-4 h-4 rounded-full"
                         :style="`background-color: ${scheduledHabit.habit.colour}`"
