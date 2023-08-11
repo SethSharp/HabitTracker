@@ -4,27 +4,25 @@ import { Head } from '@inertiajs/vue3'
 import Calendar from "@/Components/Statistics/Calendar.vue";
 
 const props = defineProps({
-    monthlyHabits: Object
+    habitsByDay: Object
 })
-
-const test = (habits) => {
-    habits.filter(habit => habit.completed !== 0)
-}
 
 let calendarSchema = {
     // should have a name, colour property only, when sending to stats, should create toCalendarArray on the model which returns the name and colour of scheduled
     // habits for the habits
-    days: props.monthlyHabits,
+    days: props.habitsByDay,
     filters: [
         {
             title: "Filter by completed",
-            apply: (habits) => {
-                console.log('data')
+            apply: (habitsByDay) => {
+                return habitsByDay.map(habits => {
+                    console.log(habits)
+                    return habits.filter(habit => habit?.completed === 1)
+                });
             }
         }
     ]
 }
-
 </script>
 
 <template>
