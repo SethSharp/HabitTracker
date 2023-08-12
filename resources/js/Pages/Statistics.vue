@@ -1,10 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import Calendar from "@/Components/Statistics/Calendar.vue";
+import Calendar from '@/Components/Statistics/Calendar.vue'
 
 const props = defineProps({
-    habitsByDay: Object
+    habitsByDay: Object,
 })
 
 let calendarSchema = {
@@ -14,23 +14,23 @@ let calendarSchema = {
     filters: [
         {
             id: 0,
-            title: "Filter by id (1)",
-            attributePath: "habit.id",
-            filterBy: 1
+            title: 'Filter by id (1)',
+            attributePath: 'habit.id',
+            filterBy: 1,
         },
         {
             id: 1,
-            title: "Filter by id (7)",
-            attributePath: "habit.id",
-            filterBy: 7
+            title: 'Filter by id (7)',
+            attributePath: 'habit.id',
+            filterBy: 7,
         },
         {
             id: 2,
-            title: "Filter by completed",
-            attributePath: "completed",
-            filterBy: 1
-        }
-    ]
+            title: 'Filter by completed',
+            attributePath: 'completed',
+            filterBy: 1,
+        },
+    ],
 }
 </script>
 
@@ -39,7 +39,7 @@ let calendarSchema = {
 
     <AuthenticatedLayout>
         <div class="py-12 mx-12">
-            <Calendar :calendarSchema="calendarSchema"/>
+            <Calendar :calendarSchema="calendarSchema" />
         </div>
     </AuthenticatedLayout>
 </template>
