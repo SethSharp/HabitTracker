@@ -99,10 +99,10 @@ onMounted(() => {
     <div class="rounded-xl w-full h-screen shadow-xl p-4">
         <div>
             <h1 class="text-xl font-medium">Filters:</h1>
-            <div class="flex mt-5">
+            <div class="my-5 grid grid-cols-4 gap-y-2 gap-x-2">
                 <div
                     v-for="(filter, index) in calendarSchema.filters"
-                    class="bg-gray-100 rounded-xl h-24 mx-4"
+                    class="bg-gray-100 rounded-xl mx-4"
                 >
                     <label class="relative inline-flex items-center">
                         <input type="checkbox" value="" class="sr-only peer" />
@@ -112,7 +112,7 @@ onMounted(() => {
                                     ? removeFilter(filter.id, index)
                                     : addFilter(index)
                             "
-                            class="p-2 rounded-md border border-black hover:bg-gray-200"
+                            class="p-2 rounded-xl border border-black hover:bg-gray-200"
                             :class="{ 'bg-primary': appliedFilters[index] }"
                         >
                             {{ appliedFilters[index] ? 'Remove' : 'Apply' }}
