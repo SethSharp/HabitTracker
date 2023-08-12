@@ -11,11 +11,15 @@ trait StatisticsHelper
     // TODO: Combine this with another trait
     // Also make the traits more generalised
     // Functions that grab a range, CollectionRangeHelper etc
-    public function getMonthlyHabitScheduleWithHabits(User $user): array
+    public function getMonthlyHabitScheduleWithHabits(User $user, ?string $month): array
     {
-        // TODO: Caching with monthlyHabitLog
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
+        if (is_null($month)) {
+            $month = Carbon::now()->monthName;
+        }
+
+        // TODO: Caching with monthlyHabitLog... maybe (data for 12 months per user) (N * 12 * X) in cache
+        $startDate = Carbon::parse("1 $month")->startOfMonth();
+        $endDate = Carbon::parse("1 $month")->endOfMonth();
 
         $habits = $user->scheduledHabits()
             ->withTrashed()

@@ -29,11 +29,13 @@ Route::middleware('auth')->name('schedule.')->group(function () {
     Route::post('schedule/habits', \App\Http\Controllers\ScheduleHabit\UpdateHabitScheduleController::class)->name('update');
 });
 
-
-Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/habits', \App\Http\Controllers\Habits\ViewHabitsController::class)->middleware(['auth', 'verified'])->name('habits');
-Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->middleware(['auth', 'verified'])->name('competition');
-Route::get('/statistics', \App\Http\Controllers\Pages\ShowStatisticsController::class)->middleware(['auth', 'verified'])->name('statistics');
+// Tab group
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->name('dashboard');
+    Route::get('/habits', \App\Http\Controllers\Habits\ViewHabitsController::class)->name('habits');
+    Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->name('competition');
+    Route::get('/statistics/{month?}', \App\Http\Controllers\Pages\ShowStatisticsController::class)->name('statistics');
+});
 
 Route::middleware('auth')->name('profile.')->group(function () {
     Route::get('/profile', \App\Http\Controllers\Profile\EditProfileController::class)->name('edit');

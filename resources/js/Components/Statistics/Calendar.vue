@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/24/outline/index.js'
 import { onMounted, ref } from 'vue'
 
 type Habit = {
@@ -26,6 +25,7 @@ type Filter = {
 
 // TODO: Look into creating a type which matches what we need for days
 type CalendarSchema = {
+    month: String
     days: []
     filters: Filter[]
 }
@@ -34,14 +34,12 @@ const props = defineProps({
     calendarSchema: Object as () => CalendarSchema,
 })
 
-let appliedFilters = ref(props.calendarSchema.filters.map((filter) => filter.applied))
-let selectedFilters: Filter[] = []
-let filteredHabits = ref(props.calendarSchema.days)
-let year = new Date().getFullYear()
-let month = new Date().getMonth() + 1
+let getDate = (): Date => {
+    return new Date(new Date().getFullYear(), months.indexOf(props.calendarSchema.month), new Date().getDate())
+}
 
-let getFirstDayOfTheMonth = (year, month) => {
-    const firstDayOfMonth = new Date(year, month - 1, 1)
+let getFirstDayOfTheMonth = () => {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
     return firstDayOfMonth.getDay() - 1
 }
 
@@ -81,6 +79,15 @@ const applySelectedFilters = () => {
     }
 }
 
+const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+]
+let appliedFilters = ref(props.calendarSchema.filters.map((filter) => filter.applied))
+let selectedFilters: Filter[] = []
+let filteredHabits = ref(props.calendarSchema.days)
+const date = getDate()
+
 onMounted(() => {
     props.calendarSchema.filters.forEach((filter, index) => {
         if (filter.applied) {
@@ -91,12 +98,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex">
-        <ChevronLeftIcon class="w-6 h-6 cursor-pointer" />
-        <span> August </span>
-        <ChevronRightIcon class="w-6 h-6 cursor-pointer" />
-    </div>
-    <div class="rounded-xl w-full h-screen shadow-xl p-4">
+    <div class="rounded-xl w-full shadow-xl p-4">
         <div>
             <h1 class="text-xl font-medium">Filters:</h1>
             <div class="my-5 grid grid-cols-4 gap-y-2 gap-x-2">
@@ -148,9 +150,14 @@ onMounted(() => {
         <div
             class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-gray-300 rounded-xl"
         >
-            <div v-for="_ in getFirstDayOfTheMonth(year, month)"></div>
-            <div v-for="(day, index) in filteredHabits" class="bg-gray-100 rounded-xl h-32">
-                <div class="flex justify-end pr-2 pt-1">{{ index + 1 }}</div>
+            <div v-for="_ in getFirstDayOfTheMonth()"></div>
+            <div v-for="(day, index) in filteredHabits" class="bg-gray-100 rounded-xl h-32 overflow-hidden">
+                <div
+                    class="flex justify-end pr-2 pt-1 mb-1"
+                    :class="{ 'bg-gray-200': date.getDate() === index+1 && months[new Date().getMonth()] === calendarSchema.month }"
+                >
+                    {{ index+1 }}
+                </div>
                 <div v-for="scheduledHabit in day.slice(0, 5)">
                     <div
                         class="ml-2 w-4 h-4 rounded-full"
