@@ -10,9 +10,4 @@ class CacheKeys
     {
         return 'weekly-habit-log-' . $user->id;
     }
-
-    public static function monthlyHabitLog(string $month, User $user)
-    {
-        return $month . 'monthly-habit-log' . $user;
-    }
 }

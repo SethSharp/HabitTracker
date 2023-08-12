@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Pages;
 
-use Carbon\Carbon;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Controllers\Controller;
