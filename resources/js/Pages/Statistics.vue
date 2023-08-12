@@ -1,16 +1,13 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3'
-import {
-    ChevronLeftIcon,
-    ChevronRightIcon,
-} from "@heroicons/vue/24/outline/index.js";
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline/index.js'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import Calendar from '@/Components/Statistics/Calendar.vue'
 
 const props = defineProps({
     habitsByDay: Object,
     habits: Array,
-    month: String
+    month: String,
 })
 
 let habitFilters = []
@@ -21,7 +18,7 @@ for (let i = 0; i < props.habits.length; i++) {
         id: i,
         title: 'Habit: ' + props.habits[i].name,
         attributePath: 'habit.id',
-        filterBy: props.habits[i].id
+        filterBy: props.habits[i].id,
     })
 }
 
@@ -41,14 +38,24 @@ let calendarSchema = {
 
 const getAdjacentMonth = (offset) => {
     const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ]
 
-    const currentIndex = months.findIndex(month => month === props.month);
-    const newIndex = (currentIndex + offset + 12) % 12;
+    const currentIndex = months.findIndex((month) => month === props.month)
+    const newIndex = (currentIndex + offset + 12) % 12
 
-    return months[newIndex];
+    return months[newIndex]
 }
 </script>
 
@@ -59,11 +66,11 @@ const getAdjacentMonth = (offset) => {
         <div class="py-12 mx-12">
             <div class="flex">
                 <Link :href="route('statistics', getAdjacentMonth(-1))">
-                    <ChevronLeftIcon class="w-7 h-7"/>
+                    <ChevronLeftIcon class="w-7 h-7" />
                 </Link>
-                <button class="border border-black p-1 rounded-lg"> {{ month }} </button>
+                <button class="border border-black p-1 rounded-lg">{{ month }}</button>
                 <Link :href="route('statistics', getAdjacentMonth(1))">
-                    <ChevronRightIcon class="w-7 h-7"/>
+                    <ChevronRightIcon class="w-7 h-7" />
                 </Link>
             </div>
             <Calendar :calendarSchema="calendarSchema" />

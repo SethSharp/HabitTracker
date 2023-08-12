@@ -35,7 +35,11 @@ const props = defineProps({
 })
 
 let getDate = (): Date => {
-    return new Date(new Date().getFullYear(), months.indexOf(props.calendarSchema.month), new Date().getDate())
+    return new Date(
+        new Date().getFullYear(),
+        months.indexOf(props.calendarSchema.month),
+        new Date().getDate()
+    )
 }
 
 let getFirstDayOfTheMonth = () => {
@@ -80,8 +84,18 @@ const applySelectedFilters = () => {
 }
 
 const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
 ]
 let appliedFilters = ref(props.calendarSchema.filters.map((filter) => filter.applied))
 let selectedFilters: Filter[] = []
@@ -151,15 +165,23 @@ onMounted(() => {
             class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-gray-300 rounded-xl"
         >
             <div v-for="_ in getFirstDayOfTheMonth()"></div>
-            <div v-for="(day, index) in filteredHabits" class="bg-gray-100 rounded-xl h-32 overflow-hidden">
+            <div
+                v-for="(day, index) in filteredHabits"
+                class="bg-gray-100 rounded-xl h-32 overflow-hidden"
+            >
                 <div
                     class="flex justify-end pr-2 pt-1 mb-1"
-                    :class="{ 'bg-gray-200': date.getDate() === index+1 && months[new Date().getMonth()] === calendarSchema.month }"
+                    :class="{
+                        'bg-gray-200':
+                            date.getDate() === index + 1 &&
+                            months[new Date().getMonth()] === calendarSchema.month,
+                    }"
                 >
-                    {{ index+1 }}
+                    {{ index + 1 }}
                 </div>
-                <div v-for="scheduledHabit in day.slice(0, 5)">
+                <div class="flex space-x-1">
                     <div
+                        v-for="scheduledHabit in day.slice(0, 5)"
                         class="ml-2 w-4 h-4 rounded-full"
                         :style="`background-color: ${scheduledHabit.habit.colour}`"
                     ></div>
