@@ -24,7 +24,7 @@ type Filter = {
     filterBy: number
 }
 
-// TODO: Look into creating a type which matches what we need
+// TODO: Look into creating a type which matches what we need for days
 type CalendarSchema = {
     days: []
     filters: Filter[]
@@ -50,7 +50,7 @@ const removeFilter = (filterId, index) => {
     appliedFilters.value[index] = false
     applySelectedFilters()
 }
-const addFilter = (filterId, index) => {
+const addFilter = (index) => {
     selectedFilters.push(props.calendarSchema.filters[index])
     appliedFilters.value[index] = true
     applySelectedFilters()
@@ -84,7 +84,7 @@ const applySelectedFilters = () => {
 onMounted(() => {
     props.calendarSchema.filters.forEach((filter, index) => {
         if (filter.applied) {
-            addFilter(filter.id, index)
+            addFilter(index)
         }
     })
 })
@@ -110,7 +110,7 @@ onMounted(() => {
                             @click="
                                 appliedFilters[index]
                                     ? removeFilter(filter.id, index)
-                                    : addFilter(filter.id, index)
+                                    : addFilter(index)
                             "
                             class="p-2 rounded-md border border-black hover:bg-gray-200"
                             :class="{ 'bg-primary': appliedFilters[index] }"

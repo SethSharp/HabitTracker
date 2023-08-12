@@ -15,7 +15,8 @@ class ShowStatisticsController extends Controller
     public function __invoke(): Response
     {
         return Inertia::render('Statistics', [
-            'habitsByDay' => $this->getMonthlyHabitScheduleWithHabits(Auth::user())
+            'habitsByDay' => $this->getMonthlyHabitScheduleWithHabits(auth()->user()),
+            'habits' => Auth::user()->habits()->get()
         ]);
     }
 }
