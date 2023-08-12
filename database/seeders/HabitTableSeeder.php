@@ -20,6 +20,7 @@ class HabitTableSeeder extends Seeder
         Carbon::setTestNow(Carbon::parse($this->getDateXDaysAgo(7)));
 
         $users = User::all();
+        $colour = ['#1E90FF', '#90EE90', '#FF8C00', '#00BABD'];
 
         foreach ($users as $user) {
             $rndFreq = Arr::random(Frequency::cases());
@@ -27,6 +28,7 @@ class HabitTableSeeder extends Seeder
             $habit = Habit::factory()->create([
                 'user_id' => $user->id,
                 'frequency' => $rndFreq->value,
+                'colour' => $colour[array_rand($colour)]
             ]);
 
             $freq = $habit->frequency;
