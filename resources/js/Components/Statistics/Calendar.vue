@@ -19,7 +19,9 @@ type Filter = {
     colour: {
         type: string,
         default: ''
-    }
+    },
+    attributePath: string,
+    filterBy: number,
 };
 
 // TODO: Look into creating a type which matches what we need
@@ -40,8 +42,7 @@ let month = new Date().getMonth()+1
 
 let getFirstDayOfTheMonth = (year, month) => {
     const firstDayOfMonth = new Date(year, month - 1, 1);
-    const dayOfWeek = firstDayOfMonth.getDay();
-    return dayOfWeek-1;
+    return firstDayOfMonth.getDay()-1;
 }
 
 const removeFilter = (filterId, index) => {
@@ -50,7 +51,7 @@ const removeFilter = (filterId, index) => {
     applySelectedFilters()
 }
 const addFilter = (filterId, index) => {
-    selectedFilters = props.calendarSchema.filters.filter(filter => filter.id === filterId);
+    selectedFilters.push(props.calendarSchema.filters[index]);
     appliedFilters.value[index] = true
     applySelectedFilters()
 }
@@ -60,9 +61,21 @@ const applySelectedFilters = () => {
         filteredHabits.value = props.calendarSchema.days
         return
     } else {
-        selectedFilters.forEach(filter => {
-            filteredHabits.value = filter.apply(props.calendarSchema.days);
+        let filteredData = [...props.calendarSchema.days];
+        selectedFilters.forEach(filterItem => {
+            filteredData = filteredData.map(dayHabits => dayHabits.filter(scheduledHabit => {
+                const attributeSegments = filterItem.attributePath.split(".")
+                let habit = scheduledHabit
+                for (const segment of attributeSegments) {
+                    habit = habit[segment];
+                    if (habit === undefined) {
+                        return false;
+                    }
+                }
+                return habit === filterItem.filterBy;
+            }))
         });
+        filteredHabits.value = filteredData
     }
 }
 

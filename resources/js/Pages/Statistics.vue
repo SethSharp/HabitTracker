@@ -14,18 +14,21 @@ let calendarSchema = {
     filters: [
         {
             id: 0,
-            title: "Filter by completed",
-            apply: (habitsByDay) => {
-                return habitsByDay.map(dayHabits => dayHabits.filter(scheduledHabit => scheduledHabit.completed === 1));
-            },
+            title: "Filter by id (1)",
+            attributePath: "habit.id",
+            filterBy: 1
         },
         {
             id: 1,
-            title: "Filter by colour",
-            apply: (habitsByDay) => {
-                return habitsByDay.map(dayHabits => dayHabits.filter(scheduledHabit => scheduledHabit.habit.colour === "#00cedf"));
-            },
-            colour: "#00cedf"
+            title: "Filter by id (7)",
+            attributePath: "habit.id",
+            filterBy: 7
+        },
+        {
+            id: 2,
+            title: "Filter by completed",
+            attributePath: "completed",
+            filterBy: 1
         }
     ]
 }

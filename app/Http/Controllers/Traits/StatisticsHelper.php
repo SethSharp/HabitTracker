@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Traits;
 use Carbon\Carbon;
 use App\Models\User;
 use Carbon\CarbonPeriod;
-use Illuminate\Support\Collection;
 
 trait StatisticsHelper
 {
-    // Combine this with another trait
+    // TODO: Combine this with another trait
     // Also make the traits more generalised
     // Functions that grab a range, CollectionRangeHelper etc
     public function getMonthlyHabitScheduleWithHabits(User $user): array
