@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Actions\Habits;
 
-use App\Enums\Frequency;
 use Carbon\Carbon;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
@@ -16,7 +15,7 @@ class StoreHabitAction
     use ScheduledHabits;
     use DateHelper;
 
-    public function __invoke(Habit $habit, Collection $data, Frequency $freq): void
+    public function __invoke(Habit $habit, Collection $data): void
     {
         $occurrences = json_decode($habit->occurrence_days);
         $scheduledDate = Carbon::parse($this->getMonday());
@@ -24,15 +23,6 @@ class StoreHabitAction
 
         if ($data['start_next_week']) {
             $scheduledDate->addWeek();
-        }
-
-        if ($freq->value == Frequency::MONTHLY->value) {
-            HabitSchedule::factory()->create([
-                'habit_id' => $habit->id,
-                'user_id' => Auth::user()->id,
-                'scheduled_completion' => $occurrences[0],
-            ]);
-            return;
         }
 
         while ($scheduledDate < $endDate) {
@@ -48,7 +38,6 @@ class StoreHabitAction
                     ]);
                 }
             }
-
             $scheduledDate->addDay();
         }
     }

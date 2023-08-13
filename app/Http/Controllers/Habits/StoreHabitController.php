@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Habits;
 use Inertia\Inertia;
 use App\Models\Habit;
 use App\Enums\Frequency;
+use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,16 @@ class StoreHabitController extends Controller
             'colour' => $data['colour']
         ]);
 
-        $action($habit, $data, $freq);
+        if ($freq->value == Frequency::MONTHLY->value) {
+            HabitSchedule::factory()->create([
+                'habit_id' => $habit->id,
+                'user_id' => Auth::user()->id,
+                'scheduled_completion' => $data['monthly_config'],
+            ]);
+        } else {
+            $action($habit, $data);
+        }
+
 
         return Inertia::location(url('habits'));
     }
