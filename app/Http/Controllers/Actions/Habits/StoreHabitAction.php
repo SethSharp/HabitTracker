@@ -18,14 +18,14 @@ class StoreHabitAction
     public function __invoke(Habit $habit, Collection $data): void
     {
         $occurrences = json_decode($habit->occurrence_days);
-        $scheduledDate = Carbon::parse($this->getMonday());
-        $endDate = $data['scheduled_to'] ? Carbon::parse($data['scheduled_to']) : Carbon::now()->endOfMonth();
+        $scheduledDate = Carbon::now()->startOfWeek();
+        $endDate = isset($data['scheduled_to']) && ! is_null($data['scheduled_to']) ? Carbon::parse($data['scheduled_to']) : Carbon::now()->endOfMonth();
 
-        if ($data['start_next_week']) {
+        if (isset($data['start_next_week']) && ! is_null($data['start_next_week'])) {
             $scheduledDate->addWeek();
         }
 
-        while ($scheduledDate < $endDate) {
+        while ($scheduledDate <= $endDate) {
             // if today is a day in occurrences add to list
             if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
                 // if not in the past add to the schedule

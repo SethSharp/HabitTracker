@@ -28,7 +28,7 @@ class StoreHabitController extends Controller
             'name' => $data['name'],
             'description' => $data['description'],
             'frequency' => $freq,
-            'scheduled_to' => isset($data['scheduled_to']) ?: null,
+            'scheduled_to' => isset($data['scheduled_to']) ? $data['scheduled_to'] : null,
             'occurrence_days' => $this->calculatedOccurrenceDays($data, $freq->value),
             'colour' => $data['colour']
         ]);
@@ -42,7 +42,6 @@ class StoreHabitController extends Controller
         } else {
             $action($habit, $data);
         }
-
 
         return Inertia::location(url('habits'));
     }
