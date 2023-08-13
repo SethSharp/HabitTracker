@@ -6,6 +6,7 @@ defineProps({
         type: String,
         required: true,
     },
+    label: String,
     min: {
         type: String,
     },
@@ -37,4 +38,8 @@ defineExpose({ focus: () => input.value.focus() })
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
     />
+    <br>
+    <label class="text-gray-500">
+        {{ label }}
+    </label>
 </template>

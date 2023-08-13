@@ -32,6 +32,7 @@ class StoreHabitController extends Controller
             'name' => $data['name'],
             'description' => $data['description'],
             'frequency' => $freq,
+            'scheduled_to' => $data['scheduled_to'],
             'occurrence_days' => $this->calculatedOccurrenceDays($data, $freq->value),
             'colour' => $data['colour']
         ]);
