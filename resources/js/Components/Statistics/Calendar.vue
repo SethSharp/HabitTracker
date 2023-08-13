@@ -184,8 +184,7 @@ onMounted(() => {
                         v-for="scheduledHabit in day.slice(0, 5)"
                         class="ml-2 w-4 h-4 rounded-full"
                         :style="`background-color: ${scheduledHabit.habit.colour}`"
-                    >
-                    </div>
+                    ></div>
                 </div>
             </div>
         </div>

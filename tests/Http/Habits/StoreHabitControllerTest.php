@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
-use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
 
 class StoreHabitControllerTest extends TestCase

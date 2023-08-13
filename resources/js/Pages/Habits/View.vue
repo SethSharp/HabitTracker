@@ -33,7 +33,7 @@ let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 const createString = () => {
     let occurrences = JSON.parse(habit.value.occurrence_days)
     const daysOfWeek = occurrences.map((number) => {
-        const index = (number) % 7 // Adjust the index to match the day names array
+        const index = number % 7 // Adjust the index to match the day names array
         return week[index]
     })
 

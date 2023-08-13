@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { XMarkIcon } from "@heroicons/vue/24/outline/index.js";
+import { XMarkIcon } from '@heroicons/vue/24/outline/index.js'
 
 defineProps({
     modelValue: {
@@ -40,7 +40,7 @@ defineExpose({ focus: () => input.value.focus() })
         />
     </div>
 
-    <br>
+    <br />
     <label class="text-gray-500">
         {{ label }}
     </label>

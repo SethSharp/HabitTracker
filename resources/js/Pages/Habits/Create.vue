@@ -91,7 +91,9 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.frequency" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 0">
-                        <InputLabel for="daily_config"> Schedule at any days in a standard week </InputLabel>
+                        <InputLabel for="daily_config">
+                            Schedule at any days in a standard week
+                        </InputLabel>
 
                         <Checkbox
                             v-for="(item, index) in weekConfig.options"
@@ -105,7 +107,9 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.daily_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 1">
-                        <InputLabel for="weekly_config"> Scheduled at a day in a standard week </InputLabel>
+                        <InputLabel for="weekly_config">
+                            Scheduled at a day in a standard week
+                        </InputLabel>
 
                         <Select
                             v-model="form.weekly_config"
@@ -116,7 +120,9 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.weekly_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 2">
-                        <InputLabel for="monthly_config"> Schedule at a point in this month </InputLabel>
+                        <InputLabel for="monthly_config">
+                            Schedule at a point in this month
+                        </InputLabel>
 
                         <DateInput
                             v-model="form.monthly_config"
