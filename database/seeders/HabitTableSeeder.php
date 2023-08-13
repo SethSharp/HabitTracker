@@ -17,7 +17,7 @@ class HabitTableSeeder extends Seeder
 
     public function run(): void
     {
-        Carbon::setTestNow(Carbon::parse($this->getDateXDaysAgo(7)));
+        Carbon::setTestNow(Carbon::now()->startOfWeek());
 
         $users = User::all();
         $colour = ['#1E90FF', '#90EE90', '#FF8C00', '#00BABD'];
@@ -34,9 +34,9 @@ class HabitTableSeeder extends Seeder
             $freq = $habit->frequency;
 
             $habit->occurrence_days = match ($freq) {
-                Frequency::DAILY => '[1,2,3]',
+                Frequency::DAILY => '[1,3,5]',
                 Frequency::WEEKLY => '[4]',
-                Frequency::MONTHLY => '["2023-07-13"]',
+                Frequency::MONTHLY => json_encode([Carbon::now()->addWeek()->toDateString()]),
                 default => '[]',
             };
 
