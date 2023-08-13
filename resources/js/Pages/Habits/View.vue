@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { PlusCircleIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
@@ -28,12 +28,12 @@ let monthData = () => {
     return JSON.parse(habit.value.occurrence_days)
 }
 
-let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 const createString = () => {
     let occurrences = JSON.parse(habit.value.occurrence_days)
     const daysOfWeek = occurrences.map((number) => {
-        const index = (number - 1) % 7 // Adjust the index to match the day names array
+        const index = (number) % 7 // Adjust the index to match the day names array
         return week[index]
     })
 

@@ -44,7 +44,7 @@ let getDate = (): Date => {
 
 let getFirstDayOfTheMonth = () => {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
-    return firstDayOfMonth.getDay() - 1
+    return firstDayOfMonth.getDay()
 }
 
 const removeFilter = (filterId, index) => {
@@ -148,13 +148,13 @@ onMounted(() => {
         <div class="grid grid-cols-7 mb-2 text-center">
             <div
                 v-for="day in [
+                    'Sunday',
                     'Monday',
                     'Tuesday',
                     'Wednesday',
                     'Thursday',
                     'Friday',
                     'Saturday',
-                    'Sunday',
                 ]"
                 class=""
             >
@@ -184,7 +184,8 @@ onMounted(() => {
                         v-for="scheduledHabit in day.slice(0, 5)"
                         class="ml-2 w-4 h-4 rounded-full"
                         :style="`background-color: ${scheduledHabit.habit.colour}`"
-                    ></div>
+                    >
+                    </div>
                 </div>
             </div>
         </div>

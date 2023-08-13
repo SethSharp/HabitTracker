@@ -36,7 +36,7 @@ defineExpose({ focus: () => input.value.focus() })
         />
         <XMarkIcon
             @click="$emit('update:modelValue', null)"
-            class="w-6 h-6 cursor-pointer hover:scale-75"
+            class="ml-2 w-5 h-5 cursor-pointer hover:scale-125"
         />
     </div>
 
