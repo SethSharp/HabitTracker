@@ -20,7 +20,7 @@ class TestUserSeeder extends Seeder
             'frequency' => Frequency::DAILY->value,
         ]);
 
-        $habit->occurrence_days = '[1,2,3,4,5,6,7]';
+        $habit->occurrence_days = '[0,1,2,3,4,5,6]';
 
         $habit->save();
 

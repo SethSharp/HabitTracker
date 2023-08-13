@@ -2,10 +2,10 @@
 
 namespace Tests\Http\Habits;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
-use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
 
 class StoreHabitControllerTest extends TestCase
@@ -77,112 +77,286 @@ class StoreHabitControllerTest extends TestCase
     }
 
     /** @test */
-    public function daily_config_is_required_if_frequency_is_daily(): void
+    public function daily_config_is_required_if_daily_is_selected()
     {
-        $this->actingAs($this->user)
-            ->post(route("habit.store", $this->dailyArray))
-            ->assertSessionDoesntHaveErrors(['weekly_config', 'monthly_config']);
-
-        $this->assertDatabaseHas('habits', [
-            'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'daily',
-        ]);
-
-        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
-        $this->assertEquals($updatedHabit->occurrence_days, '"[2,3,4]"');
-    }
-
-    /** @test */
-    public function weekly_config_is_required_if_frequency_is_weekly(): void
-    {
-        $this->actingAs($this->user)
-            ->post(route("habit.store", $this->weeklyArray))
-            ->assertSessionDoesntHaveErrors(['daily_config', 'monthly_config']);
-
-        $this->assertDatabaseHas('habits', [
-            'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'weekly',
-        ]);
-
-        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
-        $this->assertEquals($updatedHabit->occurrence_days, '[4]');
-    }
-
-    /** @test */
-    public function can_store_daily_habits(): void
-    {
-        $daily = [
-            'name' => 'Testing name',
-            'description' => 'Testing description',
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
             'frequency' => 0,
-            'daily_config' => [2,3,4],
-            'start_next_week' => false,
-            'colour' => '#00cedf'
+            'colour' => 'colour'
         ];
 
         $this->actingAs($this->user)
-            ->post(route("habit.store", $daily))
-            ->assertSessionDoesntHaveErrors(['monthly_config', 'weekly_config']);
-
-        $this->assertDatabaseHas('habits', [
-            'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'daily',
-        ]);
-
-        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
-        $this->assertEquals($updatedHabit->occurrence_days, '["2", "3", "4"]');
-
-        $scheduledHabits = HabitSchedule::all();
-
-        $this->assertCount(3, $scheduledHabits);
+            ->post(route('habit.store'), $habitData)
+            ->assertSessionHasErrors(['daily_config']);
     }
 
     /** @test */
-    public function can_store_monthly_habit(): void
-    {
-        $this->actingAs($this->user)
-            ->post(route("habit.store", $this->monthlyArray))
-            ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config']);
-
-        $this->assertDatabaseHas('habits', [
-            'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'monthly',
-            'colour' => '#00cedf'
-        ]);
-
-        $updatedHabit = Habit::where('user_id', $this->user->id)->get()->first();
-        $this->assertEquals($updatedHabit->occurrence_days, '["2023-7-17"]');
-    }
-
-    /** @test */
-    public function user_id_is_correctly_stored()
+    public function weekly_config_is_required_if_weekly_is_selected()
     {
         $habitData = [
-            'name' => 'Testing name',
-            'description' => 'Testing description',
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 1,
+            'colour' => 'colour'
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route('habit.store'), $habitData)
+            ->assertSessionHasErrors(['weekly_config']);
+    }
+
+    /** @test */
+    public function monthly_config_is_required_if_monthly_is_selected()
+    {
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
             'frequency' => 2,
-            'monthly_config' => '2023-7-17',
-            'start_next_week' => false,
-            'colour' => '#00cedf'
+            'colour' => 'colour'
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route('habit.store'), $habitData)
+            ->assertSessionHasErrors(['monthly_config']);
+    }
+
+    /** @test */
+    public function can_store_a_daily_habit()
+    {
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 0,
+            'daily_config' => [1,2,3],
+            'colour' => 'colour',
         ];
 
         $this->actingAs($this->user)
             ->post(route("habit.store", $habitData))
-            ->assertRedirect();
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
 
         $this->assertDatabaseHas('habits', [
-            'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'monthly',
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour,
+            'scheduled_to' => null
         ]);
+
+        $this->assertEquals('["1", "2", "3"]', $habit->occurrence_days);
+    }
+
+    /** @test */
+    public function can_store_a_weekly_habit()
+    {
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 1,
+            'weekly_config' => '2',
+            'colour' => 'colour'
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $habitData))
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour
+        ]);
+
+        $this->assertEquals('[2]', $habit->occurrence_days);
+    }
+
+    /** @test */
+    public function can_store_a_monthly_habit()
+    {
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 2,
+            'monthly_config' => '2023-08-13',
+            'colour' => 'colour'
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $habitData))
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour
+        ]);
+
+        $this->assertEquals('["2023-08-13"]', $habit->occurrence_days);
+    }
+
+    /** @test */
+    public function starting_habits_next_week_start_scheduled_habits_next_week()
+    {
+        Carbon::setTestNow("2023-08-01");
+
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 0,
+            'daily_config' => [1,2,3],
+            'colour' => 'colour',
+            'start_next_week' => true
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $habitData))
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour,
+            'scheduled_to' => null
+        ]);
+
+        $this->assertEquals('["1", "2", "3"]', $habit->occurrence_days);
+
+        $this->assertDatabaseCount('habit_schedules', 12);
+    }
+
+    /** @test */
+    public function habits_are_scheduled_for_half_the_month()
+    {
+        Carbon::setTestNow("2023-08-21");
+
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 0,
+            'daily_config' => [1,2,3],
+            'colour' => 'colour',
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $habitData))
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour,
+            'scheduled_to' => null
+        ]);
+
+        $this->assertEquals('["1", "2", "3"]', $habit->occurrence_days);
+
+        $this->assertDatabaseCount('habit_schedules', 6);
+    }
+
+    /** @test */
+    public function daily_habits_are_scheduled_for_the_whole_month()
+    {
+        Carbon::setTestNow("2023-08-01");
+
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 0,
+            'daily_config' => [1,2,3],
+            'colour' => 'colour',
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $habitData))
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour,
+            'scheduled_to' => null
+        ]);
+
+        $this->assertEquals('["1", "2", "3"]', $habit->occurrence_days);
+
+        $this->assertDatabaseCount('habit_schedules', 15);
+    }
+
+    /** @test */
+    public function weekly_habits_are_scheduled_on_the_correct_date()
+    {
+        Carbon::setTestNow("2023-08-01");
+
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 1,
+            'weekly_config' => '2',
+            'colour' => 'colour'
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $habitData))
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour
+        ]);
+
+        $this->assertEquals('[2]', $habit->occurrence_days);
+
+        $this->assertDatabaseCount('habit_schedules', 5);
+    }
+
+    /** @test */
+    public function monthly_habits_are_scheduled_on_the_correct_date()
+    {
+        $habitData = [
+            'name' => 'Habit 1',
+            'description' => 'Habit description',
+            'frequency' => 2,
+            'monthly_config' => '2023-08-13',
+            'colour' => 'colour'
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.store", $habitData))
+            ->assertSessionHasNoErrors();
+
+        $habit = Habit::all()->first();
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'name' => $habit->name,
+            'description' => $habit->description,
+            'colour' => $habit->colour
+        ]);
+
+        $this->assertEquals('["2023-08-13"]', $habit->occurrence_days);
+
+        $this->assertDatabaseCount('habit_schedules', 1);
     }
 }

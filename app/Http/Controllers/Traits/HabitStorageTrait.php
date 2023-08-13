@@ -8,15 +8,11 @@ trait HabitStorageTrait
 {
     private function calculatedOccurrenceDays($data, $freq): string
     {
-        switch ($freq) {
-            case Frequency::DAILY->value:
-                return json_encode($data['daily_config']);
-            case Frequency::WEEKLY->value:
-                return json_encode([(int)$data['weekly_config']]);
-            case Frequency::MONTHLY->value:
-                return json_encode([$data['monthly_config']]);
-            default:
-                return now();
-        }
+        return match ($freq) {
+            Frequency::DAILY->value => json_encode($data['daily_config']),
+            Frequency::WEEKLY->value => json_encode([(int)$data['weekly_config']]),
+            Frequency::MONTHLY->value => json_encode([$data['monthly_config']]),
+            default => now(),
+        };
     }
 }

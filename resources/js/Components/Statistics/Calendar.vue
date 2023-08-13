@@ -44,7 +44,7 @@ let getDate = (): Date => {
 
 let getFirstDayOfTheMonth = () => {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
-    return firstDayOfMonth.getDay() - 1
+    return firstDayOfMonth.getDay()
 }
 
 const removeFilter = (filterId, index) => {
@@ -148,13 +148,13 @@ onMounted(() => {
         <div class="grid grid-cols-7 mb-2 text-center">
             <div
                 v-for="day in [
+                    'Sunday',
                     'Monday',
                     'Tuesday',
                     'Wednesday',
                     'Thursday',
                     'Friday',
                     'Saturday',
-                    'Sunday',
                 ]"
                 class=""
             >
