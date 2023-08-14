@@ -25,7 +25,7 @@ const props = defineProps({
 const jsConfetti = new JSConfetti()
 
 let today = new Date()
-let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 let isCompleted = ref(false)
 
 let habitConfig = props.dailyHabits.map((h) => {
@@ -257,7 +257,7 @@ const submit = () => {
                                 :success="isSuccess(habits)"
                                 :warning="isWarning(habits)"
                                 :danger="isDanger(habits)"
-                                :heading="today.getDay() === index"
+                                :heading="today.getDay()-1 === index"
                                 :id="index"
                             >
                                 <template #heading>
