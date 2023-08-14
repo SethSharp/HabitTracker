@@ -27,6 +27,7 @@ type Filter = {
 type CalendarSchema = {
     month: String
     days: []
+    legendList: []
     filters: Filter[]
 }
 
@@ -114,7 +115,18 @@ onMounted(() => {
 <template>
     <div class="rounded-xl w-full shadow-xl p-4">
         <div>
+            <h1 class="text-xl font-medium">Legend:</h1>
+            <div class="my-5 grid grid-cols-4 gap-y-2 gap-x-2">
+                <div v-for="legend in calendarSchema.legendList" class="flex">
+                    <div> {{ legend.name }} </div>
+                    <div
+                        class="w-5 h-5"
+                        :style="`background-color: ${legend.colour}`"
+                    ></div>
+                </div>
+            </div>
             <h1 class="text-xl font-medium">Filters:</h1>
+            <!-- Make this section hide/show -->
             <div class="my-5 grid grid-cols-4 gap-y-2 gap-x-2">
                 <div
                     v-for="(filter, index) in calendarSchema.filters"
