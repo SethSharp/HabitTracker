@@ -11,26 +11,21 @@ const props = defineProps({
 })
 
 let habitFilters = []
-let legendList = []
 let startId = props.habits.length
 
 for (let i = 0; i < props.habits.length; i++) {
     habitFilters.push({
         id: i,
-        title: 'Habit: ' + props.habits[i].name,
+        title: props.habits[i].name,
         attributePath: 'habit.id',
         filterBy: props.habits[i].id,
-    })
-    legend.push({
-        name: props.habits[i].name,
-        colour: props.habits[i].colour,
+        colour: props.habits[i].colour
     })
 }
 
 let calendarSchema = {
     month: props.month,
     days: props.habitsByDay,
-    legend: legendList,
     filters: [
         ...habitFilters,
         {
