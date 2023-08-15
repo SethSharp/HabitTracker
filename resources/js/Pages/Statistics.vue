@@ -15,7 +15,7 @@ let startId = props.habits.length
 
 for (let i = 0; i < props.habits.length; i++) {
     habitFilters.push({
-        id: i,
+        id: props.habits[i].id,
         title: props.habits[i].name,
         attributePath: 'habit.id',
         filterBy: props.habits[i].id,

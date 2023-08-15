@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Traits;
 use Carbon\Carbon;
 use App\Models\User;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Collection;
 
 trait StatisticsHelper
 {
@@ -49,5 +50,11 @@ trait StatisticsHelper
         }
 
         return $habitByDate;
+    }
+
+    public function getHabitsScheduledWithinMonth(User $user, ?string $month): Collection
+    {
+        // collection of objects
+        return collect();
     }
 }

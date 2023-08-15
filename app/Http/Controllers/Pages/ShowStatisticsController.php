@@ -16,11 +16,11 @@ class ShowStatisticsController extends Controller
 
     public function __invoke(Request $request): Response
     {
-        $month = $request->route('month');
         return Inertia::render('Statistics', [
-            'habitsByDay' => $this->getMonthlyHabitScheduleWithHabits(auth()->user(), $month),
+            'habitsByDay' => $this->getMonthlyHabitScheduleWithHabits(Auth::user(), $request->route('month')),
             'habits' => Auth::user()->habits()->get(),
-            'month' => $month ?: Carbon::now()->monthName,
+            'month' => $request->route('month') ?: Carbon::now()->monthName,
+            'habitFilters' => $this->getHabitsScheduledWithinMonth(Auth::user(), $request->route('month'))
         ]);
     }
 }
