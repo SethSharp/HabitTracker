@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Traits;
 
+use App\Models\Habit;
 use Carbon\Carbon;
 use App\Models\User;
 use Carbon\CarbonPeriod;
@@ -24,8 +25,7 @@ trait StatisticsHelper
 
         $habits = $user->scheduledHabits()
             ->withTrashed()
-            ->where('scheduled_completion', '>=', $startDate)
-            ->where('scheduled_completion', '<=', $endDate)
+            ->whereBetween('scheduled_completion', [$startDate, $endDate])
             ->with(['habit' => fn ($query) => $query->withTrashed()])
             ->orderBy('scheduled_completion', 'desc')
             ->get();
@@ -54,7 +54,15 @@ trait StatisticsHelper
 
     public function getHabitsScheduledWithinMonth(User $user, ?string $month): Collection
     {
-        // collection of objects
+        if (is_null($month)) {
+            $month = Carbon::now()->monthName;
+        }
+
+        $startDate = Carbon::parse("1 $month")->startOfMonth();
+        $endDate = Carbon::parse("1 $month")->endOfMonth();
+
+        $data = $user->habits()->whereHas('habitSchedule');
+        ray($data);
         return collect();
     }
 }
