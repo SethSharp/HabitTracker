@@ -157,7 +157,6 @@ onMounted(() => {
                     'Friday',
                     'Saturday',
                 ]"
-                class=""
             >
                 {{ day }}
             </div>

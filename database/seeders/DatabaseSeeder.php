@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $user = User::factory()->create([
+        User::factory()->create([
             'name' => 'Testing Account',
             'email' => 'user@habittracker.test',
             'email_verified_at' => now(),
@@ -24,6 +24,5 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserTableSeeder::class);
         $this->call(HabitTableSeeder::class);
-        $this->call(TestUserSeeder::class, false, ['user' => $user]);
     }
 }

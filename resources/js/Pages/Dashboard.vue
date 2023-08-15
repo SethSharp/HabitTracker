@@ -86,6 +86,9 @@ let disabled = habitConfig.map((h) => {
 })
 
 const isSuccess = (habits) => {
+
+    if (habits.length === 0) return false
+
     for (const obj of Object.values(habits)) {
         if (obj.completed === 0) return false
     }
@@ -93,6 +96,9 @@ const isSuccess = (habits) => {
 }
 
 const isWarning = (habits) => {
+
+    if (habits.length === 0) return false
+
     let successCount = 0
     let failCount = 0
 
@@ -117,6 +123,9 @@ const isWarning = (habits) => {
 }
 
 const isDanger = (habits) => {
+
+    if (habits.length === 0) return false
+
     let successCount = 0
     let failCount = 0
 
@@ -152,11 +161,14 @@ const shouldShowDay = (habit) => {
 }
 
 onMounted(() => {
-    let b = true
-    for (const habit of props.dailyHabits) {
-        if (!habit.completed) {
-            b = false
-            break
+    let b = false
+
+    if (props.dailyHabits.length >= 0) {
+        for (const habit of props.dailyHabits) {
+            if (!habit.completed) {
+                b = true
+                break
+            }
         }
     }
 
@@ -224,7 +236,7 @@ const submit = () => {
                                 <div v-else>
                                     No habits for today, click
                                     <a
-                                        class="text-indigo-500 text-md underline pointer-cursor"
+                                        class="text-primary text-md font-bold underline pointer-cursor"
                                         :href="route('habits')"
                                     >
                                         here
