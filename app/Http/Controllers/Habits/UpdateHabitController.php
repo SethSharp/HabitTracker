@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Habits;
 
+use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
 use Inertia\Inertia;
 use App\Models\Habit;
 use App\Enums\Frequency;
@@ -14,11 +15,13 @@ class UpdateHabitController extends Controller
 {
     use HabitStorageTrait;
 
-    public function __invoke(Habit $habit, UpdateHabitRequest $request): Response
+    public function __invoke(Habit $habit, UpdateHabitRequest $request, UpdateHabitAction $action): Response
     {
         $data = collect($request->validated());
 
         $freq = Frequency::cases()[$data['frequency']];
+
+        $action($habit);
 
         $habit->update([
             'name' => $data['name'],
