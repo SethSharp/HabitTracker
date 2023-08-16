@@ -62,7 +62,7 @@ trait StatisticsHelper
         $endDate = Carbon::parse("1 $month")->endOfMonth();
 
         $data = $user->habits()->whereHas('habitSchedule');
-        ray($data);
+
         return collect();
     }
 }
