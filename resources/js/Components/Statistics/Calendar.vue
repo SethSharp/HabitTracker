@@ -44,7 +44,7 @@ let getDate = (): Date => {
 
 let getFirstDayOfTheMonth = () => {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
-    return firstDayOfMonth.getDay() - 1
+    return firstDayOfMonth.getDay()
 }
 
 const removeFilter = (filterId, index) => {
@@ -115,6 +115,7 @@ onMounted(() => {
     <div class="rounded-xl w-full shadow-xl p-4">
         <div>
             <h1 class="text-xl font-medium">Filters:</h1>
+            <!-- Make this section hide/show -->
             <div class="my-5 grid grid-cols-4 gap-y-2 gap-x-2">
                 <div
                     v-for="(filter, index) in calendarSchema.filters"
@@ -148,15 +149,14 @@ onMounted(() => {
         <div class="grid grid-cols-7 mb-2 text-center">
             <div
                 v-for="day in [
+                    'Sunday',
                     'Monday',
                     'Tuesday',
                     'Wednesday',
                     'Thursday',
                     'Friday',
                     'Saturday',
-                    'Sunday',
                 ]"
-                class=""
             >
                 {{ day }}
             </div>

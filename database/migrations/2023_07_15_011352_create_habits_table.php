@@ -13,6 +13,7 @@ return new class() extends Migration {
             $table->string('name');
             $table->string('description');
             $table->string('frequency');
+            $table->string('scheduled_to')->nullable();
             $table->json('occurrence_days')->nullable();
             $table->integer('streak')->default(0);
             $table->string('icon')->default('Default');

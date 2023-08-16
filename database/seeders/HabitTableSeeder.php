@@ -17,8 +17,6 @@ class HabitTableSeeder extends Seeder
 
     public function run(): void
     {
-        Carbon::setTestNow(Carbon::parse($this->getDateXDaysAgo(7)));
-
         $users = User::all();
         $colour = ['#1E90FF', '#90EE90', '#FF8C00', '#00BABD'];
 
@@ -34,22 +32,32 @@ class HabitTableSeeder extends Seeder
             $freq = $habit->frequency;
 
             $habit->occurrence_days = match ($freq) {
-                Frequency::DAILY => '[1,2,3]',
+                Frequency::DAILY => '[1,3,5]',
                 Frequency::WEEKLY => '[4]',
-                Frequency::MONTHLY => '["2023-07-13"]',
+                Frequency::MONTHLY => json_encode([Carbon::now()->addWeek()->toDateString()]),
                 default => '[]',
             };
 
             $habit->save();
 
             $occurrences = json_decode($habit->occurrence_days);
+            $scheduledDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
 
-            foreach ($occurrences as $occurrence) {
-                HabitSchedule::factory()->create([
-                    'habit_id' => $habit->id,
-                    'user_id' => $user->id,
-                    'scheduled_completion' => $this->determineDateForHabitCompletion($freq, $occurrence, Carbon::today())
-                ]);
+            while ($scheduledDate <= $endDate) {
+                // if today is a day in occurrences add to list
+                if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
+                    // if not in the past add to the schedule
+                    if (! $scheduledDate <= Carbon::now()) {
+                        // create schedule
+                        HabitSchedule::factory()->create([
+                            'habit_id' => $habit->id,
+                            'user_id' => $user->id,
+                            'scheduled_completion' => $scheduledDate
+                        ]);
+                    }
+                }
+                $scheduledDate->addDay();
             }
         }
     }

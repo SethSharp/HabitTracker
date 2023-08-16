@@ -23,13 +23,13 @@ let frequenciesConfig = {
 
 let weekConfig = {
     options: [
+        { name: 'Sunday', id: 0 },
         { name: 'Monday', id: 1 },
         { name: 'Tuesday', id: 2 },
         { name: 'Wednesday', id: 3 },
         { name: 'Thursday', id: 4 },
         { name: 'Friday', id: 5 },
         { name: 'Saturday', id: 6 },
-        { name: 'Sunday', id: 7 },
     ],
 }
 
@@ -40,6 +40,7 @@ const form = useForm({
     daily_config: [],
     weekly_config: 0,
     monthly_config: '',
+    scheduled_to: '',
     start_next_week: false,
     colour: '#00cedf',
 })
@@ -52,7 +53,7 @@ const submit = () => form.post(route('habit.store'))
 
     <AuthenticatedLayout>
         <div class="bg-gray-100 flex justify-center">
-            <form @submit.prevent="submit" class="w-1/2 mt-10 h-screen">
+            <form @submit.prevent="submit" class="w-1/2 my-10">
                 <div>
                     <div class="py-2">
                         <InputLabel for="name"> Name </InputLabel>
@@ -90,7 +91,9 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.frequency" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 0">
-                        <InputLabel for="daily_config"> Daily </InputLabel>
+                        <InputLabel for="daily_config">
+                            Schedule at any days in a standard week
+                        </InputLabel>
 
                         <Checkbox
                             v-for="(item, index) in weekConfig.options"
@@ -104,7 +107,9 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.daily_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 1">
-                        <InputLabel for="weekly_config"> Weekly </InputLabel>
+                        <InputLabel for="weekly_config">
+                            Scheduled at a day in a standard week
+                        </InputLabel>
 
                         <Select
                             v-model="form.weekly_config"
@@ -115,7 +120,9 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.weekly_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 2">
-                        <InputLabel for="monthly_config"> Monthly </InputLabel>
+                        <InputLabel for="monthly_config">
+                            Schedule at a point in this month
+                        </InputLabel>
 
                         <DateInput
                             v-model="form.monthly_config"
@@ -127,6 +134,19 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                     <div class="py-2">
+                        <InputLabel for="scheduled_to"> Schedule Habit to a date </InputLabel>
+
+                        <DateInput
+                            v-model="form.scheduled_to"
+                            v-model:min="props.min"
+                            class="mt-1 block w-full"
+                            label="Can be left to be scheduled for each month forever or scheduled for to your specified time.
+                                    This can be great for setting goals and feeling fulfilled when you are finished!"
+                        />
+
+                        <InputError :error="form.errors.scheduled_to" class="mt-2" />
+                    </div>
+                    <div class="py-2">
                         <InputLabel for="start_next_week"> Start time </InputLabel>
 
                         <Checkbox
@@ -135,9 +155,9 @@ const submit = () => form.post(route('habit.store'))
                             label="Start next"
                         />
 
-                        <label class="!text-gray-500">
-                            If not selected and habit occurs on a day that is already passed will
-                            not be added for that day
+                        <label class="text-gray-500">
+                            If not selected and habit occurs on a day that is already passed it will
+                            not be added for that day but will not affect your streak.
                         </label>
 
                         <InputError :error="form.errors.start_next_week" class="mt-2" />
