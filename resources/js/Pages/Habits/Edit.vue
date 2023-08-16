@@ -112,17 +112,6 @@ const deleteHabit = () => {
 
                         <InputError :error="form.errors.description" class="mt-2" />
                     </div>
-                    <div class="py-2">
-                        <InputLabel for="frequency"> Frequency </InputLabel>
-
-                        <Select
-                            v-model="form.frequency"
-                            v-bind="frequenciesConfig"
-                            class="mt-1 block w-full"
-                        />
-
-                        <InputError :error="form.errors.frequency" class="mt-2" />
-                    </div>
                     <div class="py-2" v-if="form.frequency === 0">
                         <InputLabel for="daily_config"> Daily </InputLabel>
 
