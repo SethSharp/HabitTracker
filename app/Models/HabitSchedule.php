@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class HabitSchedule extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
         'habit_id',

@@ -24,7 +24,6 @@ trait StatisticsHelper
         $endDate = Carbon::parse("1 $month")->endOfMonth();
 
         $habits = $user->scheduledHabits()
-            ->withTrashed()
             ->whereBetween('scheduled_completion', [$startDate, $endDate])
             ->with(['habit' => fn ($query) => $query->withTrashed()])
             ->orderBy('scheduled_completion', 'desc')

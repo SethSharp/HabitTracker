@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Habits;
 
 use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
+use App\Models\HabitSchedule;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Habit;
 use App\Enums\Frequency;
@@ -21,8 +23,9 @@ class UpdateHabitController extends Controller
 
         $freq = Frequency::cases()[$data['frequency']];
 
-        $action($habit);
+        $oldDate = $habit->occurrence_days;
 
+        // Sets the config for the habit
         $habit->update([
             'name' => $data['name'],
             'description' => $data['description'],
@@ -31,7 +34,27 @@ class UpdateHabitController extends Controller
             'colour' => $data['colour']
         ]);
 
-        $habit->save();
+        if ($freq->value == Frequency::MONTHLY->value) {
+            $date = json_decode($oldDate)[0];
+            $scheduledHabits = $request->user()
+                ->scheduledHabits()
+                ->where([
+                    'habit_id' => $habit->id,
+                    'scheduled_completion' => $date
+                ])
+                ->get();
+
+            $scheduledHabits->each(fn ($habit) => $habit->delete());
+
+            HabitSchedule::factory()->create([
+                'habit_id' => $habit->id,
+                'user_id' => $request->user(),
+                'scheduled_completion' => $data['monthly_config'],
+            ]);
+        } else {
+            // Update habit schedules starting from today
+            $action($habit, $data, $request->user());
+        }
 
         return Inertia::location(url('habits'));
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Actions\Habits;
 
+use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
@@ -15,30 +16,34 @@ class UpdateHabitAction
     use ScheduledHabits;
     use DateHelper;
 
-    public function __invoke(Habit $habit, Collection $data): void
+    public function __invoke(Habit $habit, Collection $data, User $user): void
     {
-        // will need to be ranged to today to the end of the month
         $occurrences = json_decode($habit->occurrence_days);
-        $scheduledDate = Carbon::now()->startOfWeek();
-        $endDate = isset($data['scheduled_to']) && ! is_null($data['scheduled_to']) ? Carbon::parse($data['scheduled_to']) : Carbon::now()->endOfMonth();
-
-        if (isset($data['start_next_week']) && ! is_null($data['start_next_week']) && $data['start_next_week']) {
-            $scheduledDate->addWeek();
-        }
+        $scheduledDate = Carbon::now();
+        $endDate = Carbon::now()->endOfMonth();
 
         while ($scheduledDate <= $endDate) {
+
+            $alreadyScheduled = $user->scheduledHabits()
+                ->where([
+                    'habit_id' => $habit->id,
+                    'scheduled_completion' => $scheduledDate->toDateString(),
+                ])
+                ->get();
+
             // if today is a day in occurrences add to list
             if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                // if not in the past add to the schedule
-                if (! $scheduledDate <= Carbon::now()) {
-                    // create schedule
+                if (count($alreadyScheduled) === 0) {
                     HabitSchedule::factory()->create([
                         'habit_id' => $habit->id,
                         'user_id' => Auth::user()->id,
                         'scheduled_completion' => $scheduledDate
                     ]);
                 }
+            } else {
+                $alreadyScheduled->each(fn ($habit) => $habit->delete());
             }
+
             $scheduledDate->addDay();
         }
     }

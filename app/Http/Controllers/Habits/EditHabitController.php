@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Habits;
 
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Habit;
 use App\Enums\Frequency;
@@ -16,7 +17,8 @@ class EditHabitController extends Controller
             'frequencies' => collect(Frequency::cases())->map(function ($data, $index) {
                 return ['id' => $index, 'name' => $data->value];
             }),
-            'min' => date('Y-m-01'),
+            'min' => Carbon::now()->toDateString(),
+            'max' => Carbon::now()->endOfMonth()->toDateString()
         ]);
     }
 }
