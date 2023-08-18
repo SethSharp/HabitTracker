@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Models\Habit;
 use Carbon\Carbon;
 use App\Models\User;
 use Carbon\CarbonPeriod;

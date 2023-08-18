@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Actions\Habits;
 
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
 use Illuminate\Support\Collection;

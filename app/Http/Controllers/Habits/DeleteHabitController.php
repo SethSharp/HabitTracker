@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Habits;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Habit;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\HabitStorageTrait;

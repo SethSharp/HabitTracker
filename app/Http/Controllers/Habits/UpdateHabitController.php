@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Habits;
 
-use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
-use App\Models\HabitSchedule;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Habit;
 use App\Enums\Frequency;
+use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Habits\UpdateHabitRequest;
 use App\Http\Controllers\Traits\HabitStorageTrait;
+use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
 
 class UpdateHabitController extends Controller
 {
