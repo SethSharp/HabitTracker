@@ -19,7 +19,8 @@ trait HabitLog
             ->get();
 
         $habitLogsGrouped = $habitLogs->groupBy(function ($item) {
-            return $item->habit->id;
+
+            return $item->habit?->id;
         });
 
         $habitIds = $user->habits()->pluck('id');
@@ -36,7 +37,6 @@ trait HabitLog
             CacheKeys::weeklyHabitLog($user),
             now()->addDay(),
             fn () => $user->scheduledHabits()
-                ->withTrashed()
                 ->where('scheduled_completion', '>=', $start_date)
                 ->where('scheduled_completion', '<=', $end_date)
                 ->with(['habit' => fn ($query) => $query->withTrashed()])

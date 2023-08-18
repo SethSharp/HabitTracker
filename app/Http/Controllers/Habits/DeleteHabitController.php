@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Habits;
 
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\Habit;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\Traits\HabitStorageTrait;
 
@@ -13,11 +14,15 @@ class DeleteHabitController extends Controller
 {
     use HabitStorageTrait;
 
-    public function __invoke(Habit $habit): Response
+    public function __invoke(Habit $habit, Request $request): Response
     {
-        $habit->delete();
+        $habits = $request->user()
+            ->scheduledHabits()
+            ->where('habit_id', $habit->id)
+            ->whereBetween('scheduled_completion', [Carbon::now()->toDateString(), Carbon::now()->endOfMonth()->toDateString()])
+            ->get();
 
-        $habits = Auth::user()->scheduledHabits()->where('habit_id', $habit->id)->get();
+        $habit->delete();
 
         $habits->map(function ($habit) {
             $habit->delete();

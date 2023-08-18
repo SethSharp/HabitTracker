@@ -35,7 +35,6 @@ trait ScheduledHabits
         $week = $this->getWeekDatesStartingFromMonday($this->getMonday());
 
         $thisWeeksHabits = $user->scheduledHabits()
-            ->withTrashed()
             ->where('scheduled_completion', '>=', $this->getMonday() ?? $nextMonday)
             ->where('scheduled_completion', '<=', $this->getSunday() ?? $nextSunday)
             ->with(['habit' => fn ($query) => $query->withTrashed()])

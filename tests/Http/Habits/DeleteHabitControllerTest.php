@@ -2,6 +2,7 @@
 
 namespace Tests\Http\Habits;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
@@ -72,6 +73,8 @@ class DeleteHabitControllerTest extends TestCase
     /** @test */
     public function correct_scheduled_habits_are_removed()
     {
+        Carbon::setTestNow(Carbon::parse("2023-08-03"));
+
         $scheduledHabit1 = HabitSchedule::factory()->create([
             'habit_id' => $this->habit->id,
             'user_id' => $this->user->id,
@@ -99,7 +102,7 @@ class DeleteHabitControllerTest extends TestCase
 
         $this->assertDatabaseHas('habit_schedules', [
             'id' => $scheduledHabit1->id,
-            'deleted_at' => now()
+            'deleted_at' => null
         ]);
 
         $this->assertDatabaseHas('habit_schedules', [

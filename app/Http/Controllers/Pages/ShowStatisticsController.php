@@ -18,7 +18,7 @@ class ShowStatisticsController extends Controller
     {
         return Inertia::render('Statistics', [
             'habitsByDay' => $this->getMonthlyHabitScheduleWithHabits(Auth::user(), $request->route('month')),
-            'habits' => Auth::user()->habits()->get(),
+            'habits' => Auth::user()->habits()->withTrashed()->get(),
             'month' => $request->route('month') ?: Carbon::now()->monthName,
             'habitFilters' => $this->getHabitsScheduledWithinMonth(Auth::user(), $request->route('month'))
         ]);

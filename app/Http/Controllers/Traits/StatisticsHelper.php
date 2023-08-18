@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Models\Habit;
 use Carbon\Carbon;
 use App\Models\User;
 use Carbon\CarbonPeriod;
@@ -24,7 +23,6 @@ trait StatisticsHelper
         $endDate = Carbon::parse("1 $month")->endOfMonth();
 
         $habits = $user->scheduledHabits()
-            ->withTrashed()
             ->whereBetween('scheduled_completion', [$startDate, $endDate])
             ->with(['habit' => fn ($query) => $query->withTrashed()])
             ->orderBy('scheduled_completion', 'desc')

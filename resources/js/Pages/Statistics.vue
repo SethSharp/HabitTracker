@@ -19,7 +19,7 @@ for (let i = 0; i < props.habits.length; i++) {
         title: props.habits[i].name,
         attributePath: 'habit.id',
         filterBy: props.habits[i].id,
-        colour: props.habits[i].colour
+        colour: props.habits[i].colour,
     })
 }
 

@@ -86,7 +86,6 @@ let disabled = habitConfig.map((h) => {
 })
 
 const isSuccess = (habits) => {
-
     if (habits.length === 0) return false
 
     for (const obj of Object.values(habits)) {
@@ -96,7 +95,6 @@ const isSuccess = (habits) => {
 }
 
 const isWarning = (habits) => {
-
     if (habits.length === 0) return false
 
     let successCount = 0
@@ -123,7 +121,6 @@ const isWarning = (habits) => {
 }
 
 const isDanger = (habits) => {
-
     if (habits.length === 0) return false
 
     let successCount = 0
@@ -269,7 +266,7 @@ const submit = () => {
                                 :success="isSuccess(habits)"
                                 :warning="isWarning(habits)"
                                 :danger="isDanger(habits)"
-                                :heading="today.getDay()-1 === index"
+                                :heading="today.getDay() - 1 === index"
                                 :id="index"
                             >
                                 <template #heading>
