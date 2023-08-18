@@ -20,7 +20,7 @@ class RestoreHabitController extends Controller
 
         $habit->restore();
 
-        $habits = HabitSchedule::withTrashed()->where('habit_id', $habit->id)->get();
+        $habits = HabitSchedule::where('habit_id', $habit->id)->get();
 
         $habits->map(function ($habit) {
             $habit->restore();

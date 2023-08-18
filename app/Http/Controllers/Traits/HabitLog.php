@@ -19,7 +19,8 @@ trait HabitLog
             ->get();
 
         $habitLogsGrouped = $habitLogs->groupBy(function ($item) {
-            return $item->habit->id;
+
+            return $item->habit?->id;
         });
 
         $habitIds = $user->habits()->pluck('id');
