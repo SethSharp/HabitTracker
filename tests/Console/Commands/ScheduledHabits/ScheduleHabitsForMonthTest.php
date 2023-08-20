@@ -10,24 +10,21 @@ use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
 
-class ScheduleHabitsForTheWeekTest extends TestCase
+class ScheduleHabitsForMonthTest extends TestCase
 {
     use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
 
     /** @test */
     public function command_successfully_stores_daily_habit_schedules()
     {
-        Carbon::setTestNow(Carbon::parse("2023-07-17"));
+        Carbon::setTestNow(Carbon::parse("2023-08-01"));
 
         $user = User::factory()->create();
 
-        Habit::factory()->count(1)->create([
-            'user_id' => $user->id
+        Habit::factory()->create([
+            'user_id' => $user->id,
+            'frequency' => Frequency::DAILY,
+            'occurrence_days' => '[2,3,4]',
         ]);
 
         $this->artisan('habits:schedule-habits')
@@ -35,22 +32,21 @@ class ScheduleHabitsForTheWeekTest extends TestCase
 
         $habitSchedules = HabitSchedule::all();
 
-        $this->assertEquals("2023-07-18", $habitSchedules[0]->scheduled_completion);
-        $this->assertEquals("2023-07-19", $habitSchedules[1]->scheduled_completion);
-        $this->assertEquals("2023-07-20", $habitSchedules[2]->scheduled_completion);
+        // 5 weeks, where there is a tue/wed/thur
+        $this->assertCount(15, $habitSchedules);
     }
 
     /** @test */
     public function command_successfully_stores_weekly_habit_schedule()
     {
-        Carbon::setTestNow(Carbon::parse("2023-07-17"));
+        Carbon::setTestNow(Carbon::parse("2023-08-01"));
 
         $user = User::factory()->create();
 
-        Habit::factory()->count(1)->create([
+        Habit::factory()->create([
             'user_id' => $user->id,
             'frequency' => Frequency::WEEKLY,
-            'occurrence_days' => '[4]'
+            'occurrence_days' => '[3]'
         ]);
 
         $this->artisan('habits:schedule-habits')
@@ -58,7 +54,7 @@ class ScheduleHabitsForTheWeekTest extends TestCase
 
         $habitSchedules = HabitSchedule::all();
 
-        $this->assertEquals("2023-07-20", $habitSchedules[0]->scheduled_completion);
+        $this->assertCount(5, $habitSchedules);
     }
 
     /** @test */
@@ -68,10 +64,10 @@ class ScheduleHabitsForTheWeekTest extends TestCase
 
         $user = User::factory()->create();
 
-        Habit::factory()->count(1)->create([
+        Habit::factory()->create([
             'user_id' => $user->id,
             'frequency' => Frequency::MONTHLY,
-            'occurrence_days' => '["2023-07-17"]'
+            'occurrence_days' => '["2023-08-17"]'
         ]);
 
         $this->artisan('habits:schedule-habits')
@@ -79,6 +75,6 @@ class ScheduleHabitsForTheWeekTest extends TestCase
 
         $habitSchedules = HabitSchedule::all();
 
-        $this->assertEquals("2023-07-17", $habitSchedules[0]->scheduled_completion);
+        $this->assertEquals("2023-08-17", $habitSchedules[0]->scheduled_completion);
     }
 }

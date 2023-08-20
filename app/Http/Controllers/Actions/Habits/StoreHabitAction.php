@@ -3,21 +3,17 @@
 namespace App\Http\Controllers\Actions\Habits;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Habit;
-use App\Models\HabitSchedule;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Traits\DateHelper;
-use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Http\Controllers\Traits\HabitStorageTrait;
 
 class StoreHabitAction
 {
-    use ScheduledHabits;
-    use DateHelper;
+    use HabitStorageTrait;
 
-    public function __invoke(Habit $habit, Collection $data): void
+    public function __invoke(User $user, Habit $habit, Collection $data): void
     {
-        $occurrences = json_decode($habit->occurrence_days);
         $scheduledDate = Carbon::now()->startOfWeek();
         $endDate = isset($data['scheduled_to']) && ! is_null($data['scheduled_to']) ? Carbon::parse($data['scheduled_to']) : Carbon::now()->endOfMonth();
 
@@ -25,19 +21,6 @@ class StoreHabitAction
             $scheduledDate->addWeek();
         }
 
-        while ($scheduledDate <= $endDate) {
-            // if today is a day in occurrences add to list
-            if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                // if not in the past add to the schedule
-                //                if (! $scheduledDate <= Carbon::now()) {
-                HabitSchedule::factory()->create([
-                    'habit_id' => $habit->id,
-                    'user_id' => Auth::user()->id,
-                    'scheduled_completion' => $scheduledDate
-                ]);
-                //                }
-            }
-            $scheduledDate->addDay();
-        }
+        $this->scheduledHabitsOverTimeframe($user, $habit, $scheduledDate, $endDate);
     }
 }

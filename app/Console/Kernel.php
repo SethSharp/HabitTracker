@@ -7,14 +7,14 @@ use App\Console\Commands\Counters\HabitStreak;
 use App\Console\Commands\Counters\WeeklyStreak;
 use App\Console\Commands\Habits\SendDailyHabitReminder;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\ScheduledHabits\ScheduleHabitsForWeek;
+use App\Console\Commands\ScheduledHabits\ScheduleHabitsForMonth;
 
 class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
         // scheduling habits
-        // $schedule->command(ScheduleHabitsForWeek::class)->mondays();
+        $schedule->command(ScheduleHabitsForMonth::class)->mondays();
 
         // counters
         // $schedule->command(HabitStreak::class)->daily();

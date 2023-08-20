@@ -40,7 +40,7 @@ class StoreHabitController extends Controller
                 'scheduled_completion' => $data['monthly_config'],
             ]);
         } else {
-            $action($habit, $data);
+            $action($request->user(), $habit, $data);
         }
 
         return Inertia::location(url('habits'));
