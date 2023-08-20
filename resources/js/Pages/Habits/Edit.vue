@@ -25,13 +25,13 @@ let frequenciesConfig = {
 
 let weekConfig = {
     options: [
+        { name: 'Sunday', id: 0 },
         { name: 'Monday', id: 1 },
         { name: 'Tuesday', id: 2 },
         { name: 'Wednesday', id: 3 },
         { name: 'Thursday', id: 4 },
         { name: 'Friday', id: 5 },
         { name: 'Saturday', id: 6 },
-        { name: 'Sunday', id: 7 },
     ],
 }
 
@@ -111,17 +111,6 @@ const deleteHabit = () => {
                         />
 
                         <InputError :error="form.errors.description" class="mt-2" />
-                    </div>
-                    <div class="py-2">
-                        <InputLabel for="frequency"> Frequency </InputLabel>
-
-                        <Select
-                            v-model="form.frequency"
-                            v-bind="frequenciesConfig"
-                            class="mt-1 block w-full"
-                        />
-
-                        <InputError :error="form.errors.frequency" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 0">
                         <InputLabel for="daily_config"> Daily </InputLabel>

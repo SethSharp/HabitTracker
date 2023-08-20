@@ -5,21 +5,26 @@ namespace App\Http\Controllers\Habits;
 use Inertia\Inertia;
 use App\Models\Habit;
 use App\Enums\Frequency;
+use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Habits\UpdateHabitRequest;
 use App\Http\Controllers\Traits\HabitStorageTrait;
+use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
 
 class UpdateHabitController extends Controller
 {
     use HabitStorageTrait;
 
-    public function __invoke(Habit $habit, UpdateHabitRequest $request): Response
+    public function __invoke(Habit $habit, UpdateHabitRequest $request, UpdateHabitAction $action): Response
     {
         $data = collect($request->validated());
 
         $freq = Frequency::cases()[$data['frequency']];
 
+        $oldDate = $habit->occurrence_days;
+
+        // Sets the config for the habit
         $habit->update([
             'name' => $data['name'],
             'description' => $data['description'],
@@ -28,7 +33,27 @@ class UpdateHabitController extends Controller
             'colour' => $data['colour']
         ]);
 
-        $habit->save();
+        if ($freq->value == Frequency::MONTHLY->value) {
+            $date = json_decode($oldDate)[0];
+            $scheduledHabits = $request->user()
+                ->scheduledHabits()
+                ->where([
+                    'habit_id' => $habit->id,
+                    'scheduled_completion' => $date
+                ])
+                ->get();
+
+            $scheduledHabits->each(fn ($habit) => $habit->delete());
+
+            HabitSchedule::factory()->create([
+                'habit_id' => $habit->id,
+                'user_id' => $request->user(),
+                'scheduled_completion' => $data['monthly_config'],
+            ]);
+        } else {
+            // Update habit schedules starting from today
+            $action($habit, $data, $request->user());
+        }
 
         return Inertia::location(url('habits'));
     }
