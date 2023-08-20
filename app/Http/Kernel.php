@@ -69,6 +69,6 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        'owner' => \App\Http\Middleware\Owner::class,
+
     ];
 }
