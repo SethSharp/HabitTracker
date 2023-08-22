@@ -10,6 +10,7 @@ import DateInput from '@/Components/DateInput.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
 import PickColors from 'vue-pick-colors'
+import CustomSelectLength from "@/Components/CustomSelectLength.vue";
 
 const props = defineProps({
     frequencies: Array,
@@ -33,6 +34,14 @@ let weekConfig = {
     ],
 }
 
+let customSelectedConfig = {
+    options: [
+        { name: 'Day/s', id: 'd' },
+        { name: 'Week/s', id: 'w' },
+        { name: 'Month/s', id: 'm' },
+    ]
+}
+
 const form = useForm({
     name: '',
     description: '',
@@ -40,7 +49,10 @@ const form = useForm({
     daily_config: [],
     weekly_config: 0,
     monthly_config: '',
-    scheduled_to: '',
+    scheduled_to: {
+        length: 'm',
+        time: 10,
+    },
     start_next_week: false,
     colour: '#00cedf',
 })
@@ -134,14 +146,13 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <InputLabel for="scheduled_to"> Schedule Habit to a date </InputLabel>
+                        <InputLabel for="scheduled_to"> Set a goal for this habit </InputLabel>
 
-                        <DateInput
+                        <CustomSelectLength
                             v-model="form.scheduled_to"
-                            v-model:min="props.min"
+                            v-bind="customSelectedConfig"
                             class="mt-1 block w-full"
-                            label="Can be left to be scheduled for each month forever or scheduled for to your specified time.
-                                    This can be great for setting goals and feeling fulfilled when you are finished!"
+                            label=""
                         />
 
                         <InputError :error="form.errors.scheduled_to" class="mt-2" />
@@ -152,7 +163,7 @@ const submit = () => form.post(route('habit.store'))
                         <Checkbox
                             v-model="form.start_next_week"
                             :value="form.start_next_week"
-                            label="Start next"
+                            label="Schedule for next week"
                         />
 
                         <label class="text-gray-500">

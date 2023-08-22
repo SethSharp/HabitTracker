@@ -16,7 +16,7 @@ class StoreHabitRequest extends FormRequest
             'weekly_config' => ['required_if:frequency,1'],
             'monthly_config' => ['required_if:frequency,2'],
             'start_next_week' => ['boolean'],
-            'scheduled_to' => ['nullable', 'string'],
+            'scheduled_to' => ['required'],
             'colour' => ['required']
         ];
     }
