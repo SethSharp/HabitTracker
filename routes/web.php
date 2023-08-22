@@ -32,7 +32,7 @@ Route::middleware('auth')->name('schedule.')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->name('dashboard');
     Route::get('/habits', \App\Http\Controllers\Habits\ViewHabitsController::class)->name('habits');
-    Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->name('competition');
+    Route::get('/friends', \App\Http\Controllers\Pages\ShowFriendsController::class)->name('friends');
     Route::get('/calendar/{month?}', \App\Http\Controllers\Pages\ShowCalendarController::class)->name('calendar');
 });
 

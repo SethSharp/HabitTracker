@@ -15,16 +15,16 @@ let headingLinksConfig = [
         href: 'dashboard',
     },
     {
-        name: 'Habits',
-        href: 'habits',
-    },
-    {
         name: 'Calendar',
         href: 'calendar',
     },
     {
-        name: 'Competition',
-        href: 'competition',
+        name: 'Habits',
+        href: 'habits',
+    },
+    {
+        name: 'Friends',
+        href: 'friends',
     },
 ]
 </script>
