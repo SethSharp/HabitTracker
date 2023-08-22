@@ -7,24 +7,29 @@ use App\Models\User;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
-class WeeklyStreak extends Command
+class UserStreak extends Command
 {
     use ScheduledHabits;
-    protected $signature = 'counters:weekly-streak';
+    protected $signature = 'counters:user-streak';
     protected $description = 'Go through each day of the scheduled habits and add to the current streak, if broken, store current streak as best_streak if higher';
 
     public function handle()
     {
         $users = User::all();
         $users->map(function ($user) {
-            $scheduledHabits = $user->scheduledHabits()->where('scheduled_completion', '<', Carbon::today())->get();
-            // TODO: Note somewhere in UI, if no habits for that day, will be a fail... UAT?
+            // Go through scheduled habits
+            // if a user doesn't have a habit scheduled for a certain day, it should not reset the streak
+
+            // get scheduled habits for yesterday
+            $scheduledHabits = $user->scheduledHabits()->where('scheduled_completion', '=', Carbon::now()->subDay())->get();
+
             $streak = true;
-            $scheduledHabits->map(function ($habit) use (&$streak) {
+            foreach ($scheduledHabits as $habit) {
                 if ($habit->completed == 0) {
                     $streak = false;
+                    break;
                 }
-            });
+            }
 
             if ($streak) {
                 $user->increment('streak');
