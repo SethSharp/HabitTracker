@@ -233,7 +233,7 @@ const submit = () => {
                             <div v-if="completedHabits.length !== 0">
                                 <div v-for="habit in completedHabits" class="flex my-2">
                                     <CheckIcon
-                                        class="w-10 h-10 text-white bg-green-500 p-2 rounded-full"
+                                        class="w-10 h-10 text-white bg-primary p-2 rounded-full"
                                     />
                                     <span class="py-2 px-3"> {{ habit.habit.name }}</span>
                                 </div>
