@@ -28,7 +28,7 @@ class HabitStreakTest extends TestCase
             'habit_id' => $habit->id,
             'user_id' => $user->id,
             'completed' => 0,
-            'scheduled_completion' => "2023-08-02"
+            'scheduled_completion' => "2023-08-01"
         ]);
 
         Carbon::setTestNow(Carbon::parse("2023-08-02"));
@@ -100,14 +100,14 @@ class HabitStreakTest extends TestCase
             'habit_id' => $habit1->id,
             'user_id' => $user1->id,
             'completed' => 1,
-            'scheduled_completion' => "2023-08-02"
+            'scheduled_completion' => "2023-08-01"
         ]);
 
         HabitSchedule::factory()->create([
             'habit_id' => $habit2->id,
             'user_id' => $user2->id,
             'completed' => 0,
-            'scheduled_completion' => "2023-08-02"
+            'scheduled_completion' => "2023-08-01"
         ]);
 
         Carbon::setTestNow(Carbon::parse("2023-08-02"));

@@ -11,22 +11,22 @@ class HabitStreak extends Command
 {
     use ScheduledHabits;
     protected $signature = 'counters:habit-streak';
-    protected $description = 'Counts the habit streak by looking at the scheduled habit (For this habit) and seeing if complete';
+    protected $description = 'Counts the habit streak by looking at the habits from yesterday and record if complete';
 
     public function handle()
     {
         $users = User::all();
         $users->map(function ($user) {
-            $scheduledHabits = $user->scheduledHabits()->where('scheduled_completion', Carbon::today())->get();
+            $scheduledHabits = $user->scheduledHabits()->where('scheduled_completion', Carbon::now()->subDay())->get();
 
-            $scheduledHabits->map(function ($habit) {
-                if ($habit->completed == 1) {
-                    $habit->habit->increment('streak');
+            foreach($scheduledHabits as $scheduledHabit) {
+                if ($scheduledHabit->completed == 1) {
+                    $scheduledHabit->habit->increment('streak');
                 } else {
-                    $habit->habit->streak = 0;
+                    $scheduledHabit->habit->streak = 0;
                 }
-                $habit->habit->save();
-            });
+                $scheduledHabit->habit->save();
+            }
         });
     }
 }

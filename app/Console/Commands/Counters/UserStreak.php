@@ -11,7 +11,7 @@ class UserStreak extends Command
 {
     use ScheduledHabits;
     protected $signature = 'counters:user-streak';
-    protected $description = 'Go through each day of the scheduled habits and add to the current streak, if broken, store current streak as best_streak if higher';
+    protected $description = 'Look at all scheduled habits for yesterday, record whether all streaks were completed or not';
 
     public function handle()
     {
