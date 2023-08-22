@@ -36,8 +36,8 @@ trait ScheduledHabits
         $week = $this->getWeekDatesStartingFromMonday();
 
         $thisWeeksHabits = $user->scheduledHabits()
-            ->where('scheduled_completion', '>=', Carbon::now()->startOfWeek()->toDateString())
-            ->where('scheduled_completion', '<=', Carbon::now()->endOfWeek()->toDateString())
+            ->where('scheduled_completion', '>=', Carbon::now()->startOfWeek(0)->toDateString())
+            ->where('scheduled_completion', '<=', Carbon::now()->endOfWeek(-1)->toDateString())
             ->with(['habit' => fn ($query) => $query->withTrashed()])
             ->get();
 
