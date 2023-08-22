@@ -7,12 +7,12 @@ use Inertia\Inertia;
 use App\Models\Habit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\Traits\HabitStorageTrait;
 
 class DeleteHabitController extends Controller
 {
-    use HabitStorageTrait;
+    use HabitStorage;
 
     public function __invoke(Habit $habit, Request $request): Response
     {

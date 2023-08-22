@@ -158,18 +158,7 @@ const shouldShowDay = (habit) => {
 }
 
 onMounted(() => {
-    let b = false
-
-    if (props.dailyHabits.length >= 0) {
-        for (const habit of props.dailyHabits) {
-            if (!habit.completed) {
-                b = true
-                break
-            }
-        }
-    }
-
-    if (b) {
+    if (props.dailyHabits.length === 0 && props.completedHabits.length > 0) {
         isCompleted.value = true
         confetti()
     }
@@ -204,10 +193,10 @@ const submit = () => {
             <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-6">
                 <Card>
                     <template #heading>
-                        <span class="h-fit pt-2 text-2xl"> Today's Habits </span>
+                        <span class="h-fit text-2xl"> Today's Habits </span>
                     </template>
                     <template #content>
-                        <div class="mx-2 my-5">
+                        <div class="mx-2">
                             <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
                                 <form @submit="submit">
                                     <div class="py-2">
@@ -244,7 +233,7 @@ const submit = () => {
                             <div v-if="completedHabits.length !== 0">
                                 <div v-for="habit in completedHabits" class="flex my-2">
                                     <CheckIcon
-                                        class="w-10 h-10 text-white bg-green-500 p-2 rounded-full"
+                                        class="w-10 h-10 text-white bg-primary p-2 rounded-full"
                                     />
                                     <span class="py-2 px-3"> {{ habit.habit.name }}</span>
                                 </div>

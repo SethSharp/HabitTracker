@@ -6,11 +6,10 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
-use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
 
-class WeeklyStreakTest extends TestCase
+class UserStreakTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -30,13 +29,13 @@ class WeeklyStreakTest extends TestCase
         HabitSchedule::factory()->create([
             'habit_id' => $habit->id,
             'user_id' => $user->id,
-            'scheduled_completion' => "2023-08-02"
+            'scheduled_completion' => "2023-08-06"
         ]);
 
         // Simulates the monday that it is run on
         Carbon::setTestNow(Carbon::parse("2023-08-07"));
 
-        $this->artisan('counters:weekly-streak')
+        $this->artisan('counters:user-streak')
             ->assertSuccessful();
 
         $this->assertDatabaseHas('users', [
@@ -59,29 +58,16 @@ class WeeklyStreakTest extends TestCase
             'occurrence_days' => '[1]'
         ]);
 
-        $habit2 = Habit::factory()->create([
-            'user_id' => $user->id,
-            'frequency' => Frequency::MONTHLY,
-            'occurrence_days' => '["2023-08-07"]'
-        ]);
-
         HabitSchedule::factory()->create([
             'habit_id' => $habit1->id,
             'user_id' => $user->id,
             'completed' => 1,
-            'scheduled_completion' => "2023-08-02"
-        ]);
-
-        HabitSchedule::factory()->create([
-            'habit_id' => $habit2->id,
-            'user_id' => $user->id,
-            'completed' => 0,
-            'scheduled_completion' => "2023-08-07"
+            'scheduled_completion' => "2023-08-06"
         ]);
 
         Carbon::setTestNow(Carbon::parse("2023-08-07"));
 
-        $this->artisan('counters:weekly-streak')
+        $this->artisan('counters:user-streak')
             ->assertSuccessful();
 
         $this->assertDatabaseHas('users', [
@@ -108,12 +94,12 @@ class WeeklyStreakTest extends TestCase
             'habit_id' => $habit->id,
             'user_id' => $user->id,
             'completed' => 1,
-            'scheduled_completion' => "2023-08-02"
+            'scheduled_completion' => "2023-08-06"
         ]);
 
         Carbon::setTestNow(Carbon::parse("2023-08-7"));
 
-        $this->artisan('counters:weekly-streak')
+        $this->artisan('counters:user-streak')
             ->assertSuccessful();
 
         $this->assertDatabaseHas('users', [
@@ -150,19 +136,19 @@ class WeeklyStreakTest extends TestCase
             'habit_id' => $habit1->id,
             'user_id' => $user1->id,
             'completed' => 1,
-            'scheduled_completion' => "2023-08-02"
+            'scheduled_completion' => "2023-08-06"
         ]);
 
         HabitSchedule::factory()->create([
             'habit_id' => $habit2->id,
             'user_id' => $user2->id,
             'completed' => 0,
-            'scheduled_completion' => "2023-08-02"
+            'scheduled_completion' => "2023-08-06"
         ]);
 
         Carbon::setTestNow(Carbon::parse("2023-08-07"));
 
-        $this->artisan('counters:weekly-streak')
+        $this->artisan('counters:user-streak')
             ->assertSuccessful();
 
         $this->assertDatabaseHas('users', [

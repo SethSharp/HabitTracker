@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Habits;
 
+use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class ViewHabitsController extends Controller
     {
         return Inertia::render('Habits/View', [
             'habits' => Auth::user()->habits()->get()->toArray(),
-            'log' => $this->getHabitLog(Auth::user(), $this->getDateXDaysAgo(14), $this->getDateXDaysAgo(1)),
+            'log' => $this->getHabitLog(Auth::user(), Carbon::now()->subDays(14)->toDateString(), Carbon::now()->subDay()->toDateString()),
         ]);
     }
 }

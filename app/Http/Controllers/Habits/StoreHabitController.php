@@ -8,14 +8,14 @@ use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Habits\StoreHabitRequest;
-use App\Http\Controllers\Traits\HabitStorageTrait;
 use App\Http\Controllers\Actions\Habits\StoreHabitAction;
 
 class StoreHabitController extends Controller
 {
-    use HabitStorageTrait;
+    use HabitStorage;
 
     public function __invoke(StoreHabitRequest $request, StoreHabitAction $action): Response
     {
@@ -40,7 +40,7 @@ class StoreHabitController extends Controller
                 'scheduled_completion' => $data['monthly_config'],
             ]);
         } else {
-            $action($habit, $data);
+            $action($request->user(), $habit, $data);
         }
 
         return Inertia::location(url('habits'));
