@@ -158,18 +158,7 @@ const shouldShowDay = (habit) => {
 }
 
 onMounted(() => {
-    let b = false
-
-    if (props.dailyHabits.length >= 0) {
-        for (const habit of props.dailyHabits) {
-            if (!habit.completed) {
-                b = true
-                break
-            }
-        }
-    }
-
-    if (b) {
+    if (props.dailyHabits.length === 0 && props.completedHabits.length > 0) {
         isCompleted.value = true
         confetti()
     }

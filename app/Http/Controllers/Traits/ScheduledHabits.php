@@ -14,11 +14,11 @@ trait ScheduledHabits
     public function getDailyScheduledHabits(User $user): array
     {
         return $user->scheduledHabits()
-        ->where('scheduled_completion', '=', Carbon::now()->toDateString())
-        ->where('completed', '=', 0)
-        ->with('habit')
-        ->get()
-        ->toArray();
+            ->where('scheduled_completion', '=', Carbon::now()->toDateString())
+            ->where('completed', '=', 0)
+            ->with('habit')
+            ->get()
+            ->toArray();
     }
 
     public function getCompletedDailyHabits(user $user): array
@@ -33,7 +33,7 @@ trait ScheduledHabits
 
     public function getWeeklyScheduledHabits(User $user): Collection
     {
-        $week = $this->getWeekDatesStartingFromMonday(Carbon::now()->startOfWeek()->toDateString());
+        $week = $this->getWeekDatesStartingFromMonday();
 
         $thisWeeksHabits = $user->scheduledHabits()
             ->where('scheduled_completion', '>=', Carbon::now()->startOfWeek()->toDateString())

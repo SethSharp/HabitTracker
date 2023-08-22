@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Pages;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\DateHelper;
 use App\Http\Controllers\Traits\ScheduledHabits;
 

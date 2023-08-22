@@ -7,14 +7,15 @@ use Illuminate\Support\Collection;
 
 trait DateHelper
 {
-    public function getWeekDatesStartingFromMonday($startDate): Collection
+    public function getWeekDatesStartingFromMonday(): Collection
     {
         $dates = collect();
 
-        $startOfWeek = Carbon::now()->startOfWeek()->toDateString();
+        $startOfWeek = Carbon::now()->startOfWeek();
 
         for ($i = 0; $i < 7; $i++) {
-            $dates[] = date('Y-m-d', strtotime("+$i days", $startOfWeek));
+            $dates[] = $startOfWeek->toDateString();
+            $startOfWeek->addDay();
         }
 
         return $dates;
