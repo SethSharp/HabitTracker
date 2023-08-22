@@ -193,10 +193,10 @@ const submit = () => {
             <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-6">
                 <Card>
                     <template #heading>
-                        <span class="h-fit pt-2 text-2xl"> Today's Habits </span>
+                        <span class="h-fit text-2xl"> Today's Habits </span>
                     </template>
                     <template #content>
-                        <div class="mx-2 my-5">
+                        <div class="mx-2">
                             <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
                                 <form @submit="submit">
                                     <div class="py-2">
