@@ -13,7 +13,7 @@ defineProps({
     status: {
         type: String,
     },
-    email_preference: {
+    emailPreferences: {
         type: Boolean,
     },
 })
@@ -33,8 +33,8 @@ defineProps({
                     />
                 </div>
 
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdateMailingPreferences :preference="email_preference" />
+                <div v-if="emailPreferences.length" class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <UpdateMailingPreferences :preference="emailPreferences" />
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
