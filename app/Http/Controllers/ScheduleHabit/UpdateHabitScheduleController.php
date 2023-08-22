@@ -6,13 +6,13 @@ use Inertia\Inertia;
 use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\UpdateHabitScheduleRequest;
-use App\Http\Controllers\Traits\HabitStorageTrait;
 
 class UpdateHabitScheduleController extends Controller
 {
-    use HabitStorageTrait;
+    use HabitStorage;
 
     public function __invoke(UpdateHabitScheduleRequest $request): Response
     {

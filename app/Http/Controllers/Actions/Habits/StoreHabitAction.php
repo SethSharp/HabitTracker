@@ -6,11 +6,11 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Habit;
 use Illuminate\Support\Collection;
-use App\Http\Controllers\Traits\HabitStorageTrait;
+use App\Http\Controllers\Traits\HabitStorage;
 
 class StoreHabitAction
 {
-    use HabitStorageTrait;
+    use HabitStorage;
 
     public function __invoke(User $user, Habit $habit, Collection $data): void
     {

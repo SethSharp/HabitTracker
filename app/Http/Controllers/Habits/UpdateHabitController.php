@@ -7,14 +7,14 @@ use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Habits\UpdateHabitRequest;
-use App\Http\Controllers\Traits\HabitStorageTrait;
 use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
 
 class UpdateHabitController extends Controller
 {
-    use HabitStorageTrait;
+    use HabitStorage;
 
     public function __invoke(Habit $habit, UpdateHabitRequest $request, UpdateHabitAction $action): Response
     {

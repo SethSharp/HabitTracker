@@ -11,17 +11,13 @@ trait HabitLog
 {
     public function getHabitLog(User $user, string $start_date, string $end_date)
     {
-        // TODO: Cache results, hourly
         $habitLogs = $user->scheduledHabits()
             ->where('scheduled_completion', '>=', $start_date)
             ->where('scheduled_completion', '<=', $end_date)
             ->with('habit')
             ->get();
 
-        $habitLogsGrouped = $habitLogs->groupBy(function ($item) {
-
-            return $item->habit?->id;
-        });
+        $habitLogsGrouped = $habitLogs->groupBy(fn ($item) => $item->habit?->id);
 
         $habitIds = $user->habits()->pluck('id');
 

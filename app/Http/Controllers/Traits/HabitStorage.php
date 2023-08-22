@@ -8,7 +8,7 @@ use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 
-trait HabitStorageTrait
+trait HabitStorage
 {
     private function calculatedOccurrenceDays($data, $freq): string
     {
@@ -27,14 +27,11 @@ trait HabitStorageTrait
         while ($scheduledDate <= $endDate) {
             // if today is a day in occurrences add to list
             if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                // if not in the past add to the schedule
-                //                if (! $scheduledDate <= Carbon::now()) {
                 HabitSchedule::factory()->create([
                     'habit_id' => $habit->id,
                     'user_id' => $user->id,
                     'scheduled_completion' => $scheduledDate
                 ]);
-                //                }
             }
             $scheduledDate->addDay();
         }

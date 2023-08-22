@@ -7,13 +7,13 @@ use App\Models\User;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use Illuminate\Console\Command;
+use App\Http\Controllers\Traits\HabitStorage;
 use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Http\Controllers\Traits\HabitStorageTrait;
 
 class ScheduleHabitsForMonth extends Command
 {
     use ScheduledHabits;
-    use HabitStorageTrait;
+    use HabitStorage;
 
     protected $signature = 'habits:schedule-habits';
     protected $description = 'Set habits up for the month based on the occurrence days of the habit';
