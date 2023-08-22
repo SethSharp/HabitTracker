@@ -8,12 +8,13 @@ const props = defineProps({
     habitsByDay: Object,
     habits: Array,
     month: String,
+    habitFilters: Array,
 })
 
 let habitFilters = []
 let startId = props.habits.length
 
-for (let i = 0; i < props.habits.length; i++) {
+for (let i = 0; i < props.habitFilters.length; i++) {
     habitFilters.push({
         id: props.habits[i].id,
         title: props.habits[i].name,

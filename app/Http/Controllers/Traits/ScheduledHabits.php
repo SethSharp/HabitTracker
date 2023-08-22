@@ -94,8 +94,21 @@ trait ScheduledHabits
         $startDate = Carbon::parse("1 $month")->startOfMonth();
         $endDate = Carbon::parse("1 $month")->endOfMonth();
 
-        $data = $user->habits()->whereHas('habitSchedule');
+        $data = $user->scheduledHabits()
+            ->with('habit')
+            ->whereBetween('scheduled_completion', [$startDate, $endDate])
+            ->get();
 
-        return collect();
+        $habits = collect();
+
+        foreach ($data as $scheduledHabit) {
+            if (! $habits->contains('id', $scheduledHabit->habit->id)) {
+                $habits->push($scheduledHabit->habit);
+            }
+        }
+
+        ray($habits);
+
+        return $habits;
     }
 }
