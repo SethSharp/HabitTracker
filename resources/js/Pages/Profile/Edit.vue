@@ -33,8 +33,8 @@ defineProps({
                     />
                 </div>
 
-                <div v-if="emailPreferences.length" class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdateMailingPreferences :preference="emailPreferences" />
+                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                    <UpdateMailingPreferences :preferences="emailPreferences" />
                 </div>
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">

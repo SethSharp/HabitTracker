@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use Illuminate\Http\Request;
+use App\Models\EmailPreferences;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -17,9 +18,16 @@ class UpdateEmailPreferencesController extends Controller
 
         $preference = $request->user()->emailPreferences()->get()->first();
 
-        $preference->update([
-           'daily_reminder' => $request['daily_reminder']
-        ]);
+        if (is_null($preference)) {
+            EmailPreferences::factory()->create([
+                'user_id' => $request->user(),
+                'daily_reminder' => $request['daily_reminder']
+            ]);
+        } else {
+            $preference->update([
+                'daily_reminder' => $request['daily_reminder']
+            ]);
+        }
 
         return Redirect::route('profile.edit');
     }

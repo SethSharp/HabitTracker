@@ -5,13 +5,13 @@ import InputError from '@/Components/InputError.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 
 const props = defineProps({
-    preference: {
+    preferences: {
         type: Boolean,
     },
 })
 
 let form = useForm({
-    daily_reminder: Boolean(props.preference),
+    daily_reminder: Boolean(props.preferences[0]?.daily_reminder),
 })
 
 const submit = () => form.patch(route('email-preferences.update'))
