@@ -152,7 +152,7 @@ const submit = () => form.post(route('habit.store'))
                             v-model="form.scheduled_to"
                             v-bind="customSelectedConfig"
                             class="mt-1 block w-full"
-                            label=""
+                            label="Leaving this blank, will continuously schedule these habits at the start of each month (Will not be considered a goal)"
                         />
 
                         <InputError :error="form.errors.scheduled_to" class="mt-2" />

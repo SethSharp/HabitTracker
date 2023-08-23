@@ -14,6 +14,7 @@ return new class() extends Migration {
             $table->id();
             $table->integer('user_id');
             $table->boolean('daily_reminder');
+            $table->boolean('goal_reminder');
             $table->timestamps();
         });
     }

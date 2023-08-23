@@ -30,30 +30,34 @@ class UpdateHabitController extends Controller
             'description' => $data['description'],
             'frequency' => $freq,
             'occurrence_days' => $this->calculatedOccurrenceDays($data, $freq->value),
+            'scheduled_to' => $data['scheduled_to'],
             'colour' => $data['colour']
         ]);
 
-        if ($freq->value == Frequency::MONTHLY->value) {
-            $date = json_decode($oldDate)[0];
-            $scheduledHabits = $request->user()
-                ->scheduledHabits()
-                ->where([
+        if (! $data['start_next_week']) {
+            if ($freq->value == Frequency::MONTHLY->value) {
+                $date = json_decode($oldDate)[0];
+                $scheduledHabits = $request->user()
+                    ->scheduledHabits()
+                    ->where([
+                        'habit_id' => $habit->id,
+                        'scheduled_completion' => $date
+                    ])
+                    ->get();
+
+                $scheduledHabits->each(fn ($habit) => $habit->delete());
+
+                HabitSchedule::factory()->create([
                     'habit_id' => $habit->id,
-                    'scheduled_completion' => $date
-                ])
-                ->get();
-
-            $scheduledHabits->each(fn ($habit) => $habit->delete());
-
-            HabitSchedule::factory()->create([
-                'habit_id' => $habit->id,
-                'user_id' => $request->user(),
-                'scheduled_completion' => $data['monthly_config'],
-            ]);
-        } else {
-            // Update habit schedules starting from today
-            $action($habit, $data, $request->user());
+                    'user_id' => $request->user(),
+                    'scheduled_completion' => $data['monthly_config'],
+                ]);
+            } else {
+                // Update habit schedules starting from today
+                $action($habit, $data, $request->user());
+            }
         }
+
 
         return Inertia::location(url('habits'));
     }

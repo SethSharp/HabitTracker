@@ -5,8 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\Counters\UserStreak;
 use App\Console\Commands\Counters\HabitStreak;
-use App\Console\Commands\Habits\SendDailyHabitReminder;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\Notifications\SendHabitGoalReminder;
+use App\Console\Commands\Notifications\SendDailyHabitReminder;
 use App\Console\Commands\ScheduledHabits\ScheduleHabitsForMonth;
 
 class Kernel extends ConsoleKernel
@@ -21,7 +22,8 @@ class Kernel extends ConsoleKernel
         $schedule->command(UserStreak::class)->daily();
 
         // Notifications
-        $schedule->command(SendDailyHabitReminder::class)->dailyAt('17:00');
+        $schedule->command(SendDailyHabitReminder::class)->dailyAt('08:00');
+        $schedule->command(SendHabitGoalReminder::class)->dailyAt('08:00');
     }
 
     protected function commands(): void

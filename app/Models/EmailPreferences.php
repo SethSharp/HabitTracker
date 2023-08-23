@@ -11,7 +11,8 @@ class EmailPreferences extends Model
     use HasFactory;
 
     protected $fillable = [
-        'daily_reminder'
+        'daily_reminder',
+        'goal_reminder',
     ];
 
     public function user(): BelongsTo
