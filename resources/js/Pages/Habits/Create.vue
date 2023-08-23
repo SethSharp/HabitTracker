@@ -11,11 +11,13 @@ import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
 import PickColors from 'vue-pick-colors'
 import CustomSelectLength from "@/Components/CustomSelectLength.vue";
+import {onMounted} from "vue";
 
 const props = defineProps({
     frequencies: Array,
     min: String,
     max: String,
+    goals: Array,
 })
 
 let frequenciesConfig = {
@@ -36,9 +38,10 @@ let weekConfig = {
 
 let customSelectedConfig = {
     options: [
-        { name: 'Day/s', id: 'd' },
-        { name: 'Week/s', id: 'w' },
-        { name: 'Month/s', id: 'm' },
+        { name: 'None', id: props.goals[0] },
+        { name: 'Day\\s', id: props.goals[1] },
+        { name: 'Week\\s', id: props.goals[2] },
+        { name: 'Month\\s', id: props.goals[3] },
     ]
 }
 
@@ -50,7 +53,7 @@ const form = useForm({
     weekly_config: 0,
     monthly_config: '',
     scheduled_to: {
-        length: 'm',
+        length: 0,
         time: 10,
     },
     start_next_week: false,

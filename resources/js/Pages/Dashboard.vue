@@ -141,11 +141,6 @@ const isDanger = (habits) => {
     return successCount === 0 && failCount > 0
 }
 
-const dateHelper = (date) => {
-    let d = new Date(date)
-    return `${d.getDate()}` + `/` + `${d.getMonth()}`
-}
-
 const confetti = () => {
     jsConfetti.addConfetti()
 }
@@ -173,9 +168,7 @@ const form = useForm({
     habits: completed,
 })
 
-const submit = () => {
-    form.post(route('schedule.update'))
-}
+const submit = () => form.post(route('schedule.update'))
 </script>
 
 <template>
