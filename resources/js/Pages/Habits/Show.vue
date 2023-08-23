@@ -46,6 +46,20 @@ const dateHelper = (date) => {
     return `${d.getDate()}` + `/` + `${d.getMonth()}`
 }
 
+const timeLeftHelper = (days) => {
+    if (days <= 7) {
+        return days + ' Day' + (days > 1 ? 's' : '') + ' left'
+    }
+
+    if (days > 7) {
+        let count = days / 7
+
+        if (count < 2) return '1 Week left'
+
+        return Math.round(count) + ' Weeks left'
+    }
+}
+
 const selectedUser = (id, index) => {
     selectedHabit.value = index
     habit.value = props.habits[index]
@@ -161,7 +175,7 @@ const selectedUser = (id, index) => {
                                     </div>
                                     <div class="p-4">
                                         <span class="font-bold"> Days left of goal: </span>
-                                        <span> {{ habit.scheduled_to ? habit.days_left : 'No goal set' }} </span>
+                                        <span> {{ habit.scheduled_to ? timeLeftHelper(habit.days_left) : 'No goal set' }} </span>
                                     </div>
                                 </div>
                                 <div v-else class="text-center">No habit selected</div>
