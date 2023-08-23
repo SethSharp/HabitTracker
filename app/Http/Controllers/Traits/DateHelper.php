@@ -11,7 +11,7 @@ trait DateHelper
     {
         $dates = collect();
 
-        $startOfWeek = Carbon::now()->startOfWeek();
+        $startOfWeek = Carbon::now()->startOfWeek(0);
 
         for ($i = 0; $i < 7; $i++) {
             $dates[] = $startOfWeek->toDateString();

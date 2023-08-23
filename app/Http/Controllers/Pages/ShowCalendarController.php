@@ -10,13 +10,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
-class ShowStatisticsController extends Controller
+class ShowCalendarController extends Controller
 {
     use ScheduledHabits;
 
     public function __invoke(Request $request): Response
     {
-        return Inertia::render('Statistics', [
+        return Inertia::render('Calendar', [
             'habitsByDay' => $this->getMonthlyHabitScheduleWithHabits($request->user(), $request->route('month')),
             'habits' => Auth::user()->habits()->withTrashed()->get(),
             'month' => $request->route('month') ?: Carbon::now()->monthName,

@@ -2,7 +2,7 @@
 import { Head, Link } from '@inertiajs/vue3'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline/index.js'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import Calendar from '@/Components/Statistics/Calendar.vue'
+import CalendarComponent from "@/Components/Calendar/CalendarComponent.vue";
 
 const props = defineProps({
     habitsByDay: Object,
@@ -62,20 +62,20 @@ const getAdjacentMonth = (offset) => {
 </script>
 
 <template>
-    <Head title="Statistics" />
+    <Head title="Calendar" />
 
     <AuthenticatedLayout>
         <div class="py-12 mx-12">
             <div class="flex">
-                <Link :href="route('statistics', getAdjacentMonth(-1))">
+                <Link :href="route('calendar', getAdjacentMonth(-1))">
                     <ChevronLeftIcon class="w-7 h-7 mt-0.5" />
                 </Link>
                 <button class="border border-black p-1 rounded-lg">{{ month }}</button>
-                <Link :href="route('statistics', getAdjacentMonth(1))">
+                <Link :href="route('calendar', getAdjacentMonth(1))">
                     <ChevronRightIcon class="w-7 h-7 mt-0.5" />
                 </Link>
             </div>
-            <Calendar :calendarSchema="calendarSchema" />
+            <CalendarComponent :calendarSchema="calendarSchema" />
         </div>
     </AuthenticatedLayout>
 </template>
