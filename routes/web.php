@@ -31,7 +31,7 @@ Route::middleware('auth')->name('schedule.')->group(function () {
 // Tab group
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->name('dashboard');
-    Route::get('/habits', \App\Http\Controllers\Habits\ViewHabitsController::class)->name('habits');
+    Route::get('/habits', \App\Http\Controllers\Habits\ShowHabitsController::class)->name('habits');
     Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->name('competition');
     Route::get('/statistics/{month?}', \App\Http\Controllers\Pages\ShowStatisticsController::class)->name('statistics');
 });

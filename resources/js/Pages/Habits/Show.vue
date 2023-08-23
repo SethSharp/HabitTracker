@@ -1,3 +1,4 @@
+
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
@@ -157,6 +158,10 @@ const selectedUser = (id, index) => {
                                             class="ml-2 w-6 h-6 rounded-lg"
                                             :style="`background-color: ${habit.colour}`"
                                         ></div>
+                                    </div>
+                                    <div class="p-4">
+                                        <span class="font-bold"> Days left of goal: </span>
+                                        <span> {{ habit.scheduled_to ? habit.days_left : 'No goal set' }} </span>
                                     </div>
                                 </div>
                                 <div v-else class="text-center">No habit selected</div>
