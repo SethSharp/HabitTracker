@@ -54,7 +54,7 @@ const form = useForm({
     monthly_config: '',
     scheduled_to: {
         length: 0,
-        time: 10,
+        time: 0,
     },
     start_next_week: false,
     colour: '#00cedf',

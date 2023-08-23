@@ -32,7 +32,7 @@ class StoreHabitControllerTest extends TestCase
             'start_next_week' => false,
             'colour' => '#00cedf',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -45,7 +45,7 @@ class StoreHabitControllerTest extends TestCase
             'start_next_week' => false,
             'colour' => '#00cedf',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -58,7 +58,7 @@ class StoreHabitControllerTest extends TestCase
             'start_next_week' => false,
             'colour' => '#00cedf',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -144,7 +144,7 @@ class StoreHabitControllerTest extends TestCase
             'daily_config' => [1,2,3],
             'colour' => 'colour',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -176,7 +176,7 @@ class StoreHabitControllerTest extends TestCase
             'weekly_config' => '2',
             'colour' => 'colour',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -208,7 +208,7 @@ class StoreHabitControllerTest extends TestCase
             'monthly_config' => '2023-08-13',
             'colour' => 'colour',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -243,7 +243,7 @@ class StoreHabitControllerTest extends TestCase
             'colour' => 'colour',
             'start_next_week' => true,
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -279,7 +279,7 @@ class StoreHabitControllerTest extends TestCase
             'daily_config' => [1,2,3],
             'colour' => 'colour',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -315,7 +315,7 @@ class StoreHabitControllerTest extends TestCase
             'daily_config' => [1,2,3],
             'colour' => 'colour',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -351,7 +351,7 @@ class StoreHabitControllerTest extends TestCase
             'weekly_config' => '2',
             'colour' => 'colour',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
@@ -384,7 +384,7 @@ class StoreHabitControllerTest extends TestCase
             'monthly_config' => '2023-08-13',
             'colour' => 'colour',
             'scheduled_to' => [
-                'length' => Goals::NONE->name,
+                'length' => Goals::NONE->value,
                 'time' => 0,
             ]
         ];
