@@ -15,6 +15,8 @@ return new class() extends Migration {
             $table->string('frequency');
             $table->string('scheduled_to')->nullable();
             $table->json('occurrence_days')->nullable();
+            $table->integer('completed')->default(0);
+            $table->integer('missed')->default(0);
             $table->integer('streak')->default(0);
             $table->string('icon')->default('Default');
             $table->string('colour')->default('#00cedf');
