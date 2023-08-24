@@ -19,10 +19,6 @@ const props = defineProps({
     max: String,
 })
 
-let frequenciesConfig = {
-    options: props.frequencies,
-}
-
 let weekConfig = {
     options: [
         { name: 'Sunday', id: 0 },
