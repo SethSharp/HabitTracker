@@ -27,7 +27,7 @@ trait HabitStorage
         while ($scheduledDate <= $endDate) {
             // if today is a day in occurrences add to list
             if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                if ($scheduledDate >= Carbon::now()) {
+                if ($scheduledDate >= Carbon::now()->toDateString()) {
                     HabitSchedule::factory()->create([
                         'habit_id' => $habit->id,
                         'user_id' => $user->id,

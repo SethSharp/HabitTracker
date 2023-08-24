@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import Checkbox from '@/Components/Checkbox.vue'
 
 const props = defineProps({
@@ -35,7 +36,13 @@ const internalValue = computed({
             :key="index"
             v-model="internalValue"
             :value="item.value ?? item"
-            :class="{ '!bg-indigo-500 !bg-opacity-25': item.isGoal }"
         />
+        <div class="w-full">
+            <Menu>
+                <MenuButton class="px-2 flex justify-start text-sm w-full cursor-pointer">
+                    <label class="py-2 cursor-pointer"> {{ item.label }}</label>
+                </MenuButton>
+            </Menu>
+        </div>
     </div>
 </template>
