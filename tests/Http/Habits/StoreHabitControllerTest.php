@@ -336,7 +336,7 @@ class StoreHabitControllerTest extends TestCase
 
         $this->assertEquals('["1", "2", "3"]', $habit->occurrence_days);
 
-        $this->assertDatabaseCount('habit_schedules', 15);
+        $this->assertDatabaseCount('habit_schedules', 14);
     }
 
     /** @test */

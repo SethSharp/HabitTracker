@@ -13,8 +13,8 @@ return new class() extends Migration {
         Schema::create('email_preferences', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->boolean('daily_reminder');
-            $table->boolean('goal_reminder');
+            $table->boolean('daily_reminder')->default(false);
+            $table->boolean('goal_reminder')->default(false);
             $table->timestamps();
         });
     }

@@ -9,7 +9,7 @@ use Tests\Traits\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\DailyReminderNotification;
 
-class SendHabitReminderTest extends TestCase
+class SendDailyHabitReminderTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,7 +24,8 @@ class SendHabitReminderTest extends TestCase
 
         EmailPreferences::factory()->create([
             'user_id' => $user->id,
-            'daily_reminder' => true
+            'daily_reminder' => true,
+            'goal_reminder' => false
         ]);
 
         $this->artisan('habits:send-habit-reminder')
@@ -54,7 +55,7 @@ class SendHabitReminderTest extends TestCase
         Notification::fake();
 
         $user = User::factory()->create([
-            'email_verified_at' => null
+            'email_verified_at' => null,
         ]);
 
         EmailPreferences::factory()->create([
