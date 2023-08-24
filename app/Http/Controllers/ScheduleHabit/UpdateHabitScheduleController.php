@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\ScheduleHabit;
 
-use App\Notifications\HabitGoalReminderNotification;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Models\HabitSchedule;
@@ -37,7 +36,9 @@ class UpdateHabitScheduleController extends Controller
                 $habit = $scheduledHabit->habit;
 
                 if ($habit->scheduled_to && $habit->scheduled_to === Carbon::now()->toDateString()) {
-                    $request->user()->notify(new HabitGoalReminderNotification());
+                    $habit->update([
+                        'scheduled_to' => null
+                    ]);
                 }
             }
         }
