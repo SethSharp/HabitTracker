@@ -19,10 +19,12 @@ class UpdateHabitController extends Controller
     public function __invoke(Habit $habit, UpdateHabitRequest $request, UpdateHabitAction $action): Response
     {
         $data = collect($request->validated());
-
         $freq = Frequency::cases()[$data['frequency']];
-
         $oldDate = $habit->occurrence_days;
+
+        if (! is_null($habit->scheduled_to)) {
+            unset($data['scheduled_to']);
+        }
 
         // Sets the config for the habit
         $habit->update([
@@ -30,7 +32,8 @@ class UpdateHabitController extends Controller
             'description' => $data['description'],
             'frequency' => $freq,
             'occurrence_days' => $this->calculatedOccurrenceDays($data, $freq->value),
-            'colour' => $data['colour']
+            'colour' => $data['colour'],
+            'scheduled_to' => isset($data['scheduled_to']) ?: $data['scheduled_to']
         ]);
 
         if ($freq->value == Frequency::MONTHLY->value) {

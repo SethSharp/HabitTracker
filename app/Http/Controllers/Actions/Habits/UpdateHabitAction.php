@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Traits\DateHelper;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
@@ -20,11 +19,12 @@ class UpdateHabitAction
     {
         $occurrences = json_decode($habit->occurrence_days);
         $scheduledDate = Carbon::now();
-        $endDate = Carbon::now()->endOfMonth();
 
-        while ($scheduledDate <= $endDate) {
+        $scheduledHabits = $user->scheduledHabits();
 
-            $alreadyScheduled = $user->scheduledHabits()
+        while ($scheduledDate <= Carbon::now()->endOfMonth()) {
+            // TODO: Test (untested change)
+            $scheduledHabitsForToday = $scheduledHabits
                 ->where([
                     'habit_id' => $habit->id,
                     'scheduled_completion' => $scheduledDate->toDateString(),
@@ -33,15 +33,15 @@ class UpdateHabitAction
 
             // if today is a day in occurrences add to list
             if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                if (count($alreadyScheduled) === 0) {
+                if (count($scheduledHabitsForToday) === 0) {
                     HabitSchedule::factory()->create([
                         'habit_id' => $habit->id,
-                        'user_id' => Auth::user()->id,
+                        'user_id' => $user->id,
                         'scheduled_completion' => $scheduledDate
                     ]);
                 }
             } else {
-                $alreadyScheduled->each(fn ($habit) => $habit->delete());
+                $scheduledHabitsForToday->each(fn ($habit) => $habit->delete());
             }
 
             $scheduledDate->addDay();

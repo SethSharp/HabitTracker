@@ -21,6 +21,7 @@ class UpdateHabitRequest extends FormRequest
             'weekly_config' => ['required_if:frequency,1'],
             'monthly_config' => ['required_if:frequency,2'],
             'colour' => ['required'],
+            'scheduled_to' => ['nullable'],
         ];
     }
 }

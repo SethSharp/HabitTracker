@@ -8,12 +8,10 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\HabitLog;
-use App\Http\Controllers\Traits\DateHelper;
 
 class ShowHabitsController extends Controller
 {
     use HabitLog;
-    use DateHelper;
 
     public function __invoke(Request $request): Response
     {
