@@ -22,10 +22,6 @@ class UpdateHabitController extends Controller
         $freq = Frequency::cases()[$data['frequency']];
         $oldDate = $habit->occurrence_days;
 
-        if (! is_null($habit->scheduled_to)) {
-            unset($data['scheduled_to']);
-        }
-
         // Sets the config for the habit
         $habit->update([
             'name' => $data['name'],
@@ -33,8 +29,13 @@ class UpdateHabitController extends Controller
             'frequency' => $freq,
             'occurrence_days' => $this->calculatedOccurrenceDays($data, $freq->value),
             'colour' => $data['colour'],
-            'scheduled_to' => isset($data['scheduled_to']) ?: $data['scheduled_to']
         ]);
+
+        if (is_null($habit->scheduled_to)) {
+            $habit->update([
+                'scheduled_to' => $data['scheduled_to']
+            ]);
+        }
 
         if ($freq->value == Frequency::MONTHLY->value) {
             $date = json_decode($oldDate)[0];
