@@ -49,7 +49,7 @@ const form = useForm({
     description: '',
     frequency: 0,
     daily_config: [],
-    weekly_config: 0,
+    weekly_config: null,
     monthly_config: '',
     scheduled_to: {
         length: 0,
@@ -67,7 +67,7 @@ const submit = () => form.post(route('habit.store'))
 
     <AuthenticatedLayout>
         <div class="bg-gray-100 flex justify-center">
-            <form @submit.prevent="submit" class="w-1/2 my-10">
+            <form @submit.prevent="submit" class="w-3/4 sm:w-1/2 my-10">
                 <div>
                     <div class="py-2">
                         <InputLabel for="name"> Name </InputLabel>

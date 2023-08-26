@@ -73,11 +73,11 @@ const selectedUser = (id, index) => {
 
     <AuthenticatedLayout>
         <div>
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mx-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 sm:mx-12">
                 <div class="p-4">
                     <Card class="min-h-[600px] max-h-[600px]">
                         <template #heading>
-                            <div class="sm:flex">
+                            <div class="flex">
                                 <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
                                 <div class="w-1/4 flex justify-end items-center">
                                     <SecondaryButton
@@ -124,7 +124,7 @@ const selectedUser = (id, index) => {
                     <Card class="min-h-[600px] max-h-[600px]">
                         >
                         <template #heading>
-                            <div v-if="habit" class="sm:flex">
+                            <div v-if="habit" class="flex">
                                 <span class="w-3/4 truncate h-fit py-2 text-2xl">
                                     {{ habit.name }}
                                 </span>

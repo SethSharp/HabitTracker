@@ -95,8 +95,8 @@ const deleteHabit = () => {
     <Head title="Create Habit" />
 
     <AuthenticatedLayout>
-        <div class="bg-gray-100 flex justify-center">
-            <form @submit.prevent="submit" class="w-1/2 mt-10 h-screen">
+        <div class=" flex justify-center">
+            <form @submit.prevent="submit" class="w-3/4 sm:w-1/2 mt-10 h-screen">
                 <div>
                     <div class="py-2">
                         <InputLabel for="name"> Name </InputLabel>
@@ -117,7 +117,7 @@ const deleteHabit = () => {
                             id="description"
                             ref="description"
                             v-model="form.description"
-                            class="mt-1 block w-full"
+                            class="mt-1 block w-full h-32"
                         />
 
                         <InputError :error="form.errors.description" class="mt-2" />
