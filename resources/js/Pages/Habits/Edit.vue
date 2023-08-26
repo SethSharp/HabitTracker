@@ -11,16 +11,22 @@ import InputError from '@/Components/InputError.vue'
 import DateInput from '@/Components/DateInput.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
+import CustomSelectLength from "@/Components/CustomSelectLength.vue";
 
 const props = defineProps({
     habit: Object,
     frequencies: Array,
     min: String,
     max: String,
+    goals: Array,
 })
 
-let frequenciesConfig = {
-    options: props.frequencies,
+let customSelectedConfig = {
+    options: [
+        { name: 'None', id: props.goals[0] },
+        { name: 'Week\\s', id: props.goals[1] },
+        { name: 'Month\\s', id: props.goals[2] },
+    ]
 }
 
 let weekConfig = {
@@ -71,6 +77,10 @@ const form = useForm({
     weekly_config: getWeekly(),
     monthly_config: getMonthly(),
     colour: props.habit.colour,
+    scheduled_to: {
+        length: 0,
+        time: 0,
+    },
 })
 
 const submit = () => form.post(route('habit.update', props.habit))
@@ -155,6 +165,18 @@ const deleteHabit = () => {
                         <PickColors v-model:value="form.colour" />
 
                         <InputError :error="form.errors.colour" class="mt-2" />
+                    </div>
+                    <div class="py-2" v-if="! habit.scheduled_to">
+                        <InputLabel for="scheduled_to"> Set a goal for this habit </InputLabel>
+
+                        <CustomSelectLength
+                            v-model="form.scheduled_to"
+                            v-bind="customSelectedConfig"
+                            class="mt-1 block w-full"
+                            label="Leaving this blank, will continuously schedule these habits at the start of each month (Will not be considered a goal)"
+                        />
+
+                        <InputError :error="form.errors.scheduled_to" class="mt-2" />
                     </div>
                 </div>
 

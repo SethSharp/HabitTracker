@@ -2,8 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import { onMounted, ref } from 'vue'
-import Card from '@/Components/Habits/Card.vue'
-import CheckboxGroup from '@/Components/CheckboxGroup.vue'
 import {
     CheckCircleIcon,
     XCircleIcon,
@@ -11,9 +9,11 @@ import {
 } from '@heroicons/vue/24/outline/index.js'
 import JSConfetti from 'js-confetti'
 import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
+import Card from '@/Components/Habits/Card.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
+import ScheduledHabitCheckboxGroup from "@/Components/ScheduledHabitCheckboxGroup.vue";
 
 const props = defineProps({
     dailyHabits: Array,
@@ -34,6 +34,7 @@ let habitConfig = props.dailyHabits.map((h) => {
         label: h.habit.name,
         description: h.habit.description,
         completed: h.completed,
+        isGoal: h.habit.scheduled_to
     }
 })
 
@@ -168,9 +169,7 @@ const form = useForm({
     habits: completed,
 })
 
-const submit = () => {
-    form.post(route('schedule.update'))
-}
+const submit = () => form.post(route('schedule.update'))
 </script>
 
 <template>
@@ -199,7 +198,7 @@ const submit = () => {
                                             Scheduled Habits for today
                                         </InputLabel>
 
-                                        <CheckboxGroup
+                                        <ScheduledHabitCheckboxGroup
                                             id="habits"
                                             ref="habits"
                                             v-model="form.habits"

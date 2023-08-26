@@ -2,6 +2,7 @@
 
 namespace Tests\Http\Habits;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Habit;
@@ -94,6 +95,42 @@ class UpdateHabitControllerTest extends TestCase
     }
 
     /** @test */
+    public function cannot_set_habit_goal_if_scheduled_to_is_set()
+    {
+        Carbon::setTestNow("2023-01-01");
+
+        $habit = Habit::factory()->create([
+            'user_id' => $this->user->id,
+            'scheduled_to' => "2023-01-01"
+        ]);
+
+        $monthlyArray = [
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 2,
+            'monthly_config' => '2023-7-17',
+            'colour' => '#00cedf',
+            'scheduled_to' => [
+                'length' => 10,
+                'time' => 1,
+            ]
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.update", $habit), $monthlyArray)
+            ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config']);
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'monthly',
+            'scheduled_to' => "2023-01-01"
+        ]);
+    }
+
+    /** @test */
     public function can_update_to_daily_habit(): void
     {
         $habit = Habit::factory()->create([
@@ -162,5 +199,40 @@ class UpdateHabitControllerTest extends TestCase
 
         $updatedHabit = Habit::find($habit->id);
         $this->assertEquals($updatedHabit->occurrence_days, '["2023-7-17"]');
+    }
+
+    /** @test */
+    public function can_set_habit_goal_if_scheduled_to_is_null()
+    {
+        Carbon::setTestNow("2023-01-01");
+
+        $habit = Habit::factory()->create([
+            'user_id' => $this->user->id
+        ]);
+
+        $monthlyArray = [
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 2,
+            'monthly_config' => '2023-7-17',
+            'colour' => '#00cedf',
+            'scheduled_to' => [
+                'length' => 10,
+                'time' => 1,
+            ]
+        ];
+
+        $this->actingAs($this->user)
+            ->post(route("habit.update", $habit), $monthlyArray)
+            ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config']);
+
+        $this->assertDatabaseHas('habits', [
+            'id' => $habit->id,
+            'user_id' => $this->user->id,
+            'name' => 'Testing name',
+            'description' => 'Testing description',
+            'frequency' => 'monthly',
+            'scheduled_to' => "2023-01-15"
+        ]);
     }
 }

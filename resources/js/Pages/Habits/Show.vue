@@ -1,3 +1,4 @@
+
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
@@ -43,6 +44,20 @@ const createString = () => {
 const dateHelper = (date) => {
     let d = new Date(date)
     return `${d.getDate()}` + `/` + `${d.getMonth()}`
+}
+
+const timeLeftHelper = (days) => {
+    if (days <= 7) {
+        return days + ' Day' + (days > 1 ? 's' : '') + ' left'
+    }
+
+    if (days > 7) {
+        let count = days / 7
+
+        if (count < 2) return '1 Week left'
+
+        return Math.round(count) + ' Weeks left'
+    }
 }
 
 const selectedUser = (id, index) => {
@@ -157,6 +172,10 @@ const selectedUser = (id, index) => {
                                             class="ml-2 w-6 h-6 rounded-lg"
                                             :style="`background-color: ${habit.colour}`"
                                         ></div>
+                                    </div>
+                                    <div class="p-4">
+                                        <span class="font-bold"> Days left of goal: </span>
+                                        <span> {{ habit.scheduled_to ? timeLeftHelper(habit.days_left) : 'No goal set' }} </span>
                                     </div>
                                 </div>
                                 <div v-else class="text-center">No habit selected</div>

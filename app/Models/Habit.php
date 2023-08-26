@@ -20,6 +20,7 @@ class Habit extends Model
         'occurrence_days',
         'icon',
         'colour',
+        'scheduled_to'
     ];
 
     protected $casts = [

@@ -39,6 +39,7 @@ class HabitStreakTest extends TestCase
         $this->assertDatabaseHas('habits', [
             'user_id' => $user->id,
             'streak' => 0,
+            'missed' => 1
         ]);
     }
 
@@ -74,7 +75,9 @@ class HabitStreakTest extends TestCase
 
         $this->assertDatabaseHas('habits', [
             'user_id' => $user->id,
-            'streak' => 2
+            'streak' => 2,
+            'missed' => 0,
+            'completed' => 1
         ]);
     }
 
@@ -117,12 +120,16 @@ class HabitStreakTest extends TestCase
 
         $this->assertDatabaseHas('habits', [
             'user_id' => $user1->id,
-            'streak' => 2
+            'streak' => 2,
+            'missed' => 0,
+            'completed' => 1
         ]);
 
         $this->assertDatabaseHas('habits', [
             'user_id' => $user2->id,
-            'streak' => 0
+            'streak' => 0,
+            'missed' => 1,
+            'completed' => 0
         ]);
     }
 }

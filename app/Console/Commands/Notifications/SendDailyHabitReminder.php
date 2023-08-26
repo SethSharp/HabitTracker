@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Habits;
+namespace App\Console\Commands\Notifications;
 
 use App\Models\User;
 use Illuminate\Console\Command;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Habits;
 
 use Carbon\Carbon;
+use App\Enums\Goals;
 use Inertia\Inertia;
 use App\Enums\Frequency;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ class CreateHabitController extends Controller
             }),
             'min' => Carbon::now()->toDateString(),
             'max' => Carbon::now()->endOfMonth()->toDateString(),
+            'goals' => Goals::cases()
         ]);
     }
 }

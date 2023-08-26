@@ -22,8 +22,10 @@ class HabitStreak extends Command
             foreach($scheduledHabits as $scheduledHabit) {
                 if ($scheduledHabit->completed == 1) {
                     $scheduledHabit->habit->increment('streak');
+                    $scheduledHabit->habit->increment('completed');
                 } else {
                     $scheduledHabit->habit->streak = 0;
+                    $scheduledHabit->habit->increment('missed');
                 }
                 $scheduledHabit->habit->save();
             }

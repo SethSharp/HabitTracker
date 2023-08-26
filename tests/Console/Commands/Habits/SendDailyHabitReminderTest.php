@@ -9,29 +9,9 @@ use Tests\Traits\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\DailyReminderNotification;
 
-class SendHabitReminderTest extends TestCase
+class SendDailyHabitReminderTest extends TestCase
 {
     use RefreshDatabase;
-
-    /** @test */
-    public function notification_is_sent_when_command_is_called()
-    {
-        Notification::fake();
-
-        $user = User::factory()->create([
-            'email_verified_at' => now()
-        ]);
-
-        EmailPreferences::factory()->create([
-            'user_id' => $user->id,
-            'daily_reminder' => true
-        ]);
-
-        $this->artisan('habits:send-habit-reminder')
-            ->assertSuccessful();
-
-        Notification::assertSentTo($user, DailyReminderNotification::class);
-    }
 
     /** @test */
     public function notification_is_not_sent_if_email_is_not_verified()
@@ -54,7 +34,7 @@ class SendHabitReminderTest extends TestCase
         Notification::fake();
 
         $user = User::factory()->create([
-            'email_verified_at' => null
+            'email_verified_at' => null,
         ]);
 
         EmailPreferences::factory()->create([
@@ -65,5 +45,26 @@ class SendHabitReminderTest extends TestCase
             ->assertSuccessful();
 
         Notification::assertNothingSent();
+    }
+
+    /** @test */
+    public function notification_is_sent_when_preference_is_set()
+    {
+        Notification::fake();
+
+        $user = User::factory()->create([
+            'email_verified_at' => now()
+        ]);
+
+        EmailPreferences::factory()->create([
+            'user_id' => $user->id,
+            'daily_reminder' => true,
+            'goal_reminder' => false
+        ]);
+
+        $this->artisan('habits:send-habit-reminder')
+            ->assertSuccessful();
+
+        Notification::assertSentTo($user, DailyReminderNotification::class);
     }
 }
