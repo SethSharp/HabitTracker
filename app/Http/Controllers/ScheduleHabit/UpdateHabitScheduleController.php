@@ -35,7 +35,19 @@ class UpdateHabitScheduleController extends Controller
 
                 $habit = $scheduledHabit->habit;
 
-                if ($habit->scheduled_to && $habit->scheduled_to === Carbon::now()->toDateString()) {
+
+                // This will not work in some cases, ie where the final scheduled
+                // habit does not occur today
+                // ie; A saturday plan, but the goal has said that it ends on sunday (even
+                // though it isn't scheduled for that day)
+
+                // Check
+                $restOfScheduledHabits = $request->user()
+                    ->scheduledHabits()
+                    ->where('scheduled_completion', '>', Carbon::now()->toDateString())
+                    ->get();
+
+                if (count($restOfScheduledHabits) === 0) {
                     $habit->update([
                         'scheduled_to' => null
                     ]);

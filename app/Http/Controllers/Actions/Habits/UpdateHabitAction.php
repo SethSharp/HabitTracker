@@ -20,11 +20,8 @@ class UpdateHabitAction
         $occurrences = json_decode($habit->occurrence_days);
         $scheduledDate = Carbon::now();
 
-        $scheduledHabits = $user->scheduledHabits();
-
         while ($scheduledDate <= Carbon::now()->endOfMonth()) {
-            // TODO: Test (untested change)
-            $scheduledHabitsForToday = $scheduledHabits
+            $scheduledHabitsForToday = $user->scheduledHabits()
                 ->where([
                     'habit_id' => $habit->id,
                     'scheduled_completion' => $scheduledDate->toDateString(),
@@ -41,7 +38,11 @@ class UpdateHabitAction
                     ]);
                 }
             } else {
-                $scheduledHabitsForToday->each(fn ($habit) => $habit->delete());
+                ray($scheduledHabitsForToday);
+                $scheduledHabitsForToday->each(function ($habit) {
+                    ray('removing: ' . $habit->id);
+                    $habit->delete();
+                });
             }
 
             $scheduledDate->addDay();

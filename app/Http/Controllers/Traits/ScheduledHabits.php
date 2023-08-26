@@ -107,8 +107,6 @@ trait ScheduledHabits
             }
         }
 
-        ray($habits);
-
         return $habits;
     }
 }

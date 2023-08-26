@@ -24,9 +24,8 @@ const props = defineProps({
 let customSelectedConfig = {
     options: [
         { name: 'None', id: props.goals[0] },
-        { name: 'Day\\s', id: props.goals[1] },
-        { name: 'Week\\s', id: props.goals[2] },
-        { name: 'Month\\s', id: props.goals[3] },
+        { name: 'Week\\s', id: props.goals[1] },
+        { name: 'Month\\s', id: props.goals[2] },
     ]
 }
 
@@ -167,7 +166,7 @@ const deleteHabit = () => {
 
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
-                    <div class="py-2">
+                    <div class="py-2" v-if="! habit.scheduled_to">
                         <InputLabel for="scheduled_to"> Set a goal for this habit </InputLabel>
 
                         <CustomSelectLength

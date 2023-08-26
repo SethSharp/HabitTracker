@@ -25,10 +25,8 @@ class StoreHabitController extends Controller
         $freq = Frequency::cases()[$data['frequency']];
 
         $scheduledToDate = match ($data['scheduled_to']['length']) {
-            Goals::DAILY->value => Carbon::now()->addDays($data['scheduled_to']['time'])->toDateString(),
             Goals::WEEKLY->value => Carbon::now()->addWeeks($data['scheduled_to']['time'])->toDateString(),
             Goals::MONTHLY->value => Carbon::now()->addMonths($data['scheduled_to']['time'])->toDateString(),
-            Goals::NONE->value => null,
             default => null
         };
 

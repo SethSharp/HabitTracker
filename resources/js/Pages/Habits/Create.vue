@@ -39,9 +39,8 @@ let weekConfig = {
 let customSelectedConfig = {
     options: [
         { name: 'None', id: props.goals[0] },
-        { name: 'Day\\s', id: props.goals[1] },
-        { name: 'Week\\s', id: props.goals[2] },
-        { name: 'Month\\s', id: props.goals[3] },
+        { name: 'Week\\s', id: props.goals[1] },
+        { name: 'Month\\s', id: props.goals[2] },
     ]
 }
 
