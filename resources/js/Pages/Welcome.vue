@@ -27,24 +27,9 @@ defineProps({
             <div class="mx-auto px-4 sm:px-6 lg:px-8 bg-gray-200">
                 <div class="flex justify-start py-4">
                     <div class="flex text-lg h-fit">
-                        <Link :href="route('dashboard')">
-                            <ApplicationLogo class="block fill-current text-gray-600" />
+                        <Link :href="route('welcome')">
+                            <ApplicationLogo class="block fill-current text-gray-800" />
                         </Link>
-                        <div class="py-4 px-4">
-                            <Link
-                                :href="route('login')"
-                                class="font-semibold text-gray-800 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm"
-                            >
-                                Log in
-                            </Link>
-                            <Link
-                                v-if="canRegister"
-                                :href="route('register')"
-                                class="ml-4 font-semibold text-gray-800 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm"
-                            >
-                                Register
-                            </Link>
-                        </div>
                     </div>
                 </div>
             </div>
