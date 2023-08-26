@@ -34,30 +34,39 @@ class HabitTableSeeder extends Seeder
             $habit->occurrence_days = match ($freq) {
                 Frequency::DAILY => '[1,3,5]',
                 Frequency::WEEKLY => '[4]',
-                Frequency::MONTHLY => json_encode([Carbon::now()->addWeek()->toDateString()]),
+                Frequency::MONTHLY => json_encode([Carbon::now()->startOfMonth()->addWeek()->addDays(3)->toDateString()]),
                 default => '[]',
             };
 
             $habit->save();
 
             $occurrences = json_decode($habit->occurrence_days);
-            $scheduledDate = Carbon::now()->startOfMonth();
-            $endDate = Carbon::now()->endOfMonth();
 
-            while ($scheduledDate <= $endDate) {
-                // if today is a day in occurrences add to list
-                if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                    // if not in the past add to the schedule
-                    if (! $scheduledDate <= Carbon::now()) {
-                        // create schedule
-                        HabitSchedule::factory()->create([
-                            'habit_id' => $habit->id,
-                            'user_id' => $user->id,
-                            'scheduled_completion' => $scheduledDate
-                        ]);
+            if ($freq->value == Frequency::MONTHLY->value) {
+                HabitSchedule::factory()->create([
+                    'habit_id' => $habit->id,
+                    'user_id' => $user->id,
+                    'scheduled_completion' => Carbon::now()->startOfMonth()->addWeek()->addDays(3)->toDateString(),
+                ]);
+            } else {
+                $scheduledDate = Carbon::now()->startOfMonth();
+                $endDate = Carbon::now()->endOfMonth();
+
+                while ($scheduledDate <= $endDate) {
+                    // if today is a day in occurrences add to list
+                    if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
+                        // if not in the past add to the schedule
+                        if (! $scheduledDate <= Carbon::now()) {
+                            // create schedule
+                            HabitSchedule::factory()->create([
+                                'habit_id' => $habit->id,
+                                'user_id' => $user->id,
+                                'scheduled_completion' => $scheduledDate
+                            ]);
+                        }
                     }
+                    $scheduledDate->addDay();
                 }
-                $scheduledDate->addDay();
             }
         }
     }
