@@ -114,7 +114,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="rounded-xl w-full shadow-xl p-6">
+    <div class="rounded-xl w-full shadow-xl p-2 sm:p-6">
         <div>
             <h1 class="text-xl font-medium">Filters:</h1>
             <!-- Make this section hide/show -->

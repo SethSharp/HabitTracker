@@ -65,7 +65,7 @@ const getAdjacentMonth = (offset) => {
     <Head title="Calendar" />
 
     <AuthenticatedLayout>
-        <div class="py-12 mx-6">
+        <div class="py-12 mx-2 sm:mx-6">
             <div class="flex">
                 <Link :href="route('calendar', getAdjacentMonth(-1))">
                     <ChevronLeftIcon class="w-7 h-7 mt-0.5" />
