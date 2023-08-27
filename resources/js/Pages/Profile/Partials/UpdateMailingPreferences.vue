@@ -12,6 +12,7 @@ const props = defineProps({
 
 let form = useForm({
     daily_reminder: Boolean(props.preferences[0]?.daily_reminder),
+    goal_reminder: Boolean(props.preferences[1]?.goal_reminder),
 })
 
 const submit = () => form.patch(route('email-preferences.update'))
@@ -33,10 +34,19 @@ const submit = () => form.patch(route('email-preferences.update'))
                     <Checkbox
                         v-model="form.daily_reminder"
                         :value="form.daily_reminder"
-                        label="Receive daily reminders (5:00pm) to complete habits"
+                        label="Receive daily reminders (8:00am) to complete habits"
                     />
 
                     <InputError :error="form.errors.daily_reminder" class="mt-2" />
+                </div>
+                <div class="py-2">
+                    <Checkbox
+                        v-model="form.goal_reminder"
+                        :value="form.goal_reminder"
+                        label="Receive daily reminders (8:00am) about your goals"
+                    />
+
+                    <InputError :error="form.errors.goal_reminder" class="mt-2" />
                 </div>
             </div>
 
