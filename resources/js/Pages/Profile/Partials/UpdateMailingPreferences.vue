@@ -10,9 +10,11 @@ const props = defineProps({
     },
 })
 
+console.log(props.preferences)
+
 let form = useForm({
-    daily_reminder: Boolean(props.preferences[0]?.daily_reminder),
-    goal_reminder: Boolean(props.preferences[1]?.goal_reminder),
+    daily_reminder: Boolean(props.preferences?.daily_reminder),
+    goal_reminder: Boolean(props.preferences?.goal_reminder),
 })
 
 const submit = () => form.patch(route('email-preferences.update'))
