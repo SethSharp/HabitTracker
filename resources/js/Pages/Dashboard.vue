@@ -13,7 +13,7 @@ import Card from '@/Components/Habits/Card.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
-import ScheduledHabitCheckboxGroup from "@/Components/ScheduledHabitCheckboxGroup.vue";
+import ScheduledHabitCheckboxGroup from '@/Components/ScheduledHabitCheckboxGroup.vue'
 
 const props = defineProps({
     dailyHabits: Array,
@@ -34,7 +34,7 @@ let habitConfig = props.dailyHabits.map((h) => {
         label: h.habit.name,
         description: h.habit.description,
         completed: h.completed,
-        isGoal: h.habit.scheduled_to
+        isGoal: h.habit.scheduled_to,
     }
 })
 
@@ -179,19 +179,19 @@ const submit = () => form.post(route('schedule.update'))
         <div class="py-2">
             <div
                 v-if="isCompleted"
-                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 mx-12"
+                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 mx-4 sm:mx-12"
             >
                 You have ticked off all of your habits for today! Now you can relax knowing your
                 achievement, keep it up!
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 mx-4 sm:mx-12 space-x-6">
                 <Card>
                     <template #heading>
                         <span class="h-fit text-2xl"> Today's Habits </span>
                     </template>
                     <template #content>
-                        <div class="mx-2">
-                            <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
+                        <div class="mx-2 my-2">
+                            <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-2">
                                 <form @submit="submit">
                                     <div class="py-2">
                                         <InputLabel for="habits">
@@ -236,13 +236,13 @@ const submit = () => form.post(route('schedule.update'))
                     </template>
                 </Card>
             </div>
-            <div class="mx-12">
+            <div class="mx-4 sm:mx-12">
                 <Card>
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> The Current Week </span>
                     </template>
                     <template #content>
-                        <div class="flex overflow-x-auto space-x-8 mx-4">
+                        <div class="flex overflow-x-auto space-x-8 sm:mx-4">
                             <Card
                                 v-for="(habits, index) in weeklyHabits"
                                 class="min-w-[300px]"

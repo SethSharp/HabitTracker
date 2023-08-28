@@ -22,10 +22,10 @@ let headingLinksConfig = [
         name: 'Habits',
         href: 'habits',
     },
-    {
-        name: 'Friends',
-        href: 'friends',
-    },
+    // {
+    //     name: 'Friends',
+    //     href: 'friends',
+    // },
 ]
 </script>
 
@@ -40,7 +40,9 @@ let headingLinksConfig = [
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('welcome')">
-                                    <ApplicationLogo class="block h-full w-auto fill-current text-gray-800"/>
+                                    <ApplicationLogo
+                                        class="block h-full w-auto fill-current text-gray-800"
+                                    />
                                 </Link>
                             </div>
 

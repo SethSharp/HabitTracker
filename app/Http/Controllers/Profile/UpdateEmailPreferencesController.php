@@ -14,6 +14,7 @@ class UpdateEmailPreferencesController extends Controller
     {
         $request->validate([
             'daily_reminder' => ['required', 'boolean'],
+            'goal_reminder' => ['required', 'boolean'],
         ]);
 
         $preference = $request->user()->emailPreferences()->get()->first();
@@ -21,11 +22,13 @@ class UpdateEmailPreferencesController extends Controller
         if (is_null($preference)) {
             EmailPreferences::factory()->create([
                 'user_id' => $request->user(),
-                'daily_reminder' => $request['daily_reminder']
+                'daily_reminder' => $request['daily_reminder'],
+                'goal_reminder' => $request['goal_reminder']
             ]);
         } else {
             $preference->update([
-                'daily_reminder' => $request['daily_reminder']
+                'daily_reminder' => $request['daily_reminder'],
+                'goal_reminder' => $request['goal_reminder']
             ]);
         }
 

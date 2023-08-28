@@ -37,7 +37,7 @@ const submit = () => {
             </p>
         </header>
 
-        <form @submit.prevent="submit" class="w-1/2 mt-5">
+        <form @submit.prevent="submit" class="w-full sm:w-1/2 mt-5">
             <div class="py-2">
                 <InputLabel for="current_password"> Current Password </InputLabel>
 
