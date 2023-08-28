@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import Checkbox from "@/Components/Checkbox.vue";
+import {skipChainExpression} from "eslint-plugin-vue/lib/utils";
 
 type Habit = {
     name: string
@@ -118,10 +119,10 @@ onMounted(() => {
         <div>
             <h1 class="text-xl font-medium">Filters:</h1>
             <!-- Make this section hide/show -->
-            <div class="my-5 grid grid-cols-4 gap-y-2 gap-x-2">
+            <div class="my-5 grid grid-cols-2 sm:grid-cols-4 gap-y-2 sm:gap-x-6">
                 <div
                     v-for="(filter, index) in calendarSchema.filters"
-                    class="bg-gray-100 rounded-xl mx-4 flex items-center p-2"
+                    class="bg-gray-100 rounded-xl sm:mx-4 flex items-center p-2"
                 >
                     <input
                         type="checkbox"
@@ -137,7 +138,7 @@ onMounted(() => {
                         </label>
                         <div
                             v-if="filter.colour"
-                            class="my-auto w-4 h-4 p-2 rounded-full"
+                            class="my-auto w-4 h-4 p-2 ml-1 rounded-full"
                             :style="`background-color: ${filter.colour}`"
                         ></div>
                     </div>
@@ -181,24 +182,30 @@ onMounted(() => {
                 >
                     {{ index + 1 }}
                 </div>
-                <div class="flex space-x-1">
-                    <div
-                        v-for="scheduledHabit in day.slice(0, 5)"
-                        class="ml-2 w-4 h-4 rounded-full hidden sm:block"
-                        :style="`background-color: ${scheduledHabit.habit.colour}`"
-                    ></div>
-                    <div
-                        v-for="scheduledHabit in day.slice(0, 2)"
-                        class="ml-2 w-3 h-3 rounded-full sm:hidden"
-                        :style="`background-color: ${scheduledHabit.habit.colour}`"
-                    ></div>
+                <div>
+                    <div class="hidden sm:block flex mx-0.5">
+                        <div
+                            v-for="scheduledHabit in day.slice(0, 5)"
+                            class="w-4 h-4 rounded-full"
+                            :style="`background-color: ${scheduledHabit.habit.colour}`"
+                        ></div>
+                    </div>
+                    <div class="sm:hidden">
+                        <div class="flex">
+                            <div
+                                v-for="scheduledHabit in day.slice(0, 2)"
+                                class="mx-0.5 w-3 h-3 rounded-full"
+                                :style="`background-color: ${scheduledHabit.habit.colour}`"
+                            ></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="mt-6 mx-4" v-if="selectedDay && filteredHabits[selectedDay].length">
             <h1 class="text-2xl"> Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1 }} </h1>
             <div
-                v-for="(scheduledHabit, index) in filteredHabits[selectedDay]"
+                v-for="scheduledHabit in filteredHabits[selectedDay]"
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 my-2"
             >
                 <div class="rounded-lg border border-gray-300 p-4">

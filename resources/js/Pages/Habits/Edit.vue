@@ -96,7 +96,7 @@ const deleteHabit = () => {
 
     <AuthenticatedLayout>
         <div class=" flex justify-center">
-            <form @submit.prevent="submit" class="w-3/4 sm:w-1/2 mt-10 h-screen">
+            <form @submit.prevent="submit" class="w-3/4 sm:w-1/2 mt-10 pb-5">
                 <div>
                     <div class="py-2">
                         <InputLabel for="name"> Name </InputLabel>
