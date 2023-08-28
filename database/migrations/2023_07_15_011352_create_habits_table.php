@@ -9,7 +9,7 @@ return new class() extends Migration {
     {
         Schema::create('habits', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id');
             $table->string('name');
             $table->string('description');
             $table->string('frequency');
