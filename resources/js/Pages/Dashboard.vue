@@ -179,7 +179,7 @@ const submit = () => form.post(route('schedule.update'))
         <div class="py-2">
             <div
                 v-if="isCompleted"
-                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 sm:mx-12"
+                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 mx-4 sm:mx-12"
             >
                 You have ticked off all of your habits for today! Now you can relax knowing your
                 achievement, keep it up!
