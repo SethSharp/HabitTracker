@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import Checkbox from "@/Components/Checkbox.vue";
-import {skipChainExpression} from "eslint-plugin-vue/lib/utils";
+import Checkbox from '@/Components/Checkbox.vue'
+import { skipChainExpression } from 'eslint-plugin-vue/lib/utils'
 
 type Habit = {
     name: string
@@ -127,9 +127,11 @@ onMounted(() => {
                     <input
                         type="checkbox"
                         class="my-0.5 h-8 w-8 rounded-full border-2 border-primary text-primary hover:bg-primary hover:bg-opacity-25 focus:ring-transparent"
-                        @change="appliedFilters[index]
-                                    ? removeFilter(filter.id, index)
-                                    : addFilter(index)"
+                        @change="
+                            appliedFilters[index]
+                                ? removeFilter(filter.id, index)
+                                : addFilter(index)
+                        "
                     />
 
                     <div class="ml-3 flex">
@@ -158,14 +160,16 @@ onMounted(() => {
                 ]"
             >
                 <div class="hidden sm:block">
-                    {{ day}}
+                    {{ day }}
                 </div>
                 <div class="sm:hidden">
-                    {{ day.slice(0, 3)}}
+                    {{ day.slice(0, 3) }}
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-gray-300 rounded-xl">
+        <div
+            class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-gray-300 rounded-xl"
+        >
             <div v-for="_ in getFirstDayOfTheMonth()"></div>
             <div
                 v-for="(day, index) in filteredHabits"
@@ -203,7 +207,7 @@ onMounted(() => {
             </div>
         </div>
         <div class="mt-6 mx-4" v-if="selectedDay && filteredHabits[selectedDay].length">
-            <h1 class="text-2xl"> Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1 }} </h1>
+            <h1 class="text-2xl">Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1 }}</h1>
             <div
                 v-for="scheduledHabit in filteredHabits[selectedDay]"
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 my-2"

@@ -28,7 +28,9 @@ defineProps({
                 <div class="flex justify-start py-4 w-full">
                     <div class="shrink-0 flex items-center">
                         <Link :href="route('welcome')">
-                            <ApplicationLogo class="block h-full w-auto fill-current text-gray-800"/>
+                            <ApplicationLogo
+                                class="block h-full w-auto fill-current text-gray-800"
+                            />
                         </Link>
                         <div class="text-4xl p-4">Habit Tracker</div>
                     </div>

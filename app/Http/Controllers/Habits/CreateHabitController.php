@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Habits;
 use Carbon\Carbon;
 use App\Enums\Goals;
 use Inertia\Inertia;
+use Inertia\Response;
 use App\Enums\Frequency;
 use App\Http\Controllers\Controller;
-use Inertia\Response;
 
 class CreateHabitController extends Controller
 {

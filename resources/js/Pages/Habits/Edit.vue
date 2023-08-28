@@ -11,7 +11,7 @@ import InputError from '@/Components/InputError.vue'
 import DateInput from '@/Components/DateInput.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
-import CustomSelectLength from "@/Components/CustomSelectLength.vue";
+import CustomSelectLength from '@/Components/CustomSelectLength.vue'
 
 const props = defineProps({
     habit: Object,
@@ -26,7 +26,7 @@ let customSelectedConfig = {
         { name: 'None', id: props.goals[0] },
         { name: 'Week\\s', id: props.goals[1] },
         { name: 'Month\\s', id: props.goals[2] },
-    ]
+    ],
 }
 
 let weekConfig = {
@@ -95,7 +95,7 @@ const deleteHabit = () => {
     <Head title="Create Habit" />
 
     <AuthenticatedLayout>
-        <div class=" flex justify-center">
+        <div class="flex justify-center">
             <form @submit.prevent="submit" class="w-3/4 sm:w-1/2 mt-10 pb-5">
                 <div>
                     <div class="py-2">
@@ -166,7 +166,7 @@ const deleteHabit = () => {
 
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
-                    <div class="py-2" v-if="! habit.scheduled_to">
+                    <div class="py-2" v-if="!habit.scheduled_to">
                         <InputLabel for="scheduled_to"> Set a goal for this habit </InputLabel>
 
                         <CustomSelectLength

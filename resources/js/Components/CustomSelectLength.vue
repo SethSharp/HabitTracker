@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import TextInput from "@/Components/TextInput.vue";
-import InputLabel from "@/Components/InputLabel.vue";
+import TextInput from '@/Components/TextInput.vue'
+import InputLabel from '@/Components/InputLabel.vue'
 
 const Option = {
     id: '',
@@ -49,12 +49,7 @@ const proxyTime = computed({
 
 <template>
     <div class="bg-red-50 flex w-3/4 sm:w-1/2">
-        <TextInput
-            id="name"
-            ref="name"
-            v-model="proxyTime"
-            class="mt-1 block w-full"
-        />
+        <TextInput id="name" ref="name" v-model="proxyTime" class="mt-1 block w-full" />
         <select
             :id="id"
             v-model="proxySelected"

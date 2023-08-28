@@ -13,7 +13,7 @@ import Card from '@/Components/Habits/Card.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
-import ScheduledHabitCheckboxGroup from "@/Components/ScheduledHabitCheckboxGroup.vue";
+import ScheduledHabitCheckboxGroup from '@/Components/ScheduledHabitCheckboxGroup.vue'
 
 const props = defineProps({
     dailyHabits: Array,
@@ -34,7 +34,7 @@ let habitConfig = props.dailyHabits.map((h) => {
         label: h.habit.name,
         description: h.habit.description,
         completed: h.completed,
-        isGoal: h.habit.scheduled_to
+        isGoal: h.habit.scheduled_to,
     }
 })
 
