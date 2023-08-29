@@ -9,8 +9,10 @@ use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use App\Http\Events\Habits\HabitCompletedEvent;
 
-class UpdateScheduledHabitControllerTest extends TestCase
+class UpdateHabitScheduledControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -216,5 +218,55 @@ class UpdateScheduledHabitControllerTest extends TestCase
             'id' => $habit->id,
             'scheduled_to' => "2023-08-27",
         ]);
+    }
+
+    /** @test */
+    public function habit_completed_event_emitted_when_submitted()
+    {
+        Event::fake();
+        Carbon::setTestNow("2023-08-27");
+
+        $user = User::factory()->create();
+
+        $habit = Habit::factory()->create([
+            'user_id' => $user->id,
+            'frequency' => Frequency::WEEKLY,
+            'occurrence_days' => '[1]',
+            'scheduled_to' => "2023-08-27",
+        ]);
+
+        $scheduledHabit = HabitSchedule::factory()->create([
+            'user_id' => $user->id,
+            'habit_id' => $habit->id,
+            'scheduled_completion' => "2023-08-27"
+        ]);
+
+        $scheduledHabit2 = HabitSchedule::factory()->create([
+            'user_id' => $user->id,
+            'habit_id' => $habit->id,
+            'scheduled_completion' => "2023-08-27"
+        ]);
+
+        $this->actingAs($user)
+            ->post(route('schedule.update'), [
+                'habits' => [$scheduledHabit->id]
+            ]);
+
+        $this->assertDatabaseHas('habit_schedules', [
+            'id' => $scheduledHabit->id,
+            'completed' => 1,
+        ]);
+
+        $this->assertDatabaseHas('habit_schedules', [
+            'id' => $scheduledHabit2->id,
+            'completed' => 0,
+        ]);
+
+        $this->assertDatabaseHas('habit_log', [
+            'user_id' => $user->id,
+            'habit_id' => $habit->id,
+        ]);
+
+        Event::assertDispatched(HabitCompletedEvent::class);
     }
 }
