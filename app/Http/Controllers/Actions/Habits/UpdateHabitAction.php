@@ -38,9 +38,7 @@ class UpdateHabitAction
                     ]);
                 }
             } else {
-                ray($scheduledHabitsForToday);
                 $scheduledHabitsForToday->each(function ($habit) {
-                    ray('removing: ' . $habit->id);
                     $habit->delete();
                 });
             }

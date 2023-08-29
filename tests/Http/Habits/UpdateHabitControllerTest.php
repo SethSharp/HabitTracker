@@ -27,7 +27,7 @@ class UpdateHabitControllerTest extends TestCase
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 0,
-            'daily_config' => '[1,2,3]',
+            'daily_config' => [1,2,3],
             'colour' => '#00cedf'
         ];
 
@@ -151,7 +151,7 @@ class UpdateHabitControllerTest extends TestCase
 
         $updatedHabit = Habit::find($habit->id);
 
-        $this->assertEquals($updatedHabit->occurrence_days, '"[1,2,3]"');
+        $this->assertEquals($updatedHabit->occurrence_days, '[1, 2, 3]');
     }
 
     /** @test */
