@@ -10,8 +10,6 @@ const props = defineProps({
     },
 })
 
-console.log(props.preferences)
-
 let form = useForm({
     daily_reminder: Boolean(props.preferences?.daily_reminder),
     goal_reminder: Boolean(props.preferences?.goal_reminder),
