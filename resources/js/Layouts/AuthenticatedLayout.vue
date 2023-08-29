@@ -22,10 +22,10 @@ let headingLinksConfig = [
         name: 'Habits',
         href: 'habits',
     },
-    // {
-    //     name: 'Friends',
-    //     href: 'friends',
-    // },
+    {
+        name: 'Help',
+        href: 'help',
+    },
 ]
 </script>
 

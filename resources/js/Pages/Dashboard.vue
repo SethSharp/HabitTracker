@@ -184,8 +184,8 @@ const submit = () => form.post(route('schedule.update'))
                 You have ticked off all of your habits for today! Now you can relax knowing your
                 achievement, keep it up!
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 mx-4 sm:mx-12 space-x-6">
-                <Card>
+            <div class="mx-4 sm:mx-12 justify-start">
+                <Card class="lg:w-1/2">
                     <template #heading>
                         <span class="h-fit text-2xl"> Today's Habits </span>
                     </template>
@@ -239,7 +239,7 @@ const submit = () => form.post(route('schedule.update'))
             <div class="mx-4 sm:mx-12">
                 <Card>
                     <template #heading>
-                        <span class="h-fit py-2 text-2xl"> The Current Week </span>
+                        <span class="h-fit py-2 text-2xl"> Your Week </span>
                     </template>
                     <template #content>
                         <div class="flex overflow-x-auto space-x-8 sm:mx-4">

@@ -120,10 +120,10 @@ onMounted(() => {
         <div>
             <div>
                 <div class="my-4 flex">
-                    <SecondaryButton class="text-2xl font-medium">
+                    <SecondaryButton class="text-2xl font-medium" @click="closed = ! closed">
                         Filters:
-                        <ChevronDownIcon v-if="closed" @click="closed = false" class="w-6 h-6 ml-2 my-auto" />
-                        <ChevronUpIcon v-if="! closed" @click="closed = true" class="w-6 h-6 ml-2 my-auto" />
+                        <ChevronDownIcon v-if="closed" class="w-6 h-6 ml-2 my-auto" />
+                        <ChevronUpIcon v-if="! closed" class="w-6 h-6 ml-2 my-auto" />
                     </SecondaryButton>
                 </div>
                 <div

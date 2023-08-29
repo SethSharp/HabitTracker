@@ -51,6 +51,14 @@ defineProps({
                     </div>
                 </div>
             </div>
+            <div>
+                <h1 class="text-2xl font-bold">Welcome to, Habit Tracker</h1>
+                Habit Tracker is a online application you can use to challenge yourself to
+                follow a daily, weekly or monthly routine. Holding yourself accountable to tick
+                off helpful and productive habits. Habit Tracker allows you to set daily habits
+                repeating on any day of the week. Weekly habits on any select day or a monthly
+                habit to remind you at a set date during the month.
+            </div>
             <About />
         </div>
     </div>
