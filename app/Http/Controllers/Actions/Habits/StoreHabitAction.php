@@ -15,7 +15,13 @@ class StoreHabitAction
     public function __invoke(User $user, Habit $habit, string|null $scheduledTo, Collection $data): void
     {
         $scheduledDate = Carbon::now()->startOfWeek();
-        $endDate = isset($scheduledTo) && ! is_null($data['scheduled_to']) ? Carbon::parse($scheduledTo) : Carbon::now()->endOfMonth();
+
+        $isSet = isset($scheduledTo) && ! is_null($data['scheduled_to']);
+        $endDate = $isSet
+            ? Carbon::parse($scheduledTo) > Carbon::now()->endOfMonth()
+                ? Carbon::now()->endOfMonth()
+                : Carbon::parse($scheduledTo)
+            : Carbon::now()->endOfMonth();
 
         if (isset($data['start_next_week']) && ! is_null($data['start_next_week']) && $data['start_next_week']) {
             $scheduledDate->addWeek();

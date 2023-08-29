@@ -26,6 +26,17 @@ class UpdateHabitRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'name' => "Name is required",
+            'description' => "Description is required",
+            'daily_config' => 'Select any day or days you would like your habit to repeat on',
+            'weekly_config' => 'Select any day of the week you would like your habit to repeat on',
+            'monthly_config' => 'Select any date of the month you would like your habit to repeat on',
+        ];
+    }
+
     public function withValidator(Validator $validator)
     {
         $validator->validate();
