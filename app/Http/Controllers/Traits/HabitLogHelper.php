@@ -7,7 +7,7 @@ use App\Http\CacheKeys;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
-trait HabitLog
+trait HabitLogHelper
 {
     public function getHabitLog(User $user, string $start_date, string $end_date)
     {

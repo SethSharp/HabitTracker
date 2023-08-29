@@ -33,7 +33,7 @@ class HabitTableSeeder extends Seeder
 
             $habit->occurrence_days = match ($freq) {
                 Frequency::DAILY => '[1,3,5]',
-                Frequency::WEEKLY => '[4]',
+                Frequency::WEEKLY => json_encode([array_rand([0,1,2,3,4,5,6])]),
                 Frequency::MONTHLY => json_encode([Carbon::now()->startOfMonth()->addWeek()->addDays(3)->toDateString()]),
                 default => '[]',
             };
@@ -55,15 +55,18 @@ class HabitTableSeeder extends Seeder
                 while ($scheduledDate <= $endDate) {
                     // if today is a day in occurrences add to list
                     if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                        // if not in the past add to the schedule
-                        if (! $scheduledDate <= Carbon::now()) {
-                            // create schedule
-                            HabitSchedule::factory()->create([
-                                'habit_id' => $habit->id,
-                                'user_id' => $user->id,
-                                'scheduled_completion' => $scheduledDate
-                            ]);
+                        $completed = 0;
+
+                        if ($scheduledDate < Carbon::now()) {
+                            $completed = array_rand([1, 0]);
                         }
+
+                        HabitSchedule::factory()->create([
+                            'habit_id' => $habit->id,
+                            'user_id' => $user->id,
+                            'scheduled_completion' => $scheduledDate,
+                            'completed' => $completed
+                        ]);
                     }
                     $scheduledDate->addDay();
                 }

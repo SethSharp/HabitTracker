@@ -103,7 +103,7 @@ let appliedFilters = ref(props.calendarSchema.filters.map((filter) => filter.app
 let selectedFilters: Filter[] = []
 let filteredHabits = ref(props.calendarSchema.days)
 let selectedDay = ref(0)
-let open = ref(false)
+let open = ref(true)
 const date = getDate()
 
 onMounted(() => {
@@ -122,13 +122,13 @@ onMounted(() => {
                 <div class="my-4 flex">
                     <SecondaryButton class="text-2xl font-medium">
                         Filters:
-                        <ChevronDownIcon v-if="! open" @click="open = true" class="w-6 h-6 ml-2 my-auto" />
-                        <ChevronUpIcon v-if="open" @click="open = false" class="w-6 h-6 ml-2 my-auto" />
+                        <ChevronDownIcon v-if="open" @click="open = false" class="w-6 h-6 ml-2 my-auto" />
+                        <ChevronUpIcon v-if="! open" @click="open = true" class="w-6 h-6 ml-2 my-auto" />
                     </SecondaryButton>
                 </div>
                 <div
                     class="text-gray-500"
-                    :class="{'hidden' : open}"
+                    :class="{'hidden' : ! open}"
                 >
                     <div class="my-5 grid grid-cols-2 sm:grid-cols-4 gap-y-2 sm:gap-x-6">
                         <div

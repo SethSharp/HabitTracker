@@ -9,12 +9,12 @@ use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
-use App\Http\Controllers\Traits\HabitLog;
+use App\Http\Controllers\Traits\HabitLogHelper;
 
 class HabitLogTest extends TestCase
 {
     use RefreshDatabase;
-    use HabitLog;
+    use HabitLogHelper;
 
     protected User $user;
 
