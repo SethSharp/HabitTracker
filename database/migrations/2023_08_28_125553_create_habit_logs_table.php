@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 return new class() extends Migration {
     public function up(): void
     {
-        Schema::create('habit_log', function (Blueprint $table) {
+        Schema::create('habit_logs', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
             $table->integer('habit_id');

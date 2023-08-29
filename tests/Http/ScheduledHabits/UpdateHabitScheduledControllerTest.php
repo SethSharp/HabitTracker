@@ -262,7 +262,7 @@ class UpdateHabitScheduledControllerTest extends TestCase
             'completed' => 0,
         ]);
 
-        $this->assertDatabaseHas('habit_log', [
+        $this->assertDatabaseHas('habit_logs', [
             'user_id' => $user->id,
             'habit_id' => $habit->id,
         ]);

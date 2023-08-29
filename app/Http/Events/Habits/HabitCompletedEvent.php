@@ -9,12 +9,8 @@ use Illuminate\Support\Facades\Event;
 
 class HabitCompletedEvent extends Event
 {
-    public Habit $habit;
-
     public function __construct(Habit $habit)
     {
-        $this->habit = $habit;
-
         HabitLog::create([
             'user_id' => $habit->user_id,
             'habit_id' => $habit->id,
