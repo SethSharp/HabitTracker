@@ -41,6 +41,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(HabitSchedule::class, 'user_id');
     }
 
+    public function habitLogs(): HasMany
+    {
+        return $this->hasMany(HabitLog::class, 'user_id');
+    }
+
     public function emailPreferences(): HasOne
     {
         return $this->hasOne(EmailPreferences::class, 'user_id');

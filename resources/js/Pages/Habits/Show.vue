@@ -5,6 +5,7 @@ import { ref } from 'vue'
 import { PlusCircleIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
+import Completed from "@/Components/Log/Completed.vue";
 
 let props = defineProps({
     habits: Array,
@@ -38,11 +39,6 @@ const createString = () => {
     })
 
     return daysOfWeek.join(', ')
-}
-
-const dateHelper = (date) => {
-    let d = new Date(date)
-    return `${d.getDate()}` + `/` + `${d.getMonth()}`
 }
 
 const timeLeftHelper = (days) => {
@@ -199,22 +195,10 @@ const selectedUser = (id, index) => {
                                 <div v-if="Object.keys(log).length !== 0">
                                     <div v-if="selectedLog.length !== 0">
                                         <div v-for="schedule in selectedLog">
-                                            <div
-                                                class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
-                                                :class="
-                                                    schedule.completed === 0
-                                                        ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
-                                                        : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'
-                                                "
-                                            >
-                                                {{ schedule.habit.name }}
-                                                {{
-                                                    schedule.completed
-                                                        ? 'completed on'
-                                                        : 'was not completed on'
-                                                }}
-                                                {{ dateHelper(schedule.scheduled_completion) }}
-                                            </div>
+                                            <Completed
+                                                :log="schedule.log_description"
+
+                                            />
                                         </div>
                                     </div>
                                     <div v-else>No habit log available for this habit</div>

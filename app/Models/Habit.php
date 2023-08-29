@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Frequency;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,5 +37,10 @@ class Habit extends Model
     public function habitSchedule(): BelongsTo
     {
         return $this->belongsTo(HabitSchedule::class, 'habit_id');
+    }
+
+    public function habitLogs(): HasMany
+    {
+        return $this->hasMany(HabitLog::class, 'habit_id');
     }
 }

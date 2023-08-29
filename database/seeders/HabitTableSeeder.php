@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Http\Events\Habits\HabitCompletedEvent;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Habit;
@@ -67,6 +68,10 @@ class HabitTableSeeder extends Seeder
                             'scheduled_completion' => $scheduledDate,
                             'completed' => $completed
                         ]);
+
+                        if ($completed) {
+                            broadcast(new HabitCompletedEvent($habit));
+                        }
                     }
                     $scheduledDate->addDay();
                 }

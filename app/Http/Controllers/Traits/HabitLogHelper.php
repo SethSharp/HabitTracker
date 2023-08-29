@@ -9,17 +9,13 @@ use Illuminate\Support\Facades\Cache;
 
 trait HabitLogHelper
 {
-    public function getHabitLog(User $user, string $start_date, string $end_date)
+    public function getHabitLog(User $user, string $start_date, string $end_date): Collection
     {
-        $habitLogs = $user->scheduledHabits()
-            ->where('scheduled_completion', '>=', $start_date)
-            ->where('scheduled_completion', '<=', $end_date)
-            ->with('habit')
-            ->get();
-
-        $habitLogsGrouped = $habitLogs->groupBy(fn ($item) => $item->habit?->id);
+        $habitLogs = $user->habitLogs()->get();
 
         $habitIds = $user->habits()->pluck('id');
+
+        $habitLogsGrouped = $habitLogs->groupBy(fn ($item) => $item->habit?->id);
 
         return $habitIds->reduce(function (Collection $carry, string $id) use ($habitLogsGrouped) {
             $carry[$id] = $habitLogsGrouped->get($id, []);
