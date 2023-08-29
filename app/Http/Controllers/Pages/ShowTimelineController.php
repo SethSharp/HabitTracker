@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Pages;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 
-class ShowFriendsController extends Controller
+class ShowTimelineController extends Controller
 {
     public function __invoke()
     {
-        return Inertia::render('Friends');
+        return Inertia::render('Timeline');
     }
 }
