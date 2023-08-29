@@ -126,7 +126,10 @@ onMounted(() => {
                         <ChevronUpIcon v-if="open" @click="open = false" class="w-6 h-6 ml-2 my-auto" />
                     </SecondaryButton>
                 </div>
-                <div class="text-gray-500" v-if="open">
+                <div
+                    class="text-gray-500"
+                    :class="{'hidden' : open}"
+                >
                     <div class="my-5 grid grid-cols-2 sm:grid-cols-4 gap-y-2 sm:gap-x-6">
                         <div
                             v-for="(filter, index) in calendarSchema.filters"
