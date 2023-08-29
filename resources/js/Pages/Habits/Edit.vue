@@ -167,13 +167,13 @@ const deleteHabit = () => {
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="!habit.scheduled_to">
-                        <InputLabel for="scheduled_to"> Set a goal for this habit </InputLabel>
+                        <InputLabel for="scheduled_to"> Set a time frame </InputLabel>
 
                         <CustomSelectLength
                             v-model="form.scheduled_to"
                             v-bind="customSelectedConfig"
                             class="mt-1 block w-full"
-                            label="Leaving this blank, will continuously schedule these habits at the start of each month (Will not be considered a goal)"
+                            label="Awesome for setting goals!"
                         />
 
                         <InputError :error="form.errors.scheduled_to" class="mt-2" />

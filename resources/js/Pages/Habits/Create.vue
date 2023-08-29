@@ -106,7 +106,7 @@ const submit = () => form.post(route('habit.store'))
                     </div>
                     <div class="py-2" v-if="form.frequency === 0">
                         <InputLabel for="daily_config">
-                            Schedule at any days in a standard week
+                            Schedule for any day/s in a week
                         </InputLabel>
 
                         <Checkbox
@@ -122,7 +122,7 @@ const submit = () => form.post(route('habit.store'))
                     </div>
                     <div class="py-2" v-if="form.frequency === 1">
                         <InputLabel for="weekly_config">
-                            Scheduled at a day in a standard week
+                            Scheduled for a day in a week
                         </InputLabel>
 
                         <Select
@@ -135,7 +135,7 @@ const submit = () => form.post(route('habit.store'))
                     </div>
                     <div class="py-2" v-if="form.frequency === 2">
                         <InputLabel for="monthly_config">
-                            Schedule at a point in this month
+                            Schedule for a day in a month
                         </InputLabel>
 
                         <DateInput
@@ -148,19 +148,19 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <InputLabel for="scheduled_to"> Set a goal for this habit </InputLabel>
+                        <InputLabel for="scheduled_to"> Set a time frame </InputLabel>
 
                         <CustomSelectLength
                             v-model="form.scheduled_to"
                             v-bind="customSelectedConfig"
                             class="mt-1 block w-full"
-                            label="Leaving this blank, will continuously schedule these habits at the start of each month (Will not be considered a goal)"
+                            label="Awesome for setting goals!"
                         />
 
                         <InputError :error="form.errors.scheduled_to" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <InputLabel for="start_next_week"> Start time </InputLabel>
+                        <InputLabel for="start_next_week"> Start scheduling </InputLabel>
 
                         <Checkbox
                             v-model="form.start_next_week"
@@ -169,8 +169,7 @@ const submit = () => form.post(route('habit.store'))
                         />
 
                         <label class="text-gray-500">
-                            If not selected and habit occurs on a day that is already passed it will
-                            not be added for that day but will not affect your streak.
+                            Start a new habit or start fresh!
                         </label>
 
                         <InputError :error="form.errors.start_next_week" class="mt-2" />
