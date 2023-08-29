@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Http\Events\Habits\HabitCompletedEvent;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Habit;
@@ -10,7 +9,9 @@ use App\Enums\Frequency;
 use Illuminate\Support\Arr;
 use App\Models\HabitSchedule;
 use Illuminate\Database\Seeder;
+use App\Http\Events\Habits\HabitCompletedEvent;
 use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Http\Events\Habits\HabitNotCompletedEvent;
 
 class HabitTableSeeder extends Seeder
 {
@@ -71,6 +72,8 @@ class HabitTableSeeder extends Seeder
 
                         if ($completed) {
                             broadcast(new HabitCompletedEvent($habit));
+                        } else {
+                            broadcast(new HabitNotCompletedEvent($habit));
                         }
                     }
                     $scheduledDate->addDay();

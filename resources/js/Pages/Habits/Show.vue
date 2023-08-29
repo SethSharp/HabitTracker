@@ -196,8 +196,14 @@ const selectedUser = (id, index) => {
                                     <div v-if="selectedLog.length !== 0">
                                         <div v-for="schedule in selectedLog">
                                             <Completed
+                                                v-if="schedule.log_type == 0"
                                                 :log="schedule.log_description"
-
+                                                cssStyle="bg-green-300 border-green-300 hover:bg-green-200"
+                                            />
+                                            <Completed
+                                                v-if="schedule.log_type == 1"
+                                                :log="schedule.log_description"
+                                                cssStyle="bg-red-300 border-red-300 hover:bg-red-200"
                                             />
                                         </div>
                                     </div>

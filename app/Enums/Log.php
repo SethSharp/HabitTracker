@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-enum Log: string
+enum Log: int
 {
-    case HABIT_COMPLETED = 'Habit Completed';
+    case HABIT_COMPLETED = 0;
+    case HABIT_NOT_COMPLETED = 1;
 }
