@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import Checkbox from '@/Components/Checkbox.vue'
-import { skipChainExpression } from 'eslint-plugin-vue/lib/utils'
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/solid"
+import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 
 type Habit = {
     name: string
@@ -103,6 +103,7 @@ let appliedFilters = ref(props.calendarSchema.filters.map((filter) => filter.app
 let selectedFilters: Filter[] = []
 let filteredHabits = ref(props.calendarSchema.days)
 let selectedDay = ref(0)
+let open = ref(false)
 const date = getDate()
 
 onMounted(() => {
@@ -117,32 +118,41 @@ onMounted(() => {
 <template>
     <div class="rounded-xl w-full shadow-xl p-2 sm:p-6">
         <div>
-            <h1 class="text-xl font-medium">Filters:</h1>
-            <!-- Make this section hide/show -->
-            <div class="my-5 grid grid-cols-2 sm:grid-cols-4 gap-y-2 sm:gap-x-6">
-                <div
-                    v-for="(filter, index) in calendarSchema.filters"
-                    class="bg-gray-100 rounded-xl sm:mx-4 flex items-center p-2"
-                >
-                    <input
-                        type="checkbox"
-                        class="my-0.5 h-8 w-8 rounded-full border-2 border-primary text-primary hover:bg-primary hover:bg-opacity-25 focus:ring-transparent"
-                        @change="
-                            appliedFilters[index]
-                                ? removeFilter(filter.id, index)
-                                : addFilter(index)
-                        "
-                    />
-
-                    <div class="ml-3 flex">
-                        <label class="block text-sm font-medium leading-5 text-gray-700">
-                            {{ filter.title }}
-                        </label>
+            <div>
+                <div class="my-4 flex">
+                    <SecondaryButton class="text-2xl font-medium">
+                        Filters:
+                        <ChevronDownIcon v-if="! open" @click="open = true" class="w-6 h-6 ml-2 my-auto" />
+                        <ChevronUpIcon v-if="open" @click="open = false" class="w-6 h-6 ml-2 my-auto" />
+                    </SecondaryButton>
+                </div>
+                <div class="text-gray-500" v-if="open">
+                    <div class="my-5 grid grid-cols-2 sm:grid-cols-4 gap-y-2 sm:gap-x-6">
                         <div
-                            v-if="filter.colour"
-                            class="my-auto w-4 h-4 p-2 ml-1 rounded-full"
-                            :style="`background-color: ${filter.colour}`"
-                        ></div>
+                            v-for="(filter, index) in calendarSchema.filters"
+                            class="bg-gray-100 rounded-xl sm:mx-4 flex items-center p-2"
+                        >
+                            <input
+                                type="checkbox"
+                                class="my-0.5 h-8 w-8 rounded-full border-2 border-primary text-primary hover:bg-primary hover:bg-opacity-25 focus:ring-transparent"
+                                @change="
+                                    appliedFilters[index]
+                                        ? removeFilter(filter.id, index)
+                                        : addFilter(index)
+                                "
+                            />
+
+                            <div class="ml-3 flex">
+                                <label class="block text-sm font-medium leading-5 text-gray-700">
+                                    {{ filter.title }}
+                                </label>
+                                <div
+                                    v-if="filter.colour"
+                                    class="my-auto w-4 h-4 p-2 ml-1 rounded-full"
+                                    :style="`background-color: ${filter.colour}`"
+                                ></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
