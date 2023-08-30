@@ -21,7 +21,7 @@ const props = defineProps({
 
 <template>
     <div
-        class="rounded-xl border-2 border-black overflow-hidden my-4"
+        class="rounded-xl border-2 border-black border-opacity-75 underline-h-4 overflow-hidden my-4"
         :class="`${
             success
                 ? 'bg-green-300 bg-opacity-25'
@@ -33,7 +33,7 @@ const props = defineProps({
         }`"
     >
         <div
-            class="px-4 bg-gray-200 mx-4 my-4 py-2 rounded-xl border-2"
+            class="px-4 rounded-lg mx-4 my-4 py-2 underline underline-offset-8"
             :class="`
                 ${heading ? 'border-primary bg-primary bg-opacity-25' : 'border-gray-500'}
                 ${danger ? 'border-red-300 bg-red-300 bg-opacity-25' : ''}

@@ -39,7 +39,7 @@ let headingLinksConfig = [
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('welcome')">
+                                <Link :href="route('dashboard')">
                                     <ApplicationLogo
                                         class="block h-full w-auto fill-current text-gray-800"
                                     />
@@ -195,7 +195,7 @@ let headingLinksConfig = [
         </div>
 
         <!-- Footer -->
-        <div class="w-full h-fit bg-teal-400 bg-opacity-25 text-black flex justify-center">
+        <div class="w-full h-fit bg-gray-400 bg-opacity-25 text-black flex justify-center">
             <div class="my-6 text-center">
                 <ApplicationLogo class="mx-auto" />
                 <h1>
