@@ -154,7 +154,7 @@ const shouldShowDay = (habit) => {
 }
 
 onMounted(() => {
-    if (props.dailyHabits.length === 0 && props.completedHabits.length > 0) {
+    if (props.dailyHabits.length === props.completedHabits.length) {
         isCompleted.value = true
         confetti()
     }
@@ -176,22 +176,32 @@ const submit = () => form.post(route('schedule.update'))
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="py-2">
-            <div
-                v-if="isCompleted"
-                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 mx-4 sm:mx-12"
-            >
-                You have ticked off all of your habits for today! Now you can relax knowing your
-                achievement, keep it up!
-            </div>
+        <div>
             <div class="mx-4 sm:mx-12 justify-start">
                 <Card class="lg:w-1/2">
                     <template #heading>
                         <span class="h-fit text-2xl"> Today's Habits </span>
                     </template>
                     <template #content>
-                        <div class="mx-2 my-2">
-                            <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-2">
+                        <div class="mx-2">
+                            <div>
+                                <div v-if="isCompleted"
+                                     class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6">
+                                    You have ticked off all of your habits for today! Now you can relax knowing your
+                                    achievement, keep it up!
+                                </div>
+                                <div v-else>
+                                    No habits for today, click
+                                    <a
+                                        class="text-primary text-md font-bold underline pointer-cursor"
+                                        :href="route('habits')"
+                                    >
+                                        here
+                                    </a>
+                                    to add a habit.
+                                </div>
+                            </div>
+                            <div class="pl-2 my-4">
                                 <form @submit="submit">
                                     <div class="py-2">
                                         <InputLabel for="habits">
@@ -211,32 +221,19 @@ const submit = () => form.post(route('schedule.update'))
                                     <PrimaryButton type="submit"> Save </PrimaryButton>
                                 </form>
                             </div>
-                            <div v-else>
-                                <div v-if="isCompleted">You are all done for today!</div>
-                                <div v-else>
-                                    No habits for today, click
-                                    <a
-                                        class="text-primary text-md font-bold underline pointer-cursor"
-                                        :href="route('habits')"
-                                    >
-                                        here
-                                    </a>
-                                    to add a habit.
-                                </div>
-                            </div>
-                            <div v-if="completedHabits.length !== 0">
-                                <div v-for="habit in completedHabits" class="flex my-2">
-                                    <CheckIcon
-                                        class="w-10 h-10 text-white bg-primary p-2 rounded-full"
-                                    />
-                                    <span class="py-2 px-3"> {{ habit.habit.name }}</span>
-                                </div>
-                            </div>
+<!--                            <div v-if="completedHabits.length !== 0">-->
+<!--                                <div v-for="habit in completedHabits" class="flex my-6">-->
+<!--                                    <CheckIcon-->
+<!--                                        class="w-10 h-10 text-white bg-primary p-2 rounded-full"-->
+<!--                                    />-->
+<!--                                    <span class="py-2 px-3"> {{ habit.habit.name }}</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                     </template>
                 </Card>
             </div>
-            <div class="mx-4 sm:mx-12">
+            <div class="mx-4 mt-4 sm:mx-12">
                 <Card>
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> Your Week </span>

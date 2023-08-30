@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\ScheduleHabit;
 
 use Carbon\Carbon;
+
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
@@ -14,44 +16,24 @@ class UpdateHabitScheduleController extends Controller
 {
     use HabitStorage;
 
-    public function __invoke(UpdateHabitScheduleRequest $request): Response
+    public function __invoke(Request $request): Response
     {
-        $checkedHabits = $request->validated()['habits'];
+        $updatedHabits = $request->input('habits');
 
-        $todayHabitsIds = $request->user()
+        $todayHabits = $request->user()
             ->scheduledHabits()
-            ->where('completed', 0)
             ->where('scheduled_completion', Carbon::now()->toDateString())
-            ->get()
-            ->pluck('id');
+            ->get();
 
-        foreach ($todayHabitsIds as $id) {
-            if (in_array($id, $checkedHabits)) {
-                $scheduledHabit = HabitSchedule::where('id', $id)->with('habit')->get()->first();
-
-                $scheduledHabit->update([
+        foreach ($todayHabits as $todayHabit) {
+            if (in_array($todayHabit->id, $updatedHabits)) {
+                $todayHabit->update([
                     'completed' => 1
                 ]);
-
-                $habit = $scheduledHabit->habit;
-
-
-                // This will not work in some cases, ie where the final scheduled
-                // habit does not occur today
-                // ie; A saturday plan, but the goal has said that it ends on sunday (even
-                // though it isn't scheduled for that day)
-
-                // Check
-                $restOfScheduledHabits = $request->user()
-                    ->scheduledHabits()
-                    ->where('scheduled_completion', '>', Carbon::now()->toDateString())
-                    ->get();
-
-                if (count($restOfScheduledHabits) === 0) {
-                    $habit->update([
-                        'scheduled_to' => null
-                    ]);
-                }
+            } else {
+                $todayHabit->update([
+                    'completed' => 0
+                ]);
             }
         }
 

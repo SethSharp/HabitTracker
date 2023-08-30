@@ -13,7 +13,6 @@ trait ScheduledHabits
     {
         return $user->scheduledHabits()
             ->where('scheduled_completion', '=', Carbon::now()->toDateString())
-            ->where('completed', '=', 0)
             ->with('habit')
             ->get()
             ->toArray();
