@@ -4,7 +4,6 @@ import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { PlusCircleIcon, PencilSquareIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
-import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 
 let props = defineProps({
     habits: Array,
@@ -76,12 +75,12 @@ const selectedUser = (id, index) => {
                 <div class="p-4">
                     <Card class="min-h-[600px] max-h-[600px]">
                         <template #heading>
-                            <div class="flex">
-                                <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
+                            <div class="flex text-2xl">
+                                <span class="w-3/4 h-fit py-2"> Your Habits </span>
                                 <div class="w-1/4 flex justify-end items-center">
                                     <PlusCircleIcon
                                         @click="this.$inertia.visit(route('habit.create'))"
-                                        class=" text-gray-400 w-12 h-12 font-medium text-gray-500 hover:text-gray-400 cursor-pointer"
+                                        class="w-12 h-12 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
                                     />
                                 </div>
                             </div>
@@ -95,23 +94,16 @@ const selectedUser = (id, index) => {
                                     <div v-for="(habit, index) in habits">
                                         <div
                                             @click="selectedUser(habit.id, index)"
-                                            class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
+                                            class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer animation duration-300"
                                             :class="`${
                                                 index == selectedHabit
-                                                    ? 'bg-primary hover:bg-primaryOpacity'
+                                                    ? 'bg-teal-300 hover:bg-opacity-25'
                                                     : 'bg-gray-200 hover:bg-primary'
                                             }`"
                                         >
                                             {{ habit.name }}
                                         </div>
                                     </div>
-                                </div>
-                                <div v-else class="mx-2 p-4 flex justify-center">
-                                    <a :href="route('habit.create')">
-                                        <PlusCircleIcon
-                                            class="w-16 h-16 flex text-gray-400 hover:text-gray-500"
-                                        />
-                                    </a>
                                 </div>
                             </div>
                         </template>
@@ -121,22 +113,22 @@ const selectedUser = (id, index) => {
                     <Card class="min-h-[600px] max-h-[600px]">
                         >
                         <template #heading>
-                            <div v-if="habit" class="flex">
-                                <span class="w-3/4 truncate h-fit py-2 text-2xl">
+                            <div v-if="habit" class="flex text-2xl">
+                                <span class="w-3/4 truncate h-fit py-2">
                                     {{ habit.name }}
                                 </span>
                                 <div class="w-1/4 flex justify-end items-center">
                                     <PencilSquareIcon
                                         v-if="habit.deleted_at === null"
                                         @click="this.$inertia.visit(route('habit.edit', habit))"
-                                        class=" text-gray-400 w-12 h-12 font-medium text-gray-500 hover:text-gray-400 cursor-pointer"
+                                        class=" w-12 h-12 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
                                     />
                                 </div>
                             </div>
-                            <div v-else class="text-2xl">No habit selected</div>
+                            <div v-else class="">No habit selected</div>
                         </template>
                         <template #content>
-                            <div>
+                            <div class="mx-4">
                                 <div v-if="habit" class="overflow-y-auto max-h-[525px]">
                                     <div class="p-4">
                                         <span class="font-bold"> Name: </span>
@@ -179,14 +171,13 @@ const selectedUser = (id, index) => {
                                         </span>
                                     </div>
                                 </div>
-                                <div v-else class="text-center">No habit selected</div>
+                                <div v-else class="text-lg">No habit selected</div>
                             </div>
                         </template>
                     </Card>
                 </div>
                 <div class="p-4">
                     <Card class="min-h-[600px] max-h-[600px]">
-                        >
                         <template #heading>
                             <span class="h-fit py-2 text-2xl"> Habit Log </span>
                         </template>

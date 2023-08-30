@@ -48,7 +48,7 @@ const form = useForm({
     name: '',
     description: '',
     frequency: 0,
-    daily_config: [],
+    daily_config: [0,1,2,3,4,5,6],
     weekly_config: null,
     monthly_config: '',
     scheduled_to: {

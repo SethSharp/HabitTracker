@@ -187,7 +187,7 @@ onMounted(() => {
             <div
                 v-for="(day, index) in filteredHabits"
                 @click="selectedDay = index"
-                class="bg-gray-100 rounded-xl h-12 sm:h-32 overflow-hidden hover:bg-gray-200 cursor-pointer"
+                class="bg-gray-100 rounded-xl h-12 sm:h-32 overflow-hidden hover:bg-gray-200 cursor-pointer animation duration-300"
             >
                 <div
                     class="flex justify-end pr-2 pt-1 mb-1 text-xs sm:text-md"
