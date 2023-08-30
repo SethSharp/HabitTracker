@@ -38,8 +38,8 @@ trait ScheduledHabits
             ->with(['habit' => fn ($query) => $query->withTrashed()])
             ->get();
 
-        return $week->reduce(function (Collection $carry, string $date, int $key) use ($thisWeeksHabits) {
-            $carry[$key] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion === $date)->toArray();
+        return $week->reduce(function (Collection $carry, string $date) use ($thisWeeksHabits) {
+            $carry[$date] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion === $date)->toArray();
             return $carry;
         }, collect());
     }

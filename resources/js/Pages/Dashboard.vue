@@ -8,7 +8,6 @@ import {
     EllipsisHorizontalCircleIcon,
 } from '@heroicons/vue/24/outline/index.js'
 import JSConfetti from 'js-confetti'
-import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
 import Card from '@/Components/Habits/Card.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
@@ -153,6 +152,27 @@ const shouldShowDay = (habit) => {
     return today.getDate() > scheduledDate.getDate()
 }
 
+const getDaySuffix = (day) => {
+    if (day >= 11 && day <= 13) {
+        return "th";
+    }
+    switch (day % 10) {
+        case 1:
+            return "st";
+        case 2:
+            return "nd";
+        case 3:
+            return "rd";
+        default:
+            return "th";
+    }
+}
+
+const dateHelper = (dateString) => {
+    let date = new Date(dateString).getDate()
+    return date + getDaySuffix(date);
+}
+
 onMounted(() => {
     if (props.dailyHabits.length === props.completedHabits.length) {
         isCompleted.value = true
@@ -241,7 +261,7 @@ const submit = () => form.post(route('schedule.update'))
                     <template #content>
                         <div class="flex overflow-x-auto space-x-8 sm:mx-4">
                             <Card
-                                v-for="(habits, index) in weeklyHabits"
+                                v-for="(habits, index, i) in weeklyHabits"
                                 class="min-w-[300px]"
                                 :success="isSuccess(habits)"
                                 :warning="isWarning(habits)"
@@ -250,7 +270,7 @@ const submit = () => form.post(route('schedule.update'))
                                 :id="index"
                             >
                                 <template #heading>
-                                    <span> {{ week[index] }} </span>
+                                    <span> {{ week[i] }} - {{ dateHelper(index) }} </span>
                                 </template>
                                 <template #content>
                                     <div class="min-h-[450px]">
