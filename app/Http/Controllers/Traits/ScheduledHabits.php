@@ -9,8 +9,6 @@ use Illuminate\Support\Collection;
 
 trait ScheduledHabits
 {
-    use DateHelper;
-
     public function getDailyScheduledHabits(User $user): array
     {
         return $user->scheduledHabits()
@@ -47,7 +45,7 @@ trait ScheduledHabits
         }, collect());
     }
 
-    public function getMonthlyHabitScheduleWithHabits(User $user, ?string $month): array
+    public function getMonthlyScheduledHabits(User $user, ?string $month): array
     {
         if (is_null($month)) {
             $month = Carbon::now()->monthName;
@@ -85,7 +83,7 @@ trait ScheduledHabits
         return $habitByDate;
     }
 
-    public function getHabitsScheduledWithinMonth(User $user, ?string $month): Collection
+    public function getHabitFiltersForMonth(User $user, ?string $month): Collection
     {
         if (is_null($month)) {
             $month = Carbon::now()->monthName;
@@ -102,11 +100,31 @@ trait ScheduledHabits
         $habits = collect();
 
         foreach ($data as $scheduledHabit) {
-            if (! $habits->contains('id', $scheduledHabit->habit->id)) {
-                $habits->push($scheduledHabit->habit);
+            if (! $habits->contains('id', $scheduledHabit->habit_id)) {
+                $habits->push([
+                    'id' => $scheduledHabit->habit->id,
+                    'title' => $scheduledHabit->habit->name,
+                    'attributePath' => 'habit.id',
+                    'filterBy' => $scheduledHabit->habit->id,
+                    'colour' => $scheduledHabit->habit->colour,
+                ]);
             }
         }
 
         return $habits;
+    }
+
+    private function getWeekDatesStartingFromMonday(): Collection
+    {
+        $dates = collect();
+
+        $startOfWeek = Carbon::now()->startOfWeek(0);
+
+        for ($i = 0; $i < 7; $i++) {
+            $dates[] = $startOfWeek->toDateString();
+            $startOfWeek->addDay();
+        }
+
+        return $dates;
     }
 }

@@ -16,10 +16,9 @@ class ShowCalendarController extends Controller
     public function __invoke(Request $request): Response
     {
         return Inertia::render('Calendar', [
-            'habitsByDay' => $this->getMonthlyHabitScheduleWithHabits($request->user(), $request->route('month')),
-            'habits' => $request->user()->habits()->withTrashed()->get(),
+            'habitsByDay' => $this->getMonthlyScheduledHabits($request->user(), $request->route('month')),
             'month' => $request->route('month') ?: Carbon::now()->monthName,
-            'habitFilters' => $this->getHabitsScheduledWithinMonth($request->user(), $request->route('month'))
+            'habitFilters' => $this->getHabitFiltersForMonth($request->user(), $request->route('month'))
         ]);
     }
 }

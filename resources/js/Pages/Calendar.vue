@@ -7,29 +7,17 @@ import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 
 const props = defineProps({
     habitsByDay: Object,
-    habits: Array,
     month: String,
     habitFilters: Array,
 })
 
-let habitFilters = []
-let startId = props.habits.length
-
-for (let i = 0; i < props.habitFilters.length; i++) {
-    habitFilters.push({
-        id: props.habits[i].id,
-        title: props.habits[i].name,
-        attributePath: 'habit.id',
-        filterBy: props.habits[i].id,
-        colour: props.habits[i].colour,
-    })
-}
+let startId = props.habitFilters.length
 
 let calendarSchema = {
     month: props.month,
     days: props.habitsByDay,
     filters: [
-        ...habitFilters,
+        ...props.habitFilters,
         {
             id: startId,
             title: 'Filter by completed',
