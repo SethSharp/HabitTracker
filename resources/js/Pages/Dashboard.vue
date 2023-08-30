@@ -19,6 +19,7 @@ const props = defineProps({
     completedHabits: Array,
     weeklyHabits: Array,
     log: Array,
+    streak: Number,
 })
 
 const jsConfetti = new JSConfetti()
@@ -174,7 +175,7 @@ const dateHelper = (dateString) => {
 }
 
 onMounted(() => {
-    if (props.dailyHabits.length === props.completedHabits.length) {
+    if (props.dailyHabits.length === props.completedHabits.length && props.dailyHabits.length > 0) {
         isCompleted.value = true
         confetti()
     }
@@ -197,8 +198,8 @@ const submit = () => form.post(route('schedule.update'))
 
     <AuthenticatedLayout>
         <div>
-            <div class="mx-4 sm:mx-12 justify-start">
-                <Card class="lg:w-1/2">
+            <div class="mx-4 sm:mx-12 space-x-6 grid grid-cols-1 sm:grid-cols-2">
+                <Card>
                     <template #heading>
                         <span class="h-fit text-2xl"> Today's Habits </span>
                     </template>
@@ -207,10 +208,9 @@ const submit = () => form.post(route('schedule.update'))
                             <div>
                                 <div v-if="isCompleted"
                                      class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6">
-                                    You have ticked off all of your habits for today! Now you can relax knowing your
-                                    achievement, keep it up!
+                                    You have ticked off all of your habits for today! Keep it up!
                                 </div>
-                                <div v-else>
+                                <div v-else class="mb-4">
                                     No habits for today, click
                                     <a
                                         class="text-primary text-md font-bold underline pointer-cursor"
@@ -221,7 +221,7 @@ const submit = () => form.post(route('schedule.update'))
                                     to add a habit.
                                 </div>
                             </div>
-                            <div class="pl-2 my-4">
+                            <div v-if="dailyHabits.length > 0" class="pl-2 my-4">
                                 <form @submit="submit">
                                     <div class="py-2">
                                         <InputLabel for="habits">
@@ -241,14 +241,16 @@ const submit = () => form.post(route('schedule.update'))
                                     <PrimaryButton type="submit"> Save </PrimaryButton>
                                 </form>
                             </div>
-<!--                            <div v-if="completedHabits.length !== 0">-->
-<!--                                <div v-for="habit in completedHabits" class="flex my-6">-->
-<!--                                    <CheckIcon-->
-<!--                                        class="w-10 h-10 text-white bg-primary p-2 rounded-full"-->
-<!--                                    />-->
-<!--                                    <span class="py-2 px-3"> {{ habit.habit.name }}</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                        </div>
+                    </template>
+                </Card>
+                <Card>
+                    <template #heading>
+                        <span class="h-fit text-2xl"> Statistics </span>
+                    </template>
+                    <template #content>
+                        <div class="mx-4">
+                            <span> Streak : {{ streak }} </span>
                         </div>
                     </template>
                 </Card>

@@ -121,7 +121,7 @@ const selectedUser = (id, index) => {
                                     <PencilSquareIcon
                                         v-if="habit.deleted_at === null"
                                         @click="this.$inertia.visit(route('habit.edit', habit))"
-                                        class=" w-12 h-12 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
+                                        class=" w-10 h-10 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
                                     />
                                 </div>
                             </div>

@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum Frequency: string
 {
-    case DAILY = 'daily';
-    case WEEKLY = 'weekly';
-    case MONTHLY = 'monthly';
+    case DAILY = 'Daily';
+    case WEEKLY = 'Weekly';
+    case MONTHLY = 'Monthly';
 }
