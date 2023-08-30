@@ -5,13 +5,11 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Traits\DateHelper;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
 class DatabaseSeeder extends Seeder
 {
     use ScheduledHabits;
-    use DateHelper;
 
     public function run(): void
     {

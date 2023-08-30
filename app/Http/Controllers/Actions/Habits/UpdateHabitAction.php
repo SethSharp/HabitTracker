@@ -7,13 +7,11 @@ use App\Models\User;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
 use Illuminate\Support\Collection;
-use App\Http\Controllers\Traits\DateHelper;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
 class UpdateHabitAction
 {
     use ScheduledHabits;
-    use DateHelper;
 
     public function __invoke(Habit $habit, Collection $data, User $user): void
     {

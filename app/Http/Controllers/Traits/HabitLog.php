@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 
 trait HabitLog
 {
+    // TODO: Look into building the actual log here instead of doing it on the front end...
     public function getHabitLog(User $user, string $start_date, string $end_date)
     {
         $habitLogs = $user->scheduledHabits()
