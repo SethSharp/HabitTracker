@@ -210,7 +210,7 @@ const submit = () => form.post(route('schedule.update'))
                                      class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6">
                                     You have ticked off all of your habits for today! Keep it up!
                                 </div>
-                                <div v-else class="mb-4">
+                                <div v-else class="mb-4 mx-4">
                                     No habits for today, click
                                     <a
                                         class="text-primary text-md font-bold underline pointer-cursor"
@@ -250,7 +250,13 @@ const submit = () => form.post(route('schedule.update'))
                     </template>
                     <template #content>
                         <div class="mx-4">
-                            <span> Streak : {{ streak }} </span>
+                            <div class="flex">
+                                <span class="font-bold"> Streak : {{ streak }} </span>
+                                <CheckCircleIcon class="w-6 h-6 ml-1 text-green-500" />
+                            </div>
+                            <div class="py-2">
+                                Top Habits:
+                            </div>
                         </div>
                     </template>
                 </Card>
