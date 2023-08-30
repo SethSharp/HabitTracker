@@ -32,4 +32,7 @@ class HabitSchedule extends Model
     {
         return $this->belongsTo(Habit::class, 'habit_id')->withTrashed();
     }
+
+    // TODO: Helper functions which are used throughout the app (ie getting habit schedules;
+    //      for the month, week, today or a general range)
 }

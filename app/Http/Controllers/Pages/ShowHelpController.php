@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Pages;
 
 use Inertia\Inertia;
-use App\Http\Controllers\Controller;
 use Inertia\Response;
+use App\Http\Controllers\Controller;
 
 class ShowHelpController extends Controller
 {

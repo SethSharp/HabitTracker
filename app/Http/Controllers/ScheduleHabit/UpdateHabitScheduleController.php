@@ -4,13 +4,11 @@ namespace App\Http\Controllers\ScheduleHabit;
 
 use Carbon\Carbon;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\HabitSchedule;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\UpdateHabitScheduleRequest;
 
 class UpdateHabitScheduleController extends Controller
 {
@@ -26,15 +24,17 @@ class UpdateHabitScheduleController extends Controller
             ->get();
 
         foreach ($todayHabits as $todayHabit) {
+            $completed = 0;
             if (in_array($todayHabit->id, $updatedHabits)) {
-                $todayHabit->update([
-                    'completed' => 1
-                ]);
-            } else {
-                $todayHabit->update([
-                    'completed' => 0
-                ]);
+                $completed = 1;
             }
+
+            // TODO: How will we handle goals / habits with a scheduled to date
+            //      now that we allow habits to be updated (From completed to not completed)
+
+            $todayHabit->update([
+                'completed' => $completed
+            ]);
         }
 
         return Inertia::location(url('dashboard'));
