@@ -248,7 +248,7 @@ const submit = () => form.post(route('schedule.update'))
                         <span class="h-fit text-2xl"> Statistics </span>
                     </template>
                     <template #content>
-                        <div class="mx-4">
+                        <div class="mx-4 my-2">
                             <div class="flex">
                                 <span class="font-bold"> Streak : {{ statistics.streak }} </span>
                                 <CheckCircleIcon class="w-6 h-6 ml-1 text-yellow-500" />

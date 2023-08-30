@@ -200,10 +200,10 @@ onMounted(() => {
                     {{ index + 1 }}
                 </div>
                 <div>
-                    <div class="hidden sm:block flex mx-0.5">
+                    <div class="hidden flex sm:flex flex-wrap mx-1 sm:mx-2 md:mx-3">
                         <div
                             v-for="scheduledHabit in day.slice(0, 5)"
-                            class="w-4 h-4 rounded-full"
+                            class="w-4 h-4 rounded-full mx-1 my-1"
                             :style="`background-color: ${scheduledHabit.habit.colour}`"
                         ></div>
                     </div>
