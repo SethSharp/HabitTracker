@@ -34,7 +34,7 @@ let headingLinksConfig = [
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto px-4 sm:px-6 lg:px-8 bg-gray-50">
                     <div class="flex justify-between h-20">
                         <div class="flex">
                             <!-- Logo -->
@@ -192,6 +192,13 @@ let headingLinksConfig = [
             <main>
                 <slot />
             </main>
+        </div>
+
+        <!-- Footer -->
+        <div class="w-full h-32 bg-teal-400 bg-opacity-25 text-black flex justify-center">
+            <div class="my-auto">
+                © 2023 Seth Sharp. All rights reserved.
+            </div>
         </div>
     </div>
 </template>

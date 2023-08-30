@@ -18,12 +18,16 @@ class DeleteHabitController extends Controller
     {
         $habits = $request->user()
             ->scheduledHabits()
-            ->where('habit_id', $habit->id)
+            ->where([
+                'habit_id' => $habit->id,
+                'completed' => 0
+            ])
             ->whereBetween('scheduled_completion', [Carbon::now()->toDateString(), Carbon::now()->endOfMonth()->toDateString()])
             ->get();
 
         $habit->delete();
 
+        // delete all habit schedules in the future and not complete
         $habits->map(function ($habit) {
             $habit->delete();
         });

@@ -2,7 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
-import { PlusCircleIcon } from '@heroicons/vue/24/outline/index.js'
+import { PlusCircleIcon, PencilSquareIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 
@@ -79,12 +79,10 @@ const selectedUser = (id, index) => {
                             <div class="flex">
                                 <span class="w-3/4 h-fit py-2 text-2xl"> Your Habits </span>
                                 <div class="w-1/4 flex justify-end items-center">
-                                    <SecondaryButton
+                                    <PlusCircleIcon
                                         @click="this.$inertia.visit(route('habit.create'))"
-                                        class="rounded-lg font-medium border-2 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
-                                    >
-                                        Create
-                                    </SecondaryButton>
+                                        class=" text-gray-400 w-12 h-12 font-medium text-gray-500 hover:text-gray-400 cursor-pointer"
+                                    />
                                 </div>
                             </div>
                         </template>
@@ -111,7 +109,7 @@ const selectedUser = (id, index) => {
                                 <div v-else class="mx-2 p-4 flex justify-center">
                                     <a :href="route('habit.create')">
                                         <PlusCircleIcon
-                                            class="w-16 h-16 flex hover:text-gray-500"
+                                            class="w-16 h-16 flex text-gray-400 hover:text-gray-500"
                                         />
                                     </a>
                                 </div>
@@ -127,14 +125,12 @@ const selectedUser = (id, index) => {
                                 <span class="w-3/4 truncate h-fit py-2 text-2xl">
                                     {{ habit.name }}
                                 </span>
-                                <div class="w-fit flex justify-end items-center">
-                                    <SecondaryButton
+                                <div class="w-1/4 flex justify-end items-center">
+                                    <PencilSquareIcon
                                         v-if="habit.deleted_at === null"
                                         @click="this.$inertia.visit(route('habit.edit', habit))"
-                                        class="rounded-lg font-medium border-2 bg-gray-200 border-gray-400 text-gray-500 p-2 hover:bg-gray-400"
-                                    >
-                                        Edit
-                                    </SecondaryButton>
+                                        class=" text-gray-400 w-12 h-12 font-medium text-gray-500 hover:text-gray-400 cursor-pointer"
+                                    />
                                 </div>
                             </div>
                             <div v-else class="text-2xl">No habit selected</div>
