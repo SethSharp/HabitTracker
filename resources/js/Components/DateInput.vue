@@ -19,8 +19,6 @@ defineProps({
 defineEmits(['update:modelValue'])
 
 const input = ref(null)
-
-defineExpose({ focus: () => input.value.focus() })
 </script>
 
 <template>
@@ -41,6 +39,7 @@ defineExpose({ focus: () => input.value.focus() })
     </div>
 
     <br />
+
     <label class="text-gray-500">
         {{ label }}
     </label>

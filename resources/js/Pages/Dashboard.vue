@@ -197,7 +197,7 @@ const submit = () => form.post(route('schedule.update'))
 
     <AuthenticatedLayout>
         <div>
-            <div class="mx-4 sm:mx-12 space-x-6 grid grid-cols-1 sm:grid-cols-2">
+            <div class="mx-4 sm:mx-12 sm:space-x-6 grid grid-cols-1 sm:grid-cols-2">
                 <Card>
                     <template #heading>
                         <span class="h-fit text-2xl"> Today's Habits </span>
