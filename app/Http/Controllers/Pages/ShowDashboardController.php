@@ -18,7 +18,10 @@ class ShowDashboardController extends Controller
             'dailyHabits' => $this->getDailyScheduledHabits($request->user()),
             'completedHabits' => $this->getCompletedDailyHabits($request->user()),
             'weeklyHabits' => $this->getWeeklyScheduledHabits($request->user()),
-            'streak' => $request->user()->streak
+            'statistics' => [
+                'streak' => $request->user()->streak,
+                'bestStreak' => $request->user()->best_streak,
+            ]
         ]);
     }
 }

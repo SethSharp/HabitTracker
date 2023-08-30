@@ -18,8 +18,7 @@ const props = defineProps({
     dailyHabits: Array,
     completedHabits: Array,
     weeklyHabits: Array,
-    log: Array,
-    streak: Number,
+    statistics: Array,
 })
 
 const jsConfetti = new JSConfetti()
@@ -251,11 +250,12 @@ const submit = () => form.post(route('schedule.update'))
                     <template #content>
                         <div class="mx-4">
                             <div class="flex">
-                                <span class="font-bold"> Streak : {{ streak }} </span>
-                                <CheckCircleIcon class="w-6 h-6 ml-1 text-green-500" />
+                                <span class="font-bold"> Streak : {{ statistics.streak }} </span>
+                                <CheckCircleIcon class="w-6 h-6 ml-1 text-yellow-500" />
                             </div>
-                            <div class="py-2">
-                                Top Habits:
+                            <div class="flex">
+                                <span class="font-bold"> Best Streak : {{ statistics.bestStreak }} </span>
+                                <CheckCircleIcon class="w-6 h-6 ml-1 text-green-500" />
                             </div>
                         </div>
                     </template>
@@ -274,7 +274,7 @@ const submit = () => form.post(route('schedule.update'))
                                 :success="isSuccess(habits)"
                                 :warning="isWarning(habits)"
                                 :danger="isDanger(habits)"
-                                :heading="today.getDay() === index"
+                                :heading="today.getDay() === i"
                                 :id="index"
                             >
                                 <template #heading>
