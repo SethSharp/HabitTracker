@@ -102,9 +102,25 @@ const months = [
 let appliedFilters = ref(props.calendarSchema.filters.map((filter) => filter.applied))
 let selectedFilters: Filter[] = []
 let filteredHabits = ref(props.calendarSchema.days)
-let selectedDay = ref(0)
+let selectedDay = ref(new Date().getDate()-1)
 let closed = ref(true)
 const date = getDate()
+
+const getDaySuffix = (day) => {
+    if (day >= 11 && day <= 13) {
+        return "th";
+    }
+    switch (day % 10) {
+        case 1:
+            return "st";
+        case 2:
+            return "nd";
+        case 3:
+            return "rd";
+        default:
+            return "th";
+    }
+}
 
 onMounted(() => {
     props.calendarSchema.filters.forEach((filter, index) => {
@@ -188,6 +204,7 @@ onMounted(() => {
                 v-for="(day, index) in filteredHabits"
                 @click="selectedDay = index"
                 class="bg-gray-100 rounded-xl h-12 sm:h-32 overflow-hidden hover:bg-gray-200 cursor-pointer animation duration-300"
+                :class="{'border border-2 border-gray-400' : selectedDay === index}"
             >
                 <div
                     class="flex justify-end pr-2 pt-1 mb-1 text-xs sm:text-md"
@@ -197,7 +214,7 @@ onMounted(() => {
                             months[new Date().getMonth()] === calendarSchema.month,
                     }"
                 >
-                    {{ index + 1 }}
+                    {{ index + 1 }}{{ getDaySuffix(index+1) }}
                 </div>
                 <div>
                     <div class="hidden flex sm:flex flex-wrap mx-1 sm:mx-2 md:mx-3">
@@ -220,7 +237,7 @@ onMounted(() => {
             </div>
         </div>
         <div class="mt-6 mx-4" v-if="selectedDay && filteredHabits[selectedDay].length">
-            <h1 class="text-2xl">Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1 }}</h1>
+            <h1 class="text-2xl">Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1 }}{{ getDaySuffix(selectedDay+getFirstDayOfTheMonth()-1) }}</h1>
             <div
                 v-for="scheduledHabit in filteredHabits[selectedDay]"
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 my-2"

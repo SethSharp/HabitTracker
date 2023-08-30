@@ -20,9 +20,15 @@ let calendarSchema = {
         ...props.habitFilters,
         {
             id: startId,
-            title: 'Filter by completed',
+            title: 'Completed',
             attributePath: 'completed',
             filterBy: 1,
+        },
+        {
+            id: startId,
+            title: 'Not Completed',
+            attributePath: 'completed',
+            filterBy: 0,
         },
     ],
 }
