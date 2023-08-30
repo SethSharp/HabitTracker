@@ -52,6 +52,7 @@ let headingLinksConfig = [
                                     v-for="link in headingLinksConfig"
                                     :href="route(link.href)"
                                     :active="route().current(link.href)"
+                                    class="animation duration-300"
                                 >
                                     {{ link.name }}
                                 </NavLink>

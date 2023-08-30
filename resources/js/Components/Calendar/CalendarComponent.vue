@@ -181,7 +181,7 @@ onMounted(() => {
             </div>
         </div>
         <div
-            class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-300 p-2 border border-gray-300 rounded-xl"
+            class="grid grid-cols-7 gap-2 gap-y-2 text-center bg-gray-200 p-2 border border-gray-300 rounded-xl"
         >
             <div v-for="_ in getFirstDayOfTheMonth()"></div>
             <div
