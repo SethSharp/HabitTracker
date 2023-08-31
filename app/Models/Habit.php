@@ -28,6 +28,15 @@ class Habit extends Model
         'frequency' => Frequency::class,
     ];
 
+    public function toCacheArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'completed' => $this->completed,
+            'colour' => $this->colour
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

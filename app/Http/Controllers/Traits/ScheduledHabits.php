@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Traits;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Http\CacheKeys;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 trait ScheduledHabits
 {
@@ -44,16 +46,24 @@ trait ScheduledHabits
         }, collect());
     }
 
-    public function getMonthlyScheduledHabits(User $user, ?string $month): array
+    public function getMonthlyScheduledHabits(User $user, ?string $month, bool $withCaching=false): array
     {
         if (is_null($month)) {
             $month = Carbon::now()->monthName;
         }
 
-        // TODO: Caching with monthlyHabitLog... maybe (data for 12 months per user) (N * 12 * X) in cache
         $startDate = Carbon::parse("1 $month")->startOfMonth();
         $endDate = Carbon::parse("1 $month")->endOfMonth();
 
+        if ($startDate > Carbon::now()) {
+            return [];
+        }
+
+        return Cache::remember(CacheKeys::scheduledHabitsForTheMonth($user, $month), now()->addWeek(), fn () => $this->getMonthlyHabitsByDate($user, $startDate, $endDate));
+    }
+
+    protected function getMonthlyHabitsByDate(User $user, Carbon $startDate, Carbon $endDate): array
+    {
         $habits = $user->scheduledHabits()
             ->whereBetween('scheduled_completion', [$startDate, $endDate])
             ->with(['habit' => fn ($query) => $query->withTrashed()])
@@ -69,9 +79,9 @@ trait ScheduledHabits
 
             $habitsForDate = collect();
 
-            foreach ($habits as $habit) {
-                if ($habit->scheduled_completion === $formattedDate) {
-                    $habitsForDate->push($habit);
+            foreach ($habits as $scheduledHabit) {
+                if ($scheduledHabit->scheduled_completion === $formattedDate) {
+                    $habitsForDate->push($scheduledHabit);
                 }
             }
 
