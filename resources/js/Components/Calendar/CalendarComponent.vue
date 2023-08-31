@@ -40,7 +40,7 @@ let getDate = (): Date => {
     return new Date(
         new Date().getFullYear(),
         months.indexOf(props.calendarSchema.month),
-        new Date().getDate()
+        1
     )
 }
 
@@ -85,6 +85,22 @@ const applySelectedFilters = () => {
     }
 }
 
+const getDaySuffix = (day) => {
+    if (day >= 11 && day <= 13) {
+        return "th";
+    }
+    switch (day % 10) {
+        case 1:
+            return "st";
+        case 2:
+            return "nd";
+        case 3:
+            return "rd";
+        default:
+            return "th";
+    }
+}
+
 const months = [
     'January',
     'February',
@@ -105,22 +121,6 @@ let filteredHabits = ref(props.calendarSchema.days)
 let selectedDay = ref(new Date().getDate()-1)
 let closed = ref(true)
 const date = getDate()
-
-const getDaySuffix = (day) => {
-    if (day >= 11 && day <= 13) {
-        return "th";
-    }
-    switch (day % 10) {
-        case 1:
-            return "st";
-        case 2:
-            return "nd";
-        case 3:
-            return "rd";
-        default:
-            return "th";
-    }
-}
 
 onMounted(() => {
     props.calendarSchema.filters.forEach((filter, index) => {
@@ -210,7 +210,7 @@ onMounted(() => {
                     class="flex justify-end pr-2 pt-1 mb-1 text-xs sm:text-md"
                     :class="{
                         'bg-gray-200':
-                            date.getDate() === index + 1 &&
+                            new Date().getDate() === index + 1 &&
                             months[new Date().getMonth()] === calendarSchema.month,
                     }"
                 >
@@ -236,7 +236,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <div class="mt-6 mx-4" v-if="selectedDay && filteredHabits[selectedDay].length">
+        <div class="mt-6 mx-4" v-if="selectedDay && filteredHabits[selectedDay] && filteredHabits[selectedDay].length">
             <h1 class="text-2xl">Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1 }}{{ getDaySuffix(selectedDay+getFirstDayOfTheMonth()-1) }}</h1>
             <div
                 v-for="scheduledHabit in filteredHabits[selectedDay]"

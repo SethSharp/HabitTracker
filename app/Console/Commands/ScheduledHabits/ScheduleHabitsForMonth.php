@@ -31,13 +31,25 @@ class ScheduleHabitsForMonth extends Command
 
             $habits->map(function ($habit) use ($user, $startDate, $endDate) {
                 if ($habit['frequency']->value == Frequency::MONTHLY->value) {
-                    HabitSchedule::factory()->create([
+                    HabitSchedule::create([
                         'habit_id' => $habit->id,
                         'user_id' => $user->id,
                         'scheduled_completion' => json_decode($habit['occurrence_days'])[0],
                     ]);
                 } else {
-                    $this->scheduledHabitsOverTimeframe($user, $habit, $startDate, $endDate);
+                    $occurrences = json_decode($habit->occurrence_days);
+
+                    while ($startDate <= $endDate) {
+                        if (in_array($startDate->dayOfWeek, $occurrences)) {
+                            $h = HabitSchedule::create([
+                                'habit_id' => $habit->id,
+                                'user_id' => $user->id,
+                                'scheduled_completion' => $startDate
+                            ]);
+                            ray($h);
+                        }
+                        $startDate->addDay();
+                    }
                 }
             });
         });
