@@ -209,7 +209,7 @@ const submit = () => form.post(route('schedule.update'))
                                      class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6">
                                     You have ticked off all of your habits for today! Keep it up!
                                 </div>
-                                <div v-else class="mb-4 mx-4">
+                                <div v-else class="mx-4">
                                     No habits for today, click
                                     <a
                                         class="text-primary text-md font-bold underline pointer-cursor"
@@ -220,12 +220,9 @@ const submit = () => form.post(route('schedule.update'))
                                     to add a habit.
                                 </div>
                             </div>
-                            <div v-if="dailyHabits.length > 0" class="pl-2 my-4">
+                            <div v-if="dailyHabits.length > 0" class="pl-2 mb-4">
                                 <form @submit="submit">
-                                    <div class="py-2">
-                                        <InputLabel for="habits">
-                                            Scheduled Habits for today
-                                        </InputLabel>
+                                    <div class="mb-4">
 
                                         <ScheduledHabitCheckboxGroup
                                             id="habits"
