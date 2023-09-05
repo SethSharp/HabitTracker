@@ -11,12 +11,14 @@ use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Http\Requests\Habits\UpdateHabitRequest;
 use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
 
 class UpdateHabitController extends Controller
 {
     use HabitStorage;
+    use ScheduledHabits;
 
     public function __invoke(Habit $habit, UpdateHabitRequest $request, UpdateHabitAction $action): Response
     {
@@ -61,9 +63,10 @@ class UpdateHabitController extends Controller
                 'scheduled_completion' => $data['monthly_config'],
             ]);
         } else {
-            // Update habit schedules starting from today
             $action($habit, $data, $request->user());
         }
+
+        $this->monthlyScheduledHabits($request->user(), month: null, withCaching: true);
 
         return Inertia::location(url('habits'));
     }

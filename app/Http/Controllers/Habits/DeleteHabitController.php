@@ -9,10 +9,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\Traits\ScheduledHabits;
 
 class DeleteHabitController extends Controller
 {
     use HabitStorage;
+    use ScheduledHabits;
 
     public function __invoke(Habit $habit, Request $request): Response
     {
@@ -22,7 +24,7 @@ class DeleteHabitController extends Controller
                 'habit_id' => $habit->id,
                 'completed' => 0
             ])
-            ->whereBetween('scheduled_completion', [Carbon::now()->toDateString(), Carbon::now()->endOfMonth()->toDateString()])
+            ->whereBetween('scheduled_completion', [Carbon::now()->subDay()->toDateString(), Carbon::now()->endOfMonth()->toDateString()])
             ->get();
 
         $habit->delete();
@@ -31,6 +33,8 @@ class DeleteHabitController extends Controller
         $habits->map(function ($habit) {
             $habit->delete();
         });
+
+        $this->monthlyScheduledHabits($request->user(), month: null, withCaching: true);
 
         return Inertia::location(url('habits'));
     }

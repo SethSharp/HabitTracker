@@ -60,7 +60,8 @@ trait ScheduledHabits
         }
 
         if ($withCaching) {
-            Cache::put(CacheKeys::scheduledHabitsForTheMonth($user, $month), fn () => $this->getMonthlyHabitsByDate($user, $startDate, $endDate), now()->addWeek());
+            $data = $this->getMonthlyHabitsByDate($user, $startDate, $endDate);
+            Cache::put(CacheKeys::scheduledHabitsForTheMonth($user, $month), $data, now()->addWeek());
         } else {
             return Cache::remember(CacheKeys::scheduledHabitsForTheMonth($user, $month), now()->addWeek(), fn () => $this->getMonthlyHabitsByDate($user, $startDate, $endDate));
         }

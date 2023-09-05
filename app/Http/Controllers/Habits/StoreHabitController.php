@@ -12,11 +12,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Habits\StoreHabitRequest;
+use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Http\Controllers\Actions\Habits\StoreHabitAction;
 
 class StoreHabitController extends Controller
 {
     use HabitStorage;
+    use ScheduledHabits;
 
     public function __invoke(StoreHabitRequest $request, StoreHabitAction $action): Response
     {
@@ -49,6 +51,8 @@ class StoreHabitController extends Controller
         } else {
             $action($request->user(), $habit, $scheduledToDate, $data);
         }
+
+        $this->monthlyScheduledHabits($request->user(), month: null, withCaching: true);
 
         return Inertia::location(url('habits'));
     }
