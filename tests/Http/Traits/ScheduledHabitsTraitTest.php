@@ -40,7 +40,7 @@ class ScheduledHabitsTraitTest extends TestCase
             'scheduled_completion' => "2023-08-02"
         ]);
 
-        $data = $this->getMonthlyScheduledHabits($user, "September");
+        $data = $this->monthlyScheduledHabits($user, "September");
 
         $this->assertEquals([], $data);
 
@@ -63,7 +63,7 @@ class ScheduledHabitsTraitTest extends TestCase
 
         $this->assertEquals(null, Cache::get(CacheKeys::scheduledHabitsForTheMonth($user, "August")));
 
-        $this->getMonthlyScheduledHabits($user, "August");
+        $this->monthlyScheduledHabits($user, "August");
 
         $this->assertCount(31, Cache::get(CacheKeys::scheduledHabitsForTheMonth($user, "August")));
     }

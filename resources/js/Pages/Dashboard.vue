@@ -17,8 +17,8 @@ import ScheduledHabitCheckboxGroup from '@/Components/ScheduledHabitCheckboxGrou
 const props = defineProps({
     dailyHabits: Array,
     completedHabits: Array,
-    weeklyHabits: Array,
-    statistics: Array,
+    weeklyHabits: Object,
+    statistics: Object,
 })
 
 const jsConfetti = new JSConfetti()

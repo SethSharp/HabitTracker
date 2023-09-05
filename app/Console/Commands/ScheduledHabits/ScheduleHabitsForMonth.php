@@ -41,12 +41,11 @@ class ScheduleHabitsForMonth extends Command
 
                     while ($startDate <= $endDate) {
                         if (in_array($startDate->dayOfWeek, $occurrences)) {
-                            $h = HabitSchedule::create([
+                            HabitSchedule::create([
                                 'habit_id' => $habit->id,
                                 'user_id' => $user->id,
                                 'scheduled_completion' => $startDate
                             ]);
-                            ray($h);
                         }
                         $startDate->addDay();
                     }

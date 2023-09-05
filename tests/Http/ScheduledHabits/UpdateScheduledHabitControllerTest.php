@@ -187,7 +187,7 @@ class UpdateScheduledHabitControllerTest extends TestCase
             'user_id' => $user->id,
             'frequency' => Frequency::WEEKLY,
             'occurrence_days' => '[1]',
-            'scheduled_to' => "2023-08-27",
+            'scheduled_to' => "2023-08-28",
         ]);
 
         $scheduledHabit = HabitSchedule::factory()->create([
@@ -214,7 +214,7 @@ class UpdateScheduledHabitControllerTest extends TestCase
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
-            'scheduled_to' => "2023-08-27",
+            'scheduled_to' => "2023-08-28",
         ]);
     }
 }

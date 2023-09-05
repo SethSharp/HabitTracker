@@ -46,7 +46,7 @@ trait ScheduledHabits
         }, collect());
     }
 
-    public function getMonthlyScheduledHabits(User $user, ?string $month, bool $withCaching=false): array
+    public function monthlyScheduledHabits(User $user, string|null $month, bool $withCaching=false): array|null
     {
         if (is_null($month)) {
             $month = Carbon::now()->monthName;
@@ -59,7 +59,13 @@ trait ScheduledHabits
             return [];
         }
 
-        return Cache::remember(CacheKeys::scheduledHabitsForTheMonth($user, $month), now()->addWeek(), fn () => $this->getMonthlyHabitsByDate($user, $startDate, $endDate));
+        if ($withCaching) {
+            Cache::put(CacheKeys::scheduledHabitsForTheMonth($user, $month), fn () => $this->getMonthlyHabitsByDate($user, $startDate, $endDate), now()->addWeek());
+        } else {
+            return Cache::remember(CacheKeys::scheduledHabitsForTheMonth($user, $month), now()->addWeek(), fn () => $this->getMonthlyHabitsByDate($user, $startDate, $endDate));
+        }
+
+        return null;
     }
 
     protected function getMonthlyHabitsByDate(User $user, Carbon $startDate, Carbon $endDate): array
