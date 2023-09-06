@@ -22,10 +22,6 @@ let headingLinksConfig = [
         name: 'Habits',
         href: 'habits',
     },
-    {
-        name: 'Help',
-        href: 'help',
-    },
 ]
 </script>
 
@@ -34,7 +30,7 @@ let headingLinksConfig = [
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
-                <div class="mx-auto px-4 sm:px-6 lg:px-8 bg-gray-50">
+                <div class="mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-20">
                         <div class="flex">
                             <!-- Logo -->
@@ -90,6 +86,9 @@ let headingLinksConfig = [
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')">
                                             Profile
+                                        </DropdownLink>
+                                        <DropdownLink :href="route('help')">
+                                            Help
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
@@ -173,6 +172,9 @@ let headingLinksConfig = [
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('help')">
+                                Help
                             </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
