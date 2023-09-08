@@ -187,11 +187,11 @@ const selectedUser = (id, index) => {
                                     <div v-if="selectedLog.length !== 0">
                                         <div v-for="schedule in selectedLog">
                                             <div
-                                                class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer"
+                                                class="rounded-md border border-black px-2 py-4 my-4"
                                                 :class="
                                                     schedule.completed === 0
-                                                        ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200'
-                                                        : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200'
+                                                        ? 'bg-red-300 border border-red-300 bg-opacity-25 rounded-md p-4 hover:bg-red-200 animation duration-300'
+                                                        : 'bg-green-300 border border-green-300 bg-opacity-25 rounded-md p-4 hover:bg-green-200 animation duration-300'
                                                 "
                                             >
                                                 {{ schedule.habit.name }}

@@ -43,6 +43,8 @@ class UpdateHabitController extends Controller
                     default => null
                 }
             ]);
+
+            ray($habit->scheduled_to);
         }
 
         if ($freq->value == Frequency::MONTHLY->value) {

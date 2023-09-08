@@ -60,7 +60,7 @@ class UpdateHabitControllerTest extends TestCase
     }
 
     /** @test */
-    public function habit_belongs_to_other_user()
+    public function return_unauthorized_if_habit_belongs_to_other_user()
     {
         $user = User::factory()->create();
         $habit = Habit::factory()->create([
@@ -83,6 +83,7 @@ class UpdateHabitControllerTest extends TestCase
             'name' => '',
             'description' => '',
             'frequency' => null,
+            'colour' => null,
         ];
 
         $this->actingAs($this->user)
@@ -91,11 +92,12 @@ class UpdateHabitControllerTest extends TestCase
                 'name',
                 'description',
                 'frequency',
+                'colour'
             ]);
     }
 
     /** @test */
-    public function cannot_set_habit_goal_if_scheduled_to_is_set()
+    public function cannot_update_habit_goal_if_scheduled_to_is_set()
     {
         Carbon::setTestNow("2023-01-01");
 
@@ -111,8 +113,8 @@ class UpdateHabitControllerTest extends TestCase
             'monthly_config' => '2023-7-17',
             'colour' => '#00cedf',
             'scheduled_to' => [
-                'length' => 10,
-                'time' => 1,
+                'length' => 2,
+                'time' => 12,
             ]
         ];
 
@@ -141,64 +143,69 @@ class UpdateHabitControllerTest extends TestCase
             ->post(route("habit.update", $habit), $this->dailyArray)
             ->assertSessionDoesntHaveErrors(['weekly_config', 'monthly_config']);
 
+        $updatedHabit = Habit::find($habit->id);
+
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
             'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'daily',
+            'name' => $updatedHabit->name,
+            'description' => $updatedHabit->description,
+            'frequency' => 'Daily',
         ]);
 
-        $updatedHabit = Habit::find($habit->id);
-
-        $this->assertEquals($updatedHabit->occurrence_days, '[1, 2, 3]');
+        $this->assertEquals($updatedHabit->occurrence_days, '[2, 3, 4]');
     }
 
     /** @test */
     public function can_update_weekly_habit(): void
     {
         $habit = Habit::factory()->create([
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
+            'frequency' => 'Weekly',
+            'occurrence_days' => '[2]'
         ]);
 
         $this->actingAs($this->user)
             ->post(route("habit.update", $habit), $this->weeklyArray)
             ->assertSessionDoesntHaveErrors(['daily_config', 'monthly_config']);
 
+        $updatedHabit = Habit::find($habit->id);
+
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
             'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'weekly',
+            'name' => $updatedHabit->name,
+            'description' => $updatedHabit->description,
+            'frequency' => 'Weekly',
         ]);
 
-        $updatedHabit = Habit::find($habit->id);
-
-        $this->assertEquals($updatedHabit->occurrence_days, '[4]');
+        $this->assertEquals($updatedHabit->occurrence_days, '[2]');
     }
 
     /** @test */
     public function can_update_to_monthly_habit(): void
     {
         $habit = Habit::factory()->create([
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
+            'frequency' => 'Monthly',
+            'occurrence_days' => json_encode(['2023-04-09'])
         ]);
 
         $this->actingAs($this->user)
             ->post(route("habit.update", $habit), $this->monthlyArray)
             ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config']);
 
+        $updatedHabit = Habit::find($habit->id);
+
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
             'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
-            'frequency' => 'monthly',
+            'name' => $updatedHabit->name,
+            'description' => $updatedHabit->description,
+            'frequency' => 'Monthly',
         ]);
 
-        $updatedHabit = Habit::find($habit->id);
-        $this->assertEquals($updatedHabit->occurrence_days, '["2023-7-17"]');
+        $this->assertEquals($updatedHabit->occurrence_days, '["2023-04-09"]');
     }
 
     /** @test */
@@ -217,22 +224,25 @@ class UpdateHabitControllerTest extends TestCase
             'monthly_config' => '2023-7-17',
             'colour' => '#00cedf',
             'scheduled_to' => [
-                'length' => 10,
-                'time' => 1,
+                'length' => 2,
+                'time' => 2,
             ]
         ];
 
         $this->actingAs($this->user)
             ->post(route("habit.update", $habit), $monthlyArray)
-            ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config']);
+            ->assertSessionDoesntHaveErrors(['daily_config', 'weekly_config'])
+            ->assertSessionHasNoErrors();
+
+        $updatedHabit = Habit::find($habit->id);
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
             'user_id' => $this->user->id,
-            'name' => 'Testing name',
-            'description' => 'Testing description',
+            'name' => $updatedHabit->name,
+            'description' => $updatedHabit->description,
             'frequency' => 'monthly',
-            'scheduled_to' => "2023-01-15"
+            'scheduled_to' => "2023-03-01"
         ]);
     }
 }

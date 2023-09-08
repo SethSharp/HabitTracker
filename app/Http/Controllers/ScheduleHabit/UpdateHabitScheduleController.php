@@ -35,6 +35,7 @@ class UpdateHabitScheduleController extends Controller
                 'completed' => $completed
             ]);
 
+            // habit goals
             if (! is_null($scheduledHabitForToday->habit->scheduled_to) &&
                 Carbon::now() == Carbon::parse($scheduledHabitForToday->habit->scheduled_to)) {
 

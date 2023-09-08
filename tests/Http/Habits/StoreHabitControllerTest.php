@@ -78,6 +78,7 @@ class StoreHabitControllerTest extends TestCase
             'name' => '',
             'description' => '',
             'frequency' => null,
+            'colour'
         ];
 
         $this->actingAs($this->user)
@@ -86,6 +87,7 @@ class StoreHabitControllerTest extends TestCase
                 'name',
                 'description',
                 'frequency',
+                'colour'
             ]);
     }
 
