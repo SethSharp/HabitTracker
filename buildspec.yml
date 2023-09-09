@@ -6,7 +6,7 @@ phases:
       php: 8.2  # Use the PHP version you need
       nodejs: 18  # Use the Node.js version you need
     commands:
-      - composer update
+      - composer update # Update Composer dependencies
       - npm install  # Install Node.js dependencies
   build:
     commands:
