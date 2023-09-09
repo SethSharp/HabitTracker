@@ -144,37 +144,37 @@ class UpdateScheduledHabitControllerTest extends TestCase
     public function habit_goal_scheduled_to_is_set_to_null_if_last_schedule()
     {
         $this->markTestSkipped();
-//        Carbon::setTestNow("2023-08-27");
-//
-//        $user = User::factory()->create();
-//
-//        $habit = Habit::factory()->create([
-//            'user_id' => $user->id,
-//            'frequency' => Frequency::WEEKLY,
-//            'occurrence_days' => '[1]',
-//            'scheduled_to' => "2023-08-27",
-//        ]);
-//
-//        $scheduledHabit = HabitSchedule::factory()->create([
-//            'user_id' => $user->id,
-//            'habit_id' => $habit->id,
-//            'scheduled_completion' => "2023-08-27"
-//        ]);
-//
-//        $this->actingAs($user)
-//            ->post(route('schedule.update'), [
-//                'habits' => [$scheduledHabit->id]
-//            ]);
-//
-//        $this->assertDatabaseHas('habit_schedules', [
-//            'id' => $scheduledHabit->id,
-//            'completed' => 1,
-//        ]);
-//
-//        $this->assertDatabaseHas('habits', [
-//            'id' => $habit->id,
-//            'scheduled_to' => null,
-//        ]);
+        //        Carbon::setTestNow("2023-08-27");
+        //
+        //        $user = User::factory()->create();
+        //
+        //        $habit = Habit::factory()->create([
+        //            'user_id' => $user->id,
+        //            'frequency' => Frequency::WEEKLY,
+        //            'occurrence_days' => '[1]',
+        //            'scheduled_to' => "2023-08-27",
+        //        ]);
+        //
+        //        $scheduledHabit = HabitSchedule::factory()->create([
+        //            'user_id' => $user->id,
+        //            'habit_id' => $habit->id,
+        //            'scheduled_completion' => "2023-08-27"
+        //        ]);
+        //
+        //        $this->actingAs($user)
+        //            ->post(route('schedule.update'), [
+        //                'habits' => [$scheduledHabit->id]
+        //            ]);
+        //
+        //        $this->assertDatabaseHas('habit_schedules', [
+        //            'id' => $scheduledHabit->id,
+        //            'completed' => 1,
+        //        ]);
+        //
+        //        $this->assertDatabaseHas('habits', [
+        //            'id' => $habit->id,
+        //            'scheduled_to' => null,
+        //        ]);
     }
 
     /** @test */

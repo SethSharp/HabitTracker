@@ -2,6 +2,7 @@
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 define('LARAVEL_START', microtime(true));
 
@@ -32,6 +33,12 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 */
 
 require __DIR__.'/../vendor/autoload.php';
+
+// DB
+if (DB::connection()->getDatabaseName())
+{
+    echo "Connected to database ".DB::connection()->getDatabaseName();
+}
 
 /*
 |--------------------------------------------------------------------------
