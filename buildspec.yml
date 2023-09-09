@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.2  # Use the PHP version you need
+      nodejs: 18  # Use the Node.js version you need
+    commands:
+      - composer install  # Install PHP dependencies using Composer
+      - npm install  # Install Node.js dependencies
+  build:
+    commands:
+      - php artisan key:generate  # Generate Laravel application key
+      - php artisan config:cache  # Cache Laravel configuration
+      - npm run dev  # Build frontend assets (if using Vue, Inertia, etc.)
+      # You can run additional build commands specific to your app here
+  post_build:
+    commands:
+    # Additional post-build steps such as deploying to AWS Elastic Beanstalk or S3
+    # Make sure to configure your deployment steps here
+
+artifacts:
+  files:
+    - '**/*'  # Include all files in the artifact
+  discard-paths: yes
