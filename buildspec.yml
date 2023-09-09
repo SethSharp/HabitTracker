@@ -10,7 +10,7 @@ phases:
       - npm install  # Install Node.js dependencies
   build:
     commands:
-      - php artisan key:generate  # Generate Laravel application key
+      - cp .env.example .env
       - php artisan config:cache  # Cache Laravel configuration
       - npm run dev  # Build frontend assets (if using Vue, Inertia, etc.)
       # You can run additional build commands specific to your app here
