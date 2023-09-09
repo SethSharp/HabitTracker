@@ -4,7 +4,7 @@ phases:
   install:
     runtime-versions:
       php: 8.0  # Use the PHP version you need
-      nodejs: 18  # Use the Node.js version you need
+      nodejs: 14  # Use the Node.js version you need
     commands:
       - composer install  # Install PHP dependencies using Composer
       - npm install  # Install Node.js dependencies
