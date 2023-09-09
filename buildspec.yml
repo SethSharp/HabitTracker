@@ -6,13 +6,10 @@ phases:
       php: 8.2  # Use the PHP version you need
       nodejs: 18  # Use the Node.js version you need
     commands:
-      - composer update
-      - composer install  # Install PHP dependencies using Composer
       - npm install  # Install Node.js dependencies
   build:
     commands:
       - cp .env.example .env
-      - php artisan config:cache  # Cache Laravel configuration
       - npm run build  # Build frontend assets (if using Vue, Inertia, etc.)
       # You can run additional build commands specific to your app here
   post_build:
