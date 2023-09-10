@@ -66,8 +66,7 @@ jobs:
         run: php artisan test
 
       - name: Build ZIP Deployment Package
-        # CP env variables?...
-        run: zip -r deploy.zip ./
+        run: zip -r deploy.zip ./ -x "node_modules/*" -x "vendor/*" -x "tests/*"
 
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v18
