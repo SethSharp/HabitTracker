@@ -49,9 +49,6 @@ jobs:
           echo "running php-cs-fixer..."
           vendor/bin/php-cs-fixer fix
 
-      - name: Install composer dependencies
-        run: composer install --no-cache --no-ansi --no-interaction --no-progress
-
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
@@ -68,10 +65,26 @@ jobs:
           DB_PASSWORD: root
         run: php artisan test
 
-      - name: Directory Permissions
-        run: chmod -R 777 storage bootstrap/cache
+      - name: Build ZIP Deployment Package
+        # CP env variables?...
+        run: zip -r deploy.zip ./
 
-      - name: Create Database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: "Habit Tracker"
+          environment_name: HabitTracker-UC-1
+          existing_bucket_name: elasticbeanstalk-us-east-1-290427685328
+          region: us-east-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
+
+#      - name: Directory Permissions
+#        run: chmod -R 777 storage bootstrap/cache
+#
+#      - name: Create Database
+#        run: |
+#          mkdir -p database
+#          touch database/database.sqlite
