@@ -65,6 +65,9 @@ jobs:
           DB_PASSWORD: root
         run: php artisan test
 
+      - name: Echo URL to .env
+        run: echo "APP_URL=http://habittracker-uc-1.eba-ayudv8jf.ap-southeast-2.elasticbeanstalk.com/" >> .env
+
       - name: Build ZIP Deployment Package
         run: zip -r deploy.zip ./ -x "node_modules/*" -x "vendor/*" -x "tests/*"
 
