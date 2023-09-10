@@ -25,16 +25,16 @@ defineProps({
         </div>
         <div v-else>
             <div class="mx-auto px-4 sm:px-6 lg:px-8 bg-gray-200">
-                <div class="flex justify-start py-4 w-full">
+                <div class="flex-wrap sm:flex sm:flex-nowrap justify-start py-4 w-full">
                     <div class="shrink-0 flex items-center">
                         <Link :href="route('welcome')">
                             <ApplicationLogo
-                                class="block h-full w-auto fill-current text-gray-800"
+                                class="block w-4 h-full sm:w-auto fill-current text-gray-800"
                             />
                         </Link>
                         <div class="text-4xl p-4">Habit Tracker</div>
                     </div>
-                    <div class="my-6 w-full flex justify-end">
+                    <div class="my-6 w-full flex sm:justify-end">
                         <Link
                             :href="route('login')"
                             class="font-semibold bg-gray-300 rounded-lg p-2 hover:bg-opacity-50"
@@ -52,7 +52,7 @@ defineProps({
                 </div>
             </div>
             <div class="w-full flex mt-8 px-6 justify-center">
-                <div class="w-1/2">
+                <div class="sm:w-1/2">
                     <h1 class="text-2xl font-bold">Welcome to, Habit Tracker</h1>
                     Habit Tracker is a online application you can use to challenge yourself to
                     follow a daily, weekly or monthly routine. Holding yourself accountable to tick
