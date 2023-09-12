@@ -47,7 +47,7 @@ class DeleteHabitControllerTest extends TestCase
     {
         $this->actingAs($this->user)
             ->delete(route('habit.delete', ['habit' => $this->habit]))
-            ->assertRedirect(route('habits'));
+            ->assertRedirect(route('habit'));
     }
 
     /** @test */
@@ -57,7 +57,7 @@ class DeleteHabitControllerTest extends TestCase
 
         $this->actingAs($this->user)
             ->delete(route('habit.delete', ['habit' => $this->habit]))
-            ->assertRedirect(route('habits'));
+            ->assertRedirect(route('habit'));
 
         $this->assertDatabaseHas('habits', [
             'id' => $this->habit->id,
@@ -93,7 +93,7 @@ class DeleteHabitControllerTest extends TestCase
 
         $this->actingAs($this->user)
             ->delete(route('habit.delete', ['habit' => $this->habit]))
-            ->assertRedirect(route('habits'));
+            ->assertRedirect(route('habit'));
 
         $this->assertDatabaseHas('habits', [
             'id' => $this->habit->id,

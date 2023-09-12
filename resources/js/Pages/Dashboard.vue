@@ -212,7 +212,7 @@ const submit = () => form.post(route('schedule.update'))
                                     No habits for today, click
                                     <a
                                         class="text-primary text-md font-bold underline pointer-cursor"
-                                        :href="route('habit.index')"
+                                        :href="route('habit')"
                                     >
                                         here
                                     </a>
