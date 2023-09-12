@@ -10,7 +10,6 @@ import {
 import JSConfetti from 'js-confetti'
 import Card from '@/Components/Habits/Card.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
-import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
 import ScheduledHabitCheckboxGroup from '@/Components/ScheduledHabitCheckboxGroup.vue'
 
@@ -213,7 +212,7 @@ const submit = () => form.post(route('schedule.update'))
                                     No habits for today, click
                                     <a
                                         class="text-primary text-md font-bold underline pointer-cursor"
-                                        :href="route('habits')"
+                                        :href="route('habit.index')"
                                     >
                                         here
                                     </a>

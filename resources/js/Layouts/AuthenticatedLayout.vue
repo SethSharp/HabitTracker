@@ -13,14 +13,17 @@ let headingLinksConfig = [
     {
         name: 'Dashboard',
         href: 'dashboard',
+        current: route().current('dashboard')
     },
     {
         name: 'Calendar',
         href: 'calendar',
+        current: route().current('calendar')
     },
     {
         name: 'Habits',
-        href: 'habits',
+        href: 'habit.index',
+        current: route().current('habit.*')
     },
 ]
 </script>
@@ -47,7 +50,7 @@ let headingLinksConfig = [
                                 <NavLink
                                     v-for="link in headingLinksConfig"
                                     :href="route(link.href)"
-                                    :active="route().current(link.href)"
+                                    :active="link.current"
                                     class="animation duration-300"
                                 >
                                     {{ link.name }}
