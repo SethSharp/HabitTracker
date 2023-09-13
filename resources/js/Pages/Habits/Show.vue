@@ -127,7 +127,7 @@ const selectedUser = (id, index) => {
                                     </Link>
                                 </div>
                             </div>
-                            <div v-else class="">No habit selected</div>
+                            <div v-else>No habit selected</div>
                         </template>
                         <template #content>
                             <div class="mx-4">
