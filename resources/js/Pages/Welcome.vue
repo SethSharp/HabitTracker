@@ -64,16 +64,4 @@ defineProps({
             <About />
         </div>
     </div>
-
-    <div class="w-full h-fit bg-gray-400 bg-opacity-25 text-black flex justify-center">
-        <div class="my-6 text-center">
-            <ApplicationLogo class="mx-auto" />
-            <h1>
-                Habit Tracker Demo
-            </h1>
-            <div class="mt-4">
-                © 2023 Seth Sharp. All rights reserved.
-            </div>
-        </div>
-    </div>
 </template>
