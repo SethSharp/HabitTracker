@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { PlusCircleIcon, PencilSquareIcon } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
@@ -78,10 +78,11 @@ const selectedUser = (id, index) => {
                             <div class="flex text-2xl">
                                 <span class="w-3/4 h-fit py-2"> Your Habits </span>
                                 <div class="w-1/4 flex justify-end items-center">
-                                    <PlusCircleIcon
-                                        @click="this.$inertia.visit(route('habit.create'))"
-                                        class="w-12 h-12 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
-                                    />
+                                    <Link :href="route('habit.create')">
+                                        <PlusCircleIcon
+                                            class="w-12 h-12 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
+                                        />
+                                    </Link>
                                 </div>
                             </div>
                         </template>
@@ -118,11 +119,12 @@ const selectedUser = (id, index) => {
                                     {{ habit.name }}
                                 </span>
                                 <div class="w-1/4 flex justify-end items-center">
-                                    <PencilSquareIcon
-                                        v-if="habit.deleted_at === null"
-                                        @click="this.$inertia.visit(route('habit.edit', habit))"
-                                        class=" w-10 h-10 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
-                                    />
+                                    <Link :href="route('habit.edit', habit)">
+                                        <PencilSquareIcon
+                                            v-if="habit.deleted_at === null"
+                                            class=" w-10 h-10 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
+                                        />
+                                    </Link>
                                 </div>
                             </div>
                             <div v-else class="">No habit selected</div>
