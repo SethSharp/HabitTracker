@@ -2,7 +2,6 @@
 
 namespace Tests\Http\Auth;
 
-use App\Models\User;
 use Tests\TestCase;
 use Tests\Traits\RefreshDatabase;
 use App\Http\Events\RegisteredEvent;
