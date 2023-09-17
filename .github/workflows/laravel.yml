@@ -66,12 +66,15 @@ jobs:
         run: php artisan test
 
       - name: Echo URL to .env
+        if: github.ref == 'refs/heads/main'
         run: echo "APP_URL=http://habittracker-uc-1.eba-ayudv8jf.ap-southeast-2.elasticbeanstalk.com" >> .env
 
       - name: Build ZIP Deployment Package
+        if: github.ref == 'refs/heads/main'
         run: zip -r deploy.zip ./ -x "node_modules/*" -x "vendor/*" -x "tests/*"
 
       - name: Deploy to Elastic Beanstalk
+        if: github.ref == 'refs/heads/main'
         uses: einaregilsson/beanstalk-deploy@v18
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
@@ -82,11 +85,3 @@ jobs:
           region: ap-southeast-2
           version_label: ${{ github.sha }}
           deployment_package: deploy.zip
-
-#      - name: Directory Permissions
-#        run: chmod -R 777 storage bootstrap/cache
-#
-#      - name: Create Database
-#        run: |
-#          mkdir -p database
-#          touch database/database.sqlite
