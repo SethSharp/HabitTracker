@@ -178,7 +178,10 @@ const submit = () => form.post(route('habit.store'))
                     <div class="py-2">
                         <InputLabel for="colour"> Colour </InputLabel>
 
-                        <PickColors v-model:value="form.colour" />
+                        <PickColors
+                            v-model:value="form.colour"
+                            size="40"
+                        />
 
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>

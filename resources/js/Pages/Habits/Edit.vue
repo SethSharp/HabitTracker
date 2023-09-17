@@ -92,7 +92,7 @@ const deleteHabit = () => {
 </script>
 
 <template>
-    <Head title="Create Habit" />
+    <Head title="Edit Habit" />
 
     <AuthenticatedLayout>
         <div class="flex justify-center">
@@ -162,7 +162,10 @@ const deleteHabit = () => {
                     <div class="py-2">
                         <InputLabel for="colour"> Colour </InputLabel>
 
-                        <PickColors v-model:value="form.colour" />
+                        <PickColors
+                            v-model:value="form.colour"
+                            size="40"
+                        />
 
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>

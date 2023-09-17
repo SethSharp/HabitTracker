@@ -49,6 +49,6 @@ class UpdateHabitScheduleController extends Controller
 
         $this->monthlyScheduledHabits($request->user(), month: null, withCaching: true);
 
-        return Inertia::location(url('dashboard'));
+        return Inertia::location('dashboard');
     }
 }
