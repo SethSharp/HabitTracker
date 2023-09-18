@@ -20,12 +20,22 @@ class Habit extends Model
         'occurrence_days',
         'icon',
         'colour',
+        'scheduled_to'
     ];
 
     protected $casts = [
         'user_id' => 'int',
         'frequency' => Frequency::class,
     ];
+
+    public function toCacheArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'completed' => $this->completed,
+            'colour' => $this->colour
+        ];
+    }
 
     public function user(): BelongsTo
     {

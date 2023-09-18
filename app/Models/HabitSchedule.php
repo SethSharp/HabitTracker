@@ -30,6 +30,6 @@ class HabitSchedule extends Model
 
     public function habit(): BelongsTo
     {
-        return $this->belongsTo(Habit::class, 'habit_id');
+        return $this->belongsTo(Habit::class, 'habit_id')->withTrashed();
     }
 }

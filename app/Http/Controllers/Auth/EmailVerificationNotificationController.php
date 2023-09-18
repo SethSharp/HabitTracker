@@ -9,13 +9,10 @@ use App\Providers\RouteServiceProvider;
 
 class EmailVerificationNotificationController extends Controller
 {
-    /**
-     * Send a new email verification notification.
-     */
     public function store(Request $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::HELP);
         }
 
         $request->user()->sendEmailVerificationNotification();

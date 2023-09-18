@@ -3,22 +3,25 @@
 namespace App\Http\Controllers\Pages;
 
 use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Traits\DateHelper;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
 class ShowDashboardController extends Controller
 {
     use ScheduledHabits;
-    use DateHelper;
 
-    public function __invoke()
+    public function __invoke(Request $request): Response
     {
         return Inertia::render('Dashboard', [
-            'dailyHabits' => $this->getDailyScheduledHabits(Auth::user()),
-            'completedHabits' => $this->getCompletedDailyHabits(Auth::user()),
-            'weeklyHabits' => $this->getWeeklyScheduledHabits(Auth::user()),
+            'dailyHabits' => $this->getDailyScheduledHabits($request->user()),
+            'completedHabits' => $this->getCompletedDailyHabits($request->user()),
+            'weeklyHabits' => $this->getWeeklyScheduledHabits($request->user()),
+            'statistics' => [
+                'streak' => $request->user()->streak,
+                'bestStreak' => $request->user()->best_streak,
+            ]
         ]);
     }
 }

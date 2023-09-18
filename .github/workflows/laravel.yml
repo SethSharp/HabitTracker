@@ -49,9 +49,6 @@ jobs:
           echo "running php-cs-fixer..."
           vendor/bin/php-cs-fixer fix
 
-      - name: Install composer dependencies
-        run: composer install --no-cache --no-ansi --no-interaction --no-progress
-
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
@@ -68,10 +65,23 @@ jobs:
           DB_PASSWORD: root
         run: php artisan test
 
-      - name: Directory Permissions
-        run: chmod -R 777 storage bootstrap/cache
+      - name: Echo URL to .env
+        if: github.ref == 'refs/heads/main'
+        run: echo "APP_URL=http://habittracker-uc-1.eba-ayudv8jf.ap-southeast-2.elasticbeanstalk.com" >> .env
 
-      - name: Create Database
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
+      - name: Build ZIP Deployment Package
+        if: github.ref == 'refs/heads/main'
+        run: zip -r deploy.zip ./ -x "node_modules/*" -x "vendor/*" -x "tests/*"
+
+      - name: Deploy to Elastic Beanstalk
+        if: github.ref == 'refs/heads/main'
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: "Habit Tracker"
+          environment_name: HabitTracker-UC-1
+          existing_bucket_name: elasticbeanstalk-ap-southeast-2-290427685328
+          region: ap-southeast-2
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip

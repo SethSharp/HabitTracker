@@ -25,14 +25,14 @@ const submit = () => form.patch(route('profile.update'))
 </script>
 
 <template>
-    <section>
-        <header>
+    <div>
+        <div>
             <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
 
             <p class="mt-1 text-sm text-gray-600">
                 Update your account's profile information and email address.
             </p>
-        </header>
+        </div>
 
         <form class="mt-6 space-y-6" @submit.prevent="submit">
             <div>
@@ -91,5 +91,5 @@ const submit = () => form.patch(route('profile.update'))
                 </Transition>
             </div>
         </form>
-    </section>
+    </div>
 </template>

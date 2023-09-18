@@ -3,25 +3,28 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\Counters\UserStreak;
 use App\Console\Commands\Counters\HabitStreak;
-use App\Console\Commands\Counters\WeeklyStreak;
-use App\Console\Commands\Habits\SendDailyHabitReminder;
+use App\Console\Commands\Counters\IncrementStreak;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\ScheduledHabits\ScheduleHabitsForWeek;
+use App\Console\Commands\ScheduledHabits\ScheduleHabitsForMonth;
 
 class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
         // scheduling habits
-        // $schedule->command(ScheduleHabitsForWeek::class)->mondays();
+        $schedule->command(ScheduleHabitsForMonth::class)->monthly();
 
         // counters
-        // $schedule->command(HabitStreak::class)->daily();
-        // $schedule->command(WeeklyStreak::class)->daily();
+        $schedule->command(HabitStreak::class)->daily();
+        $schedule->command(UserStreak::class)->daily();
+
+        $schedule->command(IncrementStreak::class)->everyFiveMinutes();
 
         // Notifications
-        $schedule->command(SendDailyHabitReminder::class)->dailyAt('17:00');
+        //        $schedule->command(SendDailyHabitReminder::class)->dailyAt('08:00');
+        //        $schedule->command(SendHabitGoalReminder::class)->dailyAt('08:00');
     }
 
     protected function commands(): void

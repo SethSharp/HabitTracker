@@ -15,7 +15,7 @@ class EditProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
-            'email_preference' => $request->user()->emailPreferences()->get()->first()->daily_reminder
+            'emailPreferences' => $request->user()->emailPreferences()->get()->first()
         ]);
     }
 }

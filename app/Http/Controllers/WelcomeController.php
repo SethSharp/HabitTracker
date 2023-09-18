@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 
 class WelcomeController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): Response
     {
-        if (! Auth::check()) {
-            return Inertia::render('Welcome', [
-                'canLogin' => \Illuminate\Support\Facades\Auth::check(),
-                'canRegister' => true,
-            ]);
-        }
-
-        return Inertia::location(url('dashboard'));
+        return Inertia::render('Welcome', [
+            'canLogin' => Auth::check(),
+            'canRegister' => true,
+        ]);
     }
 }

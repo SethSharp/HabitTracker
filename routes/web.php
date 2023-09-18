@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +18,7 @@ Route::get('/', \App\Http\Controllers\WelcomeController::class)->name('welcome')
 Route::middleware('auth')->name('habit.')->group(function () {
     Route::get('/habits/create', \App\Http\Controllers\Habits\CreateHabitController::class)->name('create');
     Route::get('/habits/edit/{habit}', \App\Http\Controllers\Habits\EditHabitController::class)->name('edit');
-    Route::post('habits/{habit}', \App\Http\Controllers\Habits\UpdateHabitController::class)->name('update')->middleware('owner');
+    Route::post('habits/{habit}', \App\Http\Controllers\Habits\UpdateHabitController::class)->name('update');
     Route::delete('habits/delete/{habit}', \App\Http\Controllers\Habits\DeleteHabitController::class)->name('delete');
     Route::post('habits', \App\Http\Controllers\Habits\StoreHabitController::class)->name('store');
 });
@@ -31,9 +30,9 @@ Route::middleware('auth')->name('schedule.')->group(function () {
 // Tab group
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', \App\Http\Controllers\Pages\ShowDashboardController::class)->name('dashboard');
-    Route::get('/habits', \App\Http\Controllers\Habits\ViewHabitsController::class)->name('habits');
-    Route::get('/competition', \App\Http\Controllers\Pages\ShowCompetitionController::class)->name('competition');
-    Route::get('/statistics/{month?}', \App\Http\Controllers\Pages\ShowStatisticsController::class)->name('statistics');
+    Route::get('/habits', \App\Http\Controllers\Habits\ShowHabitsController::class)->name('habit');
+    Route::get('/help', \App\Http\Controllers\Pages\ShowHelpController::class)->name('help');
+    Route::get('/calendar/{month?}', \App\Http\Controllers\Pages\ShowCalendarController::class)->name('calendar');
 });
 
 Route::middleware('auth')->name('profile.')->group(function () {

@@ -4,6 +4,7 @@ namespace Tests\Http\Habits;
 
 use Carbon\Carbon;
 use Tests\TestCase;
+use App\Enums\Goals;
 use App\Models\User;
 use App\Models\Habit;
 use Tests\Traits\RefreshDatabase;
@@ -29,7 +30,11 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => '[2,3,4]',
             'start_next_week' => false,
-            'colour' => '#00cedf'
+            'colour' => '#00cedf',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->weeklyArray = [
@@ -38,7 +43,11 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 1,
             'weekly_config' => 4,
             'start_next_week' => false,
-            'colour' => '#00cedf'
+            'colour' => '#00cedf',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->monthlyArray = [
@@ -47,7 +56,11 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 2,
             'monthly_config' => '2023-7-17',
             'start_next_week' => false,
-            'colour' => '#00cedf'
+            'colour' => '#00cedf',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
     }
 
@@ -65,6 +78,7 @@ class StoreHabitControllerTest extends TestCase
             'name' => '',
             'description' => '',
             'frequency' => null,
+            'colour'
         ];
 
         $this->actingAs($this->user)
@@ -73,6 +87,7 @@ class StoreHabitControllerTest extends TestCase
                 'name',
                 'description',
                 'frequency',
+                'colour'
             ]);
     }
 
@@ -130,6 +145,10 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => [1,2,3],
             'colour' => 'colour',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)
@@ -157,7 +176,11 @@ class StoreHabitControllerTest extends TestCase
             'description' => 'Habit description',
             'frequency' => 1,
             'weekly_config' => '2',
-            'colour' => 'colour'
+            'colour' => 'colour',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)
@@ -170,7 +193,8 @@ class StoreHabitControllerTest extends TestCase
             'id' => $habit->id,
             'name' => $habit->name,
             'description' => $habit->description,
-            'colour' => $habit->colour
+            'colour' => $habit->colour,
+            'scheduled_to' => null
         ]);
 
         $this->assertEquals('[2]', $habit->occurrence_days);
@@ -184,7 +208,11 @@ class StoreHabitControllerTest extends TestCase
             'description' => 'Habit description',
             'frequency' => 2,
             'monthly_config' => '2023-08-13',
-            'colour' => 'colour'
+            'colour' => 'colour',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)
@@ -197,7 +225,8 @@ class StoreHabitControllerTest extends TestCase
             'id' => $habit->id,
             'name' => $habit->name,
             'description' => $habit->description,
-            'colour' => $habit->colour
+            'colour' => $habit->colour,
+            'scheduled_to' => null
         ]);
 
         $this->assertEquals('["2023-08-13"]', $habit->occurrence_days);
@@ -214,7 +243,11 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => [1,2,3],
             'colour' => 'colour',
-            'start_next_week' => true
+            'start_next_week' => true,
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)
@@ -247,6 +280,10 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => [1,2,3],
             'colour' => 'colour',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)
@@ -279,6 +316,10 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => [1,2,3],
             'colour' => 'colour',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)
@@ -297,7 +338,7 @@ class StoreHabitControllerTest extends TestCase
 
         $this->assertEquals('["1", "2", "3"]', $habit->occurrence_days);
 
-        $this->assertDatabaseCount('habit_schedules', 15);
+        $this->assertDatabaseCount('habit_schedules', 14);
     }
 
     /** @test */
@@ -310,7 +351,11 @@ class StoreHabitControllerTest extends TestCase
             'description' => 'Habit description',
             'frequency' => 1,
             'weekly_config' => '2',
-            'colour' => 'colour'
+            'colour' => 'colour',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)
@@ -339,7 +384,11 @@ class StoreHabitControllerTest extends TestCase
             'description' => 'Habit description',
             'frequency' => 2,
             'monthly_config' => '2023-08-13',
-            'colour' => 'colour'
+            'colour' => 'colour',
+            'scheduled_to' => [
+                'length' => Goals::NONE->value,
+                'time' => 0,
+            ]
         ];
 
         $this->actingAs($this->user)

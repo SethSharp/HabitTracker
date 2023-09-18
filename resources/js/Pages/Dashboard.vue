@@ -2,30 +2,28 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import { onMounted, ref } from 'vue'
-import Card from '@/Components/Habits/Card.vue'
-import CheckboxGroup from '@/Components/CheckboxGroup.vue'
 import {
     CheckCircleIcon,
     XCircleIcon,
     EllipsisHorizontalCircleIcon,
 } from '@heroicons/vue/24/outline/index.js'
 import JSConfetti from 'js-confetti'
-import { CheckIcon } from '@heroicons/vue/24/solid/index.js'
+import Card from '@/Components/Habits/Card.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
-import InputLabel from '@/Components/InputLabel.vue'
 import InputError from '@/Components/InputError.vue'
+import ScheduledHabitCheckboxGroup from '@/Components/ScheduledHabitCheckboxGroup.vue'
 
 const props = defineProps({
     dailyHabits: Array,
     completedHabits: Array,
-    weeklyHabits: Array,
-    log: Array,
+    weeklyHabits: Object,
+    statistics: Object,
 })
 
 const jsConfetti = new JSConfetti()
 
 let today = new Date()
-let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 let isCompleted = ref(false)
 
 let habitConfig = props.dailyHabits.map((h) => {
@@ -34,6 +32,7 @@ let habitConfig = props.dailyHabits.map((h) => {
         label: h.habit.name,
         description: h.habit.description,
         completed: h.completed,
+        isGoal: h.habit.scheduled_to,
     }
 })
 
@@ -141,11 +140,6 @@ const isDanger = (habits) => {
     return successCount === 0 && failCount > 0
 }
 
-const dateHelper = (date) => {
-    let d = new Date(date)
-    return `${d.getDate()}` + `/` + `${d.getMonth()}`
-}
-
 const confetti = () => {
     jsConfetti.addConfetti()
 }
@@ -157,19 +151,29 @@ const shouldShowDay = (habit) => {
     return today.getDate() > scheduledDate.getDate()
 }
 
-onMounted(() => {
-    let b = false
-
-    if (props.dailyHabits.length >= 0) {
-        for (const habit of props.dailyHabits) {
-            if (!habit.completed) {
-                b = true
-                break
-            }
-        }
+const getDaySuffix = (day) => {
+    if (day >= 11 && day <= 13) {
+        return "th";
     }
+    switch (day % 10) {
+        case 1:
+            return "st";
+        case 2:
+            return "nd";
+        case 3:
+            return "rd";
+        default:
+            return "th";
+    }
+}
 
-    if (b) {
+const dateHelper = (dateString) => {
+    let date = new Date(dateString).getDate()
+    return date + getDaySuffix(date);
+}
+
+onMounted(() => {
+    if (props.dailyHabits.length === props.completedHabits.length && props.dailyHabits.length > 0) {
         isCompleted.value = true
         confetti()
     }
@@ -184,38 +188,42 @@ const form = useForm({
     habits: completed,
 })
 
-const submit = () => {
-    form.post(route('schedule.update'))
-}
+const submit = () => form.post(route('schedule.update'))
 </script>
 
 <template>
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="py-2">
-            <div
-                v-if="isCompleted"
-                class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6 mt-2 mx-12"
-            >
-                You have ticked off all of your habits for today! Now you can relax knowing your
-                achievement, keep it up!
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 mx-12 space-x-6">
+        <div>
+            <div class="mx-4 sm:mx-12 sm:space-x-6 grid grid-cols-1 sm:grid-cols-2">
                 <Card>
                     <template #heading>
-                        <span class="h-fit pt-2 text-2xl"> Today's Habits </span>
+                        <span class="h-fit text-2xl"> Today's Habits </span>
                     </template>
                     <template #content>
-                        <div class="mx-2 my-5">
-                            <div v-if="dailyHabits.length > 0 && !isCompleted" class="pl-2 mt-4">
+                        <div class="mx-2">
+                            <div>
+                                <div v-if="isCompleted"
+                                     class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6">
+                                    You have ticked off all of your habits for today! Keep it up!
+                                </div>
+                                <div v-else class="mx-4">
+                                    No habits for today, click
+                                    <a
+                                        class="text-primary text-md font-bold underline pointer-cursor"
+                                        :href="route('habit')"
+                                    >
+                                        here
+                                    </a>
+                                    to add a habit.
+                                </div>
+                            </div>
+                            <div v-if="dailyHabits.length > 0" class="pl-2 mb-4">
                                 <form @submit="submit">
-                                    <div class="py-2">
-                                        <InputLabel for="habits">
-                                            Scheduled Habits for today
-                                        </InputLabel>
+                                    <div class="mb-4">
 
-                                        <CheckboxGroup
+                                        <ScheduledHabitCheckboxGroup
                                             id="habits"
                                             ref="habits"
                                             v-model="form.habits"
@@ -228,49 +236,45 @@ const submit = () => {
                                     <PrimaryButton type="submit"> Save </PrimaryButton>
                                 </form>
                             </div>
-                            <div v-else>
-                                <div v-if="isCompleted">You are all done for today!</div>
-                                <div v-else>
-                                    No habits for today, click
-                                    <a
-                                        class="text-primary text-md font-bold underline pointer-cursor"
-                                        :href="route('habits')"
-                                    >
-                                        here
-                                    </a>
-                                    to add a habit.
-                                </div>
+                        </div>
+                    </template>
+                </Card>
+                <Card>
+                    <template #heading>
+                        <span class="h-fit text-2xl"> Statistics </span>
+                    </template>
+                    <template #content>
+                        <div class="mx-4 my-2">
+                            <div class="flex">
+                                <span class="font-bold"> Streak : {{ statistics.streak }} </span>
+                                <CheckCircleIcon class="w-6 h-6 ml-1 text-yellow-500" />
                             </div>
-                            <div v-if="completedHabits.length !== 0">
-                                <div v-for="habit in completedHabits" class="flex my-2">
-                                    <CheckIcon
-                                        class="w-10 h-10 text-white bg-green-500 p-2 rounded-full"
-                                    />
-                                    <span class="py-2 px-3"> {{ habit.habit.name }}</span>
-                                </div>
+                            <div class="flex">
+                                <span class="font-bold"> Best Streak : {{ statistics.bestStreak }} </span>
+                                <CheckCircleIcon class="w-6 h-6 ml-1 text-green-500" />
                             </div>
                         </div>
                     </template>
                 </Card>
             </div>
-            <div class="mx-12">
+            <div class="mx-4 mt-4 sm:mx-12">
                 <Card>
                     <template #heading>
-                        <span class="h-fit py-2 text-2xl"> The Current Week </span>
+                        <span class="h-fit py-2 text-2xl"> Your Week </span>
                     </template>
                     <template #content>
-                        <div class="flex overflow-x-auto space-x-8 mx-4">
+                        <div class="flex overflow-x-auto space-x-8 sm:mx-4">
                             <Card
-                                v-for="(habits, index) in weeklyHabits"
+                                v-for="(habits, index, i) in weeklyHabits"
                                 class="min-w-[300px]"
                                 :success="isSuccess(habits)"
                                 :warning="isWarning(habits)"
                                 :danger="isDanger(habits)"
-                                :heading="today.getDay() - 1 === index"
+                                :heading="today.getDay() === i"
                                 :id="index"
                             >
                                 <template #heading>
-                                    <span> {{ week[index] }} </span>
+                                    <span> {{ week[i] }} - {{ dateHelper(index) }} </span>
                                 </template>
                                 <template #content>
                                     <div class="min-h-[450px]">

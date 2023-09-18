@@ -10,4 +10,9 @@ class CacheKeys
     {
         return 'weekly-habit-log-' . $user->id;
     }
+
+    public static function scheduledHabitsForTheMonth(User $user, string $month): string
+    {
+        return 'monthly-habit-scheduled-' . $user->id . '-' . $month;
+    }
 }

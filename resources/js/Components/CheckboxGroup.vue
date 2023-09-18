@@ -40,20 +40,6 @@ const internalValue = computed({
             v-model="internalValue"
             :value="item.value ?? item"
         />
-        <div class="w-full">
-            <Menu>
-                <MenuButton class="px-2 flex justify-start text-sm w-full cursor-pointer">
-                    <label class="py-2 cursor-pointer"> {{ item.label }}</label>
-                </MenuButton>
-                <MenuItems>
-                    <MenuItem v-slot="{ active }">
-                        <div class="text-gray-500 pl-6 py-2">
-                            {{ item.description }}
-                        </div>
-                    </MenuItem>
-                </MenuItems>
-            </Menu>
-        </div>
     </div>
 
     <div class="text-gray-500 text-xs mt-3">{{ description }}</div>

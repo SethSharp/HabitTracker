@@ -13,18 +13,17 @@ let headingLinksConfig = [
     {
         name: 'Dashboard',
         href: 'dashboard',
+        current: route().current('dashboard')
+    },
+    {
+        name: 'Calendar',
+        href: 'calendar',
+        current: route().current('calendar')
     },
     {
         name: 'Habits',
-        href: 'habits',
-    },
-    {
-        name: 'Statistics',
-        href: 'statistics',
-    },
-    {
-        name: 'Competition',
-        href: 'competition',
+        href: 'habit',
+        current: route().current('habit.*')
     },
 ]
 </script>
@@ -52,6 +51,7 @@ let headingLinksConfig = [
                                     v-for="link in headingLinksConfig"
                                     :href="route(link.href)"
                                     :active="route().current(link.href)"
+                                    class="animation duration-300"
                                 >
                                     {{ link.name }}
                                 </NavLink>
@@ -89,6 +89,9 @@ let headingLinksConfig = [
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')">
                                             Profile
+                                        </DropdownLink>
+                                        <DropdownLink :href="route('help')">
+                                            Help
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
@@ -173,6 +176,9 @@ let headingLinksConfig = [
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
                             </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('help')">
+                                Help
+                            </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>
@@ -192,6 +198,19 @@ let headingLinksConfig = [
             <main>
                 <slot />
             </main>
+        </div>
+
+        <!-- Footer -->
+        <div class="w-full h-fit bg-gray-400 bg-opacity-25 text-black flex justify-center">
+            <div class="my-6 text-center">
+                <ApplicationLogo class="mx-auto" />
+                <h1>
+                    Habit Tracker Demo
+                </h1>
+                <div class="mt-4">
+                    © 2023 Seth Sharp. All rights reserved.
+                </div>
+            </div>
         </div>
     </div>
 </template>

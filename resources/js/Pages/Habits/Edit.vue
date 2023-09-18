@@ -11,16 +11,22 @@ import InputError from '@/Components/InputError.vue'
 import DateInput from '@/Components/DateInput.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
+import CustomSelectLength from '@/Components/CustomSelectLength.vue'
 
 const props = defineProps({
     habit: Object,
     frequencies: Array,
     min: String,
     max: String,
+    goals: Array,
 })
 
-let frequenciesConfig = {
-    options: props.frequencies,
+let customSelectedConfig = {
+    options: [
+        { name: 'None', id: props.goals[0] },
+        { name: 'Week\\s', id: props.goals[1] },
+        { name: 'Month\\s', id: props.goals[2] },
+    ],
 }
 
 let weekConfig = {
@@ -71,6 +77,10 @@ const form = useForm({
     weekly_config: getWeekly(),
     monthly_config: getMonthly(),
     colour: props.habit.colour,
+    scheduled_to: {
+        length: 0,
+        time: 0,
+    },
 })
 
 const submit = () => form.post(route('habit.update', props.habit))
@@ -82,11 +92,11 @@ const deleteHabit = () => {
 </script>
 
 <template>
-    <Head title="Create Habit" />
+    <Head title="Edit Habit" />
 
     <AuthenticatedLayout>
-        <div class="bg-gray-100 flex justify-center">
-            <form @submit.prevent="submit" class="w-1/2 mt-10 h-screen">
+        <div class="flex justify-center">
+            <form @submit.prevent="submit" class="w-3/4 sm:w-1/2 mt-10 pb-5">
                 <div>
                     <div class="py-2">
                         <InputLabel for="name"> Name </InputLabel>
@@ -107,7 +117,7 @@ const deleteHabit = () => {
                             id="description"
                             ref="description"
                             v-model="form.description"
-                            class="mt-1 block w-full"
+                            class="mt-1 block w-full h-32"
                         />
 
                         <InputError :error="form.errors.description" class="mt-2" />
@@ -152,9 +162,24 @@ const deleteHabit = () => {
                     <div class="py-2">
                         <InputLabel for="colour"> Colour </InputLabel>
 
-                        <PickColors v-model:value="form.colour" />
+                        <PickColors
+                            v-model:value="form.colour"
+                            size="40"
+                        />
 
                         <InputError :error="form.errors.colour" class="mt-2" />
+                    </div>
+                    <div class="py-2" v-if="!habit.scheduled_to">
+                        <InputLabel for="scheduled_to"> Set a time frame </InputLabel>
+
+                        <CustomSelectLength
+                            v-model="form.scheduled_to"
+                            v-bind="customSelectedConfig"
+                            class="mt-1 block w-full"
+                            label="Awesome for setting goals!"
+                        />
+
+                        <InputError :error="form.errors.scheduled_to" class="mt-2" />
                     </div>
                 </div>
 

@@ -35,7 +35,7 @@ const submit = () => {
                     type="password"
                     class="mt-1 block w-full"
                 />
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputError class="mt-2" :error="form.errors.password" />
             </div>
 
             <div class="flex justify-end mt-4">

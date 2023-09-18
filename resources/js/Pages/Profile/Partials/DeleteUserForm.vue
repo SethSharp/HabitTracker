@@ -4,9 +4,9 @@ import { nextTick, ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import DangerButton from '@/Components/Buttons/DangerButton.vue'
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
-import Error from '@/Components/Error.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputLabel from '@/Components/InputLabel.vue'
+import InputError from "@/Components/InputError.vue";
 
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
@@ -74,7 +74,7 @@ const closeModal = () => {
                             class="mt-1 block w-full"
                         />
 
-                        <Error :error="form.errors.password" class="mt-2" />
+                        <InputError :error="form.errors.password" class="mt-2" />
                     </div>
                     <div class="space-x-2 mt-4">
                         <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>

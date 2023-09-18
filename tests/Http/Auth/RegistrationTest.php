@@ -52,4 +52,24 @@ class RegistrationTest extends TestCase
 
         Event::assertDispatched(RegisteredEvent::class);
     }
+
+    /** @test */
+    public function email_s_verified_instantly()
+    {
+        Event::fake();
+
+        $this->post('/register', [
+            'name' => 'Test User 1',
+            'email' => 'test@example2.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        Event::assertDispatched(RegisteredEvent::class);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Test User 1',
+            'email_verified_at' => now()
+        ]);
+    }
 }
