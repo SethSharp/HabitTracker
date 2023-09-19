@@ -44,9 +44,9 @@ let weekConfig = {
 let occurrences = JSON.parse(props.habit.occurrence_days)
 
 const getFrequency = () => {
-    if (props.habit.frequency === 'weekly') {
+    if (props.habit.frequency === 'Weekly') {
         return 1
-    } else if (props.habit.frequency === 'monthly') {
+    } else if (props.habit.frequency === 'Monthly') {
         return 2
     }
     return 0
