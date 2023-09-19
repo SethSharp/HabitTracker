@@ -11,6 +11,7 @@ class ScheduledHabitsForDay extends Controller
 {
     public function __invoke(Request $request): \Illuminate\Http\JsonResponse
     {
+        ray($request->date);
         return response()->json(
             $request->user()
             ->scheduledHabits()

@@ -1,17 +1,42 @@
 <script setup>
 import Card from "@/Components/Habits/Card.vue";
 import {ChevronRightIcon, ChevronLeftIcon} from "@heroicons/vue/24/outline/index.js";
-import {ref} from "vue";
+import {ref, computed} from "vue";
 import JSConfetti from 'js-confetti'
 import axios from "axios";
 
-let scheduledHabits = ref([])
-const currentDate = ref(props.date)
-const jsConfetti = new JSConfetti()
+let buildDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+const previousDate = () => {
+    const prevDate = new Date(currentDate.value);
+    prevDate.setDate(prevDate.getDate() - 1);
+
+    const newDate = buildDate(prevDate);
+    currentDate.value = newDate
+
+    return newDate
+};
+
+const nextDate = () => {
+    const nextDate = new Date(currentDate.value);
+    nextDate.setDate(nextDate.getDate() + 1);
+
+    const newDate = buildDate(nextDate);
+    currentDate.value = newDate
+
+    console.log(currentDate.value)
+
+    return newDate
+};
 
 const prevDay = () => {
     // change date to day before
-    axios.get(route('schedule.day', { date: "2023-09-19" }))
+    axios.get(route('schedule.day', { date: previousDate }))
         .then(response => {
             console.log(response.data);
         })
@@ -23,7 +48,7 @@ const prevDay = () => {
 
 const nextDay = () => {
     // change date to next day
-    axios.get(route('schedule.day', { date: "2023-09-19" }))
+    axios.get(route('schedule.day', { date: nextDate }))
         .then(response => {
             console.log(response.data);
         })
@@ -32,6 +57,10 @@ const nextDay = () => {
             alert('An error occurred fetching data')
         });
 }
+
+let scheduledHabits = ref([])
+const currentDate = ref(buildDate(new Date()))
+const jsConfetti = new JSConfetti()
 
 const confetti = () => {
     jsConfetti.addConfetti()
