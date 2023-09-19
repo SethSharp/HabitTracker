@@ -14,6 +14,7 @@ class ShowDashboardController extends Controller
 
     public function __invoke(Request $request): Response
     {
+        ray($this->getDailyScheduledHabits($request->user()));
         return Inertia::render('Dashboard', [
             'dailyHabits' => $this->getDailyScheduledHabits($request->user()),
             'completedHabits' => $this->getCompletedDailyHabits($request->user()),
