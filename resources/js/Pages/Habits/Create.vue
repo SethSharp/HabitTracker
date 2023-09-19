@@ -11,7 +11,6 @@ import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
 import PickColors from 'vue-pick-colors'
 import CustomSelectLength from '@/Components/CustomSelectLength.vue'
-import { onMounted } from 'vue'
 
 const props = defineProps({
     frequencies: Array,

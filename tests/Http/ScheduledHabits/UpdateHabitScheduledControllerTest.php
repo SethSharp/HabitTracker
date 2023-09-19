@@ -10,7 +10,7 @@ use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use Tests\Traits\RefreshDatabase;
 
-class UpdateScheduledHabitControllerTest extends TestCase
+class UpdateHabitScheduledControllerTest extends TestCase
 {
     use RefreshDatabase;
 
