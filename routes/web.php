@@ -25,6 +25,7 @@ Route::middleware('auth')->name('habit.')->group(function () {
 
 Route::middleware('auth')->name('schedule.')->group(function () {
     Route::post('schedule/habits', \App\Http\Controllers\ScheduleHabit\UpdateHabitScheduleController::class)->name('update');
+    Route::get('schedule/day/{date}', \App\Http\Controllers\ScheduleHabit\ScheduledHabitsForDay::class)->name('day');
 });
 
 // Tab group

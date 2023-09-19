@@ -3,27 +3,34 @@ import Card from "@/Components/Habits/Card.vue";
 import {ChevronRightIcon, ChevronLeftIcon} from "@heroicons/vue/24/outline/index.js";
 import {ref} from "vue";
 import JSConfetti from 'js-confetti'
+import axios from "axios";
 
-const props = defineProps({
-    scheduledHabits: {
-        type: Array,
-    },
-    date: {
-        type: Number,
-        default: new Date().getDate(),
-        required: false,
-    },
-})
-
+let scheduledHabits = ref([])
 const currentDate = ref(props.date)
 const jsConfetti = new JSConfetti()
 
 const prevDay = () => {
-
+    // change date to day before
+    axios.get(route('schedule.day', { date: "2023-09-19" }))
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+            alert('An error occurred fetching data')
+        });
 }
 
 const nextDay = () => {
-
+    // change date to next day
+    axios.get(route('schedule.day', { date: "2023-09-19" }))
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error(error);
+            alert('An error occurred fetching data')
+        });
 }
 
 const confetti = () => {

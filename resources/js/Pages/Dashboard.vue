@@ -152,7 +152,7 @@ const submit = () => form.post(route('schedule.update'))
     <AuthenticatedLayout>
         <div>
             <div class="mx-4 sm:mx-12 sm:space-x-6 grid grid-cols-1 sm:grid-cols-2">
-                <HabitTickOff :scheduledHabits="dailyHabits"/>
+                <HabitTickOff />
                 <Card>
                     <template #heading>
                         <span class="h-fit text-2xl"> Statistics </span>
