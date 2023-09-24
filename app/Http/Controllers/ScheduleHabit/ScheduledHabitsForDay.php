@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\ScheduleHabit;
 
-use Carbon\Carbon;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

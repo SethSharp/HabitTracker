@@ -7,7 +7,8 @@ import {
     CheckCircleIcon,
     EllipsisHorizontalCircleIcon
 } from "@heroicons/vue/24/outline/index.js";
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
+import { Link } from "@inertiajs/vue3";
 import JSConfetti from 'js-confetti'
 import axios from "axios";
 
@@ -49,7 +50,6 @@ const prevDay = () => {
     // change date to day before
     axios.get(route('schedule.day', { date: previousDate() }))
         .then(response => {
-            console.log(response.data)
             scheduledHabits.value = response.data
         })
         .catch(error => {
@@ -63,12 +63,47 @@ const nextDay = () => {
     axios.get(route('schedule.day', { date: nextDate() }))
         .then(response => {
             console.log(response.data)
-            scheduledHabits.value = response.data
         })
         .catch(error => {
             console.error(error)
             alert('An error occurred fetching data')
         })
+}
+
+const completeHabit = (id, index) => {
+    axios.post(route('schedule.complete', { habitSchedule: id }))
+        .then(_ => {
+            scheduledHabits.value[index].completed = true
+        })
+        .catch(err => {
+            console.error(err)
+            alert('Unable to complete habit')
+        })
+}
+
+const uncompleteHabit = (id, index) => {
+    axios.post(route('schedule.uncomplete', { habitSchedule: id }))
+        .then(_ => {
+            scheduledHabits.value[index].completed = false
+        })
+        .catch(err => {
+            console.error(err)
+            alert('Unable to complete habit')
+        })
+}
+
+const cancelHabit = (id, index) => {
+    let conf = confirm('Are you sure you want to cancel this habit? This action cannot be undone')
+    if (conf) {
+        axios.post(route('schedule.cancel', { habitSchedule: id }))
+            .then(_ => {
+                scheduledHabits.value[index].cancelled = true
+            })
+            .catch(err => {
+                console.error(err)
+                alert('Unable to complete habit')
+            })
+    }
 }
 
 onMounted(() => {
@@ -109,18 +144,20 @@ const confetti = () => {
         </template>
         <template #content>
             <div
-                v-for="scheduledHabit in scheduledHabits"
-                class="flex my-2 justify-between"
+                v-for="(scheduledHabit, index) in scheduledHabits"
+                class="flex my-2 p-2 justify-between rounded border"
+                :class="scheduledHabit.cancelled ? 'bg-red-200 border-red-400' : 'border-gray-400'"
             >
                 <p class="text-xl my-auto">
                     {{ scheduledHabit.habit.name }}
                 </p>
-                <div class="rounded-2xl cursor-pointer border border-primary ml-2 flex overflow-hidden w-auto">
+                <div v-if="! scheduledHabit.cancelled" class="rounded-2xl cursor-pointer bg-white border border-primary ml-2 flex overflow-hidden w-auto">
                     <div
                         class="w-fit p-2 hover:bg-gray-200"
                         :class="! scheduledHabit.completed ? 'bg-gray-200' : ''"
                     >
                         <EllipsisHorizontalCircleIcon
+                            @click="uncompleteHabit(scheduledHabit.id, index)"
                             class="w-8 h-8 my-auto text-gray-500"
                         />
                     </div>
@@ -129,11 +166,15 @@ const confetti = () => {
                         :class="scheduledHabit.completed ? 'bg-green-200' : ''"
                     >
                         <CheckCircleIcon
+                            @click="completeHabit(scheduledHabit.id, index)"
                             class="w-8 h-8 my-auto text-green-500"
                         />
                     </div>
                 </div>
-                <XCircleIcon class="w-8 h-8 text-red-500 my-auto" />
+                <XCircleIcon
+                    @click="cancelHabit(scheduledHabit.id, index)"
+                    class="w-8 h-8 text-red-500 my-auto cursor-pointer"
+                />
             </div>
         </template>
     </Card>

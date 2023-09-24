@@ -13,6 +13,7 @@ return new class() extends Migration {
             $table->integer('user_id');
             $table->date('scheduled_completion');
             $table->boolean('completed')->default(0);
+            $table->boolean('cancelled')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

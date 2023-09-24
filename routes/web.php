@@ -26,6 +26,9 @@ Route::middleware('auth')->name('habit.')->group(function () {
 Route::middleware('auth')->name('schedule.')->group(function () {
     Route::post('schedule/habits', \App\Http\Controllers\ScheduleHabit\UpdateHabitScheduleController::class)->name('update');
     Route::get('schedule/day/{date}', \App\Http\Controllers\ScheduleHabit\ScheduledHabitsForDay::class)->name('day');
+    Route::post('schedule/complete/{habitSchedule}', \App\Http\Controllers\ScheduleHabit\Complete::class)->name('complete');
+    Route::post('schedule/uncomplete/{habitSchedule}', \App\Http\Controllers\ScheduleHabit\UnComplete::class)->name('uncomplete');
+    Route::post('schedule/cancel/{habitSchedule}', \App\Http\Controllers\ScheduleHabit\Cancel::class)->name('cancel');
 });
 
 // Tab group
