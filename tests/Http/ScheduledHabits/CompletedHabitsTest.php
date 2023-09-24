@@ -55,6 +55,7 @@ class CompletedHabitsTest extends TestCase
         $habitSchedule = HabitSchedule::factory()->create([
             'habit_id' => $habit->id,
             'user_id' => $this->user->id,
+            'scheduled_completion' => now()->addWeek()
         ]);
 
         $this->actingAs($this->user)
