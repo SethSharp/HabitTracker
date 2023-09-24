@@ -15,6 +15,7 @@ class HabitSchedule extends Model
         'user_id',
         'scheduled_completion',
         'completed',
+        'cancelled'
     ];
 
     protected $casts = [

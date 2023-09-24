@@ -1,17 +1,14 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head, useForm } from '@inertiajs/vue3'
-import { onMounted, ref } from 'vue'
+import { Head } from '@inertiajs/vue3'
+import { onMounted } from 'vue'
 import {
     CheckCircleIcon,
     XCircleIcon,
     EllipsisHorizontalCircleIcon,
 } from '@heroicons/vue/24/outline/index.js'
-import JSConfetti from 'js-confetti'
 import Card from '@/Components/Habits/Card.vue'
-import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
-import InputError from '@/Components/InputError.vue'
-import ScheduledHabitCheckboxGroup from '@/Components/ScheduledHabitCheckboxGroup.vue'
+import HabitTickOff from "@/Components/Habits/HabitTickOff.vue";
 
 const props = defineProps({
     dailyHabits: Array,
@@ -20,34 +17,15 @@ const props = defineProps({
     statistics: Object,
 })
 
-const jsConfetti = new JSConfetti()
-
 let today = new Date()
 let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-let isCompleted = ref(false)
-
-let habitConfig = props.dailyHabits.map((h) => {
-    return {
-        value: h.id,
-        label: h.habit.name,
-        description: h.habit.description,
-        completed: h.completed,
-        isGoal: h.habit.scheduled_to,
-    }
-})
-
-const getCompleted = () => {
-    let arr = []
-    for (let i = 0; i < habitConfig.length; i++) {
-        if (habitConfig[i].completed) {
-            arr.push(habitConfig[i].value)
-        }
-    }
-    return arr
-}
 
 const calculateX = (habit) => {
     let scheduled = new Date(habit.scheduled_completion)
+
+    if (habit.cancelled) {
+        return true
+    }
 
     if (scheduled.getDate() < today.getDate()) {
         return habit.completed === 0
@@ -69,6 +47,10 @@ const calculateCheck = (habit) => {
 const calculateGray = (habit) => {
     let scheduled = new Date(habit.scheduled_completion)
 
+    if (habit.cancelled) {
+        return false
+    }
+
     if (scheduled.getDate() < today.getDate()) return
 
     if (scheduled.getDate() === today.getDate()) {
@@ -78,17 +60,15 @@ const calculateGray = (habit) => {
     if (scheduled.getDate() > today.getDate()) return true
 }
 
-let completed = getCompleted()
-
-let disabled = habitConfig.map((h) => {
-    return h.completed ? true : false
-})
-
 const isSuccess = (habits) => {
     if (habits.length === 0) return false
 
     for (const obj of Object.values(habits)) {
-        if (obj.completed === 0) return false
+        if (obj.completed === 0) {
+            if (! obj.cancelled) {
+                return false
+            }
+        }
     }
     return true
 }
@@ -140,10 +120,6 @@ const isDanger = (habits) => {
     return successCount === 0 && failCount > 0
 }
 
-const confetti = () => {
-    jsConfetti.addConfetti()
-}
-
 const shouldShowDay = (habit) => {
     if (habit.deleted_at === null) return true
 
@@ -173,22 +149,11 @@ const dateHelper = (dateString) => {
 }
 
 onMounted(() => {
-    if (props.dailyHabits.length === props.completedHabits.length && props.dailyHabits.length > 0) {
-        isCompleted.value = true
-        confetti()
-    }
-
     let element = document.getElementById((today.getDay() - 1).toString())
     if (!element) return
 
     element.scrollIntoView()
 })
-
-const form = useForm({
-    habits: completed,
-})
-
-const submit = () => form.post(route('schedule.update'))
 </script>
 
 <template>
@@ -197,48 +162,7 @@ const submit = () => form.post(route('schedule.update'))
     <AuthenticatedLayout>
         <div>
             <div class="mx-4 sm:mx-12 sm:space-x-6 grid grid-cols-1 sm:grid-cols-2">
-                <Card>
-                    <template #heading>
-                        <span class="h-fit text-2xl"> Today's Habits </span>
-                    </template>
-                    <template #content>
-                        <div class="mx-2">
-                            <div>
-                                <div v-if="isCompleted"
-                                     class="bg-green-300 bg-opacity-25 rounded-md border-2 border-green-200 text-green-600 p-6">
-                                    You have ticked off all of your habits for today! Keep it up!
-                                </div>
-                                <div v-else class="mx-4">
-                                    No habits for today, click
-                                    <a
-                                        class="text-primary text-md font-bold underline pointer-cursor"
-                                        :href="route('habit')"
-                                    >
-                                        here
-                                    </a>
-                                    to add a habit.
-                                </div>
-                            </div>
-                            <div v-if="dailyHabits.length > 0" class="pl-2 mb-4">
-                                <form @submit="submit">
-                                    <div class="mb-4">
-
-                                        <ScheduledHabitCheckboxGroup
-                                            id="habits"
-                                            ref="habits"
-                                            v-model="form.habits"
-                                            :items="habitConfig"
-                                            :disabled="disabled"
-                                        />
-
-                                        <InputError :error="form.errors.habits" class="mt-2" />
-                                    </div>
-                                    <PrimaryButton type="submit"> Save </PrimaryButton>
-                                </form>
-                            </div>
-                        </div>
-                    </template>
-                </Card>
+                <HabitTickOff />
                 <Card>
                     <template #heading>
                         <span class="h-fit text-2xl"> Statistics </span>

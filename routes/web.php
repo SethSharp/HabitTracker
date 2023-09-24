@@ -23,8 +23,11 @@ Route::middleware('auth')->name('habit.')->group(function () {
     Route::post('habits', \App\Http\Controllers\Habits\StoreHabitController::class)->name('store');
 });
 
-Route::middleware('auth')->name('schedule.')->group(function () {
-    Route::post('schedule/habits', \App\Http\Controllers\ScheduleHabit\UpdateHabitScheduleController::class)->name('update');
+Route::middleware(['auth', 'verified'])->name('schedule.')->group(function () {
+    Route::get('schedule/day/{date}', \App\Http\Controllers\HabitSchedule\ScheduledHabitsForDay::class)->name('day');
+    Route::post('schedule/complete/{habitSchedule}', \App\Http\Controllers\HabitSchedule\Complete::class)->name('complete');
+    Route::post('schedule/uncomplete/{habitSchedule}', \App\Http\Controllers\HabitSchedule\UnComplete::class)->name('uncomplete');
+    Route::post('schedule/cancel/{habitSchedule}', \App\Http\Controllers\HabitSchedule\Cancel::class)->name('cancel');
 });
 
 // Tab group
