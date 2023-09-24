@@ -46,11 +46,33 @@ const today = () => {
     return date
 }
 
+const isAllCompleted = () => {
+    for (let i = 0; i < scheduledHabits.value.length; i++) {
+        if (! scheduledHabits.value[i].completed) {
+            if (! scheduledHabits.value[i].cancelled) {
+                return
+            }
+        }
+    }
+    jsConfetti.addConfetti()
+}
+
+const canEdit = () => {
+    let today = new Date()
+    let selectedDate = new Date(currentDate.value)
+
+    if (today.getDate() < selectedDate.getDate()) {
+        canAdjust.value = false
+    } else {
+        canAdjust.value = true
+    }
+}
+
 const prevDay = () => {
-    // change date to day before
     axios.get(route('schedule.day', { date: previousDate() }))
         .then(response => {
             scheduledHabits.value = response.data
+            canEdit()
         })
         .catch(error => {
             console.error(error);
@@ -59,10 +81,10 @@ const prevDay = () => {
 }
 
 const nextDay = () => {
-    // change date to next day
     axios.get(route('schedule.day', { date: nextDate() }))
         .then(response => {
-            console.log(response.data)
+            scheduledHabits.value = response.data
+            canEdit()
         })
         .catch(error => {
             console.error(error)
@@ -71,33 +93,11 @@ const nextDay = () => {
 }
 
 const completeHabit = (id, index) => {
-    axios.post(route('schedule.complete', { habitSchedule: id }))
-        .then(_ => {
-            scheduledHabits.value[index].completed = true
-        })
-        .catch(err => {
-            console.error(err)
-            alert('Unable to complete habit')
-        })
-}
-
-const uncompleteHabit = (id, index) => {
-    axios.post(route('schedule.uncomplete', { habitSchedule: id }))
-        .then(_ => {
-            scheduledHabits.value[index].completed = false
-        })
-        .catch(err => {
-            console.error(err)
-            alert('Unable to complete habit')
-        })
-}
-
-const cancelHabit = (id, index) => {
-    let conf = confirm('Are you sure you want to cancel this habit? This action cannot be undone')
-    if (conf) {
-        axios.post(route('schedule.cancel', { habitSchedule: id }))
+    if (! scheduledHabits.value[index].completed) {
+        axios.post(route('schedule.complete', { habitSchedule: id }))
             .then(_ => {
-                scheduledHabits.value[index].cancelled = true
+                scheduledHabits.value[index].completed = true
+                isAllCompleted()
             })
             .catch(err => {
                 console.error(err)
@@ -106,10 +106,39 @@ const cancelHabit = (id, index) => {
     }
 }
 
+const uncompleteHabit = (id, index) => {
+    if (scheduledHabits.value[index].completed) {
+        axios.post(route('schedule.uncomplete', {habitSchedule: id}))
+            .then(_ => {
+                scheduledHabits.value[index].completed = false
+            })
+            .catch(err => {
+                console.error(err)
+                alert('Unable to complete habit')
+            })
+    }
+}
+
+const cancelHabit = (id, index) => {
+    if (! scheduledHabits.value[index].cancelled) {
+        let conf = confirm('Are you sure you want to cancel this habit? This action cannot be undone')
+        if (conf) {
+            axios.post(route('schedule.cancel', { habitSchedule: id }))
+                .then(_ => {
+                    scheduledHabits.value[index].cancelled = true
+                })
+                .catch(err => {
+                    console.error(err)
+                    alert('Unable to complete habit')
+                })
+        }
+    }
+}
+
 onMounted(() => {
+    canEdit()
     axios.get(route('schedule.day', { date: today() }))
         .then(response => {
-            console.log(response.data)
             scheduledHabits.value = response.data
         })
         .catch(error => {
@@ -121,6 +150,7 @@ onMounted(() => {
 let scheduledHabits = ref([])
 const currentDate = ref(buildDate(new Date()))
 const jsConfetti = new JSConfetti()
+let canAdjust = ref(true)
 
 const confetti = () => {
     jsConfetti.addConfetti()
@@ -144,37 +174,49 @@ const confetti = () => {
         </template>
         <template #content>
             <div
+                v-if="scheduledHabits.length"
                 v-for="(scheduledHabit, index) in scheduledHabits"
                 class="flex my-2 p-2 justify-between rounded border"
-                :class="scheduledHabit.cancelled ? 'bg-red-200 border-red-400' : 'border-gray-400'"
+                :class="[
+                    scheduledHabit.cancelled ? 'bg-red-200 border-red-400' : 'border-gray-400',
+                    scheduledHabit.completed ? 'bg-green-200 border-green-400' : ''
+                    ]"
             >
                 <p class="text-xl my-auto">
                     {{ scheduledHabit.habit.name }}
                 </p>
-                <div v-if="! scheduledHabit.cancelled" class="rounded-2xl cursor-pointer bg-white border border-primary ml-2 flex overflow-hidden w-auto">
-                    <div
-                        class="w-fit p-2 hover:bg-gray-200"
-                        :class="! scheduledHabit.completed ? 'bg-gray-200' : ''"
-                    >
-                        <EllipsisHorizontalCircleIcon
-                            @click="uncompleteHabit(scheduledHabit.id, index)"
-                            class="w-8 h-8 my-auto text-gray-500"
-                        />
+                <div class="justify-end flex gap-x-2">
+                    <div v-if="! scheduledHabit.cancelled && canAdjust" class="rounded-2xl cursor-pointer bg-white border border-primary ml-2 flex overflow-hidden w-auto">
+                        <div
+                            class="w-fit p-2 hover:bg-gray-200"
+                            :class="! scheduledHabit.completed ? 'bg-gray-100' : ''"
+                        >
+                            <EllipsisHorizontalCircleIcon
+                                @click="uncompleteHabit(scheduledHabit.id, index)"
+                                class="w-8 h-8 my-auto text-gray-500"
+                            />
+                        </div>
+                        <div
+                            class="w-fit p-2 hover:bg-green-200"
+                            :class="scheduledHabit.completed ? 'bg-green-100' : ''"
+                        >
+                            <CheckCircleIcon
+                                @click="completeHabit(scheduledHabit.id, index)"
+                                class="w-8 h-8 my-auto text-green-500"
+                            />
+                        </div>
                     </div>
-                    <div
-                        class="w-fit p-2 hover:bg-green-200"
-                        :class="scheduledHabit.completed ? 'bg-green-200' : ''"
-                    >
-                        <CheckCircleIcon
-                            @click="completeHabit(scheduledHabit.id, index)"
-                            class="w-8 h-8 my-auto text-green-500"
-                        />
-                    </div>
+                    <XCircleIcon
+                        @click="cancelHabit(scheduledHabit.id, index)"
+                        class="w-8 h-8 text-red-500 my-auto cursor-pointer"
+                    />
                 </div>
-                <XCircleIcon
-                    @click="cancelHabit(scheduledHabit.id, index)"
-                    class="w-8 h-8 text-red-500 my-auto cursor-pointer"
-                />
+            </div>
+            <div v-else>
+                <div class="mx-2 my-2 sm:mx-8">
+                    Hey there! You have no habits for today.
+                    Click <a class="text-primary underline" :href="route('habit')"> here </a> to start completing now!
+                </div>
             </div>
         </template>
     </Card>

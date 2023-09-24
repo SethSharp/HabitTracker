@@ -23,6 +23,10 @@ let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 const calculateX = (habit) => {
     let scheduled = new Date(habit.scheduled_completion)
 
+    if (habit.cancelled) {
+        return true
+    }
+
     if (scheduled.getDate() < today.getDate()) {
         return habit.completed === 0
     }
@@ -43,6 +47,10 @@ const calculateCheck = (habit) => {
 const calculateGray = (habit) => {
     let scheduled = new Date(habit.scheduled_completion)
 
+    if (habit.cancelled) {
+        return false
+    }
+
     if (scheduled.getDate() < today.getDate()) return
 
     if (scheduled.getDate() === today.getDate()) {
@@ -56,7 +64,11 @@ const isSuccess = (habits) => {
     if (habits.length === 0) return false
 
     for (const obj of Object.values(habits)) {
-        if (obj.completed === 0) return false
+        if (obj.completed === 0) {
+            if (! obj.cancelled) {
+                return false
+            }
+        }
     }
     return true
 }

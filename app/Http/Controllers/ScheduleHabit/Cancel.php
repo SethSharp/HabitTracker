@@ -10,7 +10,8 @@ class Cancel extends Controller
     public function __invoke(HabitSchedule $habitSchedule): \Illuminate\Http\JsonResponse
     {
         $habitSchedule->update([
-            'cancelled' => true
+            'cancelled' => true,
+            'completed' => false,
         ]);
 
         $habitSchedule->save();
