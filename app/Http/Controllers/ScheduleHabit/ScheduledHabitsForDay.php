@@ -15,6 +15,7 @@ class ScheduledHabitsForDay extends Controller
         return response()->json(
             $request->user()
             ->scheduledHabits()
+            ->with('habit')
             ->where('scheduled_completion', $request->date)
             ->get()
         );
