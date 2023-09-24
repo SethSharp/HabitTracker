@@ -154,8 +154,6 @@ onMounted(() => {
 
     element.scrollIntoView()
 })
-
-const submit = () => form.post(route('schedule.update'))
 </script>
 
 <template>

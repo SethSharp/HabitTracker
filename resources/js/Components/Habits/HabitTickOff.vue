@@ -151,10 +151,6 @@ let scheduledHabits = ref([])
 const currentDate = ref(buildDate(new Date()))
 const jsConfetti = new JSConfetti()
 let canAdjust = ref(true)
-
-const confetti = () => {
-    jsConfetti.addConfetti()
-}
 </script>
 
 <template>

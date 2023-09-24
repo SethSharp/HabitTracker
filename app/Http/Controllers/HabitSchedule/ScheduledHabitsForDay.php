@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ScheduleHabit;
+namespace App\Http\Controllers\HabitSchedule;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,7 +9,6 @@ class ScheduledHabitsForDay extends Controller
 {
     public function __invoke(Request $request): \Illuminate\Http\JsonResponse
     {
-        ray($request->date);
         return response()->json(
             $request->user()
             ->scheduledHabits()
