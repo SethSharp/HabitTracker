@@ -155,7 +155,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -187,7 +187,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -219,7 +219,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -254,7 +254,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -290,7 +290,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -326,7 +326,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -362,7 +362,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
@@ -395,7 +395,7 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasNoErrors();
 
-        $habit = Habit::all()->first();
+        $habit = Habit::first();
 
         $this->assertDatabaseHas('habits', [
             'id' => $habit->id,
