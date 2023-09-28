@@ -240,12 +240,12 @@ let canAdjust = ref(true)
                         class="rounded-2xl cursor-pointer bg-white border border-primary ml-2 flex overflow-hidden w-auto"
                     >
                         <div
-                            class="w-fit p-2 hover:bg-gray-200"
-                            :class="!scheduledHabit.completed ? 'bg-gray-100' : ''"
+                            class="w-fit p-2 active:bg-red-400"
+                            :class="!scheduledHabit.completed ? 'bg-red-100' : 'bg-red-50'"
                         >
                             <XCircleIcon
                                 @click="uncompleteHabit(scheduledHabit.id, index)"
-                                class="w-8 h-8 my-auto text-gray-500"
+                                class="w-8 h-8 my-auto text-red-500"
                             />
                         </div>
                         <div
