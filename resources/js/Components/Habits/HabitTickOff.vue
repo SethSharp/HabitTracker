@@ -1,16 +1,14 @@
 <script setup>
-import Card from "@/Components/Habits/Card.vue";
+import Card from '@/Components/Habits/Card.vue'
 import {
     ChevronRightIcon,
     ChevronLeftIcon,
     XCircleIcon,
     CheckCircleIcon,
-    EllipsisHorizontalCircleIcon
-} from "@heroicons/vue/24/outline/index.js";
-import { onMounted, ref } from "vue";
-import { Link } from "@inertiajs/vue3";
+} from '@heroicons/vue/24/outline/index.js'
+import { onMounted, ref } from 'vue'
 import JSConfetti from 'js-confetti'
-import axios from "axios";
+import axios from 'axios'
 
 let buildDate = (date) => {
     const year = date.getFullYear()
@@ -19,9 +17,52 @@ let buildDate = (date) => {
     return `${year}-${month}-${day}`
 }
 
+const getDaySuffix = (day) => {
+    if (day >= 11 && day <= 13) {
+        return 'th'
+    }
+    switch (day % 10) {
+        case 1:
+            return 'st'
+        case 2:
+            return 'nd'
+        case 3:
+            return 'rd'
+        default:
+            return 'th'
+    }
+}
+
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+]
+
+const getReadableDate = (date) => {
+    return (
+        date.getDate() +
+        '' +
+        getDaySuffix(date.getDate()) +
+        ' of ' +
+        months[date.getMonth()].substring(0, 3)
+    )
+}
+
 const previousDate = () => {
     const prevDate = new Date(currentDate.value)
     prevDate.setDate(prevDate.getDate() - 1)
+
+    displayDate.value = getReadableDate(prevDate)
 
     const newDate = buildDate(prevDate)
     currentDate.value = newDate
@@ -32,6 +73,8 @@ const previousDate = () => {
 const nextDate = () => {
     const nextDate = new Date(currentDate.value)
     nextDate.setDate(nextDate.getDate() + 1)
+
+    displayDate.value = getReadableDate(nextDate)
 
     const newDate = buildDate(nextDate)
     currentDate.value = newDate
@@ -48,8 +91,8 @@ const today = () => {
 
 const isAllCompleted = () => {
     for (let i = 0; i < scheduledHabits.value.length; i++) {
-        if (! scheduledHabits.value[i].completed) {
-            if (! scheduledHabits.value[i].cancelled) {
+        if (!scheduledHabits.value[i].completed) {
+            if (!scheduledHabits.value[i].cancelled) {
                 return
             }
         }
@@ -69,37 +112,40 @@ const canEdit = () => {
 }
 
 const prevDay = () => {
-    axios.get(route('schedule.day', { date: previousDate() }))
-        .then(response => {
+    axios
+        .get(route('schedule.day', { date: previousDate() }))
+        .then((response) => {
             scheduledHabits.value = response.data
             canEdit()
         })
-        .catch(error => {
-            console.error(error);
+        .catch((error) => {
+            console.error(error)
             alert('An error occurred fetching data')
-        });
+        })
 }
 
 const nextDay = () => {
-    axios.get(route('schedule.day', { date: nextDate() }))
-        .then(response => {
+    axios
+        .get(route('schedule.day', { date: nextDate() }))
+        .then((response) => {
             scheduledHabits.value = response.data
             canEdit()
         })
-        .catch(error => {
+        .catch((error) => {
             console.error(error)
             alert('An error occurred fetching data')
         })
 }
 
 const completeHabit = (id, index) => {
-    if (! scheduledHabits.value[index].completed) {
-        axios.post(route('schedule.complete', { habitSchedule: id }))
-            .then(_ => {
+    if (!scheduledHabits.value[index].completed) {
+        axios
+            .post(route('schedule.complete', { habitSchedule: id }))
+            .then((_) => {
                 scheduledHabits.value[index].completed = true
                 isAllCompleted()
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err)
                 alert('Unable to complete habit')
             })
@@ -108,11 +154,12 @@ const completeHabit = (id, index) => {
 
 const uncompleteHabit = (id, index) => {
     if (scheduledHabits.value[index].completed) {
-        axios.post(route('schedule.uncomplete', {habitSchedule: id}))
-            .then(_ => {
+        axios
+            .post(route('schedule.uncomplete', { habitSchedule: id }))
+            .then((_) => {
                 scheduledHabits.value[index].completed = false
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err)
                 alert('Unable to complete habit')
             })
@@ -120,14 +167,17 @@ const uncompleteHabit = (id, index) => {
 }
 
 const cancelHabit = (id, index) => {
-    if (! scheduledHabits.value[index].cancelled) {
-        let conf = confirm('Are you sure you want to cancel this habit? This action cannot be undone')
+    if (!scheduledHabits.value[index].cancelled) {
+        let conf = confirm(
+            'Are you sure you want to cancel this habit? This action cannot be undone'
+        )
         if (conf) {
-            axios.post(route('schedule.cancel', { habitSchedule: id }))
-                .then(_ => {
+            axios
+                .post(route('schedule.cancel', { habitSchedule: id }))
+                .then((_) => {
                     scheduledHabits.value[index].cancelled = true
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.error(err)
                     alert('Unable to complete habit')
                 })
@@ -137,18 +187,21 @@ const cancelHabit = (id, index) => {
 
 onMounted(() => {
     canEdit()
-    axios.get(route('schedule.day', { date: today() }))
-        .then(response => {
+    displayDate.value = getReadableDate(new Date())
+    axios
+        .get(route('schedule.day', { date: today() }))
+        .then((response) => {
             scheduledHabits.value = response.data
         })
-        .catch(error => {
+        .catch((error) => {
             console.error(error)
             alert('An error occurred fetching data')
-        });
+        })
 })
 
 let scheduledHabits = ref([])
-const currentDate = ref(buildDate(new Date()))
+let currentDate = ref(buildDate(new Date()))
+let displayDate = ref('')
 const jsConfetti = new JSConfetti()
 let canAdjust = ref(true)
 </script>
@@ -156,12 +209,12 @@ let canAdjust = ref(true)
 <template>
     <Card>
         <template #heading>
-            <div class="flex gap-x-2">
+            <div class="flex justify-center">
                 <ChevronLeftIcon
                     @click="prevDay()"
                     class="w-8 h-8 text-black border border-gray-300 rounded-lg p-2 hover:bg-gray-200 cursor-pointer"
                 />
-                <span class="h-fit text-2xl"> Habits for: {{ currentDate }} </span>
+                <span class="h-fit text-2xl mx-4"> {{ displayDate }} </span>
                 <ChevronRightIcon
                     @click="nextDay()"
                     class="w-8 h-8 text-black border border-gray-300 rounded-lg p-2 hover:bg-gray-200 cursor-pointer"
@@ -175,19 +228,22 @@ let canAdjust = ref(true)
                 class="flex my-2 p-2 justify-between rounded border"
                 :class="[
                     scheduledHabit.cancelled ? 'bg-red-200 border-red-400' : 'border-gray-400',
-                    scheduledHabit.completed ? 'bg-green-200 border-green-400' : ''
-                    ]"
+                    scheduledHabit.completed ? 'bg-green-200 border-green-400' : '',
+                ]"
             >
                 <p class="text-xl my-auto">
                     {{ scheduledHabit.habit.name }}
                 </p>
                 <div class="justify-end flex gap-x-2">
-                    <div v-if="! scheduledHabit.cancelled && canAdjust" class="rounded-2xl cursor-pointer bg-white border border-primary ml-2 flex overflow-hidden w-auto">
+                    <div
+                        v-if="!scheduledHabit.cancelled && canAdjust"
+                        class="rounded-2xl cursor-pointer bg-white border border-primary ml-2 flex overflow-hidden w-auto"
+                    >
                         <div
                             class="w-fit p-2 hover:bg-gray-200"
-                            :class="! scheduledHabit.completed ? 'bg-gray-100' : ''"
+                            :class="!scheduledHabit.completed ? 'bg-gray-100' : ''"
                         >
-                            <EllipsisHorizontalCircleIcon
+                            <XCircleIcon
                                 @click="uncompleteHabit(scheduledHabit.id, index)"
                                 class="w-8 h-8 my-auto text-gray-500"
                             />
@@ -202,16 +258,17 @@ let canAdjust = ref(true)
                             />
                         </div>
                     </div>
-                    <XCircleIcon
-                        @click="cancelHabit(scheduledHabit.id, index)"
-                        class="w-8 h-8 text-red-500 my-auto cursor-pointer"
-                    />
+                    <!--                    <XCircleIcon-->
+                    <!--                        @click="cancelHabit(scheduledHabit.id, index)"-->
+                    <!--                        class="w-8 h-8 text-red-500 my-auto cursor-pointer"-->
+                    <!--                    />-->
                 </div>
             </div>
             <div v-else>
                 <div class="mx-2 my-2 sm:mx-8">
-                    Hey there! You have no habits for today.
-                    Click <a class="text-primary underline" :href="route('habit')"> here </a> to start completing now!
+                    Hey there! You have no habits for today. Click
+                    <a class="text-primary underline" :href="route('habit')"> here </a> to start
+                    completing now!
                 </div>
             </div>
         </template>

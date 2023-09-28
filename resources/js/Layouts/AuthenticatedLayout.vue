@@ -13,24 +13,24 @@ let headingLinksConfig = [
     {
         name: 'Dashboard',
         href: 'dashboard',
-        current: route().current('dashboard')
+        current: route().current('dashboard'),
     },
     {
         name: 'Calendar',
         href: 'calendar',
-        current: route().current('calendar')
+        current: route().current('calendar'),
     },
     {
         name: 'Habits',
         href: 'habit',
-        current: route().current('habit.*')
+        current: route().current('habit.*'),
     },
 ]
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-50">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,9 +90,7 @@ let headingLinksConfig = [
                                         <DropdownLink :href="route('profile.edit')">
                                             Profile
                                         </DropdownLink>
-                                        <DropdownLink :href="route('help')">
-                                            Help
-                                        </DropdownLink>
+                                        <DropdownLink :href="route('help')"> Help </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
@@ -176,9 +174,7 @@ let headingLinksConfig = [
                             <ResponsiveNavLink :href="route('profile.edit')">
                                 Profile
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('help')">
-                                Help
-                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('help')"> Help </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>
@@ -203,14 +199,10 @@ let headingLinksConfig = [
         <!-- Footer -->
         <div class="w-full h-fit bg-gray-400 bg-opacity-25 text-black">
             <div class="my-6 text-center flex-wrap justify-center">
-                <ApplicationLogo/>
+                <ApplicationLogo />
                 <div class="flex-wrap justify-center">
-                    <h1>
-                        Habit Tracker Demo
-                    </h1>
-                    <div class="mt-4">
-                        © 2023 Seth Sharp. All rights reserved.
-                    </div>
+                    <h1>Habit Tracker Demo</h1>
+                    <div class="mt-4">© 2023 Seth Sharp. All rights reserved.</div>
                 </div>
             </div>
         </div>

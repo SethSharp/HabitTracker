@@ -8,7 +8,7 @@ import {
     EllipsisHorizontalCircleIcon,
 } from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
-import HabitTickOff from "@/Components/Habits/HabitTickOff.vue";
+import HabitTickOff from '@/Components/Habits/HabitTickOff.vue'
 
 const props = defineProps({
     dailyHabits: Array,
@@ -65,7 +65,7 @@ const isSuccess = (habits) => {
 
     for (const obj of Object.values(habits)) {
         if (obj.completed === 0) {
-            if (! obj.cancelled) {
+            if (!obj.cancelled) {
                 return false
             }
         }
@@ -129,23 +129,23 @@ const shouldShowDay = (habit) => {
 
 const getDaySuffix = (day) => {
     if (day >= 11 && day <= 13) {
-        return "th";
+        return 'th'
     }
     switch (day % 10) {
         case 1:
-            return "st";
+            return 'st'
         case 2:
-            return "nd";
+            return 'nd'
         case 3:
-            return "rd";
+            return 'rd'
         default:
-            return "th";
+            return 'th'
     }
 }
 
 const dateHelper = (dateString) => {
     let date = new Date(dateString).getDate()
-    return date + getDaySuffix(date);
+    return date + getDaySuffix(date)
 }
 
 onMounted(() => {
@@ -163,23 +163,23 @@ onMounted(() => {
         <div>
             <div class="mx-4 sm:mx-12 sm:space-x-6 grid grid-cols-1 sm:grid-cols-2">
                 <HabitTickOff />
-                <Card>
-                    <template #heading>
-                        <span class="h-fit text-2xl"> Statistics </span>
-                    </template>
-                    <template #content>
-                        <div class="mx-4 my-2">
-                            <div class="flex">
-                                <span class="font-bold"> Streak : {{ statistics.streak }} </span>
-                                <CheckCircleIcon class="w-6 h-6 ml-1 text-yellow-500" />
-                            </div>
-                            <div class="flex">
-                                <span class="font-bold"> Best Streak : {{ statistics.bestStreak }} </span>
-                                <CheckCircleIcon class="w-6 h-6 ml-1 text-green-500" />
-                            </div>
-                        </div>
-                    </template>
-                </Card>
+                <!--                <Card>-->
+                <!--                    <template #heading>-->
+                <!--                        <span class="h-fit text-2xl"> Statistics </span>-->
+                <!--                    </template>-->
+                <!--                    <template #content>-->
+                <!--                        <div class="mx-4 my-2">-->
+                <!--                            <div class="flex">-->
+                <!--                                <span class="font-bold"> Streak : {{ statistics.streak }} </span>-->
+                <!--                                <CheckCircleIcon class="w-6 h-6 ml-1 text-yellow-500" />-->
+                <!--                            </div>-->
+                <!--                            <div class="flex">-->
+                <!--                                <span class="font-bold"> Best Streak : {{ statistics.bestStreak }} </span>-->
+                <!--                                <CheckCircleIcon class="w-6 h-6 ml-1 text-green-500" />-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </template>-->
+                <!--                </Card>-->
             </div>
             <div class="mx-4 mt-4 sm:mx-12">
                 <Card>

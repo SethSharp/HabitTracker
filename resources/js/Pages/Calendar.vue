@@ -25,7 +25,7 @@ let calendarSchema = {
             filterBy: 1,
         },
         {
-            id: startId+1,
+            id: startId + 1,
             title: 'Not Completed',
             attributePath: 'completed',
             filterBy: 0,

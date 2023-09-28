@@ -6,7 +6,7 @@ import DangerButton from '@/Components/Buttons/DangerButton.vue'
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputLabel from '@/Components/InputLabel.vue'
-import InputError from "@/Components/InputError.vue";
+import InputError from '@/Components/InputError.vue'
 
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)

@@ -122,7 +122,7 @@ const selectedUser = (id, index) => {
                                     <Link :href="route('habit.edit', habit)">
                                         <PencilSquareIcon
                                             v-if="habit.deleted_at === null"
-                                            class=" w-10 h-10 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
+                                            class="w-10 h-10 font-medium text-black hover:text-gray-500 cursor-pointer animation duration-300"
                                         />
                                     </Link>
                                 </div>

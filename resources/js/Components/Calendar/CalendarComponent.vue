@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/solid"
-import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/24/solid'
+import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 
 type Habit = {
     name: string
@@ -37,11 +37,7 @@ const props = defineProps({
 })
 
 let getDate = (): Date => {
-    return new Date(
-        new Date().getFullYear(),
-        months.indexOf(props.calendarSchema.month),
-        1
-    )
+    return new Date(new Date().getFullYear(), months.indexOf(props.calendarSchema.month), 1)
 }
 
 let getFirstDayOfTheMonth = () => {
@@ -87,17 +83,17 @@ const applySelectedFilters = () => {
 
 const getDaySuffix = (day) => {
     if (day >= 11 && day <= 13) {
-        return "th";
+        return 'th'
     }
     switch (day % 10) {
         case 1:
-            return "st";
+            return 'st'
         case 2:
-            return "nd";
+            return 'nd'
         case 3:
-            return "rd";
+            return 'rd'
         default:
-            return "th";
+            return 'th'
     }
 }
 
@@ -118,7 +114,7 @@ const months = [
 let appliedFilters = ref(props.calendarSchema.filters.map((filter) => filter.applied))
 let selectedFilters: Filter[] = []
 let filteredHabits = ref(props.calendarSchema.days)
-let selectedDay = ref(new Date().getDate()-1)
+let selectedDay = ref(new Date().getDate() - 1)
 let closed = ref(true)
 const date = getDate()
 
@@ -136,16 +132,13 @@ onMounted(() => {
         <div>
             <div>
                 <div class="my-4 flex">
-                    <SecondaryButton class="text-2xl font-medium" @click="closed = ! closed">
+                    <SecondaryButton class="text-2xl font-medium" @click="closed = !closed">
                         Filters:
                         <ChevronDownIcon v-if="closed" class="w-6 h-6 ml-2 my-auto" />
-                        <ChevronUpIcon v-if="! closed" class="w-6 h-6 ml-2 my-auto" />
+                        <ChevronUpIcon v-if="!closed" class="w-6 h-6 ml-2 my-auto" />
                     </SecondaryButton>
                 </div>
-                <div
-                    class="text-gray-500"
-                    :class="{'hidden' : closed}"
-                >
+                <div class="text-gray-500" :class="{ hidden: closed }">
                     <div class="my-5 grid grid-cols-2 sm:grid-cols-4 gap-y-2 sm:gap-x-6">
                         <div
                             v-for="(filter, index) in calendarSchema.filters"
@@ -204,7 +197,7 @@ onMounted(() => {
                 v-for="(day, index) in filteredHabits"
                 @click="selectedDay = index"
                 class="bg-gray-100 rounded-xl h-12 sm:h-32 overflow-hidden hover:bg-gray-200 cursor-pointer animation duration-300"
-                :class="{'border border-2 border-gray-400' : selectedDay === index}"
+                :class="{ 'border border-2 border-gray-400': selectedDay === index }"
             >
                 <div
                     class="flex justify-end pr-2 pt-1 mb-1 text-xs sm:text-md"
@@ -214,7 +207,7 @@ onMounted(() => {
                             months[new Date().getMonth()] === calendarSchema.month,
                     }"
                 >
-                    {{ index + 1 }}{{ getDaySuffix(index+1) }}
+                    {{ index + 1 }}{{ getDaySuffix(index + 1) }}
                 </div>
                 <div>
                     <div class="hidden flex sm:flex flex-wrap mx-1 sm:mx-2 md:mx-3">
@@ -236,8 +229,14 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <div class="mt-6 mx-4" v-if="selectedDay && filteredHabits[selectedDay] && filteredHabits[selectedDay].length">
-            <h1 class="text-2xl">Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1 }}{{ getDaySuffix(selectedDay+getFirstDayOfTheMonth()-1) }}</h1>
+        <div
+            class="mt-6 mx-4"
+            v-if="selectedDay && filteredHabits[selectedDay] && filteredHabits[selectedDay].length"
+        >
+            <h1 class="text-2xl">
+                Habits for the {{ selectedDay + getFirstDayOfTheMonth() - 1
+                }}{{ getDaySuffix(selectedDay + getFirstDayOfTheMonth() - 1) }}
+            </h1>
             <div
                 v-for="scheduledHabit in filteredHabits[selectedDay]"
                 class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 my-2"

@@ -47,7 +47,7 @@ const form = useForm({
     name: '',
     description: '',
     frequency: 0,
-    daily_config: [0,1,2,3,4,5,6],
+    daily_config: [0, 1, 2, 3, 4, 5, 6],
     weekly_config: null,
     monthly_config: '',
     scheduled_to: {
@@ -120,9 +120,7 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.daily_config" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="form.frequency === 1">
-                        <InputLabel for="weekly_config">
-                            Scheduled for a day in a week
-                        </InputLabel>
+                        <InputLabel for="weekly_config"> Scheduled for a day in a week </InputLabel>
 
                         <Select
                             v-model="form.weekly_config"
@@ -167,9 +165,7 @@ const submit = () => form.post(route('habit.store'))
                             label="Schedule for next week"
                         />
 
-                        <label class="text-gray-500">
-                            Start a new habit or start fresh!
-                        </label>
+                        <label class="text-gray-500"> Start a new habit or start fresh! </label>
 
                         <InputError :error="form.errors.start_next_week" class="mt-2" />
                     </div>
@@ -177,10 +173,7 @@ const submit = () => form.post(route('habit.store'))
                     <div class="py-2">
                         <InputLabel for="colour"> Colour </InputLabel>
 
-                        <PickColors
-                            v-model:value="form.colour"
-                            size="40"
-                        />
+                        <PickColors v-model:value="form.colour" size="40" />
 
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
