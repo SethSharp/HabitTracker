@@ -191,14 +191,14 @@ let headingLinksConfig = [
             </header>
 
             <!-- Page Content -->
-            <main>
+            <div class="py-6">
                 <slot />
-            </main>
+            </div>
         </div>
 
         <!-- Footer -->
-        <div class="w-full h-fit bg-gray-400 bg-opacity-25 text-black">
-            <div class="my-6 text-center flex-wrap justify-center">
+        <div class="w-full bg-opacity-25 text-black shadow">
+            <div class="text-center flex-wrap justify-center py-6">
                 <ApplicationLogo />
                 <div class="flex-wrap justify-center">
                     <h1>Habit Tracker Demo</h1>
