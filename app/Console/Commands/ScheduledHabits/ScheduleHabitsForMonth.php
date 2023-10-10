@@ -4,9 +4,11 @@ namespace App\Console\Commands\ScheduledHabits;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Http\CacheKeys;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Traits\HabitStorage;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
@@ -50,6 +52,10 @@ class ScheduleHabitsForMonth extends Command
                     }
                 }
             });
+
+            $cacheKey = CacheKeys::scheduledHabitsForTheMonth($user, Carbon::now()->monthName);
+
+            Cache::forget($cacheKey);
         });
     }
 }

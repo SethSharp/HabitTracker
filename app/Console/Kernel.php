@@ -5,7 +5,6 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\Counters\UserStreak;
 use App\Console\Commands\Counters\HabitStreak;
-use App\Console\Commands\Counters\IncrementStreak;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\ScheduledHabits\ScheduleHabitsForMonth;
 
