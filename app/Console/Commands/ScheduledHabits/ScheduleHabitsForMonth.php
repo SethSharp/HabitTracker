@@ -23,11 +23,12 @@ class ScheduleHabitsForMonth extends Command
         $users = User::all();
 
         $users->map(function ($user) {
-            $startDate = Carbon::now()->startOfMonth();
-            $endDate = Carbon::now()->endOfMonth();
             $habits = $user->habits()->get();
 
-            $habits->map(function ($habit) use ($user, $startDate, $endDate) {
+            $habits->map(function ($habit) use ($user) {
+                $startDate = Carbon::now()->startOfMonth();
+                $endDate = Carbon::now()->endOfMonth();
+
                 if ($habit->frequency->value == Frequency::MONTHLY->value) {
                     HabitSchedule::factory()->create([
                         'habit_id' => $habit->id,
