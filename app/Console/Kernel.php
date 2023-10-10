@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\Counters\Testing;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\Counters\UserStreak;
 use App\Console\Commands\Counters\HabitStreak;
@@ -18,6 +19,8 @@ class Kernel extends ConsoleKernel
         // counters
         $schedule->command(HabitStreak::class)->daily();
         $schedule->command(UserStreak::class)->daily();
+
+        $schedule->command(Testing::class)->everyMinute();
 
         // Notifications
         //        $schedule->command(SendDailyHabitReminder::class)->dailyAt('08:00');
