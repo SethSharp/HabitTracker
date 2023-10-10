@@ -27,7 +27,7 @@ class ScheduleHabitsForMonthTest extends TestCase
             'occurrence_days' => '[2,3,4]',
         ]);
 
-        $this->artisan('habits:schedule-habits')
+        $this->artisan('habits:schedule')
             ->assertSuccessful();
 
         $habitSchedules = HabitSchedule::all();
@@ -74,7 +74,7 @@ class ScheduleHabitsForMonthTest extends TestCase
             'occurrence_days' => '[3]'
         ]);
 
-        $this->artisan('habits:schedule-habits')
+        $this->artisan('habits:schedule')
             ->assertSuccessful();
 
         $habitSchedules = HabitSchedule::all();
@@ -101,7 +101,7 @@ class ScheduleHabitsForMonthTest extends TestCase
             'occurrence_days' => '["2023-08-17"]'
         ]);
 
-        $this->artisan('habits:schedule-habits')
+        $this->artisan('habits:schedule')
             ->assertSuccessful();
 
         $habitSchedules = HabitSchedule::all();
