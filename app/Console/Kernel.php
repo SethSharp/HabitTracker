@@ -20,8 +20,6 @@ class Kernel extends ConsoleKernel
         $schedule->command(HabitStreak::class)->daily();
         $schedule->command(UserStreak::class)->daily();
 
-        $schedule->command(IncrementStreak::class)->everyFiveMinutes();
-
         // Notifications
         //        $schedule->command(SendDailyHabitReminder::class)->dailyAt('08:00');
         //        $schedule->command(SendHabitGoalReminder::class)->dailyAt('08:00');
