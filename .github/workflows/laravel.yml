@@ -50,7 +50,7 @@ jobs:
           vendor/bin/php-cs-fixer fix
 
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        run: php -r "file_exists('.env') || copy('.deployment.env.example', '.env');"
 
       - name: Generate key
         run: php artisan key:generate
@@ -67,7 +67,13 @@ jobs:
 
       - name: Echo URL to .env
         if: github.ref == 'refs/heads/main'
-        run: echo "APP_URL=http://habittracker-uc-1.eba-ayudv8jf.ap-southeast-2.elasticbeanstalk.com" >> .env
+        run: |
+          echo "APP_URL=http://habittracker-uc-1.eba-ayudv8jf.ap-southeast-2.elasticbeanstalk.com" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST}}" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE}}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME}}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD}}" >> .env
 
       - name: Build ZIP Deployment Package
         if: github.ref == 'refs/heads/main'
