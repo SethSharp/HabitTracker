@@ -17,7 +17,5 @@ class Testing extends Command
         $user = User::first();
 
         $user->increment('streak');
-
-        ray($user);
     }
 }
