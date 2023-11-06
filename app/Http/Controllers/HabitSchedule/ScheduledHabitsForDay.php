@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\HabitSchedule;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ScheduledHabits;
 

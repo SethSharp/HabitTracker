@@ -76,7 +76,6 @@ class StoreHabitControllerTest extends TestCase
     {
         $habitData = [
             'name' => '',
-            'description' => '',
             'frequency' => null,
             'colour'
         ];
@@ -85,7 +84,6 @@ class StoreHabitControllerTest extends TestCase
             ->post(route("habit.store", $habitData))
             ->assertSessionHasErrors([
                 'name',
-                'description',
                 'frequency',
                 'colour'
             ]);

@@ -48,7 +48,7 @@ const proxyTime = computed({
 </script>
 
 <template>
-    <div class="bg-red-50 flex w-3/4 sm:w-1/2">
+    <div class="flex w-3/4 sm:w-1/2">
         <TextInput id="name" ref="name" v-model="proxyTime" class="mt-1 block w-full" />
         <select
             :id="id"

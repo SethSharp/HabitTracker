@@ -11,7 +11,7 @@ return new class() extends Migration {
             $table->id();
             $table->integer('user_id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('frequency');
             $table->string('scheduled_to')->nullable();
             $table->json('occurrence_days')->nullable();
