@@ -17,8 +17,6 @@ class UnComplete extends Controller
 
         $habitSchedule->save();
 
-        ray($habitSchedule);
-
         return response()->json($habitSchedule['completed']);
     }
 }
