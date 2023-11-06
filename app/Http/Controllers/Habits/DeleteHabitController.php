@@ -34,8 +34,6 @@ class DeleteHabitController extends Controller
             $habit->delete();
         });
 
-        $this->monthlyScheduledHabits($request->user(), month: null, withCaching: true);
-
         return Inertia::location(url('habits'));
     }
 }

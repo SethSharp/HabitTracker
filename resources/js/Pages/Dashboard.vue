@@ -12,7 +12,6 @@ import HabitTickOff from '@/Components/Habits/HabitTickOff.vue'
 
 const props = defineProps({
     dailyHabits: Array,
-    completedHabits: Array,
     weeklyHabits: Object,
     statistics: Object,
 })

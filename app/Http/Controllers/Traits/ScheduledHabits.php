@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Traits;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Http\CacheKeys;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 
 trait ScheduledHabits
 {
@@ -15,16 +13,7 @@ trait ScheduledHabits
     {
         return $user->scheduledHabits()
             ->where('scheduled_completion', '=', Carbon::now()->toDateString())
-            ->with('habit')
-            ->get()
-            ->toArray();
-    }
-
-    public function getCompletedDailyHabits(user $user): array
-    {
-        return $user->scheduledHabits()
-            ->where('scheduled_completion', '=', Carbon::now()->toDateString())
-            ->where('completed', '=', 1)
+            ->orderBy('completed', 'asc')
             ->with('habit')
             ->get()
             ->toArray();
@@ -35,6 +24,7 @@ trait ScheduledHabits
         $week = $this->getWeekDatesStartingFromMonday();
 
         $thisWeeksHabits = $user->scheduledHabits()
+            ->orderBy('completed', 'asc')
             ->where('scheduled_completion', '>=', Carbon::now()->startOfWeek(0)->toDateString())
             ->where('scheduled_completion', '<=', Carbon::now()->endOfWeek(-1)->toDateString())
             ->with(['habit' => fn ($query) => $query->withTrashed()])
@@ -46,7 +36,7 @@ trait ScheduledHabits
         }, collect());
     }
 
-    public function monthlyScheduledHabits(User $user, string|null $month, bool $withCaching=false): array|null
+    public function monthlyScheduledHabits(User $user, string|null $month): array
     {
         if (is_null($month)) {
             $month = Carbon::now()->monthName;
@@ -59,14 +49,7 @@ trait ScheduledHabits
             return [];
         }
 
-        if ($withCaching) {
-            $data = $this->getMonthlyHabitsByDate($user, $startDate, $endDate);
-            Cache::put(CacheKeys::scheduledHabitsForTheMonth($user, $month), $data, now()->addMinutes(30));
-        } else {
-            return Cache::remember(CacheKeys::scheduledHabitsForTheMonth($user, $month), now()->addMinutes(30), fn () => $this->getMonthlyHabitsByDate($user, $startDate, $endDate));
-        }
-
-        return null;
+        return $this->getMonthlyHabitsByDate($user, $startDate, $endDate);
     }
 
     protected function getMonthlyHabitsByDate(User $user, Carbon $startDate, Carbon $endDate): array

@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\Counters\Testing;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\Counters\UserStreak;
 use App\Console\Commands\Counters\HabitStreak;

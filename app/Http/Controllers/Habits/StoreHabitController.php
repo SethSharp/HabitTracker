@@ -52,8 +52,6 @@ class StoreHabitController extends Controller
             $action($request->user(), $habit, $scheduledToDate, $data);
         }
 
-        $this->monthlyScheduledHabits($request->user(), month: null, withCaching: true);
-
         return Inertia::location(url('habits'));
     }
 }
