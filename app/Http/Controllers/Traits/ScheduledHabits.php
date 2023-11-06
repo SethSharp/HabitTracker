@@ -9,12 +9,12 @@ use Illuminate\Support\Collection;
 
 trait ScheduledHabits
 {
-    public function getDailyScheduledHabits(User $user): array
+    public function getDailyScheduledHabits(User $user, ?string $date = null): array
     {
         return $user->scheduledHabits()
-            ->where('scheduled_completion', '=', Carbon::now()->toDateString())
-            ->orderBy('completed', 'asc')
+            ->where('scheduled_completion', is_null($date) ? Carbon::now()->toDateString() : $date)
             ->with('habit')
+            ->orderBy('completed', 'asc')
             ->get()
             ->toArray();
     }
