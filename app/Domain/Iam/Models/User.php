@@ -4,10 +4,10 @@ namespace App\Domain\Iam\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\HabitSchedule;
-use App\Models\EmailPreferences;
 use Laravel\Sanctum\HasApiTokens;
 use App\Domain\Habits\Models\Habit;
 use Illuminate\Notifications\Notifiable;
+use App\Domain\Emails\Models\EmailPreferences;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;

@@ -4,9 +4,9 @@ namespace Tests\Console\Commands\Habits;
 
 use Tests\TestCase;
 use App\Domain\Iam\Models\User;
-use App\Models\EmailPreferences;
 use Tests\Traits\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use App\Domain\Emails\Models\EmailPreferences;
 
 class SendHabitGoalReminderTest extends TestCase
 {

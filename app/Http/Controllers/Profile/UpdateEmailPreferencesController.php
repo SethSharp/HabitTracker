@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Profile;
 
 use Illuminate\Http\Request;
-use App\Models\EmailPreferences;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+use App\Domain\Emails\Models\EmailPreferences;
 
 class UpdateEmailPreferencesController extends Controller
 {
