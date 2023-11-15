@@ -3,10 +3,10 @@
 namespace App\Console\Commands\ScheduledHabits;
 
 use Carbon\Carbon;
-use App\Models\User;
 use App\Http\CacheKeys;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
+use App\Domain\Iam\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Traits\HabitStorage;

@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Models\User;
+use App\Domain\Iam\Models\User;
 
 class CacheKeys
 {

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Enums\Frequency;
+use App\Domain\Iam\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HabitFactory extends Factory

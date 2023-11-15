@@ -3,11 +3,10 @@
 namespace Tests\Console\Commands\Habits;
 
 use Tests\TestCase;
-use App\Models\User;
+use App\Domain\Iam\Models\User;
 use App\Models\EmailPreferences;
 use Tests\Traits\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\DailyReminderNotification;
 
 class SendDailyHabitReminderTest extends TestCase
 {

@@ -3,7 +3,7 @@
 namespace App\Console\Commands\Counters;
 
 use Carbon\Carbon;
-use App\Models\User;
+use App\Domain\Iam\Models\User;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\ScheduledHabits;
 

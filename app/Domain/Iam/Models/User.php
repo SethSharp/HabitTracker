@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Iam\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Habit;
+use App\Models\HabitSchedule;
+use App\Models\EmailPreferences;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

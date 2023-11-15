@@ -4,8 +4,8 @@ namespace Tests\Http\Habits;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Habit;
+use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
 
 class UpdateHabitControllerTest extends TestCase

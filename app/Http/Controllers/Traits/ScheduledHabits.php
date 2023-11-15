@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Traits;
 
 use Carbon\Carbon;
-use App\Models\User;
 use Carbon\CarbonPeriod;
+use App\Domain\Iam\Models\User;
 use Illuminate\Support\Collection;
 
 trait ScheduledHabits

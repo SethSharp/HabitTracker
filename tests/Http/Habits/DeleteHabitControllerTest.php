@@ -4,9 +4,9 @@ namespace Tests\Http\Habits;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Habit;
 use App\Models\HabitSchedule;
+use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
 
 class DeleteHabitControllerTest extends TestCase

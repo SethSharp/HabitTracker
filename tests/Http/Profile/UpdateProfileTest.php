@@ -3,7 +3,7 @@
 namespace Tests\Http\Profile;
 
 use Tests\TestCase;
-use App\Models\User;
+use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
 
 class UpdateProfileTest extends TestCase

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Traits;
 
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
+use App\Domain\Iam\Models\User;
 
 trait HabitStorage
 {

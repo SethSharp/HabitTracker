@@ -3,7 +3,7 @@
 namespace Tests\Http\Auth;
 
 use Tests\TestCase;
-use App\Models\User;
+use App\Domain\Iam\Models\User;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;

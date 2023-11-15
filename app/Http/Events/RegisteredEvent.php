@@ -2,7 +2,7 @@
 
 namespace App\Http\Events;
 
-use App\Models\User;
+use App\Domain\Iam\Models\User;
 use Illuminate\Support\Facades\Event;
 
 class RegisteredEvent extends Event

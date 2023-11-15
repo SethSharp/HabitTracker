@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Models\User;
 use App\Http\CacheKeys;
+use App\Domain\Iam\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 

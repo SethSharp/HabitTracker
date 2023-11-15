@@ -4,10 +4,10 @@ namespace Tests\Http\Traits;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Habit;
 use App\Http\CacheKeys;
 use App\Models\HabitSchedule;
+use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Traits\ScheduledHabits;

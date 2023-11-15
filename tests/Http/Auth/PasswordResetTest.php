@@ -3,7 +3,7 @@
 namespace Tests\Http\Auth;
 
 use Tests\TestCase;
-use App\Models\User;
+use App\Domain\Iam\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;

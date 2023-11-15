@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use App\Domain\Iam\Models\User;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use App\Http\Events\RegisteredEvent;
