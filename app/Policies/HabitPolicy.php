@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Habit;
 use App\Domain\Iam\Models\User;
+use App\Domain\Habits\Models\Habit;
 
 class HabitPolicy
 {

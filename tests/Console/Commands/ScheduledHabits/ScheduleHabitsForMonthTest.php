@@ -4,11 +4,11 @@ namespace Tests\Console\Commands\ScheduledHabits;
 
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Models\Habit;
 use App\Enums\Frequency;
 use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
+use App\Domain\Habits\Models\Habit;
 
 class ScheduleHabitsForMonthTest extends TestCase
 {

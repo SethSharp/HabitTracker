@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Habits\Models;
 
 use App\Enums\Frequency;
+use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

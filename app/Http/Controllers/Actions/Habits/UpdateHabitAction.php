@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Actions\Habits;
 
 use Carbon\Carbon;
-use App\Models\Habit;
 use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Illuminate\Support\Collection;
+use App\Domain\Habits\Models\Habit;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
 class UpdateHabitAction

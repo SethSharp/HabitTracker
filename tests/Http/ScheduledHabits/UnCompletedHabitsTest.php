@@ -3,10 +3,10 @@
 namespace Tests\Http\ScheduledHabits;
 
 use Tests\TestCase;
-use App\Models\Habit;
 use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
+use App\Domain\Habits\Models\Habit;
 
 class UnCompletedHabitsTest extends TestCase
 {

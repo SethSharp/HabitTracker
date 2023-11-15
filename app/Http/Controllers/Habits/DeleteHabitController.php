@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Habits;
 
 use Carbon\Carbon;
 use Inertia\Inertia;
-use App\Models\Habit;
 use Illuminate\Http\Request;
+use App\Domain\Habits\Models\Habit;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;

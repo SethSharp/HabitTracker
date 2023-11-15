@@ -1,13 +1,16 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domain\Habits\Models;
 
 use App\Enums\Frequency;
 use App\Domain\Iam\Models\User;
+use App\Domain\Habits\Models\Habit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HabitFactory extends Factory
 {
+    protected $model = Habit::class;
+
     public function definition(): array
     {
         return [

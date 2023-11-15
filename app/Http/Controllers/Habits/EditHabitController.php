@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Habits;
 use Carbon\Carbon;
 use App\Enums\Goals;
 use Inertia\Inertia;
-use App\Models\Habit;
 use App\Enums\Frequency;
+use App\Domain\Habits\Models\Habit;
 use App\Http\Controllers\Controller;
 
 class EditHabitController extends Controller
