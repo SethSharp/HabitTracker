@@ -2,12 +2,12 @@
 
 namespace Tests\Http\Habits;
 
+use App\Domain\Goals\Enums\Goals;
+use App\Domain\Habits\Models\Habit;
+use App\Domain\Iam\Models\User;
 use Carbon\Carbon;
 use Tests\TestCase;
-use App\Enums\Goals;
-use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
-use App\Domain\Habits\Models\Habit;
 
 class StoreHabitControllerTest extends TestCase
 {

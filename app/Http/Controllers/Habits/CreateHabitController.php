@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Habits;
 
+use App\Domain\Frequency\Enums\Frequency;
+use App\Domain\Goals\Enums\Goals;
+use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use App\Enums\Goals;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Enums\Frequency;
-use App\Http\Controllers\Controller;
 
 class CreateHabitController extends Controller
 {

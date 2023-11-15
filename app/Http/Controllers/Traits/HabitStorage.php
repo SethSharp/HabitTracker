@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Traits;
 
-use Carbon\Carbon;
-use App\Enums\Frequency;
-use App\Domain\Iam\Models\User;
+use App\Domain\Frequency\Enums\Frequency;
 use App\Domain\Habits\Models\Habit;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
+use App\Domain\Iam\Models\User;
+use Carbon\Carbon;
 
 trait HabitStorage
 {

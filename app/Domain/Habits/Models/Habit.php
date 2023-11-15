@@ -2,13 +2,13 @@
 
 namespace App\Domain\Habits\Models;
 
-use App\Enums\Frequency;
-use App\Domain\Iam\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Domain\Frequency\Enums\Frequency;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Domain\Iam\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Habit extends Model
 {
