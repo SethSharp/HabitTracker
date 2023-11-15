@@ -5,12 +5,12 @@ namespace App\Console\Commands\ScheduledHabits;
 use Carbon\Carbon;
 use App\Http\CacheKeys;
 use App\Enums\Frequency;
-use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Traits\HabitStorage;
 use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class ScheduleHabitsForMonth extends Command
 {

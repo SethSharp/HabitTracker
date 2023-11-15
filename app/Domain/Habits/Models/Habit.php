@@ -3,10 +3,10 @@
 namespace App\Domain\Habits\Models;
 
 use App\Enums\Frequency;
-use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

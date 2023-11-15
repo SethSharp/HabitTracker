@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\HabitSchedule\Models;
 
 use App\Domain\Iam\Models\User;
 use App\Domain\Habits\Models\Habit;

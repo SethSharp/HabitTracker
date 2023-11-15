@@ -3,10 +3,10 @@
 namespace Tests\Http\ScheduledHabits;
 
 use Tests\TestCase;
-use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
 use App\Domain\Habits\Models\Habit;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class CancelHabitsTest extends TestCase
 {

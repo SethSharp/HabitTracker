@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\HabitSchedule;
 
-use App\Models\HabitSchedule;
 use App\Http\Controllers\Controller;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class UnComplete extends Controller
 {

@@ -5,12 +5,12 @@ namespace Tests\Http\Traits;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Http\CacheKeys;
-use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
 use App\Domain\Habits\Models\Habit;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class ScheduledHabitsTraitTest extends TestCase
 {

@@ -3,12 +3,12 @@
 namespace App\Domain\Iam\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\HabitSchedule;
 use Laravel\Sanctum\HasApiTokens;
 use App\Domain\Habits\Models\Habit;
 use Illuminate\Notifications\Notifiable;
 use App\Domain\Emails\Models\EmailPreferences;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

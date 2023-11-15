@@ -6,13 +6,13 @@ use Carbon\Carbon;
 use App\Enums\Goals;
 use Inertia\Inertia;
 use App\Enums\Frequency;
-use App\Models\HabitSchedule;
 use App\Domain\Habits\Models\Habit;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Habits\StoreHabitRequest;
 use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 use App\Http\Controllers\Actions\Habits\StoreHabitAction;
 
 class StoreHabitController extends Controller

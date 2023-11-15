@@ -5,11 +5,11 @@ namespace Database\Seeders;
 use Carbon\Carbon;
 use App\Enums\Frequency;
 use Illuminate\Support\Arr;
-use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use Illuminate\Database\Seeder;
 use App\Domain\Habits\Models\Habit;
 use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class HabitTableSeeder extends Seeder
 {

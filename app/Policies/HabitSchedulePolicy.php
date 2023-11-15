@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use Carbon\Carbon;
-use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class HabitSchedulePolicy
 {

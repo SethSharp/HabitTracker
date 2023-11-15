@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Traits;
 
 use Carbon\Carbon;
 use App\Enums\Frequency;
-use App\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
 use App\Domain\Habits\Models\Habit;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 trait HabitStorage
 {

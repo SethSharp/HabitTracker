@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\HabitSchedule;
 use Illuminate\Console\Command;
 use App\Http\Controllers\Traits\HabitStorage;
 use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class Fix extends Command
 {

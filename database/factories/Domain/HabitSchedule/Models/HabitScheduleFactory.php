@@ -1,13 +1,16 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domain\HabitSchedule\Models;
 
 use App\Domain\Iam\Models\User;
 use App\Domain\Habits\Models\Habit;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HabitScheduleFactory extends Factory
 {
+    protected $model = HabitSchedule::class;
+
     public function definition(): array
     {
         return [
