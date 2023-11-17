@@ -1,20 +1,42 @@
 <?php
 
-namespace App\Http\Controllers\Actions\Habits;
+namespace App\Domain\HabitSchedule\Actions;
 
 use Carbon\Carbon;
 use App\Domain\Iam\Models\User;
 use Illuminate\Support\Collection;
 use App\Domain\Habits\Models\Habit;
-use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Domain\Frequency\Enums\Frequency;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
 
-class UpdateHabitAction
+class UpdateHabitScheduleAction
 {
-    use ScheduledHabits;
+    public function __invoke(
+        User       $user,
+        Frequency $frequency,
+        Habit      $habit,
+        Collection $data,
+    ): void {
+        if ($frequency->value == Frequency::MONTHLY->value) {
+            $oldDate = $habit->occurrence_days;
+            $date = json_decode($oldDate)[0];
+            $scheduledHabits = $user
+                ->scheduledHabits()
+                ->where([
+                    'habit_id' => $habit->id,
+                    'scheduled_completion' => $date
+                ])
+                ->get();
 
-    public function __invoke(Habit $habit, Collection $data, User $user): void
-    {
+            $scheduledHabits->each(fn ($habit) => $habit->delete());
+
+            HabitSchedule::factory()->create([
+                'habit_id' => $habit->id,
+                'user_id' => $user,
+                'scheduled_completion' => $data['monthly_config'],
+            ]);
+        }
+
         $occurrences = json_decode($habit->occurrence_days);
         $scheduledDate = Carbon::now();
 

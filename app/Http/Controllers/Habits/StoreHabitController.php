@@ -2,55 +2,45 @@
 
 namespace App\Http\Controllers\Habits;
 
-use App\Domain\Frequency\Enums\Frequency;
-use App\Domain\Goals\Enums\Goals;
-use App\Domain\Habits\Models\Habit;
-use App\Domain\HabitSchedule\Models\HabitSchedule;
-use App\Http\Controllers\Actions\Habits\StoreHabitAction;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\HabitStorage;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Http\Requests\Habits\StoreHabitRequest;
-use Carbon\Carbon;
 use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+use App\Domain\Frequency\Enums\Frequency;
 use Symfony\Component\HttpFoundation\Response;
+use App\Domain\Habits\Actions\StoreHabitAction;
+use App\Http\Requests\Habits\StoreHabitRequest;
+use App\Domain\Habits\DataTransferObjects\StoreHabitData;
+use App\Domain\HabitSchedule\Actions\StoreHabitScheduleAction;
 
 class StoreHabitController extends Controller
 {
-    use HabitStorage;
-    use ScheduledHabits;
-
-    public function __invoke(StoreHabitRequest $request, StoreHabitAction $action): Response
-    {
+    public function __invoke(
+        StoreHabitRequest        $request,
+        StoreHabitAction         $storeHabitAction,
+        StoreHabitScheduleAction $habitScheduleAction,
+    ): Response {
         $data = collect($request->validated());
 
         $freq = Frequency::cases()[$data['frequency']];
 
-        $scheduledToDate = match ($data['scheduled_to']['length']) {
-            Goals::WEEKLY->value => Carbon::now()->addWeeks($data['scheduled_to']['time'])->toDateString(),
-            Goals::MONTHLY->value => Carbon::now()->addMonths($data['scheduled_to']['time'])->toDateString(),
-            default => null
-        };
+        $habit = $storeHabitAction($request->user(), StoreHabitData::fromRequest(
+            $request,
+            $freq->value,
+            isset($data['scheduled_to']) ? $data['scheduled_to'] : null,
+            match ($freq->value) {
+                Frequency::DAILY->value => json_encode($data['daily_config']),
+                Frequency::WEEKLY->value => json_encode([(int)$data['weekly_config']]),
+                Frequency::MONTHLY->value => json_encode([$data['monthly_config']]),
+                default => now(),
+            }
+        ));
 
-        $habit = Habit::factory()->create([
-            'user_id' => $request->user()->id,
-            'name' => $data['name'],
-            'description' => $data['description'],
-            'frequency' => $freq,
-            'scheduled_to' => $scheduledToDate,
-            'occurrence_days' => $this->calculatedOccurrenceDays($data, $freq->value),
-            'colour' => $data['colour']
-        ]);
-
-        if ($freq->value == Frequency::MONTHLY->value) {
-            HabitSchedule::factory()->create([
-                'habit_id' => $habit->id,
-                'user_id' => $request->user()->id,
-                'scheduled_completion' => $data['monthly_config'],
-            ]);
-        } else {
-            $action($request->user(), $habit, $scheduledToDate, $data);
-        }
+        $habitScheduleAction(
+            $request->user(),
+            $freq,
+            $habit,
+            isset($data['scheduled_to']) ? $data['scheduled_to'] : null,
+            $data
+        );
 
         return Inertia::location(url('habits'));
     }

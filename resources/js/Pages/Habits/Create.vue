@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head, useForm } from '@inertiajs/vue3'
+import { Head, router, useForm } from '@inertiajs/vue3'
 import TextInput from '@/Components/TextInput.vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
@@ -11,12 +11,12 @@ import Checkbox from '@/Components/Checkbox.vue'
 import Select from '@/Components/Select.vue'
 import PickColors from 'vue-pick-colors'
 import CustomSelectLength from '@/Components/CustomSelectLength.vue'
+import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue'
 
 const props = defineProps({
     frequencies: Array,
     min: String,
     max: String,
-    goals: Array,
 })
 
 let frequenciesConfig = {
@@ -35,14 +35,6 @@ let weekConfig = {
     ],
 }
 
-let customSelectedConfig = {
-    options: [
-        { name: 'None', id: props.goals[0] },
-        { name: 'Week\\s', id: props.goals[1] },
-        { name: 'Month\\s', id: props.goals[2] },
-    ],
-}
-
 const form = useForm({
     name: '',
     description: '',
@@ -50,15 +42,14 @@ const form = useForm({
     daily_config: [0, 1, 2, 3, 4, 5, 6],
     weekly_config: null,
     monthly_config: '',
-    scheduled_to: {
-        length: 0,
-        time: 0,
-    },
+    scheduled_to: '',
     start_next_week: false,
     colour: '#00cedf',
 })
 
 const submit = () => form.post(route('habit.store'))
+
+const cancel = () => router.get(route('habit'))
 </script>
 
 <template>
@@ -140,32 +131,31 @@ const submit = () => form.post(route('habit.store'))
                             v-model:min="props.min"
                             v-model:max="props.max"
                             class="mt-1 block w-full"
+                            label="Time of the month you want to complete this habit"
                         />
 
                         <InputError :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <InputLabel for="scheduled_to"> Set a time frame </InputLabel>
+                        <InputLabel for="scheduled_to"> Scheduled To </InputLabel>
 
-                        <CustomSelectLength
+                        <DateInput
                             v-model="form.scheduled_to"
-                            v-bind="customSelectedConfig"
+                            v-model:min="props.min"
                             class="mt-1 block w-full"
-                            label="Awesome for setting goals!"
+                            label="When the goal will end for the habit"
                         />
 
                         <InputError :error="form.errors.scheduled_to" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <InputLabel for="start_next_week"> Start scheduling </InputLabel>
+                        <InputLabel for="start_next_week"> Set a goal date </InputLabel>
 
                         <Checkbox
                             v-model="form.start_next_week"
                             :value="form.start_next_week"
                             label="Schedule for next week"
                         />
-
-                        <label class="text-gray-500"> Start a new habit or start fresh! </label>
 
                         <InputError :error="form.errors.start_next_week" class="mt-2" />
                     </div>
@@ -178,9 +168,19 @@ const submit = () => form.post(route('habit.store'))
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
                 </div>
-                <PrimaryButton as="button" :loading="form.processing" type="submit" class="mt-4">
-                    Create Habit
-                </PrimaryButton>
+                <div class="flex gap-2">
+                    <SecondaryButton as="button" @click="cancel" class="mt-4">
+                        Cancel
+                    </SecondaryButton>
+                    <PrimaryButton
+                        as="button"
+                        :loading="form.processing"
+                        type="submit"
+                        class="mt-4"
+                    >
+                        Create Habit
+                    </PrimaryButton>
+                </div>
             </form>
         </div>
     </AuthenticatedLayout>

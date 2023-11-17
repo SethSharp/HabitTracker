@@ -2,13 +2,13 @@
 
 namespace Tests\Console\Commands\ScheduledHabits;
 
-use App\Domain\Frequency\Enums\Frequency;
-use App\Domain\Habits\Models\Habit;
-use App\Domain\HabitSchedule\Models\HabitSchedule;
-use App\Domain\Iam\Models\User;
 use Carbon\Carbon;
 use Tests\TestCase;
+use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
+use App\Domain\Habits\Models\Habit;
+use App\Domain\Frequency\Enums\Frequency;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class ScheduleHabitsForMonthTest extends TestCase
 {

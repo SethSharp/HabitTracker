@@ -2,14 +2,15 @@
 
 namespace App\Domain\Habits\Models;
 
-use App\Domain\Frequency\Enums\Frequency;
-use App\Domain\HabitSchedule\Models\HabitSchedule;
 use App\Domain\Iam\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Domain\Frequency\Enums\Frequency;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+// TODO: Should not have user_id, should have a pivot table user_habit
 class Habit extends Model
 {
     use HasFactory;

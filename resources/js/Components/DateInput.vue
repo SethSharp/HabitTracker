@@ -38,8 +38,6 @@ const input = ref(null)
         />
     </div>
 
-    <br />
-
     <label class="text-gray-500">
         {{ label }}
     </label>

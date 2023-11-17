@@ -2,20 +2,18 @@
 
 namespace App\Console\Commands\ScheduledHabits;
 
-use App\Domain\Frequency\Enums\Frequency;
-use App\Domain\HabitSchedule\Models\HabitSchedule;
-use App\Domain\Iam\Models\User;
-use App\Http\CacheKeys;
-use App\Http\Controllers\Traits\HabitStorage;
-use App\Http\Controllers\Traits\ScheduledHabits;
 use Carbon\Carbon;
+use App\Http\CacheKeys;
+use App\Domain\Iam\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use App\Domain\Frequency\Enums\Frequency;
+use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class ScheduleHabitsForMonth extends Command
 {
     use ScheduledHabits;
-    use HabitStorage;
 
     protected $signature = 'habits:schedule';
     protected $description = 'Set habits up for the month based on the occurrence days of the habit';

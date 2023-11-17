@@ -2,12 +2,11 @@
 
 namespace Tests\Http\Habits;
 
-use App\Domain\Goals\Enums\Goals;
-use App\Domain\Habits\Models\Habit;
-use App\Domain\Iam\Models\User;
 use Carbon\Carbon;
 use Tests\TestCase;
+use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
+use App\Domain\Habits\Models\Habit;
 
 class StoreHabitControllerTest extends TestCase
 {
@@ -31,10 +30,7 @@ class StoreHabitControllerTest extends TestCase
             'daily_config' => '[2,3,4]',
             'start_next_week' => false,
             'colour' => '#00cedf',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null
         ];
 
         $this->weeklyArray = [
@@ -44,10 +40,7 @@ class StoreHabitControllerTest extends TestCase
             'weekly_config' => 4,
             'start_next_week' => false,
             'colour' => '#00cedf',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null
         ];
 
         $this->monthlyArray = [
@@ -57,10 +50,7 @@ class StoreHabitControllerTest extends TestCase
             'monthly_config' => '2023-7-17',
             'start_next_week' => false,
             'colour' => '#00cedf',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null
         ];
     }
 
@@ -143,10 +133,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => [1,2,3],
             'colour' => 'colour',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null
         ];
 
         $this->actingAs($this->user)
@@ -175,10 +162,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 1,
             'weekly_config' => '2',
             'colour' => 'colour',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null,
         ];
 
         $this->actingAs($this->user)
@@ -207,10 +191,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 2,
             'monthly_config' => '2023-08-13',
             'colour' => 'colour',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null,
         ];
 
         $this->actingAs($this->user)
@@ -242,10 +223,7 @@ class StoreHabitControllerTest extends TestCase
             'daily_config' => [1,2,3],
             'colour' => 'colour',
             'start_next_week' => true,
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null,
         ];
 
         $this->actingAs($this->user)
@@ -278,10 +256,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => [1,2,3],
             'colour' => 'colour',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null,
         ];
 
         $this->actingAs($this->user)
@@ -314,10 +289,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 0,
             'daily_config' => [1,2,3],
             'colour' => 'colour',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null,
         ];
 
         $this->actingAs($this->user)
@@ -350,10 +322,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 1,
             'weekly_config' => '2',
             'colour' => 'colour',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null,
         ];
 
         $this->actingAs($this->user)
@@ -383,10 +352,7 @@ class StoreHabitControllerTest extends TestCase
             'frequency' => 2,
             'monthly_config' => '2023-08-13',
             'colour' => 'colour',
-            'scheduled_to' => [
-                'length' => Goals::NONE->value,
-                'time' => 0,
-            ]
+            'scheduled_to' => null,
         ];
 
         $this->actingAs($this->user)

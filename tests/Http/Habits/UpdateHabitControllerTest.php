@@ -110,10 +110,7 @@ class UpdateHabitControllerTest extends TestCase
             'frequency' => 2,
             'monthly_config' => '2023-7-17',
             'colour' => '#00cedf',
-            'scheduled_to' => [
-                'length' => 2,
-                'time' => 12,
-            ]
+            'scheduled_to' => '2023-01-01'
         ];
 
         $this->actingAs($this->user)
@@ -126,7 +123,7 @@ class UpdateHabitControllerTest extends TestCase
             'name' => 'Testing name',
             'description' => 'Testing description',
             'frequency' => 'monthly',
-            'scheduled_to' => "2023-01-01"
+            'scheduled_to' => '2023-01-01'
         ]);
     }
 
@@ -221,10 +218,7 @@ class UpdateHabitControllerTest extends TestCase
             'frequency' => 2,
             'monthly_config' => '2023-7-17',
             'colour' => '#00cedf',
-            'scheduled_to' => [
-                'length' => 2,
-                'time' => 2,
-            ]
+            'scheduled_to' => '2023-01-01'
         ];
 
         $this->actingAs($this->user)
@@ -240,7 +234,7 @@ class UpdateHabitControllerTest extends TestCase
             'name' => $updatedHabit->name,
             'description' => $updatedHabit->description,
             'frequency' => 'monthly',
-            'scheduled_to' => "2023-03-01"
+            'scheduled_to' => '2023-01-01'
         ]);
     }
 }

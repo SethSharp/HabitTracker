@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Habits;
 
+use Carbon\Carbon;
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -17,12 +18,12 @@ class StoreHabitRequest extends FormRequest
             'weekly_config' => ['required_if:frequency,1'],
             'monthly_config' => ['required_if:frequency,2'],
             'start_next_week' => ['boolean'],
-            'scheduled_to' => ['required'],
-            'colour' => ['required']
+            'scheduled_to' => ['nullable'],
+            'colour' => ['required', 'string']
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'name' => "Name is required",
@@ -37,9 +38,11 @@ class StoreHabitRequest extends FormRequest
         $validator->validate();
 
         $validator->after(function (Validator $validator) {
-            $scheduledTo = $this->input('scheduled_to');
-            if ($scheduledTo['length'] > 0 && $scheduledTo['time'] === 0) {
-                $validator->errors()->add('scheduled_to', 'Select a time value');
+            if (! is_null($date = $this->input('scheduled_to'))) {
+                $scheduledTo = Carbon::parse($date);
+                if ($scheduledTo < now()) {
+                    $validator->errors()->add('scheduled_to', 'Scheduled completion date, cannot be in the past');
+                }
             }
         });
     }
