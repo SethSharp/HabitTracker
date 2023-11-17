@@ -7,13 +7,10 @@ use App\Domain\Iam\Models\User;
 use Illuminate\Support\Collection;
 use App\Domain\Habits\Models\Habit;
 use App\Domain\Frequency\Enums\Frequency;
-use App\Http\Controllers\Traits\HabitStorage;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class HabitScheduleAction
 {
-    use HabitStorage;
-
     public function __invoke(
         User        $user,
         Frequency   $frequency,

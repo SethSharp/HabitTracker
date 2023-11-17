@@ -8,7 +8,6 @@ use App\Domain\Goals\Enums\Goals;
 use App\Domain\Habits\Models\Habit;
 use App\Http\Controllers\Controller;
 use App\Domain\Frequency\Enums\Frequency;
-use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Domain\Habits\Actions\UpdateHabitAction;
 use App\Http\Controllers\Traits\ScheduledHabits;
@@ -17,7 +16,6 @@ use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class UpdateHabitController extends Controller
 {
-    use HabitStorage;
     use ScheduledHabits;
 
     public function __invoke(Habit $habit, UpdateHabitRequest $request, UpdateHabitAction $action): Response
@@ -31,7 +29,7 @@ class UpdateHabitController extends Controller
             'name' => $data['name'],
             'description' => $data['description'],
             'frequency' => $freq,
-            'occurrence_days' => $this->calculatedOccurrenceDays($data, $freq->value),
+            'occurrence_days' => json_encode($data['daily_config']),
             'colour' => $data['colour'],
         ]);
 

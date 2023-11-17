@@ -7,19 +7,14 @@ use Inertia\Inertia;
 use App\Domain\Goals\Enums\Goals;
 use App\Http\Controllers\Controller;
 use App\Domain\Frequency\Enums\Frequency;
-use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
 use App\Domain\Habits\Actions\StoreHabitAction;
 use App\Http\Requests\Habits\StoreHabitRequest;
-use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Domain\Habits\DataTransferObjects\StoreHabitData;
 use App\Domain\HabitSchedule\Actions\HabitScheduleAction;
 
 class StoreHabitController extends Controller
 {
-    use HabitStorage;
-    use ScheduledHabits;
-
     public function __invoke(
         StoreHabitRequest   $request,
         StoreHabitAction    $storeHabitAction,
@@ -35,13 +30,11 @@ class StoreHabitController extends Controller
             default => null
         };
 
-        $occurrenceDays = $this->calculatedOccurrenceDays($data, $freq->value);
-
         $habit = $storeHabitAction($request->user(), StoreHabitData::fromRequest(
             $request,
             $freq->value,
             $scheduledToDate,
-            $occurrenceDays
+            json_encode($data['daily_config'])
         ));
 
         $habitScheduleAction(
