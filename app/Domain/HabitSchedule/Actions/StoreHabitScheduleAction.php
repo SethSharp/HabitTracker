@@ -9,7 +9,7 @@ use App\Domain\Habits\Models\Habit;
 use App\Domain\Frequency\Enums\Frequency;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
 
-class HabitScheduleAction
+class StoreHabitScheduleAction
 {
     public function __invoke(
         User        $user,

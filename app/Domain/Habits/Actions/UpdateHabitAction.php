@@ -2,46 +2,22 @@
 
 namespace App\Domain\Habits\Actions;
 
-use Carbon\Carbon;
 use App\Domain\Iam\Models\User;
-use Illuminate\Support\Collection;
 use App\Domain\Habits\Models\Habit;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Domain\HabitSchedule\Models\HabitSchedule;
+use App\Domain\Habits\DataTransferObjects\UpdateHabitData;
 
 class UpdateHabitAction
 {
-    use ScheduledHabits;
-
-    public function __invoke(Habit $habit, Collection $data, User $user): void
-    {
-        $occurrences = json_decode($habit->occurrence_days);
-        $scheduledDate = Carbon::now();
-
-        while ($scheduledDate <= Carbon::now()->endOfMonth()) {
-            $scheduledHabitsForToday = $user->scheduledHabits()
-                ->where([
-                    'habit_id' => $habit->id,
-                    'scheduled_completion' => $scheduledDate->toDateString(),
-                ])
-                ->get();
-
-            // if today is a day in occurrences add to list
-            if (in_array($scheduledDate->dayOfWeek, $occurrences)) {
-                if (count($scheduledHabitsForToday) === 0) {
-                    HabitSchedule::factory()->create([
-                        'habit_id' => $habit->id,
-                        'user_id' => $user->id,
-                        'scheduled_completion' => $scheduledDate
-                    ]);
-                }
-            } else {
-                $scheduledHabitsForToday->each(function ($habit) {
-                    $habit->delete();
-                });
-            }
-
-            $scheduledDate->addDay();
-        }
+    public function __invoke(
+        User $user,
+        Habit $habit,
+        UpdateHabitData $updateHabitData
+    ): void {
+        $habit->update([
+            'name' => $updateHabitData->name,
+            'description' => $updateHabitData->description,
+            'frequency' => $updateHabitData->frequency,
+            'colour' => $updateHabitData->colour,
+        ]);
     }
 }

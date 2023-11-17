@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Domain\Habits\Actions\StoreHabitAction;
 use App\Http\Requests\Habits\StoreHabitRequest;
 use App\Domain\Habits\DataTransferObjects\StoreHabitData;
-use App\Domain\HabitSchedule\Actions\HabitScheduleAction;
+use App\Domain\HabitSchedule\Actions\StoreHabitScheduleAction;
 
 class StoreHabitController extends Controller
 {
     public function __invoke(
-        StoreHabitRequest   $request,
-        StoreHabitAction    $storeHabitAction,
-        HabitScheduleAction $habitScheduleAction,
+        StoreHabitRequest        $request,
+        StoreHabitAction         $storeHabitAction,
+        StoreHabitScheduleAction $habitScheduleAction,
     ): Response {
         $data = collect($request->validated());
 
