@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Habits;
 
-use App\Domain\Frequency\Enums\Frequency;
-use App\Domain\Goals\Enums\Goals;
-use App\Domain\Habits\Models\Habit;
-use App\Domain\HabitSchedule\Models\HabitSchedule;
-use App\Http\Controllers\Actions\Habits\UpdateHabitAction;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\HabitStorage;
-use App\Http\Controllers\Traits\ScheduledHabits;
-use App\Http\Requests\Habits\UpdateHabitRequest;
 use Carbon\Carbon;
 use Inertia\Inertia;
+use App\Domain\Goals\Enums\Goals;
+use App\Domain\Habits\Models\Habit;
+use App\Http\Controllers\Controller;
+use App\Domain\Frequency\Enums\Frequency;
+use App\Http\Controllers\Traits\HabitStorage;
 use Symfony\Component\HttpFoundation\Response;
+use App\Domain\Habits\Actions\UpdateHabitAction;
+use App\Http\Controllers\Traits\ScheduledHabits;
+use App\Http\Requests\Habits\UpdateHabitRequest;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class UpdateHabitController extends Controller
 {

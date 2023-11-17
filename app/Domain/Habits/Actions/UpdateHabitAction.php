@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Actions\Habits;
+namespace App\Domain\Habits\Actions;
 
 use Carbon\Carbon;
 use App\Domain\Iam\Models\User;

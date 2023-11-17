@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+// TODO: Should be a pivot table instead of a model
 class HabitSchedule extends Model
 {
     use HasFactory;
@@ -33,6 +34,7 @@ class HabitSchedule extends Model
 
     public function habit(): BelongsTo
     {
+        // TODO: Should not use withTrashed?...
         return $this->belongsTo(Habit::class, 'habit_id')->withTrashed();
     }
 }
