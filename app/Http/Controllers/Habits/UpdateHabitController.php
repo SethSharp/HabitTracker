@@ -34,19 +34,13 @@ class UpdateHabitController extends Controller
             UpdateHabitData::fromRequest(
                 $request,
                 $freq->value,
-            )
-        );
-
-        // TODO: Fix how this time is calculated and pass the result to update action
-        if (is_null($habit->scheduled_to)) {
-            $habit->update([
-                'scheduled_to' => match ($data['scheduled_to']['length']) {
+                match ($data['scheduled_to']['length']) {
                     Goals::WEEKLY->value => Carbon::now()->addWeeks($data['scheduled_to']['time'])->toDateString(),
                     Goals::MONTHLY->value => Carbon::now()->addMonths($data['scheduled_to']['time'])->toDateString(),
                     default => null
                 }
-            ]);
-        }
+            )
+        );
 
         $updateHabitScheduleAction(
             $request->user(),

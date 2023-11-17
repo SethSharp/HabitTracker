@@ -18,6 +18,9 @@ class UpdateHabitAction
             'description' => $updateHabitData->description,
             'frequency' => $updateHabitData->frequency,
             'colour' => $updateHabitData->colour,
+            'scheduled_to' => ! is_null($habit->scheduled_to)
+                ? $habit->scheduled_to
+                : $updateHabitData->scheduledTo
         ]);
     }
 }
