@@ -18,16 +18,7 @@ const props = defineProps({
     frequencies: Array,
     min: String,
     max: String,
-    goals: Array,
 })
-
-let customSelectedConfig = {
-    options: [
-        { name: 'None', id: props.goals[0] },
-        { name: 'Week\\s', id: props.goals[1] },
-        { name: 'Month\\s', id: props.goals[2] },
-    ],
-}
 
 let weekConfig = {
     options: [
@@ -167,13 +158,12 @@ const deleteHabit = () => {
                         <InputError :error="form.errors.colour" class="mt-2" />
                     </div>
                     <div class="py-2" v-if="!habit.scheduled_to">
-                        <InputLabel for="scheduled_to"> Set a time frame </InputLabel>
+                        <InputLabel for="scheduled_to"> Set a goal date </InputLabel>
 
-                        <CustomSelectLength
+                        <DateInput
                             v-model="form.scheduled_to"
-                            v-bind="customSelectedConfig"
+                            v-model:min="props.min"
                             class="mt-1 block w-full"
-                            label="Awesome for setting goals!"
                         />
 
                         <InputError :error="form.errors.scheduled_to" class="mt-2" />
@@ -181,6 +171,7 @@ const deleteHabit = () => {
                 </div>
 
                 <div class="flex gap-2">
+                    <DangerButton @click.prevent="deleteHabit" class="mt-4"> Delete </DangerButton>
                     <PrimaryButton
                         as="button"
                         :loading="form.processing"
@@ -189,7 +180,6 @@ const deleteHabit = () => {
                     >
                         Save Changes
                     </PrimaryButton>
-                    <DangerButton @click.prevent="deleteHabit" class="mt-4"> Delete </DangerButton>
                 </div>
             </form>
         </div>

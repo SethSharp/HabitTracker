@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Habits;
 
-use Carbon\Carbon;
 use Inertia\Inertia;
-use App\Domain\Goals\Enums\Goals;
 use App\Domain\Habits\Models\Habit;
 use App\Http\Controllers\Controller;
 use App\Domain\Frequency\Enums\Frequency;
@@ -34,11 +32,7 @@ class UpdateHabitController extends Controller
             UpdateHabitData::fromRequest(
                 $request,
                 $freq->value,
-                match ($data['scheduled_to']['length']) {
-                    Goals::WEEKLY->value => Carbon::now()->addWeeks($data['scheduled_to']['time'])->toDateString(),
-                    Goals::MONTHLY->value => Carbon::now()->addMonths($data['scheduled_to']['time'])->toDateString(),
-                    default => null
-                }
+                isset($data['scheduled_to']) ? $data['scheduled_to'] : null,
             )
         );
 
