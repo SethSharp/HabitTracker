@@ -10,6 +10,7 @@ class StoreHabitAction
 {
     public function __invoke(User $user, StoreHabitData $storeHabitData): Habit
     {
+        ray($storeHabitData);
         return Habit::factory()->create([
             'user_id' => $user->id,
             'name' => $storeHabitData->name,

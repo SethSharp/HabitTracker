@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Habits;
 
-use Carbon\Carbon;
 use Inertia\Inertia;
-use App\Domain\Goals\Enums\Goals;
 use App\Http\Controllers\Controller;
 use App\Domain\Frequency\Enums\Frequency;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,16 +22,10 @@ class StoreHabitController extends Controller
 
         $freq = Frequency::cases()[$data['frequency']];
 
-        $scheduledToDate = match ($data['scheduled_to']['length']) {
-            Goals::WEEKLY->value => Carbon::now()->addWeeks($data['scheduled_to']['time'])->toDateString(),
-            Goals::MONTHLY->value => Carbon::now()->addMonths($data['scheduled_to']['time'])->toDateString(),
-            default => null
-        };
-
         $habit = $storeHabitAction($request->user(), StoreHabitData::fromRequest(
             $request,
             $freq->value,
-            $scheduledToDate,
+            isset($data['scheduled_to']) ? $data['scheduled_to'] : null,
             match ($freq->value) {
                 Frequency::DAILY->value => json_encode($data['daily_config']),
                 Frequency::WEEKLY->value => json_encode([(int)$data['weekly_config']]),
@@ -46,7 +38,7 @@ class StoreHabitController extends Controller
             $request->user(),
             $freq,
             $habit,
-            $scheduledToDate,
+            isset($data['scheduled_to']) ? $data['scheduled_to'] : null,
             $data
         );
 

@@ -16,7 +16,6 @@ const props = defineProps({
     frequencies: Array,
     min: String,
     max: String,
-    goals: Array,
 })
 
 let frequenciesConfig = {
@@ -35,14 +34,6 @@ let weekConfig = {
     ],
 }
 
-let customSelectedConfig = {
-    options: [
-        { name: 'None', id: props.goals[0] },
-        { name: 'Week\\s', id: props.goals[1] },
-        { name: 'Month\\s', id: props.goals[2] },
-    ],
-}
-
 const form = useForm({
     name: '',
     description: '',
@@ -50,10 +41,7 @@ const form = useForm({
     daily_config: [0, 1, 2, 3, 4, 5, 6],
     weekly_config: null,
     monthly_config: '',
-    scheduled_to: {
-        length: 0,
-        time: 0,
-    },
+    scheduled_to: '',
     start_next_week: false,
     colour: '#00cedf',
 })
@@ -140,18 +128,19 @@ const submit = () => form.post(route('habit.store'))
                             v-model:min="props.min"
                             v-model:max="props.max"
                             class="mt-1 block w-full"
+                            label="Time of the month you want to complete this habit"
                         />
 
                         <InputError :error="form.errors.monthly_config" class="mt-2" />
                     </div>
                     <div class="py-2">
-                        <InputLabel for="scheduled_to"> Set a time frame </InputLabel>
+                        <InputLabel for="scheduled_to"> Scheduled To </InputLabel>
 
-                        <CustomSelectLength
+                        <DateInput
                             v-model="form.scheduled_to"
-                            v-bind="customSelectedConfig"
+                            v-model:min="props.min"
                             class="mt-1 block w-full"
-                            label="Awesome for setting goals!"
+                            label="When the goal will end for the habit"
                         />
 
                         <InputError :error="form.errors.scheduled_to" class="mt-2" />
@@ -164,8 +153,6 @@ const submit = () => form.post(route('habit.store'))
                             :value="form.start_next_week"
                             label="Schedule for next week"
                         />
-
-                        <label class="text-gray-500"> Start a new habit or start fresh! </label>
 
                         <InputError :error="form.errors.start_next_week" class="mt-2" />
                     </div>
