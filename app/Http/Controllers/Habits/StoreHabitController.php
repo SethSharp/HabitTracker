@@ -34,7 +34,12 @@ class StoreHabitController extends Controller
             $request,
             $freq->value,
             $scheduledToDate,
-            json_encode($data['daily_config'])
+            match ($freq->value) {
+                Frequency::DAILY->value => json_encode($data['daily_config']),
+                Frequency::WEEKLY->value => json_encode([(int)$data['weekly_config']]),
+                Frequency::MONTHLY->value => json_encode([$data['monthly_config']]),
+                default => now(),
+            }
         ));
 
         $habitScheduleAction(
