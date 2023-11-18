@@ -2,13 +2,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
 import { onMounted } from 'vue'
-import {
-    CheckCircleIcon,
-    XCircleIcon,
-    EllipsisHorizontalCircleIcon,
-} from '@heroicons/vue/24/outline/index.js'
 import Card from '@/Components/Habits/Card.vue'
-import HabitTickOff from '@/Components/Habits/HabitTickOff.vue'
+import {dayNameFromDate, getDateFromDate} from "@/helpers.js";
+import HabitTickOff from "@/Components/Habits/HabitTickOff.vue";
 
 const props = defineProps({
     weeklyHabits: Object,
@@ -17,46 +13,6 @@ const props = defineProps({
 
 let today = new Date()
 let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
-const calculateX = (habit) => {
-    let scheduled = new Date(habit.scheduled_completion)
-
-    if (habit.cancelled) {
-        return true
-    }
-
-    if (scheduled.getDate() < today.getDate()) {
-        return habit.completed === 0
-    }
-}
-
-const calculateCheck = (habit) => {
-    let scheduled = new Date(habit.scheduled_completion)
-
-    if (scheduled.getDate() < today.getDate()) {
-        return habit.completed !== 0
-    }
-
-    if (scheduled.getDate() === today.getDate()) {
-        if (habit.completed === 1) return true
-    }
-}
-
-const calculateGray = (habit) => {
-    let scheduled = new Date(habit.scheduled_completion)
-
-    if (habit.cancelled) {
-        return false
-    }
-
-    if (scheduled.getDate() < today.getDate()) return
-
-    if (scheduled.getDate() === today.getDate()) {
-        if (habit.completed === 0) return true
-    }
-
-    if (scheduled.getDate() > today.getDate()) return true
-}
 
 const isSuccess = (habits) => {
     if (habits.length === 0) return false
@@ -118,34 +74,6 @@ const isDanger = (habits) => {
     return successCount === 0 && failCount > 0
 }
 
-const shouldShowDay = (habit) => {
-    if (habit.deleted_at === null) return true
-
-    let scheduledDate = new Date(habit.scheduled_completion)
-    return today.getDate() > scheduledDate.getDate()
-}
-
-const getDaySuffix = (day) => {
-    if (day >= 11 && day <= 13) {
-        return 'th'
-    }
-    switch (day % 10) {
-        case 1:
-            return 'st'
-        case 2:
-            return 'nd'
-        case 3:
-            return 'rd'
-        default:
-            return 'th'
-    }
-}
-
-const dateHelper = (dateString) => {
-    let date = new Date(dateString).getDate()
-    return date + getDaySuffix(date)
-}
-
 onMounted(() => {
     let element = document.getElementById((today.getDay() - 1).toString())
     if (!element) return
@@ -159,9 +87,6 @@ onMounted(() => {
 
     <AuthenticatedLayout>
         <div>
-            <div class="mx-4 sm:mx-12 sm:space-x-6 grid grid-cols-1 sm:grid-cols-2">
-                <HabitTickOff />
-            </div>
             <div class="mx-4 mt-4 sm:mx-12">
                 <Card>
                     <template #heading>
@@ -179,28 +104,10 @@ onMounted(() => {
                                 :id="index"
                             >
                                 <template #heading>
-                                    <span> {{ week[i] }} - {{ dateHelper(index) }} </span>
+                                    <span> {{ dayNameFromDate(index) }} - {{ getDateFromDate(index) }} </span>
                                 </template>
                                 <template #content>
-                                    <div class="min-h-[450px]">
-                                        <ul v-for="habit in habits" class="list-disc p-4">
-                                            <li v-show="shouldShowDay(habit)" class="flex">
-                                                <XCircleIcon
-                                                    v-show="calculateX(habit)"
-                                                    class="w-5 h-5 mr-1 mt-0.5 text-red-600"
-                                                />
-                                                <CheckCircleIcon
-                                                    v-show="calculateCheck(habit)"
-                                                    class="w-5 h-5 mr-1 mt-0.5 text-green-600"
-                                                />
-                                                <EllipsisHorizontalCircleIcon
-                                                    v-show="calculateGray(habit)"
-                                                    class="w-5 h-5 mr-1 mt-0.5 text-gray-600"
-                                                />
-                                                <span> {{ habit.habit.name }} </span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                   <HabitTickOff :habits="habits"/>
                                 </template>
                             </Card>
                         </div>

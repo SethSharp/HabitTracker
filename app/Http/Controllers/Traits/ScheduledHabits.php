@@ -36,6 +36,25 @@ trait ScheduledHabits
         }, collect());
     }
 
+    public function getHabitsForRange(User $user, string $startDate): Collection
+    {
+        $week = $this->getWeekDatesFromDate($startDate);
+
+        $start = Carbon::parse($startDate);
+
+        $thisWeeksHabits = $user->scheduledHabits()
+            ->orderBy('completed', 'asc')
+            ->where('scheduled_completion', '>=', $start->toDateString())
+            ->where('scheduled_completion', '<=', $start->addDays(7)->toDateString())
+            ->with(['habit' => fn ($query) => $query->withTrashed()])
+            ->get();
+
+        return $week->reduce(function (Collection $carry, string $date) use ($thisWeeksHabits) {
+            $carry[$date] = $thisWeeksHabits->filter(fn ($habit) => $habit->scheduled_completion === $date)->toArray();
+            return $carry;
+        }, collect());
+    }
+
     public function monthlyScheduledHabits(User $user, string|null $month): array
     {
         if (is_null($month)) {
@@ -118,6 +137,20 @@ trait ScheduledHabits
         $dates = collect();
 
         $startOfWeek = Carbon::now()->startOfWeek(0);
+
+        for ($i = 0; $i < 7; $i++) {
+            $dates[] = $startOfWeek->toDateString();
+            $startOfWeek->addDay();
+        }
+
+        return $dates;
+    }
+
+    private function getWeekDatesFromDate(string $date): Collection
+    {
+        $dates = collect();
+
+        $startOfWeek = Carbon::parse($date);
 
         for ($i = 0; $i < 7; $i++) {
             $dates[] = $startOfWeek->toDateString();
