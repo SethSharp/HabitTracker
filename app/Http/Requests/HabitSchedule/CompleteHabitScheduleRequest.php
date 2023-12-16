@@ -2,16 +2,15 @@
 
 namespace App\Http\Requests\HabitSchedule;
 
-use App\Domain\HabitSchedule\Models\HabitSchedule;
 use Carbon\Carbon;
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class CompleteHabitScheduleRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
         return auth()->user()->can('manage', [HabitSchedule::class, $this->route('habitSchedule')]);
     }
 
@@ -24,11 +23,12 @@ class CompleteHabitScheduleRequest extends FormRequest
     {
         $validator->validate();
 
-        ray('here');
-
         $validator->after(function (Validator $validator) {
+            if ($this->route('habitSchedule')->completed) {
+                $validator->errors()->add('habit_schedule', 'Habit is already completed!');
+            }
+
             if (Carbon::now()->lte(Carbon::parse($this->route('habitSchedule')->scheduled_completion))) {
-                ray('error');
                 $validator->errors()->add('habit_schedule', 'Cannot complete a future habit');
             }
         });

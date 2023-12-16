@@ -19,18 +19,16 @@ const isAllCompleted = () => {
 }
 
 const completeHabit = (habit) => {
-    if (!habit.completed) {
-        router.post(
-            route('schedule.complete', habit.id),
-            {},
-            {
-                onSuccess: () => {
-                    habit.completed = true
-                    isAllCompleted()
-                },
-            }
-        )
-    }
+    router.post(
+        route('schedule.complete', habit.id),
+        {},
+        {
+            onSuccess: () => {
+                habit.completed = true
+                isAllCompleted()
+            },
+        }
+    )
 }
 
 const jsConfetti = new JSConfetti()
