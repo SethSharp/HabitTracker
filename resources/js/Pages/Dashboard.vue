@@ -15,6 +15,7 @@ const props = defineProps({
     },
 })
 
+const todaysDate = ref(null)
 const currentDate = ref(null)
 const startOfTheWeek = ref(null)
 let today = new Date()
@@ -103,18 +104,18 @@ const getSunday = (theD) => {
 }
 
 const previousSunday = () => {
-    let prevDate = new Date(currentDate.value)
+    let prevDate = new Date(currentDate.value);
 
     // Calculate days until previous Sunday
-    const daysUntilSunday = (prevDate.getDay() - 0 + 7) % 7
+    const daysUntilSunday = (prevDate.getDay() - 0 + 7) % 7;
 
-    // If the current day is already Sunday, subtract 7 days to get the previous Sunday
-    const daysToSubtract = daysUntilSunday === 0 ? 7 : daysUntilSunday
+    // Always subtract 7 days to get the previous Sunday
+    const daysToSubtract = 7;
 
-    prevDate.setDate(prevDate.getDate() - daysToSubtract)
+    prevDate.setDate(prevDate.getDate() - daysUntilSunday - daysToSubtract);
 
-    return buildDate(prevDate)
-}
+    return buildDate(prevDate);
+};
 
 const nextSunday = () => {
     let nextDate = new Date(currentDate.value)
@@ -145,6 +146,7 @@ onMounted(() => {
         currentDate.value = buildDate(new Date())
     }
 
+    todaysDate.value = buildDate(new Date())
     startOfTheWeek.value = getSunday(currentDate.value)
 
     let element = document.getElementById((today.getDay() - 1).toString())
@@ -167,8 +169,8 @@ onMounted(() => {
 
                     <div class="flex w-full mx-8">
                         <div class="w-1/2">
-                            Today's date: {{ dayNameFromDate(currentDate) }}
-                            {{ getDateFromDate(currentDate) }}
+                            Today's date: {{ dayNameFromDate(todaysDate) }}
+                            {{ getDateFromDate(todaysDate) }}
                         </div>
 
                         <div class="w-1/2 flex justify-end mr-14">
@@ -178,9 +180,8 @@ onMounted(() => {
                                     <ChevronLeftIcon class="w-6 h-6" />
                                 </button>
 
-                                <span class="font-semibold"
-                                    >{{ dayNameFromDate(startOfTheWeek) }} the
-                                    {{ getDateFromDate(startOfTheWeek) }}
+                                <span>
+                                    Week starting the <span class="font-semibold"> {{ getDateFromDate(startOfTheWeek) }} </span>
                                 </span>
 
                                 <!-- Next Week Button -->
