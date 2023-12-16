@@ -1,7 +1,6 @@
 <script setup>
 import JSConfetti from 'js-confetti'
 import { router } from '@inertiajs/vue3'
-import { XMarkIcon, CheckIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps({
     habits: Object,
