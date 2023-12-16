@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
 
-class Complete extends Controller
+class CompleteHabitScheduleController extends Controller
 {
     public function __invoke(HabitSchedule $habitSchedule): JsonResponse
     {
