@@ -28,6 +28,18 @@ const completeHabit = (habit) => {
     )
 }
 
+const cancelHabit = (habit) => {
+    router.post(
+        route('schedule.cancel', habit.id),
+        {},
+        {
+            onSuccess: () => {
+                habit.completed = false
+            },
+        }
+    )
+}
+
 const jsConfetti = new JSConfetti()
 </script>
 
@@ -35,7 +47,7 @@ const jsConfetti = new JSConfetti()
     <div class="flex-wrap w-full">
         <div v-for="scheduledHabit in habits">
             <div
-                v-if="!scheduledHabit.completed || scheduledHabit.cancelled"
+                v-if="!scheduledHabit.completed"
                 class="flex my-2 p-2 justify-between rounded border"
             >
                 <p class="text-md my-auto">
@@ -43,10 +55,7 @@ const jsConfetti = new JSConfetti()
                 </p>
 
                 <div class="justify-end flex gap-x-2">
-                    <div
-                        v-if="!scheduledHabit.cancelled"
-                        class="cursor-pointer ml-2 flex overflow-hidden w-auto"
-                    >
+                    <div class="cursor-pointer ml-2 flex overflow-hidden w-auto">
                         <div
                             @click="completeHabit(scheduledHabit)"
                             class="w-fit p-2 !text-green-500 transition"
@@ -66,6 +75,14 @@ const jsConfetti = new JSConfetti()
                 <p class="text-md my-auto">
                     {{ scheduledHabit.habit.name }}
                 </p>
+
+                <div class="justify-end flex gap-x-2">
+                    <div class="cursor-pointer ml-2 flex overflow-hidden w-auto">
+                        <div @click="cancelHabit(scheduledHabit)" class="w-fit p-2 transition">
+                            cancel
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -17,7 +17,7 @@ class HabitFactory extends Factory
             'user_id' => function () {
                 return User::factory()->create()->id;
             },
-            'name' => $this->faker->title(),
+            'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(mt_rand(10, 15)),
             'frequency' => Frequency::DAILY,
             'occurrence_days' => '[2,3,4]',

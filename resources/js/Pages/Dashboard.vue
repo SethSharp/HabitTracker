@@ -201,9 +201,6 @@ onMounted(() => {
                                 <Card
                                     v-for="(habits, index, i) in weeklyHabits"
                                     class="min-w-[300px] min-h-[450px]"
-                                    :success="isSuccess(habits)"
-                                    :warning="isWarning(habits)"
-                                    :danger="isDanger(habits)"
                                     :id="index"
                                 >
                                     <template #heading>

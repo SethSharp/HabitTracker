@@ -8,7 +8,7 @@ use Tests\Traits\RefreshDatabase;
 use App\Domain\Habits\Models\Habit;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
 
-class CompletedHabitsTest extends TestCase
+class CompleteHabitScheduleTest extends TestCase
 {
     use RefreshDatabase;
 

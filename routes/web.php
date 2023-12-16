@@ -15,6 +15,7 @@ use App\Http\Controllers\Profile\EditProfileController;
 use App\Http\Controllers\Profile\DeleteProfileController;
 use App\Http\Controllers\Profile\UpdateProfileController;
 use App\Http\Controllers\Profile\UpdateEmailPreferencesController;
+use App\Http\Controllers\HabitSchedule\CancelHabitScheduleController;
 use App\Http\Controllers\HabitSchedule\CompleteHabitScheduleController;
 use App\Http\Controllers\HabitSchedule\GetScheduledHabitsForDayController;
 
@@ -35,8 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('schedule')->name('schedule.')->group(function () {
-        Route::get('schedule/day/{date}', GetScheduledHabitsForDayController::class)->name('day');
-        Route::post('schedule/complete/{habitSchedule}', CompleteHabitScheduleController::class)->name('complete');
+        Route::get('/day/{date}', GetScheduledHabitsForDayController::class)->name('day');
+        Route::post('/complete/{habitSchedule}', CompleteHabitScheduleController::class)->name('complete');
+        Route::post('/cancel/{habitSchedule}', CancelHabitScheduleController::class)->name('cancel');
     });
 
     Route::name('profile.')->group(function () {
