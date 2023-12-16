@@ -58,7 +58,7 @@ const timeLeftHelper = (days) => {
     }
 }
 
-const selectedUser = (id, index) => {
+const selectHabit = (id, index) => {
     selectedHabit.value = index
     habit.value = props.habits[index]
     selectedId = id
@@ -87,23 +87,21 @@ const selectedUser = (id, index) => {
                             </div>
                         </template>
                         <template #content>
-                            <div>
-                                <div
-                                    v-if="habits.length != 0"
-                                    class="overflow-y-auto max-h-[500px]"
-                                >
-                                    <div v-for="(habit, index) in habits">
-                                        <div
-                                            @click="selectedUser(habit.id, index)"
-                                            class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer animation duration-300"
-                                            :class="`${
-                                                index == selectedHabit
-                                                    ? 'bg-teal-300 hover:bg-opacity-25'
-                                                    : 'bg-gray-200 hover:bg-primary'
-                                            }`"
-                                        >
-                                            {{ habit.name }}
-                                        </div>
+                            <div
+                                v-if="habits.length != 0"
+                                class="overflow-y-auto max-h-[500px] w-full"
+                            >
+                                <div v-for="(habit, index) in habits">
+                                    <div
+                                        @click="selectHabit(habit.id, index)"
+                                        class="rounded-md border border-black px-2 py-4 my-4 cursor-pointer animation duration-300 w-full"
+                                        :class="`${
+                                            index == selectedHabit
+                                                ? 'bg-teal-300 hover:bg-opacity-25'
+                                                : 'bg-gray-200 hover:bg-primary'
+                                        }`"
+                                    >
+                                        {{ habit.name }}
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +110,6 @@ const selectedUser = (id, index) => {
                 </div>
                 <div class="p-4">
                     <Card class="min-h-[600px] max-h-[600px]">
-                        >
                         <template #heading>
                             <div v-if="habit" class="flex text-2xl">
                                 <span class="w-3/4 truncate h-fit py-2">
