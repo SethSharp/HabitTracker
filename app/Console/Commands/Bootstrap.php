@@ -14,5 +14,6 @@ class Bootstrap extends Command
     public function handle(): void
     {
         Role::firstOrCreate(['name' => User::ROLE_ADMIN]);
+        Role::firstOrCreate(['name' => User::ROLE_MEMBER]);
     }
 }
