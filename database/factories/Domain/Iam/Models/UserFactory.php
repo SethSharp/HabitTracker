@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Domain\Iam\Models;
 
-use App\Domain\Iam\Models\Role;
+use Codinglabs\Roles\Role;
 use Illuminate\Support\Str;
 use App\Domain\Iam\Models\User;
 use Illuminate\Support\Facades\Hash;

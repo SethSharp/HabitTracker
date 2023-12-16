@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\Iam\Models\Role;
+use Codinglabs\Roles\Role;
 use App\Domain\Iam\Models\User;
 use Illuminate\Console\Command;
 
