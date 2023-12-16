@@ -6,6 +6,7 @@ import DropdownLink from '@/Components/DropdownLink.vue'
 import NavLink from '@/Components/NavLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
 import { Link } from '@inertiajs/vue3'
+import Notification from '@/Components/Notification.vue'
 
 const showingNavigationDropdown = ref(false)
 
@@ -207,4 +208,6 @@ let headingLinksConfig = [
             </div>
         </div>
     </div>
+
+    <Notification :errors="$page.props.errors" :success="$page.props.success" />
 </template>

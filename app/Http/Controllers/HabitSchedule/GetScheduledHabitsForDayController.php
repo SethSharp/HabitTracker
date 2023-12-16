@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
-class ScheduledHabitsForDay extends Controller
+class GetScheduledHabitsForDayController extends Controller
 {
     use ScheduledHabits;
 

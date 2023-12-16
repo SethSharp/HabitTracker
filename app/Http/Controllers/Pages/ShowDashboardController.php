@@ -15,11 +15,10 @@ class ShowDashboardController extends Controller
     public function __invoke(Request $request): Response
     {
         return Inertia::render('Dashboard', [
-            'weeklyHabits' => $this->getWeeklyScheduledHabits($request->user()),
-            'statistics' => [
-                'streak' => $request->user()->streak,
-                'bestStreak' => $request->user()->best_streak,
-            ]
+            'weeklyHabits' => ! $request->route('week')
+                ? $this->getWeeklyScheduledHabits($request->user())
+                : $this->getHabitsForRange($request->user(), $request->route('week')),
+            'date' => $request->route('week')
         ]);
     }
 }

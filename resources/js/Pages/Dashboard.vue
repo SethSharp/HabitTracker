@@ -1,62 +1,25 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
-import { onMounted } from 'vue'
-import {
-    CheckCircleIcon,
-    XCircleIcon,
-    EllipsisHorizontalCircleIcon,
-} from '@heroicons/vue/24/outline/index.js'
+import { Head, router } from '@inertiajs/vue3'
+import { onMounted, ref } from 'vue'
 import Card from '@/Components/Habits/Card.vue'
+import { dayNameFromDate, getDateFromDate } from '@/helpers.js'
 import HabitTickOff from '@/Components/Habits/HabitTickOff.vue'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps({
     weeklyHabits: Object,
-    statistics: Object,
+    date: {
+        type: String,
+        default: null,
+    },
 })
 
+const todaysDate = ref(null)
+const currentDate = ref(null)
+const startOfTheWeek = ref(null)
 let today = new Date()
 let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
-const calculateX = (habit) => {
-    let scheduled = new Date(habit.scheduled_completion)
-
-    if (habit.cancelled) {
-        return true
-    }
-
-    if (scheduled.getDate() < today.getDate()) {
-        return habit.completed === 0
-    }
-}
-
-const calculateCheck = (habit) => {
-    let scheduled = new Date(habit.scheduled_completion)
-
-    if (scheduled.getDate() < today.getDate()) {
-        return habit.completed !== 0
-    }
-
-    if (scheduled.getDate() === today.getDate()) {
-        if (habit.completed === 1) return true
-    }
-}
-
-const calculateGray = (habit) => {
-    let scheduled = new Date(habit.scheduled_completion)
-
-    if (habit.cancelled) {
-        return false
-    }
-
-    if (scheduled.getDate() < today.getDate()) return
-
-    if (scheduled.getDate() === today.getDate()) {
-        if (habit.completed === 0) return true
-    }
-
-    if (scheduled.getDate() > today.getDate()) return true
-}
 
 const isSuccess = (habits) => {
     if (habits.length === 0) return false
@@ -118,35 +81,74 @@ const isDanger = (habits) => {
     return successCount === 0 && failCount > 0
 }
 
-const shouldShowDay = (habit) => {
-    if (habit.deleted_at === null) return true
+let buildDate = (date) => {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
 
-    let scheduledDate = new Date(habit.scheduled_completion)
-    return today.getDate() > scheduledDate.getDate()
+    return `${year}-${month}-${day}`
 }
 
-const getDaySuffix = (day) => {
-    if (day >= 11 && day <= 13) {
-        return 'th'
+const getSunday = (theD) => {
+    const today = new Date(theD)
+
+    if (today.getDay() === 0) {
+        return theD
     }
-    switch (day % 10) {
-        case 1:
-            return 'st'
-        case 2:
-            return 'nd'
-        case 3:
-            return 'rd'
-        default:
-            return 'th'
-    }
+
+    const dayOfWeek = today.getDay()
+    const difference = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 0) // Adjust for Sunday
+    const sunday = new Date(today.setDate(difference))
+
+    return buildDate(sunday)
 }
 
-const dateHelper = (dateString) => {
-    let date = new Date(dateString).getDate()
-    return date + getDaySuffix(date)
+const previousSunday = () => {
+    let prevDate = new Date(currentDate.value)
+
+    // Calculate days until previous Sunday
+    const daysUntilSunday = (prevDate.getDay() - 0 + 7) % 7
+
+    // Always subtract 7 days to get the previous Sunday
+    const daysToSubtract = 7
+
+    prevDate.setDate(prevDate.getDate() - daysUntilSunday - daysToSubtract)
+
+    return buildDate(prevDate)
+}
+
+const nextSunday = () => {
+    let nextDate = new Date(currentDate.value)
+
+    // Calculate days until next Sunday
+    const daysUntilSunday = (7 - nextDate.getDay()) % 7
+
+    // If the current day is already Sunday, add 7 days to get the next Sunday
+    const daysToAdd = daysUntilSunday === 0 ? 7 : daysUntilSunday
+
+    nextDate.setDate(nextDate.getDate() + daysToAdd)
+
+    return buildDate(nextDate)
+}
+
+const nextWeek = () => {
+    router.visit(route('dashboard', { week: nextSunday() }))
+}
+
+const previousWeek = () => {
+    router.visit(route('dashboard', { week: previousSunday() }))
 }
 
 onMounted(() => {
+    if (props.date) {
+        currentDate.value = props.date
+    } else {
+        currentDate.value = buildDate(new Date())
+    }
+
+    todaysDate.value = buildDate(new Date())
+    startOfTheWeek.value = getSunday(currentDate.value)
+
     let element = document.getElementById((today.getDay() - 1).toString())
     if (!element) return
 
@@ -159,50 +161,67 @@ onMounted(() => {
 
     <AuthenticatedLayout>
         <div>
-            <div class="mx-4 sm:mx-12 sm:space-x-6 grid grid-cols-1 sm:grid-cols-2">
-                <HabitTickOff />
-            </div>
-            <div class="mx-4 mt-4 sm:mx-12">
-                <Card>
+            <div class="mx-4 mt-4 sm:mx-6">
+                <Card class="min-h-[600px] max-h-[600px]">
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> Your Week </span>
                     </template>
+
+                    <div class="flex w-full mx-8">
+                        <div class="w-1/2">
+                            Today's date: {{ dayNameFromDate(todaysDate) }}
+                            {{ getDateFromDate(todaysDate) }}
+                        </div>
+
+                        <div class="w-1/2 flex justify-end mr-14">
+                            <div class="flex items-center space-x-4">
+                                <!-- Previous Week Button -->
+                                <button @click="previousWeek">
+                                    <ChevronLeftIcon class="w-6 h-6" />
+                                </button>
+
+                                <span>
+                                    Week starting the
+                                    <span class="font-semibold">
+                                        {{ getDateFromDate(startOfTheWeek) }}
+                                    </span>
+                                </span>
+
+                                <!-- Next Week Button -->
+                                <button @click="nextWeek">
+                                    <ChevronRightIcon class="w-6 h-6" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <template #content>
-                        <div class="flex overflow-x-auto space-x-8 sm:mx-4">
-                            <Card
-                                v-for="(habits, index, i) in weeklyHabits"
-                                class="min-w-[300px]"
-                                :success="isSuccess(habits)"
-                                :warning="isWarning(habits)"
-                                :danger="isDanger(habits)"
-                                :heading="today.getDay() === i"
-                                :id="index"
-                            >
-                                <template #heading>
-                                    <span> {{ week[i] }} - {{ dateHelper(index) }} </span>
-                                </template>
-                                <template #content>
-                                    <div class="min-h-[450px]">
-                                        <ul v-for="habit in habits" class="list-disc p-4">
-                                            <li v-show="shouldShowDay(habit)" class="flex">
-                                                <XCircleIcon
-                                                    v-show="calculateX(habit)"
-                                                    class="w-5 h-5 mr-1 mt-0.5 text-red-600"
-                                                />
-                                                <CheckCircleIcon
-                                                    v-show="calculateCheck(habit)"
-                                                    class="w-5 h-5 mr-1 mt-0.5 text-green-600"
-                                                />
-                                                <EllipsisHorizontalCircleIcon
-                                                    v-show="calculateGray(habit)"
-                                                    class="w-5 h-5 mr-1 mt-0.5 text-gray-600"
-                                                />
-                                                <span> {{ habit.habit.name }} </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </template>
-                            </Card>
+                        <div>
+                            <div class="flex overflow-x-auto space-x-4">
+                                <Card
+                                    v-for="(habits, index, i) in weeklyHabits"
+                                    class="min-w-[300px] min-h-[450px]"
+                                    :success="isSuccess(habits)"
+                                    :warning="isWarning(habits)"
+                                    :danger="isDanger(habits)"
+                                    :id="index"
+                                >
+                                    <template #heading>
+                                        <span
+                                            :class="{
+                                                'underline underline-offset-2':
+                                                    index === todaysDate,
+                                            }"
+                                        >
+                                            {{ dayNameFromDate(index) }} -
+                                            {{ getDateFromDate(index) }}
+                                        </span>
+                                    </template>
+                                    <template #content>
+                                        <HabitTickOff :habits="habits" />
+                                    </template>
+                                </Card>
+                            </div>
                         </div>
                     </template>
                 </Card>
