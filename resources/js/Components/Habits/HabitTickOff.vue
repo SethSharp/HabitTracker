@@ -20,15 +20,16 @@ const isAllCompleted = () => {
 
 const completeHabit = (habit) => {
     if (!habit.completed) {
-        axios
-            .post(route('schedule.complete', habit.id))
-            .then((res) => {
-                habit.completed = true
-                isAllCompleted()
-            })
-            .catch((err) => {
-                alert('There was an error completing your habit!')
-            })
+        router.post(
+            route('schedule.complete', habit.id),
+            {},
+            {
+                onSuccess: () => {
+                    habit.completed = true
+                    isAllCompleted()
+                },
+            }
+        )
     }
 }
 
