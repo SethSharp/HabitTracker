@@ -8,13 +8,13 @@ use App\Http\Requests\Habits\StoreHabitRequest;
 class StoreHabitData extends Data
 {
     public function __construct(
-        public int    $userId,
-        public string $name,
-        public string $description,
-        public string $frequency,
+        public int     $userId,
+        public string  $name,
+        public ?string $description,
+        public string  $frequency,
         public ?string $scheduledTo,
-        public string $occurrenceDays,
-        public string $colour,
+        public string  $occurrenceDays,
+        public string  $colour,
     ) {
     }
 
@@ -24,6 +24,7 @@ class StoreHabitData extends Data
         ?string           $scheduledTo,
         string            $occurrenceDays,
     ): self {
+        ray($request->input('name'));
         return new self(
             userId: $request->user()->id,
             name: $request->input('name'),
