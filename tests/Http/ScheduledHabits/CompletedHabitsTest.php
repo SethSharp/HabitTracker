@@ -36,7 +36,7 @@ class CompletedHabitsTest extends TestCase
         ]);
 
         $this->actingAs($anotherUser)
-            ->post(route('schedule.complete', [ 'habitSchedule' => $scheduledHabit->id ]))
+            ->post(route('schedule.complete', ['habitSchedule' => $scheduledHabit->id]))
             ->assertForbidden();
 
         $this->assertDatabaseHas('habit_schedules', [
@@ -59,8 +59,11 @@ class CompletedHabitsTest extends TestCase
         ]);
 
         $this->actingAs($this->user)
-            ->postJson(route('schedule.complete', [ 'habitSchedule' => $habitSchedule->id ]))
-            ->assertForbidden();
+            ->postJson(route('schedule.complete', ['habitSchedule' => $habitSchedule->id]))
+            ->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'habit_schedule' => 'Cannot complete a future habit'
+            ]);
 
         $this->assertDatabaseHas('habit_schedules', [
             'user_id' => $this->user->id,
@@ -82,8 +85,8 @@ class CompletedHabitsTest extends TestCase
         ]);
 
         $this->actingAs($this->user)
-            ->postJson(route('schedule.complete', [ 'habitSchedule' => $habitSchedule->id ]))
-            ->assertOk();
+            ->postJson(route('schedule.complete', ['habitSchedule' => $habitSchedule->id]))
+            ->assertRedirect();
 
         $this->assertDatabaseHas('habit_schedules', [
             'user_id' => $this->user->id,
