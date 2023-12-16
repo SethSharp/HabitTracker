@@ -43,7 +43,8 @@ const props = defineProps({
         >
             <slot name="heading"></slot>
         </div>
-        <div class="overflow-y-auto mx-4">
+        <slot />
+        <div class="overflow-y-auto flex mx-4">
             <slot name="content"></slot>
         </div>
     </div>

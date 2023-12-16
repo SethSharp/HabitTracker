@@ -1,4 +1,3 @@
-
 const getDaySuffix = (day) => {
     if (day >= 11 && day <= 13) {
         return 'th'
@@ -16,10 +15,18 @@ const getDaySuffix = (day) => {
 }
 
 const dayNameFromDate = (date) => {
-    const dateObject = new Date(date);
+    const dateObject = new Date(date)
 
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    return daysOfWeek[dateObject.getDay()];
+    const daysOfWeek = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ]
+    return daysOfWeek[dateObject.getDay()]
 }
 
 const getDateFromDate = (date) => {
@@ -27,4 +34,4 @@ const getDateFromDate = (date) => {
     return newDate + getDaySuffix(newDate)
 }
 
-export {dayNameFromDate, getDateFromDate}
+export { dayNameFromDate, getDateFromDate }

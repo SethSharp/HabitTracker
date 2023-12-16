@@ -3,18 +3,20 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, router } from '@inertiajs/vue3'
 import { onMounted, ref } from 'vue'
 import Card from '@/Components/Habits/Card.vue'
-import {dayNameFromDate, getDateFromDate} from "@/helpers.js";
-import HabitTickOff from "@/Components/Habits/HabitTickOff.vue";
+import { dayNameFromDate, getDateFromDate } from '@/helpers.js'
+import HabitTickOff from '@/Components/Habits/HabitTickOff.vue'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps({
     weeklyHabits: Object,
     date: {
         type: String,
-        default: null
-    }
+        default: null,
+    },
 })
 
 const currentDate = ref(null)
+const startOfTheWeek = ref(null)
 let today = new Date()
 let week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -86,46 +88,54 @@ let buildDate = (date) => {
     return `${year}-${month}-${day}`
 }
 
-const previousMonday = () => {
-    let prevDate = new Date(currentDate.value);
+const getSunday = (theD) => {
+    const today = new Date(theD)
 
-    // Calculate days until previous Monday
-    const daysUntilMonday = (prevDate.getDay() - 1 + 7) % 7;
+    if (today.getDay() === 0) {
+        return theD
+    }
 
-    // If the current day is already Monday, subtract 7 days to get the previous Monday
-    const daysToSubtract = daysUntilMonday === 0 ? 7 : daysUntilMonday;
+    const dayOfWeek = today.getDay()
+    const difference = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 0) // Adjust for Sunday
+    const sunday = new Date(today.setDate(difference))
 
-    prevDate.setDate(prevDate.getDate() - daysToSubtract);
+    return buildDate(sunday)
+}
 
-    const newDate = buildDate(prevDate);
-    currentDate.value = newDate;
+const previousSunday = () => {
+    let prevDate = new Date(currentDate.value)
 
-    return newDate;
-};
+    // Calculate days until previous Sunday
+    const daysUntilSunday = (prevDate.getDay() - 0 + 7) % 7
 
-const nextMonday = () => {
-    let nextDate = new Date(currentDate.value);
+    // If the current day is already Sunday, subtract 7 days to get the previous Sunday
+    const daysToSubtract = daysUntilSunday === 0 ? 7 : daysUntilSunday
 
-    // Calculate days until next Monday
-    const daysUntilMonday = (1 - nextDate.getDay() + 7) % 7;
+    prevDate.setDate(prevDate.getDate() - daysToSubtract)
 
-    // If the current day is already Monday, add 7 days to get the next Monday
-    const daysToAdd = daysUntilMonday === 0 ? 7 : daysUntilMonday;
+    return buildDate(prevDate)
+}
 
-    nextDate.setDate(nextDate.getDate() + daysToAdd);
+const nextSunday = () => {
+    let nextDate = new Date(currentDate.value)
 
-    const newDate = buildDate(nextDate);
-    currentDate.value = newDate;
+    // Calculate days until next Sunday
+    const daysUntilSunday = (7 - nextDate.getDay()) % 7
 
-    return newDate;
-};
+    // If the current day is already Sunday, add 7 days to get the next Sunday
+    const daysToAdd = daysUntilSunday === 0 ? 7 : daysUntilSunday
+
+    nextDate.setDate(nextDate.getDate() + daysToAdd)
+
+    return buildDate(nextDate)
+}
 
 const nextWeek = () => {
-    router.visit(route('dashboard', { week: nextMonday() }))
+    router.visit(route('dashboard', { week: nextSunday() }))
 }
 
 const previousWeek = () => {
-    router.visit(route('dashboard', { week: previousMonday() }))
+    router.visit(route('dashboard', { week: previousSunday() }))
 }
 
 onMounted(() => {
@@ -134,6 +144,8 @@ onMounted(() => {
     } else {
         currentDate.value = buildDate(new Date())
     }
+
+    startOfTheWeek.value = getSunday(currentDate.value)
 
     let element = document.getElementById((today.getDay() - 1).toString())
     if (!element) return
@@ -151,26 +163,57 @@ onMounted(() => {
                 <Card>
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> Your Week </span>
-                        <span @click="nextWeek" class="h-fit py-2 text-2xl justify-end"> Some data range adjuster </span>
                     </template>
+
+                    <div class="flex w-full mx-8">
+                        <div class="w-1/2">
+                            Today's date: {{ dayNameFromDate(currentDate) }}
+                            {{ getDateFromDate(currentDate) }}
+                        </div>
+
+                        <div class="w-1/2 flex justify-end mr-14">
+                            <div class="flex items-center space-x-4">
+                                <!-- Previous Week Button -->
+                                <button @click="previousWeek">
+                                    <ChevronLeftIcon class="w-6 h-6" />
+                                </button>
+
+                                <span class="font-semibold"
+                                    >{{ dayNameFromDate(startOfTheWeek) }} the
+                                    {{ getDateFromDate(startOfTheWeek) }}
+                                </span>
+
+                                <!-- Next Week Button -->
+                                <button @click="nextWeek">
+                                    <ChevronRightIcon class="w-6 h-6" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <template #content>
-                        <div class="flex overflow-x-auto space-x-4">
-                            <Card
-                                v-for="(habits, index, i) in weeklyHabits"
-                                class="min-w-[200px]"
-                                :success="isSuccess(habits)"
-                                :warning="isWarning(habits)"
-                                :danger="isDanger(habits)"
-                                :heading="today.getDay() === i"
-                                :id="index"
-                            >
-                                <template #heading>
-                                    <span> {{ dayNameFromDate(index) }} - {{ getDateFromDate(index) }} </span>
-                                </template>
-                                <template #content>
-                                   <HabitTickOff :habits="habits"/>
-                                </template>
-                            </Card>
+                        <div>
+                            <div class="flex overflow-x-auto space-x-4">
+                                <Card
+                                    v-for="(habits, index, i) in weeklyHabits"
+                                    class="min-w-[200px]"
+                                    :success="isSuccess(habits)"
+                                    :warning="isWarning(habits)"
+                                    :danger="isDanger(habits)"
+                                    :heading="today.getDay() === i"
+                                    :id="index"
+                                >
+                                    <template #heading>
+                                        <span>
+                                            {{ dayNameFromDate(index) }} -
+                                            {{ getDateFromDate(index) }}
+                                        </span>
+                                    </template>
+                                    <template #content>
+                                        <HabitTickOff :habits="habits" />
+                                    </template>
+                                </Card>
+                            </div>
                         </div>
                     </template>
                 </Card>

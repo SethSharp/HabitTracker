@@ -1,10 +1,10 @@
 <script setup>
 import JSConfetti from 'js-confetti'
-import {router} from "@inertiajs/vue3";
-import {XCircleIcon, CheckCircleIcon} from '@heroicons/vue/24/outline/index.js'
+import { router } from '@inertiajs/vue3'
+import { XCircleIcon, CheckCircleIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps({
-    habits: Object
+    habits: Object,
 })
 
 const isAllCompleted = () => {
@@ -19,32 +19,40 @@ const isAllCompleted = () => {
 }
 
 const completeHabit = (habit) => {
-    if (! habit.completed) {
-        router.post(route('schedule.complete', habit.id ), {}, {
-            onSuccess: (res) => {
-                habit.completed = true
-                isAllCompleted()
-            },
-            onError: (err) => {
-                console.error(err)
-                alert('Unable to complete habit')
+    if (!habit.completed) {
+        router.post(
+            route('schedule.complete', habit.id),
+            {},
+            {
+                onSuccess: (res) => {
+                    habit.completed = true
+                    isAllCompleted()
+                },
+                onError: (err) => {
+                    console.error(err)
+                    alert('Unable to complete habit')
+                },
             }
-        })
+        )
     }
 }
 
 const uncompleteHabit = (habit) => {
     if (habit.completed) {
-        router.post(route('schedule.uncomplete', habit.id ), {}, {
-            onSuccess: (res) => {
-                habit.completed = false
-                isAllCompleted()
-            },
-            onError: (err) => {
-                console.error(err)
-                alert('Unable to un-complete habit')
+        router.post(
+            route('schedule.uncomplete', habit.id),
+            {},
+            {
+                onSuccess: (res) => {
+                    habit.completed = false
+                    isAllCompleted()
+                },
+                onError: (err) => {
+                    console.error(err)
+                    alert('Unable to un-complete habit')
+                },
             }
-        })
+        )
     }
 }
 
