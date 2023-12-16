@@ -10,9 +10,7 @@ const props = defineProps({
 const isAllCompleted = () => {
     for (let i = 0; i < props.habits.length; i++) {
         if (!props.habits[i].completed) {
-            if (!props.habits[i].cancelled) {
-                return
-            }
+            return
         }
     }
     jsConfetti.addConfetti()
