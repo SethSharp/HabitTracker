@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\Iam\Models\Role;
+use Codinglabs\Roles\Role;
 use App\Domain\Iam\Models\User;
 use Illuminate\Console\Command;
 
@@ -15,6 +15,6 @@ class Fix extends Command
     {
         $user = User::whereEmail('sesharp@outlook.com')->first();
 
-        $user->assignRole(Role::whereName(User::ROLE_ADMIN));
+        $user->roles()->attach(Role::whereName(User::ROLE_ADMIN)->first());
     }
 }
