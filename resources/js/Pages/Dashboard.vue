@@ -104,18 +104,18 @@ const getSunday = (theD) => {
 }
 
 const previousSunday = () => {
-    let prevDate = new Date(currentDate.value);
+    let prevDate = new Date(currentDate.value)
 
     // Calculate days until previous Sunday
-    const daysUntilSunday = (prevDate.getDay() - 0 + 7) % 7;
+    const daysUntilSunday = (prevDate.getDay() - 0 + 7) % 7
 
     // Always subtract 7 days to get the previous Sunday
-    const daysToSubtract = 7;
+    const daysToSubtract = 7
 
-    prevDate.setDate(prevDate.getDate() - daysUntilSunday - daysToSubtract);
+    prevDate.setDate(prevDate.getDate() - daysUntilSunday - daysToSubtract)
 
-    return buildDate(prevDate);
-};
+    return buildDate(prevDate)
+}
 
 const nextSunday = () => {
     let nextDate = new Date(currentDate.value)
@@ -181,7 +181,10 @@ onMounted(() => {
                                 </button>
 
                                 <span>
-                                    Week starting the <span class="font-semibold"> {{ getDateFromDate(startOfTheWeek) }} </span>
+                                    Week starting the
+                                    <span class="font-semibold">
+                                        {{ getDateFromDate(startOfTheWeek) }}
+                                    </span>
                                 </span>
 
                                 <!-- Next Week Button -->
@@ -197,7 +200,7 @@ onMounted(() => {
                             <div class="flex overflow-x-auto space-x-4">
                                 <Card
                                     v-for="(habits, index, i) in weeklyHabits"
-                                    class="min-w-[200px]"
+                                    class="min-w-[300px]"
                                     :success="isSuccess(habits)"
                                     :warning="isWarning(habits)"
                                     :danger="isDanger(habits)"
@@ -205,7 +208,12 @@ onMounted(() => {
                                     :id="index"
                                 >
                                     <template #heading>
-                                        <span>
+                                        <span
+                                            :class="{
+                                                'underline underline-offset-2':
+                                                    index === todaysDate,
+                                            }"
+                                        >
                                             {{ dayNameFromDate(index) }} -
                                             {{ getDateFromDate(index) }}
                                         </span>

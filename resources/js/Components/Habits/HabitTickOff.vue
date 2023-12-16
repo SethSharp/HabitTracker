@@ -1,7 +1,7 @@
 <script setup>
 import JSConfetti from 'js-confetti'
 import { router } from '@inertiajs/vue3'
-import { XCircleIcon, CheckCircleIcon } from '@heroicons/vue/24/outline/index.js'
+import { XMarkIcon, CheckIcon } from '@heroicons/vue/24/outline/index.js'
 
 const props = defineProps({
     habits: Object,
@@ -20,39 +20,15 @@ const isAllCompleted = () => {
 
 const completeHabit = (habit) => {
     if (!habit.completed) {
-        router.post(
-            route('schedule.complete', habit.id),
-            {},
-            {
-                onSuccess: (res) => {
-                    habit.completed = true
-                    isAllCompleted()
-                },
-                onError: (err) => {
-                    console.error(err)
-                    alert('Unable to complete habit')
-                },
-            }
-        )
-    }
-}
-
-const uncompleteHabit = (habit) => {
-    if (habit.completed) {
-        router.post(
-            route('schedule.uncomplete', habit.id),
-            {},
-            {
-                onSuccess: (res) => {
-                    habit.completed = false
-                    isAllCompleted()
-                },
-                onError: (err) => {
-                    console.error(err)
-                    alert('Unable to un-complete habit')
-                },
-            }
-        )
+        axios
+            .post(route('schedule.complete', habit.id))
+            .then((res) => {
+                habit.completed = true
+                isAllCompleted()
+            })
+            .catch((err) => {
+                alert('There was an error completing your habit!')
+            })
     }
 }
 
@@ -60,44 +36,40 @@ const jsConfetti = new JSConfetti()
 </script>
 
 <template>
-    <div>
-        <div>
+    <div class="flex-wrap w-full">
+        <div v-for="scheduledHabit in habits">
             <div
-                v-for="scheduledHabit in habits"
+                v-if="!scheduledHabit.completed || scheduledHabit.cancelled"
                 class="flex my-2 p-2 justify-between rounded border"
-                :class="[
-                    scheduledHabit.cancelled ? 'bg-red-200 border-red-400' : 'border-gray-400',
-                    scheduledHabit.completed ? 'bg-green-200 border-green-400' : '',
-                ]"
             >
-                <p class="text-xl my-auto">
+                <p class="text-md my-auto">
                     {{ scheduledHabit.habit.name }}
                 </p>
+
                 <div class="justify-end flex gap-x-2">
                     <div
                         v-if="!scheduledHabit.cancelled"
-                        class="rounded-2xl cursor-pointer bg-white border border-primary ml-2 flex overflow-hidden w-auto"
+                        class="cursor-pointer ml-2 flex overflow-hidden w-auto"
                     >
                         <div
-                            class="w-fit p-2 active:bg-red-400"
-                            :class="!scheduledHabit.completed ? 'bg-red-100' : 'bg-red-50'"
+                            @click="completeHabit(scheduledHabit)"
+                            class="w-fit p-2 !text-green-500 transition"
                         >
-                            <XCircleIcon
-                                @click="uncompleteHabit(scheduledHabit)"
-                                class="w-8 h-8 my-auto text-red-500"
-                            />
-                        </div>
-                        <div
-                            class="w-fit p-2 hover:bg-green-200"
-                            :class="scheduledHabit.completed ? 'bg-green-100' : ''"
-                        >
-                            <CheckCircleIcon
-                                @click="completeHabit(scheduledHabit)"
-                                class="w-8 h-8 my-auto text-green-500"
-                            />
+                            complete
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div v-for="scheduledHabit in habits">
+            <div
+                v-if="scheduledHabit.completed"
+                class="flex my-2 p-2 justify-between rounded border bg-green-200 border-green-400"
+            >
+                <p class="text-md my-auto">
+                    {{ scheduledHabit.habit.name }}
+                </p>
             </div>
         </div>
     </div>
