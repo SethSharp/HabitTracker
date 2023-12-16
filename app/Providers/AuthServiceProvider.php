@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domain\Iam\Models\Role;
 use App\Domain\Iam\Models\User;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\HabitSchedulePolicy;
@@ -24,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('viewPulse', function (User $user) {
-            return $user->isAdmin();
+            return $user->hasRole(Role::whereName(User::ROLE_ADMIN)->first());
         });
     }
 }

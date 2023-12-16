@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce2d5fbefdc518a336d7e782e798a91b",
+    "content-hash": "1e9e3d373ab5c625b9a55aa86adbb70f",
     "packages": [
         {
             "name": "brick/math",
@@ -60,6 +60,65 @@
                 }
             ],
             "time": "2023-01-15T23:15:59+00:00"
+        },
+        {
+            "name": "codinglabsau/laravel-roles",
+            "version": "v2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codinglabsau/laravel-roles.git",
+                "reference": "8efd4876100540b1e43ad5d9a4d2a9907e3dd25e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codinglabsau/laravel-roles/zipball/8efd4876100540b1e43ad5d9a4d2a9907e3dd25e",
+                "reference": "8efd4876100540b1e43ad5d9a4d2a9907e3dd25e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "codinglabsau/php-styles": "dev-main",
+                "orchestra/testbench": "^8.0",
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Codinglabs\\Roles\\RolesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Codinglabs\\Roles\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Thomas",
+                    "email": "steve@codinglabs.com.au",
+                    "homepage": "https://codinglabs.com.au"
+                }
+            ],
+            "description": "Simple Laravel roles",
+            "homepage": "https://github.com/codinglabsau/laravel-roles",
+            "keywords": [
+                "laravel",
+                "roles"
+            ],
+            "support": {
+                "issues": "https://github.com/codinglabsau/laravel-roles/issues",
+                "source": "https://github.com/codinglabsau/laravel-roles/tree/v2.5.0"
+            },
+            "time": "2023-02-20T01:23:07+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -10037,6 +10096,7 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
+        "laravel/pulse": 10,
         "codinglabsau/php-styles": 20
     },
     "prefer-stable": true,
