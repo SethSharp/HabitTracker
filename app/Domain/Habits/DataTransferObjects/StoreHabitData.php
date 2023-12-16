@@ -15,8 +15,7 @@ class StoreHabitData extends Data
         public ?string $scheduledTo,
         public string  $occurrenceDays,
         public string  $colour,
-    ) {
-    }
+    ) {}
 
     public static function fromRequest(
         StoreHabitRequest $request,
@@ -24,7 +23,6 @@ class StoreHabitData extends Data
         ?string           $scheduledTo,
         string            $occurrenceDays,
     ): self {
-        ray($request->input('name'));
         return new self(
             userId: $request->user()->id,
             name: $request->input('name'),

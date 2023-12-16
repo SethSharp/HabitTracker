@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Domain\Iam\Models;
 
+use Codinglabs\Roles\Role;
 use Illuminate\Support\Str;
 use App\Domain\Iam\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -27,5 +28,12 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function admin(): self
+    {
+        return $this->afterCreating(function (User $user) {
+            $user->roles()->attach(Role::whereName(User::ROLE_ADMIN)->first());
+        });
     }
 }

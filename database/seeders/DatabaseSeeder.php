@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Domain\Iam\Models\User;
 use Illuminate\Database\Seeder;
+use App\Console\Commands\Bootstrap;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Traits\ScheduledHabits;
 
 class DatabaseSeeder extends Seeder
@@ -13,7 +15,9 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        User::factory()->create([
+        Artisan::call(Bootstrap::class);
+
+        User::factory()->admin()->create([
             'name' => 'Seth Sharp',
             'email' => 'seth@habit-tracker.test',
             'email_verified_at' => now(),

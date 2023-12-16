@@ -2,7 +2,7 @@
 
 namespace App\Domain\Iam\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Codinglabs\Roles\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 use App\Domain\Habits\Models\Habit;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +16,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_MEMBER = 'member';
 
     protected $fillable = [
         'name',
