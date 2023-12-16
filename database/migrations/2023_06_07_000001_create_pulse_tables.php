@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class() extends Migration {
+return new class() extends Migration
+{
     /**
      * Get the migration connection name.
      */
@@ -77,15 +78,5 @@ return new class() extends Migration {
             $table->index('type'); // For purging...
             $table->index(['period', 'type', 'aggregate', 'bucket']); // For aggregate queries...
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('pulse_values');
-        Schema::dropIfExists('pulse_entries');
-        Schema::dropIfExists('pulse_aggregates');
     }
 };

@@ -17,9 +17,4 @@ class CreateRoleUserTable extends Migration
             $table->unique(['user_id', 'role_id']);
         });
     }
-
-    public function down()
-    {
-        Schema::dropIfExists('role_user');
-    }
 }
