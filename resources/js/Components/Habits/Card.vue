@@ -32,15 +32,7 @@ const props = defineProps({
                 : ''
         }`"
     >
-        <div
-            class="px-4 rounded-lg mx-4 my-4 py-2 font-medium"
-            :class="`
-                ${heading ? 'border-primary bg-primary bg-opacity-25' : 'border-gray-500'}
-                ${danger ? 'border-red-300 bg-red-300 bg-opacity-25' : ''}
-                ${success ? 'border-green-300 bg-green-300 bg-opacity-25' : ''}
-                ${warning ? 'border-yellow-300 bg-yellow-300 bg-opacity-25' : ''}
-            `"
-        >
+        <div class="px-4 rounded-lg mx-4 my-4 py-2 font-medium">
             <slot name="heading"></slot>
         </div>
         <slot />

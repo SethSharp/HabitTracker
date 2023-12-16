@@ -204,7 +204,6 @@ onMounted(() => {
                                     :success="isSuccess(habits)"
                                     :warning="isWarning(habits)"
                                     :danger="isDanger(habits)"
-                                    :heading="today.getDay() === i"
                                     :id="index"
                                 >
                                     <template #heading>
