@@ -43,7 +43,7 @@ trait ScheduledHabits
         $start = Carbon::parse($startDate);
 
         $thisWeeksHabits = $user->scheduledHabits()
-            ->orderBy('completed', 'asc')
+            ->orderBy('completed')
             ->where('scheduled_completion', '>=', $start->toDateString())
             ->where('scheduled_completion', '<=', $start->addDays(7)->toDateString())
             ->with(['habit' => fn ($query) => $query->withTrashed()])
