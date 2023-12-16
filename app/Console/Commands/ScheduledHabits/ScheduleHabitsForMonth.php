@@ -18,7 +18,7 @@ class ScheduleHabitsForMonth extends Command
     protected $signature = 'habits:schedule';
     protected $description = 'Set habits up for the month based on the occurrence days of the habit';
 
-    public function handle()
+    public function handle(): void
     {
         $users = User::all();
 
