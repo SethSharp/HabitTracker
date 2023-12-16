@@ -162,7 +162,7 @@ onMounted(() => {
     <AuthenticatedLayout>
         <div>
             <div class="mx-4 mt-4 sm:mx-6">
-                <Card>
+                <Card class="min-h-[600px] max-h-[600px]">
                     <template #heading>
                         <span class="h-fit py-2 text-2xl"> Your Week </span>
                     </template>
@@ -200,7 +200,7 @@ onMounted(() => {
                             <div class="flex overflow-x-auto space-x-4">
                                 <Card
                                     v-for="(habits, index, i) in weeklyHabits"
-                                    class="min-w-[300px]"
+                                    class="min-w-[300px] min-h-[450px]"
                                     :success="isSuccess(habits)"
                                     :warning="isWarning(habits)"
                                     :danger="isDanger(habits)"
