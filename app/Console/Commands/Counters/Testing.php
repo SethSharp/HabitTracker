@@ -9,6 +9,7 @@ use App\Http\Controllers\Traits\ScheduledHabits;
 class Testing extends Command
 {
     use ScheduledHabits;
+
     protected $signature = 'counters:testing';
     protected $description = '';
 
@@ -16,6 +17,8 @@ class Testing extends Command
     {
         $user = User::first();
 
-        $user->increment('streak');
+        $user->update([
+            'streak' => 12
+        ]);
     }
 }
