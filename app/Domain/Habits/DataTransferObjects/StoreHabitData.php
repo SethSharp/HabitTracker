@@ -3,7 +3,7 @@
 namespace App\Domain\Habits\DataTransferObjects;
 
 use Spatie\LaravelData\Data;
-use App\Http\Requests\Habits\StoreHabitRequest;
+use App\App\Http\Requests\Habits\StoreHabitRequest;
 
 class StoreHabitData extends Data
 {
@@ -15,7 +15,8 @@ class StoreHabitData extends Data
         public ?string $scheduledTo,
         public string  $occurrenceDays,
         public string  $colour,
-    ) {}
+    ) {
+    }
 
     public static function fromRequest(
         StoreHabitRequest $request,

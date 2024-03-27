@@ -8,7 +8,7 @@ use App\Domain\Iam\Models\User;
 use Tests\Traits\RefreshDatabase;
 use App\Domain\Habits\Models\Habit;
 use App\Domain\Frequency\Enums\Frequency;
-use App\Http\Controllers\Traits\HabitLog;
+use App\App\Http\Controllers\Traits\HabitLog;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
 
 class HabitLogTest extends TestCase

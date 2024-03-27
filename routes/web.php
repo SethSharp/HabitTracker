@@ -1,23 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\Pages\ShowHelpController;
-use App\Http\Controllers\Habits\EditHabitController;
-use App\Http\Controllers\Habits\ShowHabitsController;
-use App\Http\Controllers\Habits\StoreHabitController;
-use App\Http\Controllers\Habits\CreateHabitController;
-use App\Http\Controllers\Habits\DeleteHabitController;
-use App\Http\Controllers\Habits\UpdateHabitController;
-use App\Http\Controllers\Pages\ShowCalendarController;
-use App\Http\Controllers\Pages\ShowDashboardController;
-use App\Http\Controllers\Profile\EditProfileController;
-use App\Http\Controllers\Profile\DeleteProfileController;
-use App\Http\Controllers\Profile\UpdateProfileController;
-use App\Http\Controllers\Profile\UpdateEmailPreferencesController;
-use App\Http\Controllers\HabitSchedule\CancelHabitScheduleController;
-use App\Http\Controllers\HabitSchedule\CompleteHabitScheduleController;
-use App\Http\Controllers\HabitSchedule\GetScheduledHabitsForDayController;
+use App\App\Http\Controllers\WelcomeController;
+use App\App\Http\Controllers\Pages\ShowHelpController;
+use App\App\Http\Controllers\Habits\EditHabitController;
+use App\App\Http\Controllers\Habits\ShowHabitsController;
+use App\App\Http\Controllers\Habits\StoreHabitController;
+use App\App\Http\Controllers\Habits\CreateHabitController;
+use App\App\Http\Controllers\Habits\DeleteHabitController;
+use App\App\Http\Controllers\Habits\UpdateHabitController;
+use App\App\Http\Controllers\Pages\ShowCalendarController;
+use App\App\Http\Controllers\Pages\ShowDashboardController;
+use App\App\Http\Controllers\Profile\EditProfileController;
+use App\App\Http\Controllers\Profile\DeleteProfileController;
+use App\App\Http\Controllers\Profile\UpdateProfileController;
+use App\App\Http\Controllers\Profile\UpdateEmailPreferencesController;
+use App\App\Http\Controllers\HabitSchedule\CancelHabitScheduleController;
+use App\App\Http\Controllers\HabitSchedule\CompleteHabitScheduleController;
+use App\App\Http\Controllers\HabitSchedule\GetScheduledHabitsForDayController;
 
 Route::get('/', WelcomeController::class)->name('welcome');
 

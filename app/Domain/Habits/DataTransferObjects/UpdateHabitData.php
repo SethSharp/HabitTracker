@@ -3,7 +3,7 @@
 namespace App\Domain\Habits\DataTransferObjects;
 
 use Spatie\LaravelData\Data;
-use App\Http\Requests\Habits\UpdateHabitRequest;
+use App\App\Http\Requests\Habits\UpdateHabitRequest;
 
 class UpdateHabitData extends Data
 {

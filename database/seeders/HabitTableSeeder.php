@@ -8,8 +8,8 @@ use App\Domain\Iam\Models\User;
 use Illuminate\Database\Seeder;
 use App\Domain\Habits\Models\Habit;
 use App\Domain\Frequency\Enums\Frequency;
-use App\Http\Controllers\Traits\ScheduledHabits;
 use App\Domain\HabitSchedule\Models\HabitSchedule;
+use App\App\Http\Controllers\Traits\ScheduledHabits;
 
 class HabitTableSeeder extends Seeder
 {

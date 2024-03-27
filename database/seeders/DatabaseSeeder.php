@@ -4,10 +4,10 @@ namespace Database\Seeders;
 
 use App\Domain\Iam\Models\User;
 use Illuminate\Database\Seeder;
-use App\Console\Commands\Bootstrap;
 use Illuminate\Support\Facades\Hash;
+use App\App\Console\Commands\Bootstrap;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Traits\ScheduledHabits;
+use App\App\Http\Controllers\Traits\ScheduledHabits;
 
 class DatabaseSeeder extends Seeder
 {

@@ -4,13 +4,14 @@ namespace Tests\Http\Auth;
 
 use Tests\TestCase;
 use Tests\Traits\RefreshDatabase;
-use App\Http\Events\RegisteredEvent;
 use Illuminate\Support\Facades\Event;
-use App\Providers\RouteServiceProvider;
+use App\App\Http\Events\RegisteredEvent;
+use App\App\Providers\RouteServiceProvider;
 
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
