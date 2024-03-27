@@ -3,9 +3,9 @@ name: Deploy
 on: [ push ]
 
 jobs:
-  tests-and-deploy-steps:
+  run-tests:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     env:
       DB_DATABASE: testing
@@ -50,7 +50,7 @@ jobs:
           vendor/bin/php-cs-fixer fix
 
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.deployment.env.example', '.env');"
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Generate key
         run: php artisan key:generate
@@ -65,22 +65,29 @@ jobs:
           DB_PASSWORD: root
         run: php artisan test
 
+  deploy-staging:
+    if: github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('staging.env.example', '.env');"
+
+      - name: Generate key
+        run: php artisan key:generate
+
       - name: Echo URL to .env
-        if: github.ref == 'refs/heads/main'
         run: |
-          echo "APP_URL=http://habittracker-uc-1.eba-ayudv8jf.ap-southeast-2.elasticbeanstalk.com" >> .env
           echo "DB_HOST=${{ secrets.DB_HOST}}" >> .env
-          echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=${{ secrets.DB_DATABASE}}" >> .env
           echo "DB_USERNAME=${{ secrets.DB_USERNAME}}" >> .env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD}}" >> .env
 
       - name: Build ZIP Deployment Package
-        if: github.ref == 'refs/heads/main'
         run: zip -r deploy.zip ./ -x "node_modules/*" -x "vendor/*" -x "tests/*"
 
-      - name: Deploy to Elastic Beanstalk
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy to Staging Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v18
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
