@@ -2,8 +2,12 @@ name: Deploy
 
 on: [ push ]
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  run-tests:
+  tests:
 
     runs-on: ubuntu-22.04
 
@@ -66,6 +70,8 @@ jobs:
         run: php artisan test
 
   deploy-staging:
+    needs: tests
+
     if: github.ref == 'refs/heads/main'
 
     runs-on: ubuntu-22.04
@@ -74,6 +80,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: zip, sqlite3
+          coverage: none
 
       - name: Restore npm cache
         uses: actions/cache@v4
