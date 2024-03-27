@@ -44,7 +44,7 @@ defineProps({
                         <Link
                             v-if="canRegister"
                             :href="route('register')"
-                            class="ml-4 font-semibold bg-primary rounded-lg p-2 hover:bg-opacity-50"
+                            class="ml-4 font-semibold bg-primary-600 rounded-lg p-2 hover:bg-opacity-50"
                         >
                             Register
                         </Link>

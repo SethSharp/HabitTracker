@@ -99,6 +99,9 @@ jobs:
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('staging.env.example', '.env');"
 
+      - name: Install composer dependencies
+        run: composer install --no-cache --no-ansi --no-interaction --no-progress
+        
       - name: Generate key
         run: php artisan key:generate
 
