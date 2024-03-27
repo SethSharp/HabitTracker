@@ -59,6 +59,10 @@ jobs:
       - name: Generate key
         run: php artisan key:generate
 
+      - name: Build frontend
+        run: |
+          npm run build
+
       - name: Execute tests
         env:
           DB_USERNAME: root
