@@ -38,7 +38,7 @@ jobs:
         run: composer install --no-cache --no-ansi --no-interaction --no-progress
 
       - name: Install node dependencies
-        run: npm ci
+        run: npm i
 
       - name: Setup node
         uses: actions/setup-node@v3
