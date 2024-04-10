@@ -56,6 +56,11 @@ jobs:
       - name: Generate key
         run: php artisan key:generate
 
+      - name: Build frontend
+        run: |
+          npm run build
+
+
       - name: Execute tests
         env:
           DB_USERNAME: root
@@ -99,7 +104,9 @@ jobs:
           npm run build
 
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('staging.env.example', '.env');"
+        run: |
+          echo file_exists('.env');
+          php -r "file_exists('.env') || copy('.env.staging.example', '.env');"
 
       - name: Install composer dependencies
         run: composer install --no-cache --no-ansi --no-interaction --no-progress
