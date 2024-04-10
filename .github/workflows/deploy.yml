@@ -60,7 +60,6 @@ jobs:
         run: |
           npm run build
 
-
       - name: Execute tests
         env:
           DB_USERNAME: root
@@ -91,13 +90,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: Restore npm cache
-        uses: actions/cache@v4
+      - name: Install node dependencies
+        run: npm i
+
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: 20
 
       - name: Build frontend
         run: |
