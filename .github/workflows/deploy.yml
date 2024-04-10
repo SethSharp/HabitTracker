@@ -31,9 +31,6 @@ jobs:
           extensions: zip, sqlite3
           coverage: none
 
-      - name: Check composer compatability
-        run: composer check-platform-reqs
-
       - name: Install composer dependencies
         run: composer install --no-cache --no-ansi --no-interaction --no-progress
 
@@ -58,10 +55,6 @@ jobs:
 
       - name: Generate key
         run: php artisan key:generate
-
-      - name: Build frontend
-        run: |
-          npm run build
 
       - name: Execute tests
         env:
@@ -88,6 +81,11 @@ jobs:
           extensions: zip, sqlite3
           coverage: none
 
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
       - name: Restore npm cache
         uses: actions/cache@v4
         with:
@@ -109,7 +107,7 @@ jobs:
       - name: Generate key
         run: php artisan key:generate
 
-      - name: Echo URL to .env
+      - name: Echo DB credentials to .env
         run: |
           echo "DB_HOST=${{ secrets.DB_HOST}}" >> .env
           echo "DB_DATABASE=${{ secrets.DB_DATABASE}}" >> .env
