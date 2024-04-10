@@ -85,22 +85,8 @@ jobs:
           extensions: zip, sqlite3
           coverage: none
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
       - name: Install node dependencies
         run: npm i
-
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Build frontend
-        run: |
-          npm run build
 
       - name: Copy .env
         run: |
