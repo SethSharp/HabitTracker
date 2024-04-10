@@ -9,7 +9,7 @@ concurrency:
 jobs:
   tests:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     env:
       DB_DATABASE: testing
@@ -43,7 +43,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
 
       - name: Format code
         run: |
@@ -96,12 +96,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Build frontend
+        run: |
+          npm run build
+
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('staging.env.example', '.env');"
 
       - name: Install composer dependencies
         run: composer install --no-cache --no-ansi --no-interaction --no-progress
-        
+
       - name: Generate key
         run: php artisan key:generate
 
