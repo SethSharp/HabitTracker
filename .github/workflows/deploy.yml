@@ -90,8 +90,12 @@ jobs:
 
       - name: Copy .env
         run: |
-          echo file_exists('.env');
-          php -r "file_exists('.env') || copy('.env.staging.example', '.env');"
+          if [ -f .env ]; then
+            echo "File .env exists"
+          else
+            echo "File .env does not exist"
+            php -r "copy('.env.staging.example', '.env');"
+          fi
 
       - name: Install composer dependencies
         run: composer install --no-cache --no-ansi --no-interaction --no-progress
