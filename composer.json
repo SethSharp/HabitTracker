@@ -8,10 +8,10 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "codinglabsau/laravel-roles": "^2.5",
         "guzzlehttp/guzzle": "^7.7",
-        "inertiajs/inertia-laravel": "^1.0",
+        "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^11.0",
         "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "^4.0",
